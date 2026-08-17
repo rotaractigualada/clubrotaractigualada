@@ -123,7 +123,11 @@
 
 @media (max-width: 640px) {
   .cookie-banner {
-    height: 25vh;
+    height: auto;
+    max-height: 42vh;
+    overflow-y: auto;
+    align-items: flex-start;
+    padding: 1rem 1.25rem 1.25rem;
   }
 
   .cookie-banner__actions {
