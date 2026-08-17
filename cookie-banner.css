@@ -1,0 +1,136 @@
+/* =============================================
+   COOKIE-BANNER.CSS — Rotaract Igualada
+   Bàner inferior al 25% de la pantalla + teló
+   fosc sobre la resta per centrar l'atenció.
+   ============================================= */
+
+.cookie-open {
+  overflow: hidden;
+}
+
+.cookie-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1999;
+  background: rgba(12, 14, 32, 0.62);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  animation: cookieFadeIn 0.3s ease-out;
+}
+
+@keyframes cookieFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.cookie-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 25vh;
+  z-index: 2000;
+  overflow: auto;
+  background: var(--bg-white, #ffffff);
+  border-top: 2px solid var(--blue, #2f2f96);
+  box-shadow: 0 -6px 24px rgba(47, 47, 150, 0.12);
+  padding: 1rem 1.5rem;
+  animation: cookieBannerUp 0.3s ease-out;
+  display: flex;
+  align-items: center;
+}
+
+@keyframes cookieBannerUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cookie-banner__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.5rem;
+  justify-content: space-between;
+}
+
+.cookie-banner p {
+  flex: 1 1 22rem;
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text, #1a1a1a);
+}
+
+.cookie-banner a {
+  color: var(--blue, #2f2f96);
+  font-weight: 700;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.cookie-banner a:hover {
+  color: var(--accent, #DA1A5D);
+}
+
+.cookie-banner__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cookie-banner__btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.cookie-banner__btn--accept {
+  background: var(--blue, #2f2f96);
+  color: #ffffff;
+}
+
+.cookie-banner__btn--accept:hover {
+  background: var(--primary-dark, #1e1e6e);
+}
+
+.cookie-banner__btn--reject {
+  background: transparent;
+  color: var(--text-light, #6b7280);
+  border: 1px solid rgba(47, 47, 150, 0.25);
+}
+
+.cookie-banner__btn--reject:hover {
+  border-color: var(--blue, #2f2f96);
+  color: var(--blue, #2f2f96);
+}
+
+@media (max-width: 640px) {
+  .cookie-banner {
+    height: 25vh;
+  }
+
+  .cookie-banner__actions {
+    width: 100%;
+  }
+
+  .cookie-banner__btn {
+    flex: 1;
+  }
+}

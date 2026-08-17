@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <script src="scroll-top.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Directiu — Rotaract Igualada</title>
+  <meta name="description" content="Coneix la junta directiva i els socis del Club Rotaract d'Igualada, el club de joves de Rotary a l'Anoia.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Rotaract Igualada">
+  <meta property="og:locale" content="ca_ES">
+  <meta property="og:title" content="Directiu — Rotaract Igualada">
+  <meta property="og:description" content="Coneix la junta directiva i els socis del Club Rotaract d'Igualada.">
+  <meta property="og:url" content="https://www.rotaractigualada.org/directiu.html">
+  <meta property="og:image" content="https://www.rotaractigualada.org/FOTO_1.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.rotaractigualada.org/directiu.html">
+  <link rel="stylesheet" href="rotaractigualada.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    /* ─────────────────────────────────────────────
+       DIRECTIU — Socis & Junta styles
+    ───────────────────────────────────────────── */
+
+    /* Hero */
+    .directiu-hero {
+      width: 100%;
+      min-height: 280px;
+      background: linear-gradient(135deg, var(--primary) 0%, #1a1a6e 60%, #3a0a2e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .directiu-hero::before,
+    .directiu-hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.08;
+      background: #fff;
+    }
+    .directiu-hero::before {
+      width: 500px; height: 500px;
+      top: -200px; right: -100px;
+    }
+    .directiu-hero::after {
+      width: 300px; height: 300px;
+      bottom: -150px; left: -50px;
+    }
+
+    .directiu-hero__content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      max-width: 600px;
+    }
+
+    .directiu-hero__eyebrow {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .directiu-hero__title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+
+    .directiu-hero__desc {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(0.88rem, 2vw, 1rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+      max-width: 500px;
+      margin-top: 0.25rem;
+    }
+
+    /* Tabs (Socis / Junta) */
+    .directiu-tabs {
+      background: #fff;
+      border-bottom: 1px solid rgba(47,47,150,0.08);
+      position: sticky;
+      top: 62px;
+      z-index: 100;
+    }
+
+    .directiu-tabs__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+      padding: 0 2rem;
+    }
+
+    .directiu-tabs__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-light);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .directiu-tabs__btn:hover {
+      color: var(--pink);
+    }
+
+    .directiu-tabs__btn.is-active {
+      color: var(--pink);
+      border-bottom-color: var(--pink);
+    }
+
+    /* Panells de contingut */
+    .directiu-panel {
+      display: none;
+    }
+
+    .directiu-panel.is-visible {
+      display: block;
+    }
+
+    /* Animació d'entrada del panel */
+    @keyframes panelFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .directiu-panel.is-visible {
+      animation: panelFadeIn 0.3s ease forwards;
+    }
+
+    /* ─── Secció genèrica ─── */
+    .directiu-section {
+      width: 100%;
+      padding: clamp(3.5rem, 8vw, 5.5rem) clamp(1rem, 4vw, 2rem);
+    }
+
+    .directiu-section--alt {
+      background: var(--bg-light);
+    }
+
+    .directiu-section__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Capçalera de secció */
+    .directiu-section__header {
+      text-align: center;
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    }
+
+    .directiu-section__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.38rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(218, 26, 93, 0.08);
+      color: var(--pink);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+    }
+
+    .directiu-section__eyebrow::before {
+      content: '';
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--pink);
+    }
+
+    .directiu-section__title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .directiu-section__title span {
+      color: var(--pink);
+    }
+
+    .directiu-section__divider {
+      width: 42px;
+      height: 3px;
+      background: var(--pink);
+      border-radius: 99px;
+      margin: 1rem auto 1.1rem;
+    }
+
+    .directiu-section__subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(0.9rem, 1.8vw, 1rem);
+      color: var(--text-light);
+      line-height: 1.75;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ─── Grid de socis ─── */
+    .socis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .soci-card {
+      background: #fff;
+      border: 1px solid rgba(47,47,150,0.08);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.7rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    .soci-card.dir-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .soci-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(218,26,93,0.18);
+      box-shadow: 0 10px 28px rgba(47,47,150,0.1);
+    }
+
+    .soci-card__avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ececf5, #f5f5fb);
+      border: 3px solid rgba(47,47,150,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .soci-card__avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .soci-card__avatar-initials {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--blue);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .soci-card__name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* ─── Grid de junta ─── */
+    .junta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+
+
+    .junta-card {
+      background: #fff;
+      border: 1px solid rgba(47,47,150,0.08);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.8rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+
+    .junta-card.dir-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .junta-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(218,26,93,0.2);
+      box-shadow: 0 14px 36px rgba(47,47,150,0.12);
+    }
+
+    .junta-card--featured .junta-card__photo {
+      width: 110px;
+      height: 110px;
+    }
+
+    .junta-card__photo {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ececf5, #f5f5fb);
+      border: 3px solid rgba(47,47,150,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: border-color 0.25s ease;
+    }
+
+    .junta-card:hover .junta-card__photo {
+      border-color: rgba(218,26,93,0.3);
+    }
+
+    .junta-card__photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .junta-card__photo-initials {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--blue);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .junta-card--featured .junta-card__photo-initials {
+      font-size: 1.8rem;
+    }
+
+    .junta-card__role-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(218,26,93,0.08);
+      color: var(--pink);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .junta-card--featured .junta-card__role-badge {
+      background: var(--pink);
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 0.3rem 0.85rem;
+    }
+
+    .junta-card__name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .junta-card--featured .junta-card__name {
+      font-size: 1.15rem;
+    }
+
+    /* Transicions escalonades */
+    .soci-card:nth-child(1)  { transition-delay: 0.02s; }
+    .soci-card:nth-child(2)  { transition-delay: 0.05s; }
+    .soci-card:nth-child(3)  { transition-delay: 0.08s; }
+    .soci-card:nth-child(4)  { transition-delay: 0.11s; }
+    .soci-card:nth-child(5)  { transition-delay: 0.14s; }
+    .soci-card:nth-child(6)  { transition-delay: 0.17s; }
+    .soci-card:nth-child(7)  { transition-delay: 0.20s; }
+    .soci-card:nth-child(8)  { transition-delay: 0.23s; }
+    .soci-card:nth-child(9)  { transition-delay: 0.26s; }
+    .soci-card:nth-child(10) { transition-delay: 0.29s; }
+    .soci-card:nth-child(11) { transition-delay: 0.32s; }
+    .soci-card:nth-child(12) { transition-delay: 0.35s; }
+    .soci-card:nth-child(13) { transition-delay: 0.38s; }
+    .soci-card:nth-child(14) { transition-delay: 0.41s; }
+    .soci-card:nth-child(15) { transition-delay: 0.44s; }
+    .soci-card:nth-child(16) { transition-delay: 0.47s; }
+    .soci-card:nth-child(17) { transition-delay: 0.50s; }
+    .soci-card:nth-child(18) { transition-delay: 0.53s; }
+    .soci-card:nth-child(19) { transition-delay: 0.56s; }
+    .soci-card:nth-child(20) { transition-delay: 0.59s; }
+
+    .junta-card:nth-child(1)  { transition-delay: 0.02s; }
+    .junta-card:nth-child(2)  { transition-delay: 0.06s; }
+    .junta-card:nth-child(3)  { transition-delay: 0.10s; }
+    .junta-card:nth-child(4)  { transition-delay: 0.14s; }
+    .junta-card:nth-child(5)  { transition-delay: 0.18s; }
+    .junta-card:nth-child(6)  { transition-delay: 0.22s; }
+    .junta-card:nth-child(7)  { transition-delay: 0.26s; }
+    .junta-card:nth-child(8)  { transition-delay: 0.30s; }
+    .junta-card:nth-child(9)  { transition-delay: 0.34s; }
+    .junta-card:nth-child(10) { transition-delay: 0.38s; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .directiu-tabs__btn {
+        padding: 0.875rem 1rem;
+        font-size: 0.82rem;
+      }
+      .directiu-hero {
+        padding: 4rem 1.5rem 3rem;
+        min-height: 220px;
+      }
+      .socis-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+      .junta-grid {
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 1.1rem;
+      }
+      .junta-card--featured {
+        max-width: 260px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .directiu-tabs {
+        top: 68px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .directiu-section {
+        padding: 2.5rem 1.1rem;
+      }
+      .socis-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .junta-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .directiu-tabs__inner {
+        padding: 0 1rem;
+      }
+      .junta-card {
+        padding: 1.25rem 0.9rem 1.25rem;
+      }
+      .junta-card__photo {
+        width: 72px;
+        height: 72px;
+      }
+      .junta-card--featured .junta-card__photo {
+        width: 88px;
+        height: 88px;
+      }
+      .junta-card__role-badge {
+        padding: 0.22rem 0.6rem;
+        font-size: 0.65rem;
+        letter-spacing: 0.08em;
+      }
+      .junta-card__name {
+        font-size: 0.92rem;
+      }
+      .soci-card__avatar {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .directiu-tabs {
+        top: 60px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .soci-card, .junta-card {
+        opacity: 1;
+        transform: none;
+      }
+      *, *::before, *::after {
+        animation: none !important;
+        transition-duration: .01ms !important;
+        transition-delay: 0ms !important;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="cookie-banner.css">
+  <link rel="stylesheet" href="i18n.css">
+</head>
+
+<body id="top">
+
+  <a class="skip-link" href="#contingut" data-en="Skip to main content">Salta al contingut principal</a>
+
+  <!-- =============================================
+       MOBILE OVERLAY
+  ============================================= -->
+  <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+
+  <!-- =============================================
+       MOBILE NAV DRAWER
+  ============================================= -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Menú mòbil" aria-hidden="true">
+    <button class="mobile-nav__close" id="mobileNavClose" aria-label="Tancar menú">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <ul class="mobile-nav__list">
+      <li><a href="index.html" class="mobile-nav__link" data-en="Home">Inici</a></li>
+      <li class="mobile-nav__group">
+        <a href="nosaltres.html" class="mobile-nav__group-label" data-en="About us">Nosaltres</a>
+        <ul class="mobile-nav__sub">
+          <li><a href="nosaltres.html#rotary-internacional" class="mobile-nav__sublink" data-en="Rotary International">Rotary Internacional</a></li>
+          <li><a href="nosaltres.html#rotary-igualada" class="mobile-nav__sublink">Rotary Igualada</a></li>
+          <li><a href="nosaltres.html#rotaract-internacional" class="mobile-nav__sublink" data-en="Rotaract International & District">Rotaract Internacional i Districte</a></li>
+          <li><a href="nosaltres.html#rotaract-igualada" class="mobile-nav__sublink">Rotaract Igualada</a></li>
+        </ul>
+      </li>
+      <li class="mobile-nav__group">
+        <a href="activitats.html" class="mobile-nav__group-label" data-en="Activities">Activitats</a>
+        <ul class="mobile-nav__sub">
+            <li><a href="activitats.html#programades" class="mobile-nav__sublink" data-en="Upcoming activities">Activitats programades</a></li>
+            <li><a href="activitats.html#realitzades" class="mobile-nav__sublink" data-en="Past activities">Activitats realitzades</a></li>
+            <li><a href="activitats.html#calendari" class="mobile-nav__sublink" data-en="Calendar">Calendari</a></li>
+        </ul>
+      </li>
+      <li class="mobile-nav__group">
+        <a href="directiu.html" class="mobile-nav__group-label" data-en="Board">Directiu</a>
+        <ul class="mobile-nav__sub">
+          <li><a href="#socis" class="mobile-nav__sublink" data-en="Members">Socis</a></li>
+          <li><a href="#junta" class="mobile-nav__sublink" data-en="Board 26-27">Junta 26-27</a></li>
+        </ul>
+      </li>
+      <li><a href="contacte.html" class="mobile-nav__link" data-en="Contact">Contacte</a></li>
+      <li class="mobile-nav__lang-item">
+        <div class="lang-menu mobile-nav__lang">
+          <button type="button" class="lang-menu__btn" aria-haspopup="menu" aria-expanded="false" aria-label="Canvia d'idioma / Switch language">
+            <span class="lang-menu__current" data-lang-current>CA</span>
+            <svg class="lang-menu__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <ul class="lang-menu__list" role="menu" aria-label="Idioma / Language / Idioma">
+            <li><button type="button" role="menuitem" class="lang-menu__opt lang-menu__opt--active" data-lang-opt="ca">Català</button></li>
+            <li><button type="button" role="menuitem" class="lang-menu__opt" data-lang-opt="en">English</button></li>
+            <li><button type="button" role="menuitem" class="lang-menu__opt" data-lang-opt="es">Castellà</button></li>
+          </ul>
+        </div>
+      </li>
+      <li><a href="contacte.html" class="mobile-nav__cta" data-en="JOIN US">UNEIX-TE</a></li>
+    </ul>
+  </nav>
+
+  <!-- =============================================
+       HEADER
+  ============================================= -->
+  <header class="header">
+    <div class="header__inner">
+
+      <a class="header__logo-link" href="index.html">
+        <img
+          src="rotaractigualadaSINFONDO.png"
+          alt="Rotaract Igualada"
+          class="header__logo">
+      </a>
+
+      <nav class="nav" aria-label="Navegació principal">
+        <a href="index.html" data-en="Home">Inici</a>
+
+        <div class="nav__item nav__item--dropdown">
+          <a href="nosaltres.html" class="nav__link--parent">
+            <span data-en="About us">Nosaltres</span>
+            <svg class="nav__chevron" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul class="nav__dropdown">
+            <li><a href="nosaltres.html#rotary-internacional" data-en="Rotary International">Rotary Internacional</a></li>
+            <li><a href="nosaltres.html#rotary-igualada">Rotary Igualada</a></li>
+            <li><a href="nosaltres.html#rotaract-internacional" data-en="Rotaract International & District">Rotaract Internacional i Districte</a></li>
+            <li><a href="nosaltres.html#rotaract-igualada">Rotaract Igualada</a></li>
+          </ul>
+        </div>
+
+        <div class="nav__item nav__item--dropdown">
+          <a href="activitats.html" class="nav__link--parent">
+            <span data-en="Activities">Activitats</span>
+            <svg class="nav__chevron" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul class="nav__dropdown">
+            <li><a href="activitats.html#programades" data-en="Upcoming activities">Activitats programades</a></li>
+            <li><a href="activitats.html#realitzades" data-en="Past activities">Activitats realitzades</a></li>
+            <li><a href="activitats.html#calendari" data-en="Calendar">Calendari</a></li>
+          </ul>
+        </div>
+
+        <div class="nav__item nav__item--dropdown">
+          <a href="directiu.html" class="nav__link--parent nav__link--active" aria-current="page">
+            <span data-en="Board">Directiu</span>
+            <svg class="nav__chevron" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul class="nav__dropdown">
+            <li><a href="#socis" data-en="Members">Socis</a></li>
+            <li><a href="#junta" data-en="Board 26-27">Junta 26-27</a></li>
+          </ul>
+        </div>
+
+        <a href="contacte.html" data-en="Contact">Contacte</a>
+      </nav>
+
+      <div class="lang-menu header__lang">
+        <button type="button" class="lang-menu__btn" aria-haspopup="menu" aria-expanded="false" aria-label="Canvia d'idioma / Switch language">
+          <span class="lang-menu__current" data-lang-current>CA</span>
+          <svg class="lang-menu__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <ul class="lang-menu__list" role="menu" aria-label="Idioma / Language / Idioma">
+          <li><button type="button" role="menuitem" class="lang-menu__opt lang-menu__opt--active" data-lang-opt="ca">Català</button></li>
+          <li><button type="button" role="menuitem" class="lang-menu__opt" data-lang-opt="en">English</button></li>
+          <li><button type="button" role="menuitem" class="lang-menu__opt" data-lang-opt="es">Castellà</button></li>
+        </ul>
+      </div>
+      <a href="contacte.html" class="header__cta" data-en="JOIN US">UNEIX-TE</a>
+
+      <button
+        class="hamburger"
+        id="hamburger"
+        aria-label="Obrir menú"
+        aria-expanded="false"
+        aria-controls="mobileNav">
+        <span class="hamburger__bar"></span>
+        <span class="hamburger__bar"></span>
+        <span class="hamburger__bar"></span>
+      </button>
+
+    </div>
+  </header>
+
+  <main id="contingut">
+
+  <!-- =============================================
+       HERO DIRECTIU
+  ============================================= -->
+  <section class="directiu-hero">
+    <div class="directiu-hero__content">
+      <p class="directiu-hero__eyebrow" data-en="Rotaract Club Igualada">Club Rotaract d'Igualada</p>
+      <h1 class="directiu-hero__title" data-en="Board">Directiu</h1>
+      <p class="directiu-hero__desc" data-en="The people who make the club possible: our members and the board steering our course from 2026 to 2027.">Les persones que fan possible el club: els nostres socis i la junta que dirigeix el rumb del 2026 al 2027.</p>
+    </div>
+  </section>
+
+  <!-- =============================================
+       TABS DIRECTIU
+  ============================================= -->
+  <div class="directiu-tabs" id="directiu-tabs">
+    <div class="directiu-tabs__inner">
+      <button class="directiu-tabs__btn is-active" data-tab="socis">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        <span data-en="Members">Socis</span>
+      </button>
+      <button class="directiu-tabs__btn" data-tab="junta">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="5"></circle>
+          <path d="M20 21a8 8 0 1 0-16 0"></path>
+        </svg>
+        <span data-en="Board 26-27">Junta 26-27</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- =============================================
+       PANELL SOCIS
+  ============================================= -->
+  <div class="directiu-panel is-visible" id="panel-socis">
+  <section class="directiu-section" id="socis">
+    <div class="directiu-section__inner">
+
+      <div class="directiu-section__header">
+        <p class="directiu-section__eyebrow" data-en="Our club">El nostre club</p>
+        <h2 class="directiu-section__title"><span data-en="Our" style="color: inherit;">Els nostres</span> <span data-en="Members">Socis</span></h2>
+        <div class="directiu-section__divider"></div>
+        <p class="directiu-section__subtitle" data-en="Committed people who are an active part of Rotaract Club Igualada, driving service and leadership in our community.">Persones compromeses que formen part activa del Club Rotaract d'Igualada i impulsen el servei i el lideratge al nostre entorn.</p>
+      </div>
+
+      <div class="socis-grid" id="socisGrid">
+
+        <!-- ── Afegeix o elimina cards segons els teus socis reals ── -->
+        <!-- Cada card: canvia les inicials i el nom -->
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <!-- Substitueix per: <img src="foto_soci.jpg" alt="Nom Soci"> -->
+            <span class="soci-card__avatar-initials">AA</span>
+          </div>
+          <p class="soci-card__name">Olau Cantero</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">BB</span>
+          </div>
+          <p class="soci-card__name">Gerard López</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">CC</span>
+          </div>
+          <p class="soci-card__name">Adrià López</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">DD</span>
+          </div>
+          <p class="soci-card__name">Luca Santos</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">EE</span>
+          </div>
+          <p class="soci-card__name">Gabriela Labari</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">FF</span>
+          </div>
+          <p class="soci-card__name">Abdellah Sekkoumi</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">GG</span>
+          </div>
+          <p class="soci-card__name">Ivet Martín</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">HH</span>
+          </div>
+          <p class="soci-card__name">Bernat Macet</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">II</span>
+          </div>
+          <p class="soci-card__name">Jana Rueda</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">JJ</span>
+          </div>
+          <p class="soci-card__name">Derek López</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+  </div><!-- /panel-socis -->
+
+  <!-- =============================================
+       PANELL JUNTA 26-27
+  ============================================= -->
+  <div class="directiu-panel" id="panel-junta">
+  <section class="directiu-section directiu-section--alt" id="junta">
+    <div class="directiu-section__inner">
+
+      <div class="directiu-section__header">
+        <p class="directiu-section__eyebrow" data-en="2026–2027 term">Curs 2026–2027</p>
+        <h2 class="directiu-section__title"><span data-en="The" style="color: inherit;">Junta</span> <span data-en="Board 26-27">Directiva 26-27</span></h2>
+        <div class="directiu-section__divider"></div>
+        <p class="directiu-section__subtitle" data-en="The team leading Rotaract Igualada during the 2026-2027 term, with commitment, service and youth leadership.">L'equip que lidera Rotaract Igualada durant el curs 2026-2027, amb compromís, servei i lideratge jove.</p>
+      </div>
+
+      <div class="junta-grid" id="juntaGrid">
+
+        <!-- ── President/a (card destacada, ampla) ── -->
+        <article class="junta-card junta-card--featured">
+          <div class="junta-card__photo">
+            <!-- Substitueix per: <img src="foto_president.jpg" alt="Nom President"> -->
+            <span class="junta-card__photo-initials">NP</span>
+          </div>
+          <span class="junta-card__role-badge" data-en="President">President</span>
+          <p class="junta-card__name">Gerard López</p>
+        </article>
+
+        <!-- ── Resta de la junta ── -->
+        <article class="junta-card">
+          <div class="junta-card__photo">
+            <span class="junta-card__photo-initials">NS</span>
+          </div>
+          <span class="junta-card__role-badge" data-en="Secretary">Secretari</span>
+          <p class="junta-card__name">Luca Santos</p>
+        </article>
+
+        <article class="junta-card">
+          <div class="junta-card__photo">
+            <span class="junta-card__photo-initials">NT</span>
+          </div>
+          <span class="junta-card__role-badge" data-en="Treasurer">Tresorer</span>
+          <p class="junta-card__name">Adrià López</p>
+        </article>
+
+        <article class="junta-card">
+          <div class="junta-card__photo">
+            <span class="junta-card__photo-initials">NV</span>
+          </div>
+          <span class="junta-card__role-badge" data-en="Partnership">Partnership</span>
+          <p class="junta-card__name">Olau Cantero</p>
+        </article>
+
+        <article class="junta-card">
+          <div class="junta-card__photo">
+            <span class="junta-card__photo-initials">NC</span>
+          </div>
+          <span class="junta-card__role-badge" data-en="Social Media">Xarxes Socials</span>
+          <p class="junta-card__name">x</p>
+        </article>
+
+        <article class="junta-card">
+          <div class="junta-card__photo">
+            <span class="junta-card__photo-initials">NA</span>
+          </div>
+          <span class="junta-card__role-badge">Macero</span>
+          <p class="junta-card__name">Gabriela Labari</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+  </div><!-- /panel-junta -->
+
+</main>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand-name">Rotaract Igualada</div>
+        <p class="footer__brand-desc" data-en="We are a community of committed young people driving social and leadership projects in the Anoia region. As part of the global Rotary network, we turn our energy into community service and real action. We bring together talent, friendship and values to create a positive impact and grow together.">Som una comunitat de joves compromesos que impulsem projectes socials i de lideratge a l'Anoia. Com a part de la xarxa global de Rotary, transformem la nostra energia en servei comunitari i acció real. Unim talent, amistat i valors per generar un impacte positiu al nostre entorn i créixer junts.</p>
+        <div class="footer__social" aria-label="Xarxes socials">
+          <a href="https://www.instagram.com/rotaractigualada/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+          </a>
+          <span class="footer__social-link footer__social-link--disabled" aria-disabled="true" title="Enllaç pendent">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </span>
+          <span class="footer__social-link footer__social-link--disabled" aria-disabled="true" title="Enllaç pendent">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </span>
+          <span class="footer__social-link footer__social-link--disabled" aria-disabled="true" title="Enllaç pendent">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__heading" data-en="Navigation">Navegació</h4>
+        <ul class="footer__links">
+          <li><a href="index.html" data-en="Home">Inici</a></li>
+          <li><a href="nosaltres.html" data-en="About us">Nosaltres</a></li>
+          <li><a href="directiu.html" data-en="Board">Directiu</a></li>
+          <li><a href="activitats.html" data-en="Activities">Activitats</a></li>
+          <li><a href="index.html#galeria" data-en="Gallery">Galeria</a></li>
+          <li><a href="contacte.html" data-en="Contact">Contacte</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__heading" data-en="Legal">Legal</h4>
+        <ul class="footer__links">
+          <li><a href="#" class="open-politica-privacitat" data-en="Privacy policy">Política de privacitat</a></li>
+          <li><a href="#" class="open-politica-cookies" data-en="Cookie policy">Política de cookies</a></li>
+          <li><a href="#" class="open-avis-legal" data-en="Legal notice">Avís legal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__heading" data-en="Contact">Contacte</h4>
+        <div class="footer__contact-item">
+          <span>✉️</span>
+          <a href="mailto:rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
+        </div>
+        <div class="footer__contact-item">
+          <span>📝</span>
+          <a href="contacte.html" data-en="Sign-up form">Formulari d'inscripció</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy" data-en="© 2026 Rotaract Club Igualada. All rights reserved.">© 2026 Club Rotaract d'Igualada. Tots els drets reservats.</p>
+    </div>
+  </footer>
+
+  <!-- =============================================
+       SCRIPTS
+  ============================================= -->
+  <script src="nav.js"></script>
+  <script src="directiu.js"></script>
+
+
+  <script src="legal-modals.js"></script>
+
+  <!-- =============================================
+       MODAL AVÍS LEGAL
+  ============================================= -->
+  <div id="avisLegalModal" class="legal-modal-overlay">
+    <div class="legal-modal-content">
+      <button class="legal-modal-close" aria-label="Tancar">&times;</button>
+
+      <div class="legal-container">
+        <h2 data-en="Legal Notice">Avís Legal</h2>
+
+        <section class="legal-section">
+          <h3 data-en="1. Organisation details">1. Dades de l'entitat</h3>
+          <p data-en="In compliance with current legislation, users are informed that this website is owned by [Association/Foundation name], a non-profit organisation registered in the [corresponding Register] under number [Registration number], with Tax ID [Entity Tax ID] and registered office at [Address].">
+            En compliment del que estableix la legislació vigent, s'informa als usuaris que aquest lloc web és
+            titularitat de [Nom de l'associació/fundació], entitat sense ànim de lucre inscrita al
+            [Registre d'Associacions/Fundacions corresponent] amb el número [Número de registre], amb NIF
+            [NIF de l'entitat] i domicili social a [Adreça].
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="2. Purpose">2. Objecte</h3>
+          <p data-en="This legal notice governs the use of the website rotaractigualada.org, made available by Rotaract Club Igualada to inform users about its activity, mission, projects and possible ways to collaborate.">
+            El present avís legal regula l'ús del lloc web rotaractigualada.org, que Club Rotaract d'Igualada posa a
+            disposició de les persones usuàries amb la finalitat d'informar sobre la seva activitat,
+            missió, projectes i possibles vies de col·laboració.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="3. Terms of use">3. Condicions d'ús</h3>
+          <p data-en="Access to this website is free of charge and its use implies full acceptance of the terms of use set out here. Users agree to make appropriate use of the content and services offered by Rotaract Club Igualada through its website, and not to use them for unlawful purposes or purposes contrary to the organisation's values.">
+            L'accés a aquest lloc web és gratuït i la seva utilització implica l'acceptació plena de les
+            condicions d'ús aquí exposades. La persona usuària es compromet a fer un ús adequat dels
+            continguts i serveis que Club Rotaract d'Igualada ofereix a través del seu lloc web, i a no
+            utilitzar-los per a finalitats il·lícites o contràries als valors de l'entitat.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="4. Intellectual and industrial property">4. Propietat intel·lectual i industrial</h3>
+          <p data-en="All content on the website, including text, images, logos, icons and graphic design, is the property of Rotaract Club Igualada or third parties who have authorised its use, and is protected by intellectual and industrial property laws. Reproduction is not permitted without express authorisation, except for non-commercial dissemination of our activity, always citing the source.">
+            Tots els continguts del lloc web, incloent-hi textos, imatges, logotips, icones i disseny
+            gràfic, són propietat de Club Rotaract d'Igualada o de tercers que n'han autoritzat l'ús, i estan
+            protegits per les lleis de propietat intel·lectual i industrial. No es permet la seva
+            reproducció sense autorització expressa, excepte per a finalitats de difusió no comercial
+            de la nostra activitat, citant-ne sempre la font.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="5. Donations and collaborations">5. Donacions i col·laboracions</h3>
+          <p data-en="This website does not process payments or collect online donations. Any economic collaboration with the organisation is managed through the direct contact channels indicated on this website.">
+            Aquest lloc web no processa pagaments ni recull donatius en línia. Qualsevol col·laboració
+            econòmica amb l'entitat es gestiona a través dels canals de contacte directes que s'indiquen
+            en aquesta web.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="6. Liability">6. Responsabilitat</h3>
+          <p data-en="Rotaract Club Igualada is not responsible for any security errors that may occur, nor for any damage that may be caused to a user's computer system due to the presence of viruses or any other element that may cause alterations to the computer system.">
+            Club Rotaract d'Igualada no es responsabilitza dels possibles errors de seguretat que es puguin
+            produir ni dels danys que puguin causar-se al sistema informàtic de la persona usuària per
+            la presència de virus o qualsevol altre element que pugui produir alteracions en el
+            sistema informàtic.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="7. Third-party links">7. Enllaços a tercers</h3>
+          <p data-en="This website may contain links to third-party websites (partners, funding organisations, social media, etc.). Rotaract Club Igualada is not responsible for the content or privacy policies of these external sites.">
+            Aquest lloc web pot contenir enllaços a llocs web de tercers (col·laboradors, entitats
+            finançadores, xarxes socials, etc.). Club Rotaract d'Igualada no es fa responsable dels continguts
+            ni de les polítiques de privacitat d'aquests llocs externs.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="8. Modifications">8. Modificacions</h3>
+          <p data-en="Rotaract Club Igualada reserves the right to make any modifications it deems appropriate to its website, and may change, remove or add content and services provided through it, as well as the way they are presented or located.">
+            Club Rotaract d'Igualada es reserva el dret a realitzar les modificacions que consideri oportunes en
+            el seu lloc web, podent canviar, suprimir o afegir tant els continguts i serveis que es
+            prestin a través d'aquest com la forma en la qual aquests apareguin presentats o localitzats.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="9. Applicable law">9. Legislació aplicable</h3>
+          <p data-en="These terms shall be governed by current Spanish law, with both parties submitting, for any dispute, to the courts corresponding to the organisation's registered office.">
+            Les presents condicions es regiran per la legislació espanyola vigent, sotmetent-se les parts,
+            per a qualsevol controvèrsia, als jutjats i tribunals corresponents al domicili de l'entitat.
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       MODAL POLÍTICA DE PRIVACITAT
+  ============================================= -->
+  <div id="politicaPrivacitatModal" class="legal-modal-overlay">
+    <div class="legal-modal-content">
+      <button class="legal-modal-close" aria-label="Tancar">&times;</button>
+
+      <div class="legal-container">
+        <h2 data-en="Privacy Policy">Política de Privacitat</h2>
+
+        <section class="legal-section">
+          <h3 data-en="1. Data controller">1. Responsable del tractament</h3>
+          <p data-en-is-html="true" data-en="The data controller for personal data collected through this website is Rotaract Club Igualada, a non-profit organisation registered in the [corresponding Association/Foundation Register] under number [Registration number], with Tax ID [Entity Tax ID] and registered office at [Address]. You can contact the organisation by email at &lt;a href=&quot;mailto:rotaractigualada@gmail.com&quot;&gt;rotaractigualada@gmail.com&lt;/a&gt;.">
+            El responsable del tractament de les dades personals recollides a través d'aquest lloc web és
+            Club Rotaract d'Igualada, entitat sense ànim de lucre inscrita al
+            [Registre d'Associacions/Fundacions corresponent] amb el número [Número de registre], amb NIF
+            [NIF de l'entitat] i domicili social a [Adreça]. Es pot contactar amb l'entitat a través del
+            correu <a href="mailto:rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="2. What data we collect">2. Quines dades recollim</h3>
+          <p data-en="Through the contact form we collect your name, email address, selected subject and the content of the message you send us. This data is used solely to manage your request and respond to you.">
+            A través del formulari de contacte recollim el nom, el correu electrònic, l'assumpte
+            seleccionat i el contingut del missatge que ens envies. Aquestes dades s'utilitzen
+            únicament per gestionar la teva sol·licitud i donar-te resposta.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="3. Purpose of processing">3. Finalitat del tractament</h3>
+          <p data-en="The data provided is used for the following purposes:">Les dades facilitades s'utilitzen per a les següents finalitats:</p>
+          <ul>
+            <li data-en="Responding to enquiries, collaboration or volunteering requests.">Respondre a consultes, sol·licituds de col·laboració o voluntariat.</li>
+            <li data-en="Managing the relationship with members, volunteers and collaborators.">Gestionar la relació amb persones sòcies, voluntàries i col·laboradores.</li>
+            <li data-en="Informing about Rotaract Club Igualada's activities and projects, when consent for communications has been given.">Informar sobre activitats i projectes de Club Rotaract d'Igualada, quan s'hagi donat
+              consentiment per a comunicacions.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="4. Legal basis">4. Base legal</h3>
+          <p data-en="The processing of data is based on the user's consent, given by submitting the contact form and accepting this privacy policy.">
+            El tractament de les dades es basa en el consentiment de la persona usuària, atorgat en
+            enviar el formulari de contacte i acceptar aquesta política de privacitat.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="5. Data retention">5. Conservació de les dades</h3>
+          <p data-en="Data will be kept for as long as necessary to handle the request and, subsequently, for the periods legally established for addressing possible liabilities.">
+            Les dades es conservaran durant el temps necessari per atendre la sol·licitud i, posteriorment,
+            durant els terminis legalment establerts per a l'atenció de possibles responsabilitats.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="6. Data disclosure to third parties">6. Cessió de dades a tercers</h3>
+          <p data-en="Data submitted through the contact form is processed directly by the organisation's own channels: messages are received by email and a copy is kept on the website's server as proof of receipt. Rotaract Club Igualada does not disclose or sell personal data to third parties, except where there is a legal obligation.">
+            Les dades enviades a través del formulari de contacte es tramiten directament pels canals
+            propis de l'entitat: els missatges es reben per correu electrònic i se'n conserva una còpia
+            al servidor del lloc web com a resguard de recepció. Fora d'això, Club Rotaract d'Igualada
+            no cedeix ni ven dades personals a tercers, excepte quan existeixi una obligació legal.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="7. Users' rights">7. Drets de les persones usuàries</h3>
+          <p data-en-is-html="true" data-en="In accordance with the General Data Protection Regulation (GDPR) and applicable Spanish law, you can exercise your rights of access, rectification, erasure, objection, restriction of processing and data portability by emailing &lt;a href=&quot;mailto:rotaractigualada@gmail.com&quot;&gt;rotaractigualada@gmail.com&lt;/a&gt;, stating which right you wish to exercise and attaching a copy of a document proving your identity.">D'acord amb el Reglament General de Protecció de Dades (RGPD) i la normativa espanyola
+            aplicable, pots exercir els teus drets d'accés, rectificació, supressió, oposició,
+            limitació del tractament i portabilitat de les dades enviant un correu a
+            <a href="mailto:rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>, indicant el dret
+            que vols exercir i adjuntant una còpia d'un document que acrediti la teva identitat.</p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="8. Data security">8. Seguretat de les dades</h3>
+          <p data-en="Rotaract Club Igualada adopts the necessary technical and organisational measures to ensure the security of personal data and prevent its alteration, loss, unauthorised processing or access.">
+            Club Rotaract d'Igualada adopta les mesures tècniques i organitzatives necessàries per
+            garantir la seguretat de les dades personals i evitar-ne l'alteració, pèrdua, tractament o
+            accés no autoritzat.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="9. Changes to the privacy policy">9. Canvis en la política de privacitat</h3>
+          <p data-en="This privacy policy may be modified to adapt it to legislative or case-law developments. In such cases, changes will be announced with sufficient notice on this same website.">
+            Aquesta política de privacitat pot ser modificada per adaptar-la a novetats legislatives o
+            jurisprudencials. En aquests casos, s'anunciaran els canvis amb prou antelació en aquest
+            mateix lloc web.
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       MODAL POLÍTICA DE COOKIES
+  ============================================= -->
+  <div id="politicaCookiesModal" class="legal-modal-overlay">
+    <div class="legal-modal-content">
+      <button class="legal-modal-close" aria-label="Tancar">&times;</button>
+
+      <div class="legal-container">
+        <h2 data-en="Cookie Policy">Política de Cookies</h2>
+
+        <section class="legal-section">
+          <h3 data-en="1. What are cookies">1. Què són les cookies</h3>
+          <p data-en="Cookies are small text files that websites store on your device (computer, mobile or tablet) when you visit them. Among other things, they help remember your preferences, improve your browsing experience, and gather usage statistics for the website.">
+            Les cookies són petits arxius de text que els llocs web emmagatzemen al teu dispositiu
+            (ordinador, mòbil o tauleta) quan els visites. Serveixen, entre altres coses, per recordar
+            les teves preferències, millorar la teva experiència de navegació i obtenir estadístiques
+            d'ús del lloc web.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="1. What are cookies">1. Què són les cookies</h3>
+          <p data-en="Cookies are small text files that websites store on your device (computer, mobile or tablet) when you visit them. Among other things, they help remember your preferences, improve your browsing experience, and gather usage statistics for the website.">
+            Les cookies són petits arxius de text que els llocs web emmagatzemen al teu dispositiu
+            (ordinador, mòbil o tauleta) quan els visites. Serveixen, entre altres coses, per recordar
+            les teves preferències, millorar la teva experiència de navegació i obtenir estadístiques
+            d'ús del lloc web.
+          </p>
+        </section>
+
+<section class="legal-section">
+          <h3 data-en="2. Does this website use cookies?">2. Aquest lloc web utilitza cookies?</h3>
+          <p data-en="This website only uses strictly necessary local storage (localStorage) to remember your language preference — data that never leaves your device. Additionally, if you give your consent, Google Analytics (GA4) analytics cookies are installed to understand how the website is used. Without your consent, no cookies are installed and no measurement service is loaded.">
+            Aquest lloc web només utilitza emmagatzematge local estrictament necessari (localStorage) per
+            recordar la teva preferència d'idioma, una dada que no surt mai del teu dispositiu. A més, si
+            dones el teu consentiment, s'instal·len cookies d'anàlisi de Google Analytics (GA4) per
+            entendre com s'utilitza la web. Sense el teu consentiment no s'instal·la cap cookie ni es
+            carrega cap servei de mesurament.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="3. Types of cookies we use">3. Tipus de cookies que utilitzem</h3>
+          <table class="cookie-table">
+            <thead>
+              <tr>
+                <th data-en="Type">Tipus</th>
+                <th data-en="Purpose">Finalitat</th>
+                <th data-en="Duration">Durada</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-en="Technical and necessary">Tècniques i necessàries</td>
+                <td data-en="Allow browsing of the website and use of its basic features (for example, remembering your language preference).">Permeten la navegació i l'ús de les funcionalitats bàsiques (per exemple, recordar la teva preferència d'idioma).</td>
+                <td data-en="While the browser is open">Mentre el navegador és obert</td>
+              </tr>
+              <tr>
+                <td data-en="Analytics / statistics">Anàlisi / estadístiques</td>
+                <td data-en="Allow us to understand how users interact with the website in order to improve its performance and content. Only installed if you accept them.">Ens permeten entendre com interactuen els usuaris amb la web per millorar-ne el rendiment i el contingut. Només s'instal·len si les acceptes.</td>
+                <td data-en="Up to 2 years">Fins a 2 anys</td>
+              </tr>
+            </tbody>
+          </table>
+          <p data-en="Information collected through cookies is managed by Rotaract Club Igualada and, in cases where third-party services are used (such as social media or analytics tools), also by the providers of those services.">
+            La informació recollida mitjançant cookies és gestionada per Club Rotaract d'Igualada i, quan
+            s'utilitzen serveis de tercers (com xarxes socials o eines d'anàlisi), també pels proveïdors
+            d'aquests serveis.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="4. Third-party cookies">4. Cookies de tercers</h3>
+          <p data-en="Google Analytics (GA4) is installed by Google LLC / Google Ireland Limited as our measurement provider. It only acts when you have accepted analytics cookies. In addition, if we embed posts from our Instagram profile, Instagram may install its own cookies; those platforms have their own privacy and cookie policies, over which we have no control.">
+            Google Analytics (GA4) és instal·lat per Google LLC / Google Ireland Limited com a proveïdor
+            de mesurament nostre. Només actua si has acceptat les cookies d'anàlisi. A més, si incrustem
+            publicacions del nostre perfil d'Instagram, Instagram pot instal·lar cookies pròpies;
+            aquestes plataformes tenen les seves pròpies polítiques de privacitat i de cookies, sobre les
+            quals no tenim cap control.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="5. How to manage or disable cookies">5. Com gestionar o desactivar les cookies</h3>
+          <p data-en="You can allow, block or delete cookies installed on your device through your browser's settings. Below are links to information on managing cookies in the most common browsers:">
+            Pots permetre, bloquejar o eliminar les cookies instal·lades al teu dispositiu mitjançant la
+            configuració de les opcions del teu navegador. A continuació tens enllaços a la informació
+            sobre la gestió de cookies dels navegadors més habituals:
+          </p>
+          <ul>
+            <li data-en="Google Chrome">Google Chrome</li>
+            <li data-en="Mozilla Firefox">Mozilla Firefox</li>
+            <li data-en="Safari">Safari</li>
+            <li data-en="Microsoft Edge">Microsoft Edge</li>
+          </ul>
+          <p data-en="Please note that if you disable cookies, some features of the website may not work correctly.">
+            Tingues en compte que si desactives les cookies, algunes funcionalitats del lloc web poden
+            no funcionar correctament.
+          </p>
+        </section>
+
+        <section class="legal-section">
+          <h3 data-en="6. Changes to the cookie policy">6. Canvis en la política de cookies</h3>
+          <p data-en="Rotaract Club Igualada may modify this cookie policy to adapt it to legislative or technical developments. It is recommended to review it periodically.">
+            Club Rotaract d'Igualada pot modificar aquesta política de cookies per adaptar-la a
+            novetats legislatives o tècniques. Es recomana revisar-la periòdicament.
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="cookie-banner.js"></script>
+  <script src="analytics.js"></script>
+  <script src="i18n.js"></script>
+</body>
+</html>

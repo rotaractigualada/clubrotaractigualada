@@ -1,0 +1,235 @@
+/* ============================================ */
+/* MODAL AVÍS LEGAL - estils                     */
+/* ============================================ */
+
+/* Capa de fons (overlay) — compartit pels 3 modals */
+.legal-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 26, 26, 0.65);
+  backdrop-filter: blur(2px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Quan el modal està actiu */
+.legal-modal-overlay.active {
+  display: flex;
+}
+
+/* Caixa de contingut del modal */
+.legal-modal-content {
+  background: var(--bg-white);
+  border-radius: var(--radius);
+  max-width: 800px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 20px 10px;
+  box-shadow: var(--shadow-md);
+  animation: legalModalFadeIn 0.25s ease-out;
+}
+
+@keyframes legalModalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Botó de tancar */
+.legal-modal-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  margin: 10px 10px 0 0;
+  background: var(--bg-light);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--text-light);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  z-index: 10;
+}
+
+.legal-modal-close:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+/* ============================================ */
+/* CONTINGUT DELS DOCUMENTS LEGALS               */
+/* (avís legal, privacitat, cookies)             */
+/* ============================================ */
+
+.legal-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px 32px;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.legal-container h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 3px solid var(--accent);
+  color: var(--primary);
+}
+
+.legal-section {
+  margin-bottom: 24px;
+}
+
+.legal-section h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--primary);
+}
+
+.legal-section h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin: 14px 0 6px;
+  color: var(--accent);
+}
+
+.legal-section p,
+.legal-section li {
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  text-align: justify;
+}
+
+.legal-section p {
+  margin: 0 0 10px;
+}
+
+.legal-section p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-section ul,
+.legal-section ol {
+  margin: 0 0 10px 20px;
+}
+
+.legal-section a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  transition: var(--transition);
+}
+
+.legal-section a:hover {
+  color: var(--accent);
+}
+
+/* Taula de cookies */
+.legal-table-wrapper {
+  overflow-x: auto;
+  margin: 12px 0 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--subtle);
+}
+
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.92rem;
+  min-width: 480px;
+}
+
+.legal-table th,
+.legal-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--subtle);
+}
+
+.legal-table th {
+  background: var(--bg-light);
+  color: var(--primary);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.legal-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================ */
+/* RESPONSIVE                                    */
+/* ============================================ */
+
+@media (max-width: 600px) {
+  .legal-modal-content {
+    max-height: 90vh;
+    padding: 16px 8px;
+  }
+
+  .legal-container {
+    padding: 0 14px 24px;
+  }
+
+  .legal-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .legal-section h3 {
+    font-size: 1.08rem;
+  }
+}
+
+.legal-section .cookie-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 14px;
+  font-size: 0.85rem;
+}
+
+.cookie-table th,
+.cookie-table td {
+  border: 1px solid rgba(47, 47, 150, 0.15);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.cookie-table th {
+  background: rgba(47, 47, 150, 0.06);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .legal-section .cookie-table {
+    font-size: 0.78rem;
+  }
+}

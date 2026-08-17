@@ -1,0 +1,1118 @@
+/* =============================================
+   ACTIVITATS.CSS — Rotaract Igualada
+   Pàgina d'activitats: programades, realitzades, calendari
+   ============================================= */
+
+/* ─────────────────────────────────────────────
+   HERO ACTIVITATS
+───────────────────────────────────────────── */
+.act-hero {
+  position: relative;
+  width: 100%;
+  min-height: 380px;
+  background: linear-gradient(135deg, var(--primary) 0%, #1a1a6e 55%, #3a0a2e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 2rem 4rem;
+  overflow: hidden;
+}
+
+.act-hero__bg-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.act-hero__shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.07;
+  background: #fff;
+}
+
+.act-hero__shape--1 {
+  width: 600px; height: 600px;
+  top: -250px; right: -150px;
+}
+
+.act-hero__shape--2 {
+  width: 350px; height: 350px;
+  bottom: -180px; left: -80px;
+}
+
+.act-hero__shape--3 {
+  width: 200px; height: 200px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.04;
+  background: var(--pink);
+}
+
+.act-hero__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 680px;
+}
+
+.act-hero__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+
+.act-hero__title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+}
+
+.act-hero__title span {
+  color: var(--pink);
+}
+
+.act-hero__desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-weight: 400;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.75;
+  max-width: 540px;
+}
+
+.act-hero__tabs-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.act-hero__tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease, transform 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.act-hero__tab-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.act-hero__tab-btn:hover {
+  background: rgba(218, 26, 93, 0.75);
+  border-color: rgba(218, 26, 93, 0.75);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.act-hero__tab-btn--active {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(218, 26, 93, 0.45);
+  font-weight: 700;
+}
+
+/* ─────────────────────────────────────────────
+   SECCIONS GENERALS
+───────────────────────────────────────────── */
+.act-section {
+  padding: clamp(4rem, 8vw, 6rem) 0;
+}
+
+.act-section--light {
+  background: var(--bg-light);
+}
+
+.act-section--dark {
+  background: linear-gradient(160deg, #1a1a6e 0%, var(--primary) 60%, #2a0a1e 100%);
+}
+
+.act-section__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.act-section__header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.act-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+}
+
+.act-tag svg {
+  width: 13px;
+  height: 13px;
+}
+
+.act-tag--blue {
+  color: var(--primary);
+  background: rgba(47, 47, 150, 0.1);
+}
+
+.act-tag--pink {
+  color: var(--pink);
+  background: rgba(218, 26, 93, 0.1);
+}
+
+.act-section__title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.act-section__title span {
+  color: var(--pink);
+}
+
+.act-section__title--light {
+  color: #fff;
+}
+
+.act-section__divider {
+  width: 44px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 99px;
+}
+
+.act-section__divider--pink {
+  background: var(--pink);
+}
+
+.act-section__desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: var(--text-light);
+  line-height: 1.75;
+  max-width: 540px;
+  text-align: center;
+}
+
+.act-section__desc--light {
+  color: rgba(255,255,255,0.7);
+}
+
+/* ─────────────────────────────────────────────
+   FILTRES
+───────────────────────────────────────────── */
+.act-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.act-filter-btn {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  background: #fff;
+  color: var(--text-light);
+  border: 1.5px solid #e5e7eb;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.act-filter-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(47, 47, 150, 0.05);
+}
+
+.act-filter-btn--active {
+  background: var(--primary);
+  color: #fff !important;
+  border-color: var(--primary);
+}
+
+.act-filter-btn--pink:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+  background: rgba(218, 26, 93, 0.05);
+}
+
+.act-filter-btn--pink.act-filter-btn--active {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #fff !important;
+}
+
+.act-filter-btn--dark {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.65);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.act-filter-btn--dark:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border-color: rgba(255,255,255,0.35);
+}
+
+.act-filter-btn--dark.act-filter-btn--active {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #fff !important;
+}
+
+/* ─────────────────────────────────────────────
+   GRID D'ACTIVITATS
+───────────────────────────────────────────── */
+.act-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ─────────────────────────────────────────────
+   TARGETES D'ACTIVITATS
+───────────────────────────────────────────── */
+.act-card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(47,47,150,0.08);
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), box-shadow 0.28s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.act-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(47,47,150,0.14);
+}
+
+.act-card--done {
+  background: #fff;
+  border: 1px solid rgba(218,26,93,0.15);
+  box-shadow: 0 4px 20px rgba(218,26,93,0.08);
+}
+
+.act-card--done:hover {
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(218,26,93,0.18);
+}
+
+/* Badge de categoria */
+.act-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+}
+
+.act-card__badge--social    { background: rgba(34,197,94,0.15);  color: #16a34a; }
+.act-card__badge--formacio  { background: rgba(59,130,246,0.15); color: #2563eb; }
+.act-card__badge--cultura   { background: rgba(168,85,247,0.15); color: #7c3aed; }
+.act-card__badge--esport    { background: rgba(249,115,22,0.15); color: #ea580c; }
+.act-card__badge--done      { background: rgba(218,26,93,0.12); color: var(--pink-dark); }
+
+/* Imatge */
+.act-card__img-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ececf5, #f5f5fb);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.act-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.act-card:hover .act-card__img-wrap img {
+  transform: scale(1.04);
+}
+
+.act-card__img-placeholder {
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    #ececf5,
+    #ececf5 10px,
+    #f5f5fb 10px,
+    #f5f5fb 20px
+  );
+}
+
+.act-card--done .act-card__img-placeholder {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(218,26,93,0.06),
+    rgba(218,26,93,0.06) 10px,
+    rgba(218,26,93,0.1) 10px,
+    rgba(218,26,93,0.1) 20px
+  );
+}
+
+/* Cos de la targeta */
+.act-card__body {
+  padding: 1.25rem 1.4rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+}
+
+.act-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.act-card__date,
+.act-card__location,
+.act-card__participants {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+.act-card__date svg,
+.act-card__location svg,
+.act-card__participants svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.act-card--done .act-card__date,
+.act-card--done .act-card__location,
+.act-card--done .act-card__participants {
+  color: var(--text-light);
+}
+
+.act-card__title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.act-card--done .act-card__title {
+  color: var(--text);
+}
+
+.act-card__desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.87rem;
+  font-weight: 400;
+  color: var(--text-light);
+  line-height: 1.65;
+  flex: 1;
+}
+
+.act-card--done .act-card__desc {
+  color: var(--text-light);
+}
+
+/* Footer de la targeta (places + CTA) */
+.act-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(47,47,150,0.07);
+}
+
+.act-card__spots {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.73rem;
+  font-weight: 500;
+  color: var(--text-light);
+  min-width: 90px;
+}
+
+.act-card__spots-bar {
+  width: 100%;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.act-card__spots-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--pink));
+  border-radius: 999px;
+  transition: width 1s ease;
+}
+
+.act-card__cta {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--pink);
+  color: #fff;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(218,26,93,0.25);
+}
+
+.act-card__cta:hover {
+  background: var(--pink-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(218,26,93,0.35);
+}
+
+/* Tags de categories */
+.act-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.act-card__tag {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.act-card__tag--social   { background: rgba(34,197,94,0.15);  color: #16a34a; }
+.act-card__tag--formacio { background: rgba(59,130,246,0.15); color: #2563eb; }
+.act-card__tag--cultura  { background: rgba(168,85,247,0.15); color: #7c3aed; }
+.act-card__tag--esport   { background: rgba(249,115,22,0.15); color: #ea580c; }
+
+/* ─────────────────────────────────────────────
+   BOTÓ CTA GENERAL
+───────────────────────────────────────────── */
+.act-section__cta-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.act-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.9rem 2rem;
+  border-radius: 999px;
+  transition: all 0.25s ease;
+}
+
+.act-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.act-btn:hover svg {
+  transform: translateX(4px);
+}
+
+.act-btn--primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(47,47,150,0.2);
+}
+
+.act-btn--primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(47,47,150,0.3);
+}
+
+/* ─────────────────────────────────────────────
+   CALENDARI
+───────────────────────────────────────────── */
+.calendar-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.calendar {
+  background: #fff;
+  border-radius: 20px;
+  padding: 1.75rem;
+  box-shadow: 0 4px 24px rgba(47,47,150,0.1);
+}
+
+.calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.calendar__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(47,47,150,0.06);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--primary);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.calendar__nav:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.calendar__nav svg {
+  width: 16px;
+  height: 16px;
+}
+
+.calendar__month-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+
+.calendar__days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.calendar__days-header span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+  padding: 0.35rem 0;
+}
+
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+  position: relative;
+}
+
+.cal-day:hover:not(.cal-day--empty) {
+  background: rgba(47,47,150,0.08);
+  color: var(--primary);
+}
+
+.cal-day--empty {
+  cursor: default;
+  opacity: 0;
+}
+
+.cal-day--today {
+  background: rgba(47,47,150,0.1);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.cal-day--selected {
+  background: var(--primary) !important;
+  color: #fff !important;
+  font-weight: 700;
+}
+
+.cal-day--has-event::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--pink);
+}
+
+.cal-day--selected.cal-day--has-event::after {
+  background: rgba(255,255,255,0.8);
+}
+
+/* Panell d'esdeveniments */
+.cal-events {
+  background: #fff;
+  border-radius: 20px;
+  padding: 1.75rem;
+  box-shadow: 0 4px 24px rgba(47,47,150,0.1);
+  min-height: 300px;
+}
+
+.cal-events__title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+.cal-events__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.cal-events__empty {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem;
+  color: var(--text-light);
+  font-style: italic;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.cal-event-item {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  padding: 0.85rem;
+  background: var(--bg-light);
+  border-radius: 12px;
+  border-left: 3px solid var(--pink);
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cal-event-item__icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.cal-event-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cal-event-item__title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.cal-event-item__meta {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem;
+  color: var(--text-light);
+}
+
+.cal-event-item__cta {
+  display: inline-block;
+  margin-top: 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--pink);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.cal-event-item__cta:hover {
+  color: var(--pink-dark);
+  text-decoration: underline;
+}
+
+/* ─────────────────────────────────────────────
+   TIMELINE
+───────────────────────────────────────────── */
+.timeline-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.timeline__title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--primary), var(--pink));
+  border-radius: 999px;
+}
+
+.timeline__item {
+  position: relative;
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  padding-bottom: 1.5rem;
+}
+
+.timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline__dot {
+  position: absolute;
+  left: -1.8rem;
+  top: 14px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2.5px solid #fff;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px currentColor;
+  z-index: 1;
+}
+
+.timeline__dot--social   { background: #16a34a; color: #16a34a; }
+.timeline__dot--formacio { background: #2563eb; color: #2563eb; }
+.timeline__dot--cultura  { background: #7c3aed; color: #7c3aed; }
+.timeline__dot--esport   { background: #ea580c; color: #ea580c; }
+
+.timeline__card {
+  flex: 1;
+  background: #fff;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 2px 14px rgba(47,47,150,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.timeline__card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 6px 24px rgba(47,47,150,0.13);
+}
+
+.timeline__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.4rem;
+}
+
+.timeline__date {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-light);
+  letter-spacing: 0.04em;
+}
+
+.timeline__card-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.timeline__card-desc {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-top: 0.2rem;
+}
+
+/* ─────────────────────────────────────────────
+   ANIMACIÓ DE REVEAL
+───────────────────────────────────────────── */
+.act-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.4,0,0.2,1), transform 0.65s cubic-bezier(0.4,0,0.2,1);
+}
+
+.act-reveal.act-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .act-reveal { opacity: 1; transform: none; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+/* Delays en cascada per a la grid */
+.act-grid .act-card:nth-child(1) { transition-delay: 0.05s; }
+.act-grid .act-card:nth-child(2) { transition-delay: 0.12s; }
+.act-grid .act-card:nth-child(3) { transition-delay: 0.19s; }
+.act-grid .act-card:nth-child(4) { transition-delay: 0.26s; }
+.act-grid .act-card:nth-child(5) { transition-delay: 0.33s; }
+.act-grid .act-card:nth-child(6) { transition-delay: 0.40s; }
+
+/* ─────────────────────────────────────────────
+   TARGETES OCULTES (filtrades)
+───────────────────────────────────────────── */
+.act-card--hidden {
+  display: none;
+}
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .calendar-wrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .act-hero {
+    min-height: 300px;
+    padding: 4.5rem 1.5rem 3.5rem;
+  }
+
+  .act-hero__tabs-nav {
+    gap: 0.5rem;
+  }
+
+  .act-hero__tab-btn {
+    font-size: 0.78rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .act-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline {
+    padding-left: 1.75rem;
+  }
+
+  .timeline__dot {
+    left: -1.55rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .act-hero {
+    padding: 4rem 1.25rem 3rem;
+  }
+
+  .act-section__inner {
+    gap: 2rem;
+  }
+
+  .calendar {
+    padding: 1.25rem;
+  }
+
+  .cal-events {
+    padding: 1.25rem;
+  }
+
+  .cal-day {
+    font-size: 0.78rem;
+    border-radius: 8px;
+  }
+}
+
+/* ── Sistema de Tabs ── */
+.act-tab-section {
+  display: none;
+  scroll-margin-top: 100px; /* compensa el header sticky en fer scrollIntoView */
+}
+
+.act-tab-section--active {
+  display: block;
+  animation: tabFadeIn 0.35s ease forwards;
+}
+
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Botons de tab ara són <button>, cal resetejar estils */
+.act-hero__tab-btn {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+/* ─────────────────────────────────────────────
+   ESTAT BUIT — Activitats Realitzades
+   Mostra un missatge quan encara no hi ha cap activitat.
+   Quan s'afegeixin activitats, elimina aquest bloc i
+   descomenta el grid al HTML.
+───────────────────────────────────────────── */
+.act-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1.5rem 5rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.act-empty-state__icon {
+  font-size: 4rem;
+  line-height: 1;
+  margin-bottom: 1.25rem;
+}
+
+.act-empty-state__title {
+  font-family: var(--font-display, 'Playfair Display', serif);
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  font-weight: 700;
+  color: var(--text, #1a1a2e);
+  margin-bottom: 0.75rem;
+}
+
+.act-empty-state__desc {
+  font-size: 1rem;
+  color: var(--text-muted, #555);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 480px) {
+  .act-empty-state {
+    padding: 2.5rem 1rem 3rem;
+  }
+
+  .act-empty-state__icon {
+    font-size: 3rem;
+  }
+}
