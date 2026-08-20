@@ -19,7 +19,9 @@ Redirect 301 /rotaractigualada.html /index.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   # HSTS: només té efecte quan el lloc es serveix per HTTPS
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
-  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=()"
+  # El formulari d'inscripció (JotForm) pot demanar càmera/micròfon
+  # (atribut allow de l'embed); es permet només per als iframes de jotform.com.
+  Header always set Permissions-Policy "geolocation=(), camera=(self \"https://*.jotform.com\"), microphone=(self \"https://*.jotform.com\"), payment=()"
   # style-src 'unsafe-inline' és necessari pels estils inline propis
   # (bloc <style> de directiu.html i atributs style=); cap script inline.
   # instagram.com només per als posts incrustats de la secció d'Instagram

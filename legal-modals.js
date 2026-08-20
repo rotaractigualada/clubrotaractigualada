@@ -17,28 +17,35 @@ document.addEventListener('DOMContentLoaded', function () {
   var activeModal = null;
 
   // ── Formulari d'inscripció (JotForm) ──
-  // S'injecta com a iframe amb ?language= segons l'idioma seleccionat
-  // a la web (el script jsform de JotForm ignora els seus propis
-  // paràmetres; l'iframe els accepta).
-  var SIGNUP_FORM_ID = '262316885101050';
-  var SIGNUP_LANGS = { ca: 'ca', en: 'en', es: 'es' };
+  // S'injecta com a iframe triant el formulari segons l'idioma
+  // seleccionat a la web (cada idioma té el seu propi formulari).
+  var SIGNUP_FORMS = {
+    ca: { id: '262316885101050', title: 'Formulari d\'inscripció' },
+    es: { id: '262317185797065', title: 'Formulario de inscripción' },
+    en: { id: '262317031291044', title: 'Registration Form' }
+  };
 
   function injectSignupForm(modal) {
     var embed = modal.querySelector('#signupFormEmbed');
     if (!embed) return;
     var lang = document.documentElement.getAttribute('lang');
-    lang = SIGNUP_LANGS[lang] || 'en';
+    var form = SIGNUP_FORMS[lang] || SIGNUP_FORMS.en;
     embed.innerHTML = '';
     var frame = document.createElement('iframe');
-    frame.src = 'https://form.jotform.com/' + SIGNUP_FORM_ID + '?language=' + lang;
-    frame.setAttribute('title', 'Formulari d\'inscripció');
-    frame.setAttribute('loading', 'lazy');
+    frame.id = 'JotFormIFrame-' + form.id;
+    frame.src = 'https://form.jotform.com/' + form.id;
+    frame.setAttribute('title', form.title);
     frame.setAttribute('allowtransparency', 'true');
     frame.setAttribute('allowfullscreen', 'true');
+    frame.setAttribute('allow', 'geolocation; microphone; camera');
+    frame.scrolling = 'no';
     frame.style.minWidth = '100%';
     frame.style.maxWidth = '100%';
-    frame.style.height = '800px';
+    frame.style.height = '539px';
     frame.style.border = 'none';
+    frame.addEventListener('load', function () {
+      window.scrollTo(0, 0);
+    });
     embed.appendChild(frame);
   }
 
