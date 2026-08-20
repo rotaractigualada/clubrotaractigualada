@@ -10,15 +10,45 @@ document.addEventListener('DOMContentLoaded', function () {
   var modals = {
     'open-avis-legal': 'avisLegalModal',
     'open-politica-privacitat': 'politicaPrivacitatModal',
-    'open-politica-cookies': 'politicaCookiesModal'
+    'open-politica-cookies': 'politicaCookiesModal',
+    'open-signup-form': 'signupFormModal'
   };
 
   var activeModal = null;
+
+  // ── Formulari d'inscripció (JotForm) ──
+  // S'injecta com a iframe amb ?language= segons l'idioma seleccionat
+  // a la web (el script jsform de JotForm ignora els seus propis
+  // paràmetres; l'iframe els accepta).
+  var SIGNUP_FORM_ID = '262316885101050';
+  var SIGNUP_LANGS = { ca: 'ca', en: 'en', es: 'es' };
+
+  function injectSignupForm(modal) {
+    var embed = modal.querySelector('#signupFormEmbed');
+    if (!embed) return;
+    var lang = document.documentElement.getAttribute('lang');
+    lang = SIGNUP_LANGS[lang] || 'en';
+    embed.innerHTML = '';
+    var frame = document.createElement('iframe');
+    frame.src = 'https://form.jotform.com/' + SIGNUP_FORM_ID + '?language=' + lang;
+    frame.setAttribute('title', 'Formulari d\'inscripció');
+    frame.setAttribute('loading', 'lazy');
+    frame.setAttribute('allowtransparency', 'true');
+    frame.setAttribute('allowfullscreen', 'true');
+    frame.style.minWidth = '100%';
+    frame.style.maxWidth = '100%';
+    frame.style.height = '800px';
+    frame.style.border = 'none';
+    embed.appendChild(frame);
+  }
 
   function openModal(modal) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden'; // evita scroll del fons
     activeModal = modal;
+    if (modal.id === 'signupFormModal') {
+      injectSignupForm(modal);
+    }
     // Mou el focus dins del modal en obrir-lo
     var firstFocusable = modal.querySelector('.legal-modal-close, a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
     if (firstFocusable) firstFocusable.focus();
@@ -32,15 +62,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Delegació a document: funciona encara que els elements es re-creïn
   document.addEventListener('click', function (e) {
-    var trigger = e.target && e.target.closest ? e.target.closest('.open-avis-legal, .open-politica-privacitat, .open-politica-cookies') : null;
+    var trigger = e.target && e.target.closest ? e.target.closest('.open-avis-legal, .open-politica-privacitat, .open-politica-cookies, .open-signup-form') : null;
     if (!trigger) return;
     var cls = null;
     if (trigger.classList.contains('open-avis-legal')) {
       cls = 'open-avis-legal';
     } else if (trigger.classList.contains('open-politica-privacitat')) {
       cls = 'open-politica-privacitat';
-    } else {
+    } else if (trigger.classList.contains('open-politica-cookies')) {
       cls = 'open-politica-cookies';
+    } else {
+      cls = 'open-signup-form';
     }
     var modal = document.getElementById(modals[cls]);
     if (!modal) return;

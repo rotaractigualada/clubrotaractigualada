@@ -406,6 +406,28 @@
       </div>
     </section>
 
+    <!-- Formulari d'inscripció (JotForm) -->
+    <section class="signup-section" id="inscripcio">
+      <div class="signup-section__inner">
+
+        <div class="signup-section__header">
+          <p class="signup-section__eyebrow" data-en="Join us">Inscripció</p>
+          <h2 class="signup-section__title" data-en="Registration form">Formulari d'inscripció</h2>
+          <div class="signup-section__divider"></div>
+          <p class="signup-section__subtitle" data-en="Fill in the form and we'll get back to you soon.">Omple el formulari i ens posarem en contacte amb tu ben aviat.</p>
+        </div>
+
+        <div class="signup-section__cta">
+          <p class="signup-section__cta-text" data-en="Click the button and the registration form will open right here on the page.">Fes clic al botó i el formulari d'inscripció s'obrirà aquí mateix a la pàgina.</p>
+          <button type="button" class="signup-section__cta-btn open-signup-form">
+            <span data-en="Access the form">Accedeix al formulari</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
   <!-- Footer -->
@@ -465,7 +487,7 @@
         </div>
         <div class="footer__contact-item">
           <span aria-hidden="true">📝</span>
-          <a href="#contacte" data-en="Sign-up form">Formulari d'inscripció</a>
+          <a href="#inscripcio" data-en="Sign-up form">Formulari d'inscripció</a>
         </div>
       </div>
     </div>
@@ -788,6 +810,23 @@
           </p>
         </section>
 
+      </div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       MODAL FORMULARI D'INSCRIPCIÓ (JotForm)
+  ============================================= -->
+  <div id="signupFormModal" class="legal-modal-overlay">
+    <div class="legal-modal-content legal-modal-content--wide">
+      <button class="legal-modal-close" aria-label="Tancar">&times;</button>
+      <div class="legal-container signup-modal">
+        <h2 data-en="Registration form">Formulari d'inscripció</h2>
+        <div class="signup-modal__embed" id="signupFormEmbed"></div>
+        <noscript>
+          <p data-en="If the form does not load, open it in a new window.">Si el formulari no es carrega, obre'l en una finestra nova:</p>
+          <p><a href="https://www.jotform.com/262316885101050" target="_blank" rel="noopener noreferrer" data-en="Open registration form">Obrir formulari d'inscripció</a></p>
+        </noscript>
       </div>
     </div>
   </div>

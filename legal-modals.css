@@ -233,3 +233,17 @@
     font-size: 0.78rem;
   }
 }
+
+/* ============================================ */
+/* MODAL AMPLI (formulari d'inscripció JotForm)  */
+/* ============================================ */
+
+.legal-modal-content--wide {
+  max-width: 980px;
+}
+
+.signup-modal__embed iframe {
+  width: 100%;
+  border: none;
+  display: block;
+}

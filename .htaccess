@@ -24,7 +24,8 @@ Redirect 301 /rotaractigualada.html /index.html
   # (bloc <style> de directiu.html i atributs style=); cap script inline.
   # instagram.com només per als posts incrustats de la secció d'Instagram
   # (script d'incrustació oficial + iframes de cada post).
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.instagram.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-src https://www.instagram.com https://instagram.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+  # jotform.com per al formulari d'inscripció (script d'incrustació + iframe).
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.instagram.com https://*.jotform.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.jotform.com; object-src 'none'; frame-src https://www.instagram.com https://instagram.com https://*.jotform.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 </IfModule>
 
 # ── Bloqueig de fitxers sensibles ──
