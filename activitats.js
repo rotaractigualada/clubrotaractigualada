@@ -191,7 +191,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function renderCalendar() {
     calGrid.innerHTML = '';
-    calTitle.textContent = `${monthNames[getLang()] || monthNames.ca[currentMonth]} ${currentYear}`;
+    // Fix: abans es pintava monthNames[getLang()] sencer (tots els mesos
+    // separats per comes) perquè l'array és veritatiu i el || no entrava mai.
+    var names = monthNames[getLang()] || monthNames.ca;
+    calTitle.textContent = names[currentMonth] + ' ' + currentYear;
 
     const firstDay    = new Date(currentYear, currentMonth, 1).getDay();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -300,5 +303,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   renderCalendar();
+
+  // Si l'usuari canvia d'idioma, repinta el calendari
+  // (el títol del mes es genera des d'aquí, no des de l'i18n)
+  document.addEventListener('rotaract:lang', renderCalendar);
 
 });

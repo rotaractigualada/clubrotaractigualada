@@ -1029,6 +1029,39 @@ body.nav-open {
   width: 100% !important;
 }
 
+/* Targetes buides mentre no hi ha posts reals d'Instagram */
+.instagram-section__empty {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 18px;
+  border: 2px dashed rgba(107, 114, 128, 0.45);
+  background: linear-gradient(160deg, #f8f9fc 0%, #eef1f8 100%);
+  color: var(--text-light);
+}
+
+.instagram-section__empty svg {
+  width: 2.25rem;
+  height: 2.25rem;
+  fill: currentColor;
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+
+.instagram-section__empty p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
 .instagram-section__follow {
   display: flex;
   justify-content: center;
@@ -1631,34 +1664,45 @@ body.nav-open {
   transition: transform 0.4s ease;
 }
 
-.galeria__item img[src="FOTO_1.jpg"],
-.galeria__item img[src="FOTO_2.jpg"],
-.galeria__item img[src="FOTO_3.jpg"],
-.galeria__item img[src="FOTO_4.jpg"],
-.galeria__item img[src="FOTO_5.jpg"],
-.galeria__item img[src="FOTO_6.jpg"] {
-  opacity: 0;
-}
-
-.galeria__item::before {
-  content: '📷 Afegeix la teva foto';
-  position: absolute;
-  inset: 0;
+/* Estat buit mentre no hi ha fotos d'activitats */
+.galeria__empty {
+  width: 100%;
+  max-width: 1100px;
+  min-height: 320px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.85rem;
+  gap: 1rem;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  border-radius: 18px;
+  border: 2px dashed rgba(107, 114, 128, 0.45);
+  background: linear-gradient(160deg, #f8f9fc 0%, #eef1f8 100%);
+  color: var(--text-light);
+}
+
+.galeria__empty svg {
+  width: 3rem;
+  height: 3rem;
+  fill: currentColor;
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+
+.galeria__empty p {
+  margin: 0;
+  font-size: 1rem;
   font-weight: 500;
-  color: rgba(47, 47, 150, 0.4);
-  background: repeating-linear-gradient(
-    45deg,
-    #ececf5,
-    #ececf5 10px,
-    #f5f5fb 10px,
-    #f5f5fb 20px
-  );
-  z-index: 0;
+  line-height: 1.5;
+  max-width: 420px;
+}
+
+@media (max-width: 520px) {
+  .galeria__empty {
+    min-height: 220px;
+    padding: 2rem 1.25rem;
+  }
 }
 
 .galeria__item:hover img {

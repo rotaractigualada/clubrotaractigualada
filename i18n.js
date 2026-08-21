@@ -56,6 +56,9 @@
     'A young, international network': 'Una red joven e internacional',
     'About us': 'Nosotros',
     'Access the form': 'Acceder al formulario',
+    'View this post on Instagram': 'Ver esta publicación en Instagram',
+    'When we have activities, we will post photos here!': '¡Cuando tengamos actividades, subiremos fotos aquí!',
+    'No photos yet, but we will post some very soon!': '¡Todavía no tenemos fotos, pero muy pronto subiremos!',
     'Access to this website is free of charge and its use implies full acceptance of the terms of use set out here. Users agree to make appropriate use of the content and services offered by Rotaract Club Igualada through its website, and not to use them for unlawful purposes or purposes contrary to the organisation\'s values.': 'El acceso a este sitio web es gratuito y su uso implica la plena aceptación de las condiciones de uso aquí expuestas. Los usuarios se comprometen a hacer un uso adecuado de los contenidos y servicios que ofrece Rotaract Club Igualada a través de su web, y a no utilizarlos con fines ilícitos o contrarios a los valores de la organización.',
     'Accept': 'Aceptar',
     'Reject': 'Rechazar',
@@ -383,6 +386,10 @@
       opt.classList.toggle('lang-menu__opt--active', opt.dataset.langOpt === lang);
     });
     closeLangMenus();
+
+    // Notifica la resta de scripts (p. ex. el calendari d'activitats)
+    // que generen text dinàmic, perquè es repintin en l'idioma nou.
+    document.dispatchEvent(new CustomEvent('rotaract:lang', { detail: { lang: lang } }));
 
     saveLang(lang);
   }

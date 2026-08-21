@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
     frame.setAttribute('allowtransparency', 'true');
     frame.setAttribute('allowfullscreen', 'true');
     frame.setAttribute('allow', 'geolocation; microphone; camera');
-    frame.scrolling = 'no';
     frame.style.minWidth = '100%';
     frame.style.maxWidth = '100%';
     frame.style.height = '539px';
@@ -48,6 +47,28 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     embed.appendChild(frame);
   }
+
+  // Auto-ajusta l'alçada de l'iframe amb el protocol postMessage de
+  // JotForm (setHeight). Sense això, amb alçada fixa i sense scroll,
+  // no es poden veure totes les preguntes del formulari.
+  function handleJotFormMessage(e) {
+    if (e.origin !== 'https://form.jotform.com') return;
+    if (typeof e.data !== 'string') return;
+    var args = e.data.split(':');
+    if (args[0] !== 'setHeight') return;
+    var height = parseInt(args[1], 10);
+    if (isNaN(height)) return;
+    var frame = null;
+    if (args.length > 2) {
+      // El darrer fragment sol ser l'ID del formulari remitent
+      frame = document.getElementById('JotFormIFrame-' + args[args.length - 1]);
+    }
+    if (!frame && activeModal && activeModal.id === 'signupFormModal') {
+      frame = activeModal.querySelector('.signup-modal__embed iframe');
+    }
+    if (frame) frame.style.height = height + 'px';
+  }
+  window.addEventListener('message', handleJotFormMessage, false);
 
   function openModal(modal) {
     modal.classList.add('active');

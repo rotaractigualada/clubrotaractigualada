@@ -307,36 +307,20 @@
       <p class="galeria__subtitle" data-en="Moments we've shared together throughout our journey.">Moments que hem viscut junts al llarg de la nostra trajectòria.</p>
     </div>
 
-    <div class="galeria__grid">
-      <div class="galeria__item galeria__item--wide">
-        <img src="FOTO_1.jpg" alt="Activitat 1">
-        <div class="galeria__caption" data-en="Activity name">Nom de l'activitat</div>
-      </div>
-
-      <div class="galeria__item">
-        <img src="FOTO_2.jpg" alt="Activitat 2">
-        <div class="galeria__caption" data-en="Activity name">Nom de l'activitat</div>
-      </div>
-
-      <div class="galeria__item">
-        <img src="FOTO_3.jpg" alt="Activitat 3">
-        <div class="galeria__caption" data-en="Activity name">Nom de l'activitat</div>
-      </div>
-
-      <div class="galeria__item">
-        <img src="FOTO_4.jpg" alt="Activitat 4">
-        <div class="galeria__caption" data-en="Activity name">Nom de l'activitat</div>
-      </div>
-
-      <div class="galeria__item">
-        <img src="FOTO_5.jpg" alt="Activitat 5">
-        <div class="galeria__caption" data-en="Activity name">Nom de l'activitat</div>
-      </div>
-
-      <div class="galeria__item galeria__item--wide">
-        <img src="FOTO_6.jpg" alt="Activitat 6">
-        <div class="galeria__caption" data-en="Activity name">Nom de l'activitat</div>
-      </div>
+    <!-- Quan tingueu fotos d'activitats, substituïu aquest bloc per la
+         graella de fotos. Exemple de peça:
+           <div class="galeria__grid">
+             <div class="galeria__item">
+               <img src="NOM_FOTO.jpg" alt="Descripció">
+               <div class="galeria__caption" data-en="Activity name">Nom de l'activitat</div>
+             </div>
+           </div>
+         (les peces amples fan servir la classe galeria__item--wide) -->
+    <div class="galeria__empty">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M9.4 4l-1.8 2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3.6L14.6 4H9.4zm2.6 13.5A4.75 4.75 0 1 1 12 8a4.75 4.75 0 0 1 0 9.5zM12 15.5a2.75 2.75 0 1 0 0-5.5 2.75 2.75 0 0 0 0 5.5z"/>
+      </svg>
+      <p data-en="When we have activities, we will post photos here!">Quan tinguem activitats, ja hi penjarem fotos!</p>
     </div>
   </section>
 
@@ -372,7 +356,30 @@
         3) Copia el codi que apareix (comença per <blockquote ...>) i enganxa'l aquí sota.
         4) Guarda l'arxiu i puja'l al servidor. El post apareix automàticament.
         Consell: deixa-hi només els 3-6 últims posts i esborra els més antics.
+        Quan afegeixis un post real, esborra una de les targetes buides de sota.
       -->
+
+      <!-- Publicació real d'Instagram (l'embed.js la converteix en post) -->
+      <blockquote class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/p/DcQqNmWDIUN/"
+        data-instgrm-version="14"
+        style="background:#FFF;border:0;border-radius:18px;margin:1px;max-width:340px;width:calc(100% - 2px);padding:0;">
+        <a href="https://www.instagram.com/p/DcQqNmWDIUN/" target="_blank" rel="noopener noreferrer" data-en="View this post on Instagram">Veure aquesta publicació a Instagram</a>
+      </blockquote>
+
+      <div class="instagram-section__empty">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+        </svg>
+        <p data-en="No photos yet, but we will post some very soon!">Encara no tenim fotos, però ben aviat en penjarem!</p>
+      </div>
+
+      <div class="instagram-section__empty">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+        </svg>
+        <p data-en="No photos yet, but we will post some very soon!">Encara no tenim fotos, però ben aviat en penjarem!</p>
+      </div>
     </div>
 
     <div class="instagram-section__follow">
