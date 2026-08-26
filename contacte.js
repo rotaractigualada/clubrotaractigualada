@@ -55,6 +55,46 @@
     });
   });
 
+  // ── Arribada des del peu de pàgina: contacte.html?correu=club ──
+  // Els enllaços de correu del peu de totes les pàgines porten aquí.
+  // Seguretat: l'adreça NO es llegeix mai de la URL (evita suplantacions);
+  // només s'accepta una clau d'aquesta llista blanca.
+  var DEST_EMAILS = { club: 'rotaractigualada@gmail.com' };
+  var destKey = new URLSearchParams(window.location.search).get('correu');
+  var destEmail = (destKey && Object.prototype.hasOwnProperty.call(DEST_EMAILS, destKey))
+    ? DEST_EMAILS[destKey]
+    : null;
+
+  if (destEmail) {
+    // Neteja el paràmetre perquè en recarregar no salti altre cop
+    window.history.replaceState(null, '', window.location.pathname);
+
+    var showRecipient = function () {
+      var note = document.getElementById('recipientNote');
+      var display = document.getElementById('recipientEmailDisplay');
+      if (note && display) {
+        display.textContent = destEmail;
+        note.hidden = false;
+      }
+      var targetForm = document.getElementById('contactForm');
+      if (targetForm) {
+        targetForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      var nameField = document.getElementById('contactName');
+      if (nameField) {
+        window.setTimeout(function () { nameField.focus({ preventScroll: true }); }, 700);
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      window.setTimeout(showRecipient, 200);
+    } else {
+      window.addEventListener('load', function () {
+        window.setTimeout(showRecipient, 200);
+      });
+    }
+  }
+
   // ── Form submit ─────────────────────────────
   const form       = document.getElementById('contactForm');
   const submitBtn  = document.getElementById('submitBtn');
