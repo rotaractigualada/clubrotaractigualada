@@ -21,6 +21,9 @@ const MIN_INTERVAL_SECS = 30;      // antispam: mínim de segons entre enviament
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 header('Cache-Control: no-store');
+header('Referrer-Policy: no-referrer');
+header('X-Frame-Options: SAMEORIGIN');
+header('Content-Security-Policy: default-src \'none\'; frame-ancestors \'self\'');
 
 function json_out(int $status, array $payload): void {
     http_response_code($status);
@@ -30,6 +33,38 @@ function json_out(int $status, array $payload): void {
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
     json_out(405, ['ok' => false, 'error' => 'Method not allowed']);
+}
+
+/* ── Protecció CSRF (doble submissió) ─────────────────────────────
+   form-handler.php només accepta POSTs del mateix lloc: el token
+   lo genera csrf.php, es desa en una cookie HttpOnly i s'envia de
+   tornada com a camp; es comparen amb hash_equals. A més, si el
+   navegador envia una capçalera Origin, ha de coincidir amb el
+   domini del lloc (això bloqueja els CSRF vells i atacs cross-site
+   en navegadors que no fan servir el token). */
+function tx_real_origin(): string {
+    $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+    if ($origin !== '') {
+        $host = parse_url($origin, PHP_URL_HOST) ?: '';
+        $port = parse_url($origin, PHP_URL_PORT);
+        if ($host !== '') {
+            return $host . ($port ? ':' . $port : '');
+        }
+    }
+    // Fallback per navegadors que no envien Origin (pocs, als POST).
+    return $_SERVER['HTTP_HOST'] ?? '';
+}
+
+$csrfToken   = (string) ($_POST['csrf_token'] ?? '');
+$csrfCookie  = (string) ($_COOKIE['rotaract_csrf'] ?? '');
+$originHost  = tx_real_origin();
+$expectedHost = $_SERVER['HTTP_HOST'] ?? '';
+
+if ($csrfToken === '' || $csrfCookie === '' || !hash_equals($csrfCookie, $csrfToken)) {
+    json_out(403, ['ok' => false, 'error' => 'csrf']);
+}
+if (($originHost !== '' && $expectedHost !== '' && $originHost !== $expectedHost)) {
+    json_out(403, ['ok' => false, 'error' => 'origin']);
 }
 
 $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
@@ -56,6 +91,7 @@ function clean_text(string $value, int $max): string {
     return substr($value, 0, $max);
 }
 
+/* Emmagatzema temporalment els camps bruts per processar-los */
 $name    = clean_text($_POST['name'] ?? '', 120);
 $email   = strtolower(clean_text($_POST['email'] ?? '', 190));
 $subject = clean_text($_POST['subject'] ?? '', 60);
@@ -71,7 +107,7 @@ $errors = [];
 if ($name === '')                                  { $errors[] = 'name'; }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL))    { $errors[] = 'email'; }
 
-$allowedSubjects = ['voluntariat', 'col·laboracio', 'unir-me', 'premsa', 'altre'];
+$allowedSubjects = ['dubte', 'proposta', 'altre'];
 if ($subject === '' || !in_array($subject, $allowedSubjects, true)) { $errors[] = 'subject'; }
 
 if ($message === '') { $errors[] = 'message'; }
@@ -83,11 +119,9 @@ if ($errors) {
 
 /* Còpia de seguretat de totes les trameses (CSV) */
 $subjectLabels = [
-    'voluntariat'    => 'Voluntariat',
-    'col·laboracio'  => 'Col·laboració',
-    'unir-me'        => 'Unir-me al club',
-    'premsa'         => 'Premsa',
-    'altre'          => 'Altre',
+    'dubte'     => 'Dubte',
+    'proposta'  => 'Proposta',
+    'altre'     => 'Altres',
 ];
 $subjectLabel = $subjectLabels[$subject] ?? $subject;
 

@@ -78,6 +78,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const subjectGroup = contactForm.querySelector('.subject-pills');
   const privacyCheck = document.getElementById('contactPrivacy');
 
+  // ── CSRF (doble submissió) ─────────────────
+  // Token de csrf.php (cookie HttpOnly); si l'usuari envia el
+  // formulari abans que arribi, l'obtenim al moment.
+  let csrfToken = null;
+  let csrfPromise = null;
+  function ensureCsrf() {
+    if (csrfToken) return Promise.resolve(csrfToken);
+    if (csrfPromise) return csrfPromise;
+    csrfPromise = fetch('csrf.php', { method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json' } })
+      .then((r) => r.json())
+      .then((d) => { csrfToken = (d && d.csrf) ? d.csrf : null; return csrfToken; })
+      .catch(() => { csrfToken = null; return csrfToken; });
+    return csrfPromise;
+  }
+
   [nameInput, emailInput, messageInput].forEach((field) => {
     if (field) field.addEventListener('input', () => clearFieldError(field));
   });
@@ -149,10 +164,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (label) label.textContent = t('Enviant...', 'Sending...', 'Enviando...');
     submitError.hidden = true;
 
-    fetch(FORM_ENDPOINT, {
-      method: 'POST',
-      headers: { Accept: 'application/json' },
-      body: new FormData(contactForm)
+    ensureCsrf().then((token) => {
+      const data = new FormData(contactForm);
+      if (token) data.append('csrf_token', token);
+      return fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: data
+      });
     })
       .then((response) => {
         if (!response.ok) {

@@ -19,21 +19,36 @@ Redirect 301 /rotaractigualada.html /index.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   # HSTS: només té efecte quan el lloc es serveix per HTTPS
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  # Aísla les finestres (open) i els recursos propis d'ús creuat.
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
+  Header always set X-Permitted-Cross-Domain-Policies "none"
   # El formulari d'inscripció (JotForm) pot demanar càmera/micròfon
   # (atribut allow de l'embed); es permet només per als iframes de jotform.com.
-  Header always set Permissions-Policy "geolocation=(), camera=(self \"https://*.jotform.com\"), microphone=(self \"https://*.jotform.com\"), payment=()"
+  Header always set Permissions-Policy "geolocation=(), camera=(self \"https://*.jotform.com\"), microphone=(self \"https://*.jotform.com\"), payment=(), usb=(), magnetometer=(), gyroscope=()"
   # style-src 'unsafe-inline' és necessari pels estils inline propis
   # (bloc <style> de directiu.html i atributs style=); cap script inline.
   # instagram.com només per als posts incrustats de la secció d'Instagram
   # (script d'incrustació oficial + iframes de cada post).
   # jotform.com per al formulari d'inscripció (script d'incrustació + iframe).
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.instagram.com https://*.jotform.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://*.jotform.com; object-src 'none'; frame-src https://www.instagram.com https://instagram.com https://*.jotform.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+  # google-analytics / googletagmanager: només si l'usuari accepta les
+  # cookies d'anàlisi (analytics.js no les carrega si no hi ha consentiment).
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.instagram.com https://*.jotform.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://*.jotform.com https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com; object-src 'none'; frame-src https://www.instagram.com https://instagram.com https://*.jotform.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 </IfModule>
 
 # ── Bloqueig de fitxers sensibles ──
 <FilesMatch "^(\.env|\.git|composer\.json|package\.json|\.htpasswd)|\.(log|sql|csv|bak|old|tmp|swp)$">
   Require all denied
 </FilesMatch>
+
+# ── Protecció del directori de dades del formulari ──
+# El fitxer submissions.csv conté dades personals dels usuaris;
+# no s'ha de poder descarregar per web en cap cas.
+<IfModule mod_authz_core.c>
+  <FilesMatch "\.(csv|txt|log|json)$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
 
 # ── Compressió ──
 <IfModule mod_deflate.c>

@@ -268,25 +268,6 @@
             </p>
           </div>
 
-          <div class="contact-aside__join reveal-left" style="animation-delay:.15s">
-            <div class="join-card">
-              <div class="join-card__top">
-                <span class="join-card__badge" data-en="Join us">Uneix-te</span>
-                <h3 class="join-card__title" data-en="Want to be part of Rotaract?">Vols formar part de Rotaract?</h3>
-                <p class="join-card__desc" data-en="If you're between 18 and 30 and want to do useful things with energetic people, you're in the right place.">Si tens entre 18 i 30 anys i vols fer coses útils amb gent amb energia, ets al lloc correcte.</p>
-              </div>
-              <ul class="join-card__list">
-                <li data-en="Social projects with real impact">Projectes socials amb impacte real</li>
-                <li data-en="A young, international network">Xarxa jove i internacional</li>
-                <li data-en="Personal growth and leadership">Creixement personal i lideratge</li>
-              </ul>
-              <a href="#contactForm" class="join-card__cta contact-email-link" data-email="rotaractigualada@gmail.com">
-                <span data-en="Write to sign up">Escriu-nos per apuntar-te</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-              </a>
-            </div>
-          </div>
-
           <!-- FAQ ràpid -->
           <div class="contact-faq reveal-left" style="animation-delay:.28s">
             <h3 class="contact-faq__title" data-en="Frequently asked questions">Preguntes freqüents</h3>
@@ -313,7 +294,7 @@
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field">
             <div class="contact-form__header">
               <h2 class="contact-form__title" data-en="Send us a message">Envia'ns un missatge</h2>
-              <p class="contact-form__subtitle" data-en="All fields marked with * are required.">Tots els camps marcats amb * són obligatoris.</p>
+              <p class="contact-form__subtitle" data-en="Use this form for questions, proposals or anything else. All fields marked with * are required.">Fes servir aquest formulari per a dubtes, propostes o qüestions diverses. Tots els camps marcats amb * són obligatoris.</p>
             </div>
 
             <p class="contact-form__recipient" id="recipientNote" hidden>
@@ -349,24 +330,16 @@
               <label for="contactSubject"><span data-en="Subject">Assumpte</span> <span class="required">*</span></label>
               <div class="subject-pills" role="group" aria-label="Selecciona un assumpte">
                 <label class="subject-pill">
-                  <input type="radio" name="subject" value="voluntariat" id="contactSubject" required>
-                  <span data-en="🙌 Volunteering">🙌 Voluntariat</span>
+                  <input type="radio" name="subject" value="dubte" id="contactSubject" required>
+                  <span data-en="❓ A question">❓ Un dubte</span>
                 </label>
                 <label class="subject-pill">
-                  <input type="radio" name="subject" value="col·laboracio">
-                  <span data-en="🤝 Collaboration">🤝 Col·laboració</span>
-                </label>
-                <label class="subject-pill">
-                  <input type="radio" name="subject" value="unir-me">
-                  <span data-en="✨ I want to join">✨ Vull unir-me</span>
-                </label>
-                <label class="subject-pill">
-                  <input type="radio" name="subject" value="premsa">
-                  <span data-en="📰 Press">📰 Premsa</span>
+                  <input type="radio" name="subject" value="proposta">
+                  <span data-en="💡 A proposal">💡 Una proposta</span>
                 </label>
                 <label class="subject-pill">
                   <input type="radio" name="subject" value="altre">
-                  <span data-en="💬 Other">💬 Altre</span>
+                  <span data-en="💬 Something else">💬 Altres</span>
                 </label>
               </div>
             </div>
@@ -406,25 +379,80 @@
       </div>
     </section>
 
-    <!-- Formulari d'inscripció (JotForm) -->
-    <section class="signup-section" id="inscripcio">
-      <div class="signup-section__inner">
+    <!-- ─────────────────────────────────────────────────
+         COM UNIR-SE AL CLUB — Explicació + botó d'inscripció
+    ───────────────────────────────────────────────── -->
+    <section class="signup-process" id="inscripcio">
+      <div class="signup-process__inner">
 
-        <div class="signup-section__header">
-          <p class="signup-section__eyebrow" data-en="Join us">Inscripció</p>
-          <h2 class="signup-section__title" data-en="Registration form">Formulari d'inscripció</h2>
-          <div class="signup-section__divider"></div>
-          <p class="signup-section__subtitle" data-en="Fill in the form and we'll get back to you soon.">Omple el formulari i ens posarem en contacte amb tu ben aviat.</p>
+        <div class="signup-process__header">
+          <span class="signup-process__eyebrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span data-en="Join the club">Inscriu-te</span>
+          </span>
+          <h2 class="signup-process__title" data-en="How to join the club">Com unir-se al club</h2>
+          <div class="signup-process__divider"></div>
+          <p class="signup-process__intro" data-en="Want to be part of Rotaract Igualada? The process is simple and transparent.">Vols formar part del Rotaract Igualada? El procés és senzill i transparent.</p>
         </div>
 
-        <div class="signup-section__cta">
-          <p class="signup-section__cta-text" data-en="Click the button and the registration form will open right here on the page.">Fes clic al botó i el formulari d'inscripció s'obrirà aquí mateix a la pàgina.</p>
-          <button type="button" class="signup-section__cta-btn open-signup-form">
-            <span data-en="Access the form">Accedeix al formulari</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-        </div>
+        <div class="signup-process__grid">
 
+          <!-- Passos del procés -->
+          <ol class="signup-process__steps" role="list">
+
+            <li class="signup-process__step">
+              <span class="signup-process__step-num">1</span>
+              <div class="signup-process__step-body">
+                <h3 data-en="Fill in the form">Omple el formulari</h3>
+                <p data-en="Tell us who you are, what your values are, and why you want to be part of the club.">Explica'ns qui ets, quins són els teus valors i per què vols formar part del club.</p>
+              </div>
+            </li>
+
+            <li class="signup-process__step">
+              <span class="signup-process__step-num">2</span>
+              <div class="signup-process__step-body">
+                <h3 data-en="Application review">Revisió de la sol·licitud</h3>
+                <p data-en="The club team will review your application to better understand your profile and motivations.">L'equip del club revisarà la teva sol·licitud per conèixer millor el teu perfil i les teves motivacions.</p>
+              </div>
+            </li>
+
+            <li class="signup-process__step">
+              <span class="signup-process__step-num">3</span>
+              <div class="signup-process__step-body">
+                <h3 data-en="Club meetings">Reunions de socis</h3>
+                <p data-en="You will attend two club meetings to meet the members, see how we work, and decide if you're a good fit.">Participaràs en dues reunions del club per conèixer els socis, veure com funcionem i decidir si encaixes amb nosaltres.</p>
+              </div>
+            </li>
+
+            <li class="signup-process__step">
+              <span class="signup-process__step-num">4</span>
+              <div class="signup-process__step-body">
+                <h3 data-en="Final vote">Votació final</h3>
+                <p data-en="After the meetings, members will conduct an anonymous vote to decide on your admission.">Després de les reunions, els socis votaran de forma anònima per decidir la teva incorporació.</p>
+              </div>
+            </li>
+
+            <li class="signup-process__step">
+              <span class="signup-process__step-num">5</span>
+              <div class="signup-process__step-body">
+                <h3 data-en="Response within 48 hours">Resposta en 48 hores</h3>
+                <p data-en="You will be notified by email within 48 hours with the result of the vote. Whether it's a yes or a not yet, we'll be by your side to guide your next steps.">En menys de 48 hores rebràs el resultat de la votació al teu correu, acompanyat d'un sí o d'un "encara no". Sigui quina sigui la resposta, t'ajudarem a fer els següents passos.</p>
+              </div>
+            </li>
+
+          </ol>
+
+          <!-- CTA: botó per obrir el formulari -->
+          <div class="signup-process__cta-col">
+            <p class="signup-process__cta-label" data-en="Ready to get started?">Ja tens ganes de començar?</p>
+            <button type="button" class="signup-process__cta-btn open-signup-form">
+              <span data-en="Access the form">Accedeix al formulari</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <p class="signup-process__cta-note" data-en="We will get back to you as soon as possible.">Et respondrem el més aviat possible.</p>
+          </div>
+
+        </div>
       </div>
     </section>
 

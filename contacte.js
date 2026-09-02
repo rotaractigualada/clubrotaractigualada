@@ -95,6 +95,22 @@
     }
   }
 
+  // ── CSRF (doble submissió) ───────────────────
+  // El token es carrega des de csrf.php (cookie HttpOnly) i s'envia
+  // amb cada formulari; form-handler.php el valida. Si l'usuari envia
+  // el formulari abans que el token arribi, esperem a obtenir-lo.
+  var csrfToken = null;
+  var csrfPromise = null;
+  function ensureCsrf() {
+    if (csrfToken) return Promise.resolve(csrfToken);
+    if (csrfPromise) return csrfPromise;
+    csrfPromise = fetch('csrf.php', { method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { csrfToken = (d && d.csrf) ? d.csrf : null; return csrfToken; })
+      .catch(function () { csrfToken = null; return csrfToken; });
+    return csrfPromise;
+  }
+
   // ── Form submit ─────────────────────────────
   const form       = document.getElementById('contactForm');
   const submitBtn  = document.getElementById('submitBtn');
@@ -203,10 +219,14 @@
       submitBtn.disabled = true;
       if (submitText) submitText.textContent = t('Enviant…', 'Sending…', 'Enviando…');
 
-      fetch(FORM_ENDPOINT, {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(form)
+      ensureCsrf().then(function (token) {
+        var data = new FormData(form);
+        if (token) data.append('csrf_token', token);
+        return fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: data
+        });
       })
         .then(function (response) {
           if (!response.ok) throw new Error('HTTP ' + response.status);
