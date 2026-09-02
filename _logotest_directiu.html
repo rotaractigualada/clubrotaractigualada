@@ -1,24 +1,538 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
+  <script src="scroll-top.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Club Rotaract d'Igualada</title>
-  <meta name="description" content="Rotaract Igualada: joves compromesos amb projectes socials i de lideratge a l'Anoia. Descobreix les nostres activitats, la nostra història i com unir-t'hi.">
+<title>Directiu — Rotaract Igualada</title>
+  <meta name="description" content="Coneix la junta directiva i els socis del Club Rotaract d'Igualada, el club de joves de Rotary a l'Anoia.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Rotaract Igualada">
   <meta property="og:locale" content="ca_ES">
-  <meta property="og:title" content="Rotaract Igualada — Joventut i lideratge a l'Anoia">
-  <meta property="og:description" content="Joves compromesos amb projectes socials i de lideratge a l'Anoia. Descobreix les nostres activitats i com unir-t'hi.">
-  <meta property="og:url" content="https://www.rotaractigualada.org/">
+  <meta property="og:title" content="Directiu — Rotaract Igualada">
+  <meta property="og:description" content="Coneix la junta directiva i els socis del Club Rotaract d'Igualada.">
+  <meta property="og:url" content="https://www.rotaractigualada.org/directiu.html">
   <meta property="og:image" content="https://www.rotaractigualada.org/FOTO_1.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="https://www.rotaractigualada.org/">
+  <link rel="canonical" href="https://www.rotaractigualada.org/directiu.html">
   <link rel="stylesheet" href="rotaractigualada.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    /* ─────────────────────────────────────────────
+       DIRECTIU — Socis & Junta styles
+    ───────────────────────────────────────────── */
+
+    /* Hero */
+    .directiu-hero {
+      width: 100%;
+      min-height: 280px;
+      background: linear-gradient(135deg, var(--primary) 0%, #1a1a6e 60%, #3a0a2e 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .directiu-hero::before,
+    .directiu-hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.08;
+      background: #fff;
+    }
+    .directiu-hero::before {
+      width: 500px; height: 500px;
+      top: -200px; right: -100px;
+    }
+    .directiu-hero::after {
+      width: 300px; height: 300px;
+      bottom: -150px; left: -50px;
+    }
+
+    .directiu-hero__content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      max-width: 600px;
+    }
+
+    .directiu-hero__eyebrow {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .directiu-hero__title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+
+    .directiu-hero__desc {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(0.88rem, 2vw, 1rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+      max-width: 500px;
+      margin-top: 0.25rem;
+    }
+
+    /* Tabs (Socis / Junta) */
+    .directiu-tabs {
+      background: #fff;
+      border-bottom: 1px solid rgba(47,47,150,0.08);
+      position: sticky;
+      top: 62px;
+      z-index: 100;
+    }
+
+    .directiu-tabs__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+      padding: 0 2rem;
+    }
+
+    .directiu-tabs__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-light);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .directiu-tabs__btn:hover {
+      color: var(--pink);
+    }
+
+    .directiu-tabs__btn.is-active {
+      color: var(--pink);
+      border-bottom-color: var(--pink);
+    }
+
+    /* Panells de contingut */
+    .directiu-panel {
+      display: none;
+    }
+
+    .directiu-panel.is-visible {
+      display: block;
+    }
+
+    /* Animació d'entrada del panel */
+    @keyframes panelFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .directiu-panel.is-visible {
+      animation: panelFadeIn 0.3s ease forwards;
+    }
+
+    /* ─── Secció genèrica ─── */
+    .directiu-section {
+      width: 100%;
+      padding: clamp(3.5rem, 8vw, 5.5rem) clamp(1rem, 4vw, 2rem);
+    }
+
+    .directiu-section--alt {
+      background: var(--bg-light);
+    }
+
+    .directiu-section__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Capçalera de secció */
+    .directiu-section__header {
+      text-align: center;
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    }
+
+    .directiu-section__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.38rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(218, 26, 93, 0.08);
+      color: var(--pink);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+    }
+
+    .directiu-section__eyebrow::before {
+      content: '';
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--pink);
+    }
+
+    .directiu-section__title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .directiu-section__title span {
+      color: var(--pink);
+    }
+
+    .directiu-section__divider {
+      width: 42px;
+      height: 3px;
+      background: var(--pink);
+      border-radius: 99px;
+      margin: 1rem auto 1.1rem;
+    }
+
+    .directiu-section__subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(0.9rem, 1.8vw, 1rem);
+      color: var(--text-light);
+      line-height: 1.75;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ─── Grid de socis ─── */
+    .socis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .soci-card {
+      background: #fff;
+      border: 1px solid rgba(47,47,150,0.08);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.7rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    .soci-card.dir-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .soci-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(218,26,93,0.18);
+      box-shadow: 0 10px 28px rgba(47,47,150,0.1);
+    }
+
+    .soci-card__avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ececf5, #f5f5fb);
+      border: 3px solid rgba(47,47,150,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .soci-card__avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .soci-card__avatar-initials {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--blue);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .soci-card__name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* ─── Grid de junta ─── */
+    .junta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+
+
+    .junta-card {
+      background: #fff;
+      border: 1px solid rgba(47,47,150,0.08);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.8rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+
+    .junta-card.dir-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .junta-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(218,26,93,0.2);
+      box-shadow: 0 14px 36px rgba(47,47,150,0.12);
+    }
+
+    .junta-card--featured .junta-card__photo {
+      width: 110px;
+      height: 110px;
+    }
+
+    .junta-card__photo {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ececf5, #f5f5fb);
+      border: 3px solid rgba(47,47,150,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: border-color 0.25s ease;
+    }
+
+    .junta-card:hover .junta-card__photo {
+      border-color: rgba(218,26,93,0.3);
+    }
+
+    .junta-card__photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .junta-card__photo-initials {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--blue);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .junta-card--featured .junta-card__photo-initials {
+      font-size: 1.8rem;
+    }
+
+    .junta-card__role-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(218,26,93,0.08);
+      color: var(--pink);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .junta-card--featured .junta-card__role-badge {
+      background: var(--pink);
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 0.3rem 0.85rem;
+    }
+
+    .junta-card__name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .junta-card--featured .junta-card__name {
+      font-size: 1.15rem;
+    }
+
+    /* Transicions escalonades */
+    .soci-card:nth-child(1)  { transition-delay: 0.02s; }
+    .soci-card:nth-child(2)  { transition-delay: 0.05s; }
+    .soci-card:nth-child(3)  { transition-delay: 0.08s; }
+    .soci-card:nth-child(4)  { transition-delay: 0.11s; }
+    .soci-card:nth-child(5)  { transition-delay: 0.14s; }
+    .soci-card:nth-child(6)  { transition-delay: 0.17s; }
+    .soci-card:nth-child(7)  { transition-delay: 0.20s; }
+    .soci-card:nth-child(8)  { transition-delay: 0.23s; }
+    .soci-card:nth-child(9)  { transition-delay: 0.26s; }
+    .soci-card:nth-child(10) { transition-delay: 0.29s; }
+    .soci-card:nth-child(11) { transition-delay: 0.32s; }
+    .soci-card:nth-child(12) { transition-delay: 0.35s; }
+    .soci-card:nth-child(13) { transition-delay: 0.38s; }
+    .soci-card:nth-child(14) { transition-delay: 0.41s; }
+    .soci-card:nth-child(15) { transition-delay: 0.44s; }
+    .soci-card:nth-child(16) { transition-delay: 0.47s; }
+    .soci-card:nth-child(17) { transition-delay: 0.50s; }
+    .soci-card:nth-child(18) { transition-delay: 0.53s; }
+    .soci-card:nth-child(19) { transition-delay: 0.56s; }
+    .soci-card:nth-child(20) { transition-delay: 0.59s; }
+
+    .junta-card:nth-child(1)  { transition-delay: 0.02s; }
+    .junta-card:nth-child(2)  { transition-delay: 0.06s; }
+    .junta-card:nth-child(3)  { transition-delay: 0.10s; }
+    .junta-card:nth-child(4)  { transition-delay: 0.14s; }
+    .junta-card:nth-child(5)  { transition-delay: 0.18s; }
+    .junta-card:nth-child(6)  { transition-delay: 0.22s; }
+    .junta-card:nth-child(7)  { transition-delay: 0.26s; }
+    .junta-card:nth-child(8)  { transition-delay: 0.30s; }
+    .junta-card:nth-child(9)  { transition-delay: 0.34s; }
+    .junta-card:nth-child(10) { transition-delay: 0.38s; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .directiu-tabs__btn {
+        padding: 0.875rem 1rem;
+        font-size: 0.82rem;
+      }
+      .directiu-hero {
+        padding: 4rem 1.5rem 3rem;
+        min-height: 220px;
+      }
+      .socis-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+      .junta-grid {
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        gap: 1.1rem;
+      }
+      .junta-card--featured {
+        max-width: 260px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .directiu-tabs {
+        top: 68px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .directiu-section {
+        padding: 2.5rem 1.1rem;
+      }
+      .socis-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .junta-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .directiu-tabs__inner {
+        padding: 0 1rem;
+      }
+      .junta-card {
+        padding: 1.25rem 0.9rem 1.25rem;
+      }
+      .junta-card__photo {
+        width: 72px;
+        height: 72px;
+      }
+      .junta-card--featured .junta-card__photo {
+        width: 88px;
+        height: 88px;
+      }
+      .junta-card__role-badge {
+        padding: 0.22rem 0.6rem;
+        font-size: 0.65rem;
+        letter-spacing: 0.08em;
+      }
+      .junta-card__name {
+        font-size: 0.92rem;
+      }
+      .soci-card__avatar {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .directiu-tabs {
+        top: 60px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .soci-card, .junta-card {
+        opacity: 1;
+        transform: none;
+      }
+      *, *::before, *::after {
+        animation: none !important;
+        transition-duration: .01ms !important;
+        transition-delay: 0ms !important;
+      }
+    }
+  </style>
   <link rel="stylesheet" href="cookie-banner.css">
   <link rel="stylesheet" href="i18n.css">
 </head>
@@ -28,7 +542,7 @@
   <a class="skip-link" href="#contingut" data-en="Skip to main content">Salta al contingut principal</a>
 
   <!-- =============================================
-       MOBILE OVERLAY (fons fosc quan s'obre el nav)
+       MOBILE OVERLAY
   ============================================= -->
   <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
 
@@ -65,8 +579,8 @@
       <li class="mobile-nav__group">
         <a href="directiu.html" class="mobile-nav__group-label" data-en="Board">Directiu</a>
         <ul class="mobile-nav__sub">
-          <li><a href="directiu.html#socis" class="mobile-nav__sublink" data-en="Members">Socis</a></li>
-          <li><a href="directiu.html#junta" class="mobile-nav__sublink" data-en="Board 26-27">Junta 26-27</a></li>
+          <li><a href="#socis" class="mobile-nav__sublink" data-en="Members">Socis</a></li>
+          <li><a href="#junta" class="mobile-nav__sublink" data-en="Board 26-27">Junta 26-27</a></li>
         </ul>
       </li>
       <li><a href="contacte.html" class="mobile-nav__link" data-en="Contact">Contacte</a></li>
@@ -101,7 +615,7 @@
       </a>
 
       <nav class="nav" aria-label="Navegació principal">
-<a href="index.html" class="nav__link--active" aria-current="page" data-en="Home">Inici</a>
+        <a href="index.html" data-en="Home">Inici</a>
 
         <div class="nav__item nav__item--dropdown">
           <a href="nosaltres.html" class="nav__link--parent">
@@ -137,7 +651,7 @@
         </div>
 
         <div class="nav__item nav__item--dropdown">
-          <a href="directiu.html" class="nav__link--parent">
+          <a href="directiu.html" class="nav__link--parent nav__link--active" aria-current="page">
             <span data-en="Board">Directiu</span>
             <svg class="nav__chevron" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2.5"
@@ -146,8 +660,8 @@
             </svg>
           </a>
           <ul class="nav__dropdown">
-            <li><a href="directiu.html#socis" data-en="Members">Socis</a></li>
-            <li><a href="directiu.html#junta" data-en="Board 26-27">Junta 26-27</a></li>
+            <li><a href="#socis" data-en="Members">Socis</a></li>
+            <li><a href="#junta" data-en="Board 26-27">Junta 26-27</a></li>
           </ul>
         </div>
 
@@ -184,315 +698,191 @@
   <main id="contingut">
 
   <!-- =============================================
-       HERO — "hero-section"
+       HERO DIRECTIU
   ============================================= -->
-  <section class="hero-section">
-    <div class="hero__content">
-      <h1 class="hero__title" data-en="ROTARACT CLUB OF IGUALADA">CLUB ROTARACT D'IGUALADA</h1>
-      <p class="hero__text" data-en-is-html="true" data-en="We believe in the power of young people to transform our community. <br>At Rotaract Igualada we bring together the talent and energy of young people aged 18 to 30 to create solidarity projects with a real impact.">Creiem en el poder de la joventut per transformar el nostre entorn. <br>A Rotaract Igualada unim el talent i l'energia de joves d'entre 18 i 30 anys per crear projectes solidaris amb un impacte real.</p>
-      <a href="contacte.html" class="hero__cta" data-en="JOIN ROTARACT">UNEIX-TE A ROTARACT</a>
+  <section class="directiu-hero">
+    <div class="directiu-hero__content">
+      <p class="directiu-hero__eyebrow" data-en="Rotaract Club Igualada">Club Rotaract d'Igualada</p>
+      <h1 class="directiu-hero__title" data-en="Board">Directiu</h1>
+      <p class="directiu-hero__desc" data-en="The people who make the club possible: our members and the board steering our course from 2026 to 2027.">Les persones que fan possible el club: els nostres socis i la junta que dirigeix el rumb del 2026 al 2027.</p>
     </div>
   </section>
 
   <!-- =============================================
-       SOBRE NOSALTRES
+       TABS DIRECTIU
   ============================================= -->
-  <section class="aboutus-section" id="nosaltres">
-    <div class="aboutus__container">
-      <div class="aboutus__grid">
-        <div class="aboutus__content reveal-left">
-          <p class="aboutus__eyebrow" data-en="About us">Sobre nosaltres</p>
-          <h2 class="aboutus__title" data-en="Young people who turn ideas into action">Joves que converteixen idees en acció</h2>
-          <p class="aboutus__lead" data-en="At Rotaract Club Igualada we are a community of young people eager to do useful, meaningful, close-to-home work. We work as a team to drive social, cultural and service initiatives that bring real value to the city and our community.">
-            Al Club Rotaract d'Igualada som una comunitat de joves amb ganes de fer coses útils, properes i amb sentit.
-            Treballem en equip per impulsar iniciatives socials, culturals i de servei que aportin valor real a
-            la ciutat i al nostre entorn.
-          </p>
-
-          <div class="aboutus__pillars">
-            <article class="aboutus__pillar">
-              <div class="aboutus__pillar-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 3v18"></path>
-                  <path d="M5 8l7-5 7 5"></path>
-                  <path d="M5 16l7 5 7-5"></path>
-                </svg>
-              </div>
-              <div>
-                <h3 data-en="Service">Servei</h3>
-                <p data-en="Projects designed to respond to real needs with direct impact.">Projectes pensats per respondre a necessitats reals amb impacte directe.</p>
-              </div>
-            </article>
-
-            <article class="aboutus__pillar">
-              <div class="aboutus__pillar-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 20v-6"></path>
-                  <path d="M8 14a4 4 0 1 1 8 0"></path>
-                  <path d="M6 20h12"></path>
-                  <path d="M9 4l3 3 3-3"></path>
-                </svg>
-              </div>
-              <div>
-                <h3 data-en="Leadership">Lideratge</h3>
-                <p data-en="Personal growth, shared responsibility and youth initiative.">Creixement personal, responsabilitat compartida i iniciativa jove.</p>
-              </div>
-            </article>
-
-            <article class="aboutus__pillar">
-              <div class="aboutus__pillar-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="10.5" cy="7" r="3"></circle>
-                  <path d="M20 8v6"></path>
-                  <path d="M23 11h-6"></path>
-                </svg>
-              </div>
-              <div>
-                <h3 data-en="Community">Comunitat</h3>
-                <p data-en="Bonds, friendship and networking to grow together and gain strength.">Vincles, amistat i xarxa per créixer junts i sumar més força.</p>
-              </div>
-            </article>
-          </div>
-
-          <div class="aboutus__actions">
-            <a href="contacte.html" class="aboutus__cta aboutus__cta--primary" data-en="Talk to us">Parla amb nosaltres</a>
-            <a href="activitats.html#realitzades" class="aboutus__cta aboutus__cta--secondary" data-en="See activities">Veure activitats</a>
-          </div>
-        </div>
-
-        <div class="aboutus__visual reveal-right">
-          <div class="aboutus__panel">
-            <div class="aboutus__panel-top">
-              <span class="aboutus__badge">Rotaract Igualada</span>
-              <h3 class="aboutus__panel-title" data-en="Service, friendship and leadership">Servei, amistat i lideratge</h3>
-              <p class="aboutus__panel-text" data-en="We are part of an international network of young people acting with local commitment. Our way of working is clear: combine ideas, organise actions and generate impact.">
-                Som part d'una xarxa internacional de joves que actuen amb compromís local.
-                La nostra manera de treballar és clara: sumar idees, organitzar accions i generar impacte.
-              </p>
-            </div>
-
-            <div class="aboutus__stats">
-              <div class="aboutus__stat">
-                <strong>18–30</strong>
-                <span data-en="age range">franja d'edat</span>
-              </div>
-              <div class="aboutus__stat">
-                <strong>4</strong>
-                <span data-en="core values">valors clau</span>
-              </div>
-              <div class="aboutus__stat">
-                <strong>1</strong>
-                <span data-en="united team">equip unit</span>
-              </div>
-            </div>
-
-            <ul class="aboutus__list">
-              <li data-en="Take action through community and international service">Prendre acció mitjançant el servei comunitari i internacional</li>
-              <li data-en="Develop leadership skills">Adquirir aptituds per al lideratge</li>
-              <li data-en="Take part in professional development">Participar en el desenvolupament professional</li>
-              <li data-en="Embrace cultural diversity and gain a global outlook">Adoptar la diversitat cultural i adquirir una perspectiva global</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+  <div class="directiu-tabs" id="directiu-tabs">
+    <div class="directiu-tabs__inner">
+      <button class="directiu-tabs__btn is-active" data-tab="socis">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        <span data-en="Members">Socis</span>
+      </button>
+      <button class="directiu-tabs__btn" data-tab="junta">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="5"></circle>
+          <path d="M20 21a8 8 0 1 0-16 0"></path>
+        </svg>
+        <span data-en="Board 26-27">Junta 26-27</span>
+      </button>
     </div>
-  </section>
-
-  <section class="galeria-section" id="galeria">
-    <div class="galeria__header">
-      <p class="galeria__eyebrow" data-en="📸 Our activities">📸 Les nostres activitats</p>
-      <h2 class="galeria__title"><span data-en="Gallery" style="color: inherit;">Galeria</span> <span>Rotaract Igualada</span></h2>
-      <div class="galeria__divider"></div>
-      <p class="galeria__subtitle" data-en="Moments we've shared together throughout our journey.">Moments que hem viscut junts al llarg de la nostra trajectòria.</p>
-    </div>
-
-    <!-- Quan tingueu fotos d'activitats, substituïu aquest bloc per la
-         graella de fotos. Exemple de peça:
-           <div class="galeria__grid">
-             <div class="galeria__item">
-               <img src="NOM_FOTO.jpg" alt="Descripció">
-               <div class="galeria__caption" data-en="Activity name">Nom de l'activitat</div>
-             </div>
-           </div>
-         (les peces amples fan servir la classe galeria__item--wide) -->
-    <div class="galeria__empty">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M9.4 4l-1.8 2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3.6L14.6 4H9.4zm2.6 13.5A4.75 4.75 0 1 1 12 8a4.75 4.75 0 0 1 0 9.5zM12 15.5a2.75 2.75 0 1 0 0-5.5 2.75 2.75 0 0 0 0 5.5z"/>
-      </svg>
-      <p data-en="When we have activities, we will post photos here!">Quan tinguem activitats, ja hi penjarem fotos!</p>
-    </div>
-  </section>
+  </div>
 
   <!-- =============================================
-       INSTAGRAM
+       PANELL SOCIS
   ============================================= -->
-  <section class="instagram-section" id="instagram">
+  <div class="directiu-panel is-visible" id="panel-socis">
+  <section class="directiu-section" id="socis">
+    <div class="directiu-section__inner">
 
-    <div class="instagram-section__header">
-      <p class="instagram-section__eyebrow">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-        <span data-en="Follow us on Instagram">Segueix-nos a Instagram</span>
-      </p>
-
-      <h2 class="instagram-section__title">
-        Instagram <span>Rotaract Igualada</span>
-      </h2>
-
-      <div class="instagram-section__divider"></div>
-
-      <p class="instagram-section__subtitle" data-en="All our news and activities, updated in real time.">
-        Totes les nostres novetats i activitats actualitzades al moment.
-      </p>
-    </div>
-
-<div class="instagram-section__embeds" id="instagram-embeds">
-      <!--
-        INSTRUCCIONS PER RENOVAR ELS POSTS TU MATEIX:
-        1) Obre el teu post d'Instagram al navegador.
-        2) Clica el botó "..." del post (o "Comparteix") → "Incrusta" / "Embed".
-        3) Copia el codi que apareix (comença per <blockquote ...>) i enganxa'l aquí sota.
-        4) Guarda l'arxiu i puja'l al servidor. El post apareix automàticament.
-        Consell: deixa-hi només els 3-6 últims posts i esborra els més antics.
-        Quan afegeixis un post real, esborra una de les targetes buides de sota.
-      -->
-
-      <!-- Publicació real d'Instagram (l'embed.js la converteix en post) -->
-      <blockquote class="instagram-media"
-        data-instgrm-permalink="https://www.instagram.com/p/DcQqNmWDIUN/"
-        data-instgrm-version="14"
-        style="background:#FFF;border:0;border-radius:18px;margin:1px;max-width:340px;width:calc(100% - 2px);padding:0;">
-        <a href="https://www.instagram.com/p/DcQqNmWDIUN/" target="_blank" rel="noopener noreferrer" data-en="View this post on Instagram">Veure aquesta publicació a Instagram</a>
-      </blockquote>
-
-      <div class="instagram-section__empty">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-        <p data-en="No photos yet, but we will post some very soon!">Encara no tenim fotos, però ben aviat en penjarem!</p>
+      <div class="directiu-section__header">
+        <p class="directiu-section__eyebrow" data-en="Our club">El nostre club</p>
+        <h2 class="directiu-section__title"><span data-en="Our" style="color: inherit;">Els nostres</span> <span data-en="Members">Socis</span></h2>
+        <div class="directiu-section__divider"></div>
+        <p class="directiu-section__subtitle" data-en="Committed people who are an active part of Rotaract Club Igualada, driving service and leadership in our community.">Persones compromeses que formen part activa del Club Rotaract d'Igualada i impulsen el servei i el lideratge al nostre entorn.</p>
       </div>
 
-      <div class="instagram-section__empty">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-        <p data-en="No photos yet, but we will post some very soon!">Encara no tenim fotos, però ben aviat en penjarem!</p>
+      <div class="socis-grid" id="socisGrid">
+
+        <!-- ── Afegeix o elimina cards segons els teus socis reals ── -->
+        <!-- Cada card: canvia les inicials i el nom -->
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">BB</span>
+          </div>
+          <p class="soci-card__name">Gerard López</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">CC</span>
+          </div>
+          <p class="soci-card__name">Adrià López</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">DD</span>
+          </div>
+          <p class="soci-card__name">Luca Santos</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">EE</span>
+          </div>
+          <p class="soci-card__name">Gabriela Labari</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">FF</span>
+          </div>
+          <p class="soci-card__name">Abdellah Sekkoumi</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">GG</span>
+          </div>
+          <p class="soci-card__name">Ivet Martín</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">HH</span>
+          </div>
+          <p class="soci-card__name">Bernat Macet</p>
+        </article>
+
+        <article class="soci-card">
+          <div class="soci-card__avatar">
+            <span class="soci-card__avatar-initials">II</span>
+          </div>
+          <p class="soci-card__name">Jana Rueda</p>
+        </article>
+
       </div>
     </div>
-
-    <div class="instagram-section__follow">
-      <a
-        class="instagram-section__cta"
-        href="https://www.instagram.com/rotaractigualada/"
-        target="_blank"
-        rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-        <span data-en="Follow us on Instagram">Segueix-nos a Instagram</span>
-      </a>
-    </div>
-
   </section>
+  </div><!-- /panel-socis -->
 
   <!-- =============================================
-       CONTACT
+       PANELL JUNTA 26-27
   ============================================= -->
-  <section class="contact" id="contacte">
-    <div class="container">
-      <div class="section__header reveal-left">
-        <div class="section__eyebrow">
-          <span class="section__eyebrow-dot"></span>
-          <span data-en="Contact">Contacte</span>
-        </div>
-        <h2 class="section__title" data-en="Write to us">Escriu-nos</h2>
-        <p class="section__desc" data-en="Got a question, a proposal, or want to collaborate? We're here.">Tens alguna pregunta, proposta o vols col·laborar? Som aquí.</p>
+  <div class="directiu-panel" id="panel-junta">
+  <section class="directiu-section directiu-section--alt" id="junta">
+    <div class="directiu-section__inner">
+
+      <div class="directiu-section__header">
+        <p class="directiu-section__eyebrow" data-en="2026–2027 term">Curs 2026–2027</p>
+        <h2 class="directiu-section__title"><span data-en="The" style="color: inherit;">Junta</span> <span data-en="Board 26-27">Directiva 26-27</span></h2>
+        <div class="directiu-section__divider"></div>
+        <p class="directiu-section__subtitle" data-en="The team leading Rotaract Igualada during the 2026-2027 term, with commitment, service and youth leadership.">L'equip que lidera Rotaract Igualada durant el curs 2026-2027, amb compromís, servei i lideratge jove.</p>
       </div>
-      <div class="contact__grid">
-        <div class="contact__info reveal-left">
-          <h3 data-en="Contact channels">Canals de contacte</h3>
-          <p data-en="You can reach us by email or through our social media. We reply within 48h.">Pots contactar-nos per email o a través de les nostres xarxes socials. Responem en menys de 48h.</p>
-          <div class="contact__channels">
-            <div class="contact__channel">
-              <div class="contact__channel-icon">✉️</div>
-              <div class="contact__channel-text">
-                <h4 data-en="General">General</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
-              </div>
-            </div>
-            <div class="contact__channel">
-              <div class="contact__channel-icon">👤</div>
-              <div class="contact__channel-text">
-                <h4 data-en="Presidency">Presidència</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
-              </div>
-            </div>
-            <div class="contact__channel">
-              <div class="contact__channel-icon">🤝</div>
-              <div class="contact__channel-text">
-                <h4 data-en="Secretary">Secretari</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
-              </div>
-            </div>
+
+      <div class="junta-grid" id="juntaGrid">
+
+        <!-- ── President/a (card destacada, ampla) ── -->
+        <article class="junta-card junta-card--featured">
+          <div class="junta-card__photo">
+            <!-- Substitueix per: <img src="foto_president.jpg" alt="Nom President"> -->
+            <span class="junta-card__photo-initials">NP</span>
           </div>
-        </div>
-        <form class="contact__form reveal-right" id="contactForm" novalidate>
-          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field">
-          <p class="contact-form__recipient" id="recipientNote" hidden>
-            <span data-en="Writing to:">Escrivint a:</span> <strong id="recipientEmailDisplay"></strong>
-          </p>
-          <div class="form-group">
-            <label for="contactName"><span data-en="Full name">Nom complet</span> <span class="required">*</span></label>
-            <input type="text" id="contactName" name="name" required placeholder="El teu nom complet" data-en-placeholder="Your full name" />
+          <span class="junta-card__role-badge" data-en="President">President</span>
+          <p class="junta-card__name">Gerard López</p>
+        </article>
+
+        <!-- ── Resta de la junta ── -->
+        <article class="junta-card">
+          <div class="junta-card__photo">
+            <span class="junta-card__photo-initials">NS</span>
           </div>
-          <div class="form-group">
-            <label for="contactEmail"><span data-en="Email">Correu electrònic</span> <span class="required">*</span></label>
-            <input type="email" id="contactEmail" name="email" required placeholder="Tu@email.com" data-en-placeholder="you@email.com" />
+          <span class="junta-card__role-badge" data-en="Secretary">Secretari</span>
+          <p class="junta-card__name">Luca Santos</p>
+        </article>
+
+        <article class="junta-card">
+          <div class="junta-card__photo">
+            <span class="junta-card__photo-initials">NT</span>
           </div>
-<div class="form-group">
-            <label for="contactSubject"><span data-en="Subject">Assumpte</span> <span class="required">*</span></label>
-            <div class="subject-pills" role="group" aria-label="Selecciona un assumpte">
-              <label class="subject-pill">
-                <input type="radio" name="subject" value="dubte" id="contactSubject" required>
-                <span data-en="❓ A question">❓ Un dubte</span>
-              </label>
-              <label class="subject-pill">
-                <input type="radio" name="subject" value="proposta">
-                <span data-en="💡 A proposal">💡 Una proposta</span>
-              </label>
-              <label class="subject-pill">
-                <input type="radio" name="subject" value="altre">
-                <span data-en="💬 Something else">💬 Altres</span>
-              </label>
-            </div>
+          <span class="junta-card__role-badge" data-en="Treasurer">Tresorer</span>
+          <p class="junta-card__name">Adrià López</p>
+        </article>
+
+        <article class="junta-card">
+          <div class="junta-card__photo">
+            <span class="junta-card__photo-initials">NV</span>
           </div>
-          <div class="form-group">
-            <label for="contactMessage"><span data-en="Message">Missatge</span> <span class="required">*</span></label>
-            <textarea id="contactMessage" name="message" required maxlength="500" placeholder="Escriu el teu missatge aquí..." data-en-placeholder="Write your message here..."></textarea>
+          <span class="junta-card__role-badge" data-en="Partnership">Partnership</span>
+          <p class="junta-card__name">x</p>
+        </article>
+
+        <article class="junta-card">
+          <div class="junta-card__photo">
+            <span class="junta-card__photo-initials">NC</span>
           </div>
-          <div class="form-group">
-            <label class="form-checkbox">
-              <input type="checkbox" id="contactPrivacy" name="privacy" value="1" required />
-              <span data-en-is-html="true" data-en="I have read and accept the &lt;a href=&quot;#&quot; class=&quot;open-avis-legal&quot;&gt;legal notice&lt;/a&gt; and the &lt;a href=&quot;#&quot; class=&quot;open-politica-privacitat&quot;&gt;privacy policy&lt;/a&gt;.">He llegit i accepto l'<a href="#" class="open-avis-legal" data-en="legal notice">avís legal</a> i la <a href="#" class="open-politica-privacitat" data-en="privacy policy">política de privacitat</a>.</span>
-            </label>
+          <span class="junta-card__role-badge" data-en="Social Media">Xarxes Socials</span>
+          <p class="junta-card__name">x</p>
+        </article>
+
+        <article class="junta-card">
+          <div class="junta-card__photo">
+            <span class="junta-card__photo-initials">NA</span>
           </div>
-          <button type="submit" class="btn btn--primary" style="width:100%; justify-content:center;">
-            <span data-en="Send message">Enviar missatge</span>
-            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-          </button>
-          <div id="formSuccess" class="form-success" aria-live="polite">
-            <span data-en="✅ Message sent successfully! We'll reply soon.">✅ Missatge enviat correctament! Et respondrem aviat.</span>
-          </div>
-        </form>
+          <span class="junta-card__role-badge">Macero</span>
+          <p class="junta-card__name">Gabriela Labari</p>
+        </article>
+
       </div>
     </div>
   </section>
+  </div><!-- /panel-junta -->
 
 </main>
 
@@ -554,7 +944,7 @@
         </div>
         <div class="footer__contact-item">
           <span>📝</span>
-          <a href="contacte.html#inscripcio" data-en="Link to the sign-up form">Enllaç al formulari d'inscripció</a>
+          <a href="contacte.html#inscripcio" data-en="Sign-up form">Formulari d'inscripció</a>
         </div>
       </div>
     </div>
@@ -567,9 +957,14 @@
        SCRIPTS
   ============================================= -->
   <script src="nav.js"></script>
-  <script src="rotaractigualada.js"></script>
+  <script src="directiu.js"></script>
+
+
   <script src="legal-modals.js"></script>
 
+  <!-- =============================================
+       MODAL AVÍS LEGAL
+  ============================================= -->
   <div id="avisLegalModal" class="legal-modal-overlay">
     <div class="legal-modal-content">
       <button class="legal-modal-close" aria-label="Tancar">&times;</button>
@@ -784,6 +1179,16 @@
           </p>
         </section>
 
+        <section class="legal-section">
+          <h3 data-en="1. What are cookies">1. Què són les cookies</h3>
+          <p data-en="Cookies are small text files that websites store on your device (computer, mobile or tablet) when you visit them. Among other things, they help remember your preferences, improve your browsing experience, and gather usage statistics for the website.">
+            Les cookies són petits arxius de text que els llocs web emmagatzemen al teu dispositiu
+            (ordinador, mòbil o tauleta) quan els visites. Serveixen, entre altres coses, per recordar
+            les teves preferències, millorar la teva experiència de navegació i obtenir estadístiques
+            d'ús del lloc web.
+          </p>
+        </section>
+
 <section class="legal-section">
           <h3 data-en="2. Does this website use cookies?">2. Aquest lloc web utilitza cookies?</h3>
           <p data-en="This website only uses strictly necessary local storage (localStorage) to remember your language preference — data that never leaves your device. Additionally, if you give your consent, Google Analytics (GA4) analytics cookies are installed to understand how the website is used. Without your consent, no cookies are installed and no measurement service is loaded.">
@@ -867,9 +1272,9 @@
     </div>
   </div>
 
-<script src="cookie-banner.js"></script>
+  <script src="cookie-banner.js"></script>
   <script src="analytics.js"></script>
   <script src="i18n.js"></script>
-  <script async src="https://www.instagram.com/embed.js" charset="utf-8"></script>
+<script>window.addEventListener("load",function(){var l=document.querySelector(".header__logo");var r=l?l.getBoundingClientRect():null;var p=document.createElement("pre");p.id="logo";p.textContent=(r?("w="+Math.round(r.width)+" h="+Math.round(r.height)):"null")+" | "+location.href;document.body.appendChild(p);});</script>
 </body>
 </html>

@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
+<script src="scroll-top.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Club Rotaract d'Igualada</title>
-  <meta name="description" content="Rotaract Igualada: joves compromesos amb projectes socials i de lideratge a l'Anoia. Descobreix les nostres activitats, la nostra història i com unir-t'hi.">
+<title>Activitats — Rotaract Igualada</title>
+  <meta name="description" content="Activitats i projectes solidaris, culturals, esportius i de formació del Rotaract Igualada. Consulta el calendari i inscriu-t'hi.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Rotaract Igualada">
   <meta property="og:locale" content="ca_ES">
-  <meta property="og:title" content="Rotaract Igualada — Joventut i lideratge a l'Anoia">
-  <meta property="og:description" content="Joves compromesos amb projectes socials i de lideratge a l'Anoia. Descobreix les nostres activitats i com unir-t'hi.">
-  <meta property="og:url" content="https://www.rotaractigualada.org/">
+  <meta property="og:title" content="Activitats — Rotaract Igualada">
+  <meta property="og:description" content="Activitats i projectes solidaris, culturals, esportius i de formació del Rotaract Igualada.">
+  <meta property="og:url" content="https://www.rotaractigualada.org/activitats.html">
   <meta property="og:image" content="https://www.rotaractigualada.org/FOTO_1.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="https://www.rotaractigualada.org/">
+  <link rel="canonical" href="https://www.rotaractigualada.org/activitats.html">
   <link rel="stylesheet" href="rotaractigualada.css">
+  <link rel="stylesheet" href="legal-modals.css">
+  <link rel="stylesheet" href="activitats.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -27,18 +30,13 @@
 
   <a class="skip-link" href="#contingut" data-en="Skip to main content">Salta al contingut principal</a>
 
-  <!-- =============================================
-       MOBILE OVERLAY (fons fosc quan s'obre el nav)
-  ============================================= -->
+  <!-- MOBILE OVERLAY -->
   <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
 
-  <!-- =============================================
-       MOBILE NAV DRAWER
-  ============================================= -->
+  <!-- MOBILE NAV DRAWER -->
   <nav class="mobile-nav" id="mobileNav" aria-label="Menú mòbil" aria-hidden="true">
     <button class="mobile-nav__close" id="mobileNavClose" aria-label="Tancar menú">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-           stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <line x1="18" y1="6" x2="6" y2="18"/>
         <line x1="6" y1="6" x2="18" y2="18"/>
       </svg>
@@ -87,30 +85,18 @@
     </ul>
   </nav>
 
-  <!-- =============================================
-       HEADER
-  ============================================= -->
+  <!-- HEADER (idèntic) -->
   <header class="header">
     <div class="header__inner">
-
       <a class="header__logo-link" href="index.html">
-        <img
-          src="logorotaractbo.png"
-          alt="Rotaract Igualada"
-          class="header__logo">
+        <img src="logorotaractbo.png" alt="Rotaract Igualada" class="header__logo">
       </a>
-
       <nav class="nav" aria-label="Navegació principal">
-<a href="index.html" class="nav__link--active" aria-current="page" data-en="Home">Inici</a>
-
+        <a href="index.html" data-en="Home">Inici</a>
         <div class="nav__item nav__item--dropdown">
           <a href="nosaltres.html" class="nav__link--parent">
             <span data-en="About us">Nosaltres</span>
-            <svg class="nav__chevron" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2.5"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+            <svg class="nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </a>
           <ul class="nav__dropdown">
             <li><a href="nosaltres.html#rotary-internacional" data-en="Rotary International">Rotary Internacional</a></li>
@@ -119,15 +105,10 @@
             <li><a href="nosaltres.html#rotaract-igualada">Rotaract Igualada</a></li>
           </ul>
         </div>
-
         <div class="nav__item nav__item--dropdown">
-          <a href="activitats.html" class="nav__link--parent">
+          <a href="activitats.html" class="nav__link--parent nav__link--active" aria-current="page">
             <span data-en="Activities">Activitats</span>
-            <svg class="nav__chevron" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2.5"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+            <svg class="nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </a>
           <ul class="nav__dropdown">
             <li><a href="activitats.html#programades" data-en="Upcoming activities">Activitats programades</a></li>
@@ -135,25 +116,18 @@
             <li><a href="activitats.html#calendari" data-en="Calendar">Calendari</a></li>
           </ul>
         </div>
-
         <div class="nav__item nav__item--dropdown">
           <a href="directiu.html" class="nav__link--parent">
             <span data-en="Board">Directiu</span>
-            <svg class="nav__chevron" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2.5"
-                 stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+            <svg class="nav__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </a>
           <ul class="nav__dropdown">
             <li><a href="directiu.html#socis" data-en="Members">Socis</a></li>
             <li><a href="directiu.html#junta" data-en="Board 26-27">Junta 26-27</a></li>
           </ul>
         </div>
-
         <a href="contacte.html" data-en="Contact">Contacte</a>
       </nav>
-
       <div class="lang-menu header__lang">
         <button type="button" class="lang-menu__btn" aria-haspopup="menu" aria-expanded="false" aria-label="Canvia d'idioma / Switch language">
           <span class="lang-menu__current" data-lang-current>CA</span>
@@ -166,339 +140,353 @@
         </ul>
       </div>
       <a href="contacte.html" class="header__cta" data-en="JOIN US">UNEIX-TE</a>
-
-      <button
-        class="hamburger"
-        id="hamburger"
-        aria-label="Obrir menú"
-        aria-expanded="false"
-        aria-controls="mobileNav">
+      <button class="hamburger" id="hamburger" aria-label="Obrir menú" aria-expanded="false" aria-controls="mobileNav">
         <span class="hamburger__bar"></span>
         <span class="hamburger__bar"></span>
         <span class="hamburger__bar"></span>
       </button>
-
     </div>
   </header>
 
   <main id="contingut">
 
-  <!-- =============================================
-       HERO — "hero-section"
-  ============================================= -->
-  <section class="hero-section">
-    <div class="hero__content">
-      <h1 class="hero__title" data-en="ROTARACT CLUB OF IGUALADA">CLUB ROTARACT D'IGUALADA</h1>
-      <p class="hero__text" data-en-is-html="true" data-en="We believe in the power of young people to transform our community. <br>At Rotaract Igualada we bring together the talent and energy of young people aged 18 to 30 to create solidarity projects with a real impact.">Creiem en el poder de la joventut per transformar el nostre entorn. <br>A Rotaract Igualada unim el talent i l'energia de joves d'entre 18 i 30 anys per crear projectes solidaris amb un impacte real.</p>
-      <a href="contacte.html" class="hero__cta" data-en="JOIN ROTARACT">UNEIX-TE A ROTARACT</a>
+  <!-- ============================================
+       HERO ACTIVITATS
+  ============================================ -->
+  <section class="act-hero">
+    <div class="act-hero__bg-shapes" aria-hidden="true">
+      <div class="act-hero__shape act-hero__shape--1"></div>
+      <div class="act-hero__shape act-hero__shape--2"></div>
+      <div class="act-hero__shape act-hero__shape--3"></div>
     </div>
-  </section>
-
-  <!-- =============================================
-       SOBRE NOSALTRES
-  ============================================= -->
-  <section class="aboutus-section" id="nosaltres">
-    <div class="aboutus__container">
-      <div class="aboutus__grid">
-        <div class="aboutus__content reveal-left">
-          <p class="aboutus__eyebrow" data-en="About us">Sobre nosaltres</p>
-          <h2 class="aboutus__title" data-en="Young people who turn ideas into action">Joves que converteixen idees en acció</h2>
-          <p class="aboutus__lead" data-en="At Rotaract Club Igualada we are a community of young people eager to do useful, meaningful, close-to-home work. We work as a team to drive social, cultural and service initiatives that bring real value to the city and our community.">
-            Al Club Rotaract d'Igualada som una comunitat de joves amb ganes de fer coses útils, properes i amb sentit.
-            Treballem en equip per impulsar iniciatives socials, culturals i de servei que aportin valor real a
-            la ciutat i al nostre entorn.
-          </p>
-
-          <div class="aboutus__pillars">
-            <article class="aboutus__pillar">
-              <div class="aboutus__pillar-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 3v18"></path>
-                  <path d="M5 8l7-5 7 5"></path>
-                  <path d="M5 16l7 5 7-5"></path>
-                </svg>
-              </div>
-              <div>
-                <h3 data-en="Service">Servei</h3>
-                <p data-en="Projects designed to respond to real needs with direct impact.">Projectes pensats per respondre a necessitats reals amb impacte directe.</p>
-              </div>
-            </article>
-
-            <article class="aboutus__pillar">
-              <div class="aboutus__pillar-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 20v-6"></path>
-                  <path d="M8 14a4 4 0 1 1 8 0"></path>
-                  <path d="M6 20h12"></path>
-                  <path d="M9 4l3 3 3-3"></path>
-                </svg>
-              </div>
-              <div>
-                <h3 data-en="Leadership">Lideratge</h3>
-                <p data-en="Personal growth, shared responsibility and youth initiative.">Creixement personal, responsabilitat compartida i iniciativa jove.</p>
-              </div>
-            </article>
-
-            <article class="aboutus__pillar">
-              <div class="aboutus__pillar-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="10.5" cy="7" r="3"></circle>
-                  <path d="M20 8v6"></path>
-                  <path d="M23 11h-6"></path>
-                </svg>
-              </div>
-              <div>
-                <h3 data-en="Community">Comunitat</h3>
-                <p data-en="Bonds, friendship and networking to grow together and gain strength.">Vincles, amistat i xarxa per créixer junts i sumar més força.</p>
-              </div>
-            </article>
-          </div>
-
-          <div class="aboutus__actions">
-            <a href="contacte.html" class="aboutus__cta aboutus__cta--primary" data-en="Talk to us">Parla amb nosaltres</a>
-            <a href="activitats.html#realitzades" class="aboutus__cta aboutus__cta--secondary" data-en="See activities">Veure activitats</a>
-          </div>
-        </div>
-
-        <div class="aboutus__visual reveal-right">
-          <div class="aboutus__panel">
-            <div class="aboutus__panel-top">
-              <span class="aboutus__badge">Rotaract Igualada</span>
-              <h3 class="aboutus__panel-title" data-en="Service, friendship and leadership">Servei, amistat i lideratge</h3>
-              <p class="aboutus__panel-text" data-en="We are part of an international network of young people acting with local commitment. Our way of working is clear: combine ideas, organise actions and generate impact.">
-                Som part d'una xarxa internacional de joves que actuen amb compromís local.
-                La nostra manera de treballar és clara: sumar idees, organitzar accions i generar impacte.
-              </p>
-            </div>
-
-            <div class="aboutus__stats">
-              <div class="aboutus__stat">
-                <strong>18–30</strong>
-                <span data-en="age range">franja d'edat</span>
-              </div>
-              <div class="aboutus__stat">
-                <strong>4</strong>
-                <span data-en="core values">valors clau</span>
-              </div>
-              <div class="aboutus__stat">
-                <strong>1</strong>
-                <span data-en="united team">equip unit</span>
-              </div>
-            </div>
-
-            <ul class="aboutus__list">
-              <li data-en="Take action through community and international service">Prendre acció mitjançant el servei comunitari i internacional</li>
-              <li data-en="Develop leadership skills">Adquirir aptituds per al lideratge</li>
-              <li data-en="Take part in professional development">Participar en el desenvolupament professional</li>
-              <li data-en="Embrace cultural diversity and gain a global outlook">Adoptar la diversitat cultural i adquirir una perspectiva global</li>
-            </ul>
-          </div>
-        </div>
+    <div class="act-hero__content">
+      <span class="act-hero__eyebrow">Rotaract Igualada</span>
+      <h1 class="act-hero__title"><span data-en="Our" style="color: inherit;">Les nostres</span> <span data-en="Activities">Activitats</span></h1>
+      <p class="act-hero__desc" data-en="Discover everything we do: from solidarity projects to leisure gatherings. Every activity is a chance to grow, connect and make an impact.">Descobreix tot el que fem: des de projectes solidaris fins a trobades de lleure. Cada activitat és una oportunitat de créixer, connectar i generar impacte.</p>
+      <div class="act-hero__tabs-nav">
+        <button class="act-hero__tab-btn act-hero__tab-btn--active" data-tab="programades">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span data-en="Upcoming">Programades</span>
+        </button>
+        <button class="act-hero__tab-btn" data-tab="realitzades">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span data-en="Past">Realitzades</span>
+        </button>
+        <button class="act-hero__tab-btn" data-tab="calendari">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span data-en="Calendar">Calendari</span>
+        </button>
       </div>
     </div>
   </section>
 
-  <section class="galeria-section" id="galeria">
-    <div class="galeria__header">
-      <p class="galeria__eyebrow" data-en="📸 Our activities">📸 Les nostres activitats</p>
-      <h2 class="galeria__title"><span data-en="Gallery" style="color: inherit;">Galeria</span> <span>Rotaract Igualada</span></h2>
-      <div class="galeria__divider"></div>
-      <p class="galeria__subtitle" data-en="Moments we've shared together throughout our journey.">Moments que hem viscut junts al llarg de la nostra trajectòria.</p>
-    </div>
+  <!-- ============================================
+       SECCIÓ 1: ACTIVITATS PROGRAMADES
+  ============================================ -->
+  <section class="act-section act-section--light act-tab-section act-tab-section--active" id="programades">
+    <div class="act-section__inner">
+      <div class="act-section__header act-reveal">
+        <span class="act-tag act-tag--blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span data-en="Coming soon">Pròximament</span>
+        </span>
+        <h2 class="act-section__title"><span data-en="Activities" style="color: inherit;">Activitats</span> <span data-en="Upcoming">Programades</span></h2>
+        <div class="act-section__divider"></div>
+        <p class="act-section__desc" data-en="Sign up for the activities we have planned. Reserve your spot and be part of our next adventure.">Apunta't a les activitats que tenim preparades. Reserva el teu lloc i forma part de la nostra propera aventura.</p>
+      </div>
 
-    <!-- Quan tingueu fotos d'activitats, substituïu aquest bloc per la
-         graella de fotos. Exemple de peça:
-           <div class="galeria__grid">
-             <div class="galeria__item">
-               <img src="NOM_FOTO.jpg" alt="Descripció">
-               <div class="galeria__caption" data-en="Activity name">Nom de l'activitat</div>
-             </div>
-           </div>
-         (les peces amples fan servir la classe galeria__item--wide) -->
-    <div class="galeria__empty">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M9.4 4l-1.8 2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3.6L14.6 4H9.4zm2.6 13.5A4.75 4.75 0 1 1 12 8a4.75 4.75 0 0 1 0 9.5zM12 15.5a2.75 2.75 0 1 0 0-5.5 2.75 2.75 0 0 0 0 5.5z"/>
-      </svg>
-      <p data-en="When we have activities, we will post photos here!">Quan tinguem activitats, ja hi penjarem fotos!</p>
+      <!-- ================================================
+           ESTAT BUIT — encara no tenim cap activitat programada
+           publicada. Quan tingueu la primera activitat, traieu
+           aquest bloc i descomenteu el bloc "FILTRES + GRID"
+           que hi havia aquí abans (el trobareu al control de
+           versions / còpia de seguretat anterior).
+      ================================================ -->
+      <div class="act-empty-state act-reveal">
+        <div class="act-empty-state__icon">🚧</div>
+        <h3 class="act-empty-state__title" data-en="We're preparing our next activities">Estem preparant les properes activitats</h3>
+        <p class="act-empty-state__desc" data-en="We don't have any activities scheduled yet, but we're already working on what's coming next. They'll be posted here very soon!">
+          Encara no tenim cap activitat programada, però ja estem treballant en les properes propostes.<br>
+          Molt aviat les tindràs aquí!
+        </p>
+        <a href="contacte.html" class="act-btn act-btn--primary">
+          <span data-en="Get in touch">Contacta amb nosaltres</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- =============================================
-       INSTAGRAM
-  ============================================= -->
-  <section class="instagram-section" id="instagram">
-
-    <div class="instagram-section__header">
-      <p class="instagram-section__eyebrow">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-        <span data-en="Follow us on Instagram">Segueix-nos a Instagram</span>
-      </p>
-
-      <h2 class="instagram-section__title">
-        Instagram <span>Rotaract Igualada</span>
-      </h2>
-
-      <div class="instagram-section__divider"></div>
-
-      <p class="instagram-section__subtitle" data-en="All our news and activities, updated in real time.">
-        Totes les nostres novetats i activitats actualitzades al moment.
-      </p>
-    </div>
-
-<div class="instagram-section__embeds" id="instagram-embeds">
-      <!--
-        INSTRUCCIONS PER RENOVAR ELS POSTS TU MATEIX:
-        1) Obre el teu post d'Instagram al navegador.
-        2) Clica el botó "..." del post (o "Comparteix") → "Incrusta" / "Embed".
-        3) Copia el codi que apareix (comença per <blockquote ...>) i enganxa'l aquí sota.
-        4) Guarda l'arxiu i puja'l al servidor. El post apareix automàticament.
-        Consell: deixa-hi només els 3-6 últims posts i esborra els més antics.
-        Quan afegeixis un post real, esborra una de les targetes buides de sota.
-      -->
-
-      <!-- Publicació real d'Instagram (l'embed.js la converteix en post) -->
-      <blockquote class="instagram-media"
-        data-instgrm-permalink="https://www.instagram.com/p/DcQqNmWDIUN/"
-        data-instgrm-version="14"
-        style="background:#FFF;border:0;border-radius:18px;margin:1px;max-width:340px;width:calc(100% - 2px);padding:0;">
-        <a href="https://www.instagram.com/p/DcQqNmWDIUN/" target="_blank" rel="noopener noreferrer" data-en="View this post on Instagram">Veure aquesta publicació a Instagram</a>
-      </blockquote>
-
-      <div class="instagram-section__empty">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-        <p data-en="No photos yet, but we will post some very soon!">Encara no tenim fotos, però ben aviat en penjarem!</p>
+  <!-- ============================================
+       SECCIÓ 2: ACTIVITATS REALITZADES
+  ============================================ -->
+  <section class="act-section act-section--light act-tab-section" id="realitzades">
+    <div class="act-section__inner">
+      <div class="act-section__header act-reveal">
+        <span class="act-tag act-tag--pink">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span data-en="Already done">Ja realitzades</span>
+        </span>
+        <h2 class="act-section__title"><span data-en="Activities" style="color: inherit;">Activitats</span> <span data-en="Past">Realitzades</span></h2>
+        <div class="act-section__divider act-section__divider--pink"></div>
+        <p class="act-section__desc" data-en="A collection of the moments we've shared together. Every activity is a step on the path we're building.">Un recull dels moments que hem viscut junts. Cada activitat és una petja en el camí que estem construint.</p>
       </div>
 
-      <div class="instagram-section__empty">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-        <p data-en="No photos yet, but we will post some very soon!">Encara no tenim fotos, però ben aviat en penjarem!</p>
+      <!-- ================================================
+           ESTAT BUIT — encara no s'ha realitzat cap activitat.
+           Quan tingueu la primera activitat feta, traieu aquest
+           bloc i descomenteu el bloc "FILTRES + GRID" que hi ha
+           a continuació.
+      ================================================ -->
+      <div class="act-empty-state act-reveal">
+        <div class="act-empty-state__icon">🌱</div>
+        <h3 class="act-empty-state__title" data-en="We're just getting started">Encara estem començant</h3>
+        <p class="act-empty-state__desc">
+          Encara no hem realitzat cap activitat, però aviat tindrem molts moments per compartir.<br>
+          Segueix-nos i forma part de la nostra primera aventura!
+        </p>
+        <a href="activitats.html#programades" class="act-btn act-btn--primary">
+          Veure activitats programades
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
       </div>
-    </div>
 
-    <div class="instagram-section__follow">
-      <a
-        class="instagram-section__cta"
-        href="https://www.instagram.com/rotaractigualada/"
-        target="_blank"
-        rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-        <span data-en="Follow us on Instagram">Segueix-nos a Instagram</span>
-      </a>
-    </div>
+      <!-- ================================================
+           FILTRES + GRID — descomenta quan tinguis activitats
+           realitzades. Elimina el bloc "ESTAT BUIT" de dalt.
+      ================================================
 
+      <div class="act-filters act-reveal">
+        <button class="act-filter-btn act-filter-btn--pink act-filter-btn--active" data-filter="all" data-section="real" data-en="All">Totes</button>
+        <button class="act-filter-btn act-filter-btn--pink" data-filter="social" data-section="real" data-en="Solidarity">Solidari</button>
+        <button class="act-filter-btn act-filter-btn--pink" data-filter="cultura" data-section="real" data-en="Culture">Cultura</button>
+        <button class="act-filter-btn act-filter-btn--pink" data-filter="formacio" data-section="real" data-en="Training">Formació</button>
+        <button class="act-filter-btn act-filter-btn--pink" data-filter="esport" data-section="real" data-en="Sports">Esport</button>
+      </div>
+
+      <div class="act-grid" id="grid-realitzades">
+
+        <article class="act-card act-card--done act-reveal" data-cat="social">
+          <div class="act-card__badge act-card__badge--done" data-en="Completed">Realitzada</div>
+          <div class="act-card__img-wrap">
+            <img src="FOTO_1.jpg" alt="Activitat solidària" data-fallback-img>
+            <div class="act-card__img-placeholder">🌟</div>
+          </div>
+          <div class="act-card__body">
+            <div class="act-card__meta">
+              <span class="act-card__date">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Mar 2026
+              </span>
+              <span class="act-card__participants">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                18 participants
+              </span>
+            </div>
+            <h3 class="act-card__title" data-en="Activity Name">Nom de l'Activitat</h3>
+            <p class="act-card__desc" data-en="Summary of the past activity. How many people took part, what the impact was and the highlights of the day.">Resum de l'activitat realitzada. Quants participants hi van assistir, quin va ser l'impacte i els punts destacats de la jornada.</p>
+            <div class="act-card__tags">
+              <span class="act-card__tag act-card__tag--social" data-en="Solidarity">Solidari</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="act-card act-card--done act-reveal" data-cat="cultura">
+          <div class="act-card__badge act-card__badge--done" data-en="Completed">Realitzada</div>
+          <div class="act-card__img-wrap">
+            <img src="FOTO_2.jpg" alt="Activitat cultural" data-fallback-img>
+            <div class="act-card__img-placeholder">🎨</div>
+          </div>
+          <div class="act-card__body">
+            <div class="act-card__meta">
+              <span class="act-card__date">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Feb 2026
+              </span>
+              <span class="act-card__participants">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                25 participants
+              </span>
+            </div>
+            <h3 class="act-card__title" data-en="Activity Name">Nom de l'Activitat</h3>
+            <p class="act-card__desc" data-en="A cultural activity that brought together many club members. An evening to enjoy local culture and build bonds among participants.">Una activitat cultural que va aplegar a molts membres del club. Una vetllada per gaudir de la cultura local i crear vincles entre els participants.</p>
+            <div class="act-card__tags">
+              <span class="act-card__tag act-card__tag--cultura" data-en="Culture">Cultura</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="act-card act-card--done act-reveal" data-cat="formacio">
+          <div class="act-card__badge act-card__badge--done" data-en="Completed">Realitzada</div>
+          <div class="act-card__img-wrap">
+            <img src="FOTO_3.jpg" alt="Sessió de formació" data-fallback-img>
+            <div class="act-card__img-placeholder">📖</div>
+          </div>
+          <div class="act-card__body">
+            <div class="act-card__meta">
+              <span class="act-card__date">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Gen 2026
+              </span>
+              <span class="act-card__participants">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                15 participants
+              </span>
+            </div>
+            <h3 class="act-card__title" data-en="Activity Name">Nom de l'Activitat</h3>
+            <p class="act-card__desc" data-en="A training session for club members. Practical content, open discussion and shared learning in a dynamic setting.">Sessió formativa per als membres del club. Continguts pràctics, debat obert i aprenentatge compartit en un ambient dinàmic.</p>
+            <div class="act-card__tags">
+              <span class="act-card__tag act-card__tag--formacio" data-en="Training">Formació</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="act-card act-card--done act-reveal" data-cat="esport">
+          <div class="act-card__badge act-card__badge--done" data-en="Completed">Realitzada</div>
+          <div class="act-card__img-wrap">
+            <img src="FOTO_4.jpg" alt="Activitat esportiva" data-fallback-img>
+            <div class="act-card__img-placeholder">🏃</div>
+          </div>
+          <div class="act-card__body">
+            <div class="act-card__meta">
+              <span class="act-card__date">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Des 2025
+              </span>
+              <span class="act-card__participants">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                20 participants
+              </span>
+            </div>
+            <h3 class="act-card__title" data-en="Activity Name">Nom de l'Activitat</h3>
+            <p class="act-card__desc" data-en="A sports day among club members. An afternoon of friendly competition, teamwork and great spirits on the field.">Jornada esportiva entre membres del club. Una tarda de competició amistosa, treball en equip i molt bon humor al camp.</p>
+            <div class="act-card__tags">
+              <span class="act-card__tag act-card__tag--esport" data-en="Sports">Esport</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="act-card act-card--done act-reveal" data-cat="social">
+          <div class="act-card__badge act-card__badge--done" data-en="Completed">Realitzada</div>
+          <div class="act-card__img-wrap">
+            <img src="FOTO_5.jpg" alt="Activitat solidària" data-fallback-img>
+            <div class="act-card__img-placeholder">❤️</div>
+          </div>
+          <div class="act-card__body">
+            <div class="act-card__meta">
+              <span class="act-card__date">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Nov 2025
+              </span>
+              <span class="act-card__participants">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                30 participants
+              </span>
+            </div>
+            <h3 class="act-card__title" data-en="Activity Name">Nom de l'Activitat</h3>
+            <p class="act-card__desc" data-en="A solidarity project with community impact. One of the activities of the year that generated the most response and participation from members.">Projecte solidari d'impacte comunitari. Una de les activitats de l'any que va generar més resposta i participació dels membres.</p>
+            <div class="act-card__tags">
+              <span class="act-card__tag act-card__tag--social" data-en="Solidarity">Solidari</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="act-card act-card--done act-reveal" data-cat="cultura">
+          <div class="act-card__badge act-card__badge--done" data-en="Completed">Realitzada</div>
+          <div class="act-card__img-wrap">
+            <img src="FOTO_6.jpg" alt="Activitat cultural" data-fallback-img>
+            <div class="act-card__img-placeholder">🌍</div>
+          </div>
+          <div class="act-card__body">
+            <div class="act-card__meta">
+              <span class="act-card__date">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Oct 2025
+              </span>
+              <span class="act-card__participants">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                22 participants
+              </span>
+            </div>
+            <h3 class="act-card__title" data-en="Activity Name">Nom de l'Activitat</h3>
+            <p class="act-card__desc" data-en="A cultural excursion to get to know our region better. Guided visit, discovering local heritage and unforgettable moments together.">Una excursió cultural per conèixer millor el nostre entorn. Visita guiada, descoberta del patrimoni local i moments inoblidables en grup.</p>
+            <div class="act-card__tags">
+              <span class="act-card__tag act-card__tag--cultura" data-en="Culture">Cultura</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      --><!-- /FILTRES + GRID -->
+
+    </div>
   </section>
 
-  <!-- =============================================
-       CONTACT
-  ============================================= -->
-  <section class="contact" id="contacte">
-    <div class="container">
-      <div class="section__header reveal-left">
-        <div class="section__eyebrow">
-          <span class="section__eyebrow-dot"></span>
-          <span data-en="Contact">Contacte</span>
-        </div>
-        <h2 class="section__title" data-en="Write to us">Escriu-nos</h2>
-        <p class="section__desc" data-en="Got a question, a proposal, or want to collaborate? We're here.">Tens alguna pregunta, proposta o vols col·laborar? Som aquí.</p>
+  <!-- ============================================
+       SECCIÓ 3: CALENDARI
+  ============================================ -->
+  <section class="act-section act-section--light act-tab-section" id="calendari">
+    <div class="act-section__inner">
+      <div class="act-section__header act-reveal">
+        <span class="act-tag act-tag--blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span data-en="Plan ahead">Planifica't</span>
+        </span>
+        <h2 class="act-section__title"><span data-en="Activity" style="color: inherit;">Calendari</span> <span data-en="Calendar">d'Activitats</span></h2>
+        <div class="act-section__divider"></div>
+        <p class="act-section__desc" data-en="Check when and where our upcoming activities are. Add the dates to your calendar and don't miss a thing.">Consulta quan i on tenim les properes activitats. Afegeix les dates al teu calendari i no et perdis res.</p>
       </div>
-      <div class="contact__grid">
-        <div class="contact__info reveal-left">
-          <h3 data-en="Contact channels">Canals de contacte</h3>
-          <p data-en="You can reach us by email or through our social media. We reply within 48h.">Pots contactar-nos per email o a través de les nostres xarxes socials. Responem en menys de 48h.</p>
-          <div class="contact__channels">
-            <div class="contact__channel">
-              <div class="contact__channel-icon">✉️</div>
-              <div class="contact__channel-text">
-                <h4 data-en="General">General</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
-              </div>
-            </div>
-            <div class="contact__channel">
-              <div class="contact__channel-icon">👤</div>
-              <div class="contact__channel-text">
-                <h4 data-en="Presidency">Presidència</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
-              </div>
-            </div>
-            <div class="contact__channel">
-              <div class="contact__channel-icon">🤝</div>
-              <div class="contact__channel-text">
-                <h4 data-en="Secretary">Secretari</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
-              </div>
-            </div>
+
+      <!-- Calendari interactiu -->
+      <div class="calendar-wrap act-reveal">
+        <div class="calendar">
+          <div class="calendar__header">
+            <button class="calendar__nav" id="cal-prev" aria-label="Mes anterior">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <h3 class="calendar__month-title" id="cal-title">Juliol 2026</h3>
+            <button class="calendar__nav" id="cal-next" aria-label="Mes següent">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+          <div class="calendar__days-header">
+            <span data-en="Mo">Dl</span><span data-en="Tu">Dt</span><span data-en="We">Dc</span><span data-en="Th">Dj</span><span data-en="Fr">Dv</span><span data-en="Sa">Ds</span><span data-en="Su">Dg</span>
+          </div>
+          <div class="calendar__grid" id="cal-grid"></div>
+        </div>
+
+        <!-- Llista d'esdeveniments del mes -->
+        <div class="cal-events">
+          <h4 class="cal-events__title" data-en="Events this month">Esdeveniments del mes</h4>
+          <div class="cal-events__list" id="cal-events-list">
+            <p class="cal-events__empty" data-en="Select a day to see the details.">Selecciona un dia per veure els detalls.</p>
           </div>
         </div>
-        <form class="contact__form reveal-right" id="contactForm" novalidate>
-          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field">
-          <p class="contact-form__recipient" id="recipientNote" hidden>
-            <span data-en="Writing to:">Escrivint a:</span> <strong id="recipientEmailDisplay"></strong>
-          </p>
-          <div class="form-group">
-            <label for="contactName"><span data-en="Full name">Nom complet</span> <span class="required">*</span></label>
-            <input type="text" id="contactName" name="name" required placeholder="El teu nom complet" data-en-placeholder="Your full name" />
-          </div>
-          <div class="form-group">
-            <label for="contactEmail"><span data-en="Email">Correu electrònic</span> <span class="required">*</span></label>
-            <input type="email" id="contactEmail" name="email" required placeholder="Tu@email.com" data-en-placeholder="you@email.com" />
-          </div>
-<div class="form-group">
-            <label for="contactSubject"><span data-en="Subject">Assumpte</span> <span class="required">*</span></label>
-            <div class="subject-pills" role="group" aria-label="Selecciona un assumpte">
-              <label class="subject-pill">
-                <input type="radio" name="subject" value="dubte" id="contactSubject" required>
-                <span data-en="❓ A question">❓ Un dubte</span>
-              </label>
-              <label class="subject-pill">
-                <input type="radio" name="subject" value="proposta">
-                <span data-en="💡 A proposal">💡 Una proposta</span>
-              </label>
-              <label class="subject-pill">
-                <input type="radio" name="subject" value="altre">
-                <span data-en="💬 Something else">💬 Altres</span>
-              </label>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="contactMessage"><span data-en="Message">Missatge</span> <span class="required">*</span></label>
-            <textarea id="contactMessage" name="message" required maxlength="500" placeholder="Escriu el teu missatge aquí..." data-en-placeholder="Write your message here..."></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-checkbox">
-              <input type="checkbox" id="contactPrivacy" name="privacy" value="1" required />
-              <span data-en-is-html="true" data-en="I have read and accept the &lt;a href=&quot;#&quot; class=&quot;open-avis-legal&quot;&gt;legal notice&lt;/a&gt; and the &lt;a href=&quot;#&quot; class=&quot;open-politica-privacitat&quot;&gt;privacy policy&lt;/a&gt;.">He llegit i accepto l'<a href="#" class="open-avis-legal" data-en="legal notice">avís legal</a> i la <a href="#" class="open-politica-privacitat" data-en="privacy policy">política de privacitat</a>.</span>
-            </label>
-          </div>
-          <button type="submit" class="btn btn--primary" style="width:100%; justify-content:center;">
-            <span data-en="Send message">Enviar missatge</span>
-            <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-          </button>
-          <div id="formSuccess" class="form-success" aria-live="polite">
-            <span data-en="✅ Message sent successfully! We'll reply soon.">✅ Missatge enviat correctament! Et respondrem aviat.</span>
-          </div>
-        </form>
       </div>
+
+      <!-- ================================================
+           ESTAT BUIT — encara no hi ha activitats confirmades
+           al calendari. Quan en tingueu, traieu aquest bloc i
+           torneu a activar la llista "timeline__item" de sota
+           (la trobareu al control de versions / còpia anterior).
+      ================================================ -->
+      <div class="act-empty-state act-reveal" style="margin-top: 2.5rem;">
+        <div class="act-empty-state__icon">🛠️</div>
+        <h3 class="act-empty-state__title" data-en="We're still setting up the calendar">Encara estem muntant el calendari</h3>
+        <p class="act-empty-state__desc" data-en="We haven't confirmed any dates yet, but we're already working on the next activities. Check back soon!">
+          Encara no tenim cap data confirmada, però ja estem treballant en les properes activitats.<br>
+          Torna aviat per veure les novetats!
+        </p>
+      </div>
+
     </div>
   </section>
 
 </main>
 
-  <!-- =============================================
-       FOOTER
-  ============================================= -->
+  <!-- ============================================
+       FOOTER (idèntic)
+  ============================================ -->
   <footer class="footer" role="contentinfo">
     <div class="footer__grid">
       <div>
@@ -506,24 +494,16 @@
         <p class="footer__brand-desc" data-en="We are a community of committed young people driving social and leadership projects in the Anoia region. As part of the global Rotary network, we turn our energy into community service and real action. We bring together talent, friendship and values to create a positive impact and grow together.">Som una comunitat de joves compromesos que impulsem projectes socials i de lideratge a l'Anoia. Com a part de la xarxa global de Rotary, transformem la nostra energia en servei comunitari i acció real. Unim talent, amistat i valors per generar un impacte positiu al nostre entorn i créixer junts.</p>
         <div class="footer__social" aria-label="Xarxes socials">
           <a href="https://www.instagram.com/rotaractigualada/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           </a>
           <span class="footer__social-link footer__social-link--disabled" aria-disabled="true" title="Enllaç pendent">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
           </span>
           <span class="footer__social-link footer__social-link--disabled" aria-disabled="true" title="Enllaç pendent">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
           </span>
           <span class="footer__social-link footer__social-link--disabled" aria-disabled="true" title="Enllaç pendent">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </span>
         </div>
       </div>
@@ -554,7 +534,7 @@
         </div>
         <div class="footer__contact-item">
           <span>📝</span>
-          <a href="contacte.html#inscripcio" data-en="Link to the sign-up form">Enllaç al formulari d'inscripció</a>
+          <a href="contacte.html#inscripcio" data-en="Sign-up form">Formulari d'inscripció</a>
         </div>
       </div>
     </div>
@@ -563,13 +543,15 @@
     </div>
   </footer>
 
-  <!-- =============================================
-       SCRIPTS
-  ============================================= -->
   <script src="nav.js"></script>
-  <script src="rotaractigualada.js"></script>
+  <script src="activitats.js"></script>
+
+
   <script src="legal-modals.js"></script>
 
+  <!-- =============================================
+       MODAL AVÍS LEGAL
+  ============================================= -->
   <div id="avisLegalModal" class="legal-modal-overlay">
     <div class="legal-modal-content">
       <button class="legal-modal-close" aria-label="Tancar">&times;</button>
@@ -784,6 +766,16 @@
           </p>
         </section>
 
+        <section class="legal-section">
+          <h3 data-en="1. What are cookies">1. Què són les cookies</h3>
+          <p data-en="Cookies are small text files that websites store on your device (computer, mobile or tablet) when you visit them. Among other things, they help remember your preferences, improve your browsing experience, and gather usage statistics for the website.">
+            Les cookies són petits arxius de text que els llocs web emmagatzemen al teu dispositiu
+            (ordinador, mòbil o tauleta) quan els visites. Serveixen, entre altres coses, per recordar
+            les teves preferències, millorar la teva experiència de navegació i obtenir estadístiques
+            d'ús del lloc web.
+          </p>
+        </section>
+
 <section class="legal-section">
           <h3 data-en="2. Does this website use cookies?">2. Aquest lloc web utilitza cookies?</h3>
           <p data-en="This website only uses strictly necessary local storage (localStorage) to remember your language preference — data that never leaves your device. Additionally, if you give your consent, Google Analytics (GA4) analytics cookies are installed to understand how the website is used. Without your consent, no cookies are installed and no measurement service is loaded.">
@@ -867,9 +859,9 @@
     </div>
   </div>
 
-<script src="cookie-banner.js"></script>
+  <script src="cookie-banner.js"></script>
   <script src="analytics.js"></script>
   <script src="i18n.js"></script>
-  <script async src="https://www.instagram.com/embed.js" charset="utf-8"></script>
+<script>window.addEventListener("load",function(){var l=document.querySelector(".header__logo");var r=l?l.getBoundingClientRect():null;var p=document.createElement("pre");p.id="logo";p.textContent=(r?("w="+Math.round(r.width)+" h="+Math.round(r.height)):"null")+" | "+location.href;document.body.appendChild(p);});</script>
 </body>
 </html>

@@ -97,7 +97,7 @@ textarea:focus-visible {
 }
 
 .header__logo-link { display: flex; align-items: center; flex-shrink: 0; text-decoration: none; }
-.header__logo { width: clamp(110px, 13vw, 175px); height: auto; object-fit: contain; padding-top: 6px; }
+.header__logo { width: clamp(120px, 12.5vw, 150px); height: clamp(44px, 4.8vw, 58px); object-fit: cover; object-position: center; padding-top: 6px; }
 
 .nav {
   flex: 1;
