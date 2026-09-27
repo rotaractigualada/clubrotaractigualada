@@ -505,7 +505,7 @@ body.nav-open {
   justify-content: center;
   text-align: center;
   overflow: hidden;
-  background-image: url("gestion-voluntariado-1024x423.jpg");
+  background-image: url('sopar.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -568,7 +568,7 @@ body.nav-open {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("gestion-voluntariado-1024x423.jpg");
+  background-image: url("sopar.jpg");
   background-size: cover;
   background-position: center;
   filter: brightness(20%);
