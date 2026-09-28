@@ -55,6 +55,11 @@ RedirectMatch 404 ^/form-data(/|$)
   <FilesMatch "\.(csv|txt|log|json)$">
     Require all denied
   </FilesMatch>
+  # Excepció: robots.txt ha de ser públic perquè els cercadors el llegeixin
+  # (la regla anterior el bloquejava amb un 403).
+  <Files "robots.txt">
+    Require all granted
+  </Files>
 </IfModule>
 
 # ── Compressió ──
