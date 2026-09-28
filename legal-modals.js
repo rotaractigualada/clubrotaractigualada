@@ -15,6 +15,18 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   var activeModal = null;
+  var lastTrigger = null; // element que ha obert el modal (hi tornem el focus en tancar)
+
+  // Semàntica de diàleg per als lectors de pantalla
+  document.querySelectorAll('.legal-modal-overlay').forEach(function (modal) {
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    var title = modal.querySelector('h2');
+    if (title) {
+      if (!title.id) title.id = modal.id + 'Title';
+      modal.setAttribute('aria-labelledby', title.id);
+    }
+  });
 
   // ── Formulari d'inscripció (JotForm) ──
   // S'injecta com a iframe triant el formulari segons l'idioma
@@ -71,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('message', handleJotFormMessage, false);
 
   function openModal(modal) {
+    lastTrigger = document.activeElement;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden'; // evita scroll del fons
     activeModal = modal;
@@ -86,6 +99,10 @@ document.addEventListener('DOMContentLoaded', function () {
     modal.classList.remove('active');
     document.body.style.overflow = '';
     activeModal = null;
+    if (lastTrigger && typeof lastTrigger.focus === 'function' && document.contains(lastTrigger)) {
+      lastTrigger.focus();
+    }
+    lastTrigger = null;
   }
 
   // Delegació a document: funciona encara que els elements es re-creïn

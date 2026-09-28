@@ -93,6 +93,9 @@ function clean_text(string $value, int $max): string {
 
 /* Emmagatzema temporalment els camps bruts per processar-los */
 $name    = clean_text($_POST['name'] ?? '', 120);
+/* Camps opcionals (només al formulari de contacte.html) */
+$surname = clean_text($_POST['surname'] ?? '', 120);
+$phone   = clean_text($_POST['phone'] ?? '', 30);
 $email   = strtolower(clean_text($_POST['email'] ?? '', 190));
 $subject = clean_text($_POST['subject'] ?? '', 60);
 $message = trim(strip_tags($_POST['message'] ?? ''));
@@ -124,6 +127,7 @@ $subjectLabels = [
     'altre'     => 'Altres',
 ];
 $subjectLabel = $subjectLabels[$subject] ?? $subject;
+$fullName     = trim($name . ' ' . $surname);
 
 $csvField = static function (string $v): string {
     /* Protecció davant injecció de fórmules: si el camp comença per
@@ -137,10 +141,11 @@ $csvField = static function (string $v): string {
 $csvLine = implode(';', [
     date('c'),
     $ip,
-    $csvField($name),
+    $csvField($fullName),
     $csvField($email),
     $csvField($subjectLabel),
     $csvField($message),
+    $csvField($phone),
 ]) . "\n";
 
 if (!is_dir(dirname(LOG_FILE))) {
@@ -155,8 +160,11 @@ if (!is_dir($rlDir)) {
 @file_put_contents($rlFile, (string) time(), LOCK_EX);
 
 /* Correu de notificació */
-$body  = "Nom: {$name}\n";
+$body  = "Nom: {$fullName}\n";
 $body .= "Correu: {$email}\n";
+if ($phone !== '') {
+    $body .= "Telèfon: {$phone}\n";
+}
 $body .= "Assumpte: {$subjectLabel}\n";
 $body .= "\nMissatge:\n{$message}\n";
 $body .= "\n---\nEnviat des de " . ($_SERVER['HTTP_HOST'] ?? 'web') . " (IP: {$ip})\n";
@@ -164,7 +172,6 @@ $body .= "\n---\nEnviat des de " . ($_SERVER['HTTP_HOST'] ?? 'web') . " (IP: {$i
 $headers  = 'From: ' . FROM_EMAIL . "\r\n";
 $headers .= 'Reply-To: ' . $email . "\r\n";
 $headers .= 'Content-Type: text/plain; charset=UTF-8' . "\r\n";
-$headers .= 'X-Mailer: PHP/' . phpversion() . "\r\n";
 
 $mailOk = @mail(TO_EMAIL, SUBJECT_PREFIX . 'Contacte: ' . $subjectLabel, $body, $headers);
 

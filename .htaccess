@@ -23,11 +23,14 @@ Redirect 301 /rotaractigualada.html /index.html
   Header always set Cross-Origin-Opener-Policy "same-origin"
   Header always set Cross-Origin-Resource-Policy "same-origin"
   Header always set X-Permitted-Cross-Domain-Policies "none"
+  # No revelis la versió de PHP del servidor
+  Header always unset X-Powered-By
+  Header unset X-Powered-By
   # El formulari d'inscripció (JotForm) pot demanar càmera/micròfon
   # (atribut allow de l'embed); es permet només per als iframes de jotform.com.
   Header always set Permissions-Policy "geolocation=(), camera=(self \"https://*.jotform.com\"), microphone=(self \"https://*.jotform.com\"), payment=(), usb=(), magnetometer=(), gyroscope=()"
   # style-src 'unsafe-inline' és necessari pels estils inline propis
-  # (bloc <style> de directiu.html i atributs style=); cap script inline.
+  # (atributs style= de l'HTML i dels embeds); cap script inline.
   # instagram.com només per als posts incrustats de la secció d'Instagram
   # (script d'incrustació oficial + iframes de cada post).
   # jotform.com per al formulari d'inscripció (script d'incrustació + iframe).
@@ -37,20 +40,48 @@ Redirect 301 /rotaractigualada.html /index.html
 </IfModule>
 
 # ── Bloqueig de fitxers sensibles ──
-<FilesMatch "^(\.env|\.git|composer\.json|package\.json|\.htpasswd)|\.(log|sql|csv|bak|old|tmp|swp)$">
+<FilesMatch "^(\.env|\.git|composer\.json|package\.json|package-lock\.json|\.htpasswd)|\.(log|sql|csv|bak|old|tmp|swp|mjs)$">
   Require all denied
 </FilesMatch>
 
 # ── Protecció del directori de dades del formulari ──
+# Tot el directori form-data/ (CSV de trameses i fitxers de límit
+# d'enviaments) queda inaccessible per web, sigui quina sigui l'extensió.
+RedirectMatch 404 ^/form-data(/|$)
+# Tests i dependències de desenvolupament: no s'han de servir
+RedirectMatch 404 ^/(tests|node_modules)(/|$)
+
 # El fitxer submissions.csv conté dades personals dels usuaris;
 # no s'ha de poder descarregar per web en cap cas.
 <IfModule mod_authz_core.c>
   <FilesMatch "\.(csv|txt|log|json)$">
     Require all denied
   </FilesMatch>
+  # Excepció: robots.txt ha de ser públic perquè els cercadors el llegeixin
+  # (la regla anterior el bloquejava amb un 403).
+  <Files "robots.txt">
+    Require all granted
+  </Files>
 </IfModule>
 
 # ── Compressió ──
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/json application/javascript text/javascript image/svg+xml
+</IfModule>
+
+# ── Memòria cau del navegador ──
+# Imatges i icones canvien poc: 30 dies. CSS i JS no porten versió al
+# nom del fitxer, així que es mantenen curts (1 dia) perquè els canvis
+# publicats arribin aviat. L'HTML no es desa a la memòria cau.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+  ExpiresByType image/x-icon "access plus 30 days"
+  ExpiresByType text/css "access plus 1 day"
+  ExpiresByType application/javascript "access plus 1 day"
+  ExpiresByType text/javascript "access plus 1 day"
+  ExpiresByType text/html "access plus 0 seconds"
 </IfModule>

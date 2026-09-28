@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Desactiva tots els botons
     tabBtns.forEach(b => {
       b.classList.remove('act-hero__tab-btn--active');
+      b.setAttribute('aria-pressed', 'false');
     });
 
     // Activa la secció i el botó corresponents
@@ -35,7 +36,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const targetBtn     = document.querySelector(`[data-tab="${tabId}"]`);
 
     if (targetSection) targetSection.classList.add('act-tab-section--active');
-    if (targetBtn)     targetBtn.classList.add('act-hero__tab-btn--active');
+    if (targetBtn) {
+      targetBtn.classList.add('act-hero__tab-btn--active');
+      targetBtn.setAttribute('aria-pressed', 'true');
+    }
 
     // Actualitza la URL sense fer scroll.
     // Per a la pestanya per defecte ("programades") no afegim cap hash,
@@ -137,6 +141,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ── Filtres d'activitats ── */
   const filterBtns = document.querySelectorAll('.act-filter-btn');
+  filterBtns.forEach(btn => {
+    btn.setAttribute('aria-pressed', btn.classList.contains('act-filter-btn--active') ? 'true' : 'false');
+  });
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', function () {
@@ -147,8 +154,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
       document.querySelectorAll(`[data-section="${section}"]`).forEach(b => {
         b.classList.remove('act-filter-btn--active');
+        b.setAttribute('aria-pressed', 'false');
       });
       this.classList.add('act-filter-btn--active');
+      this.setAttribute('aria-pressed', 'true');
 
       grid.querySelectorAll('.act-card').forEach(card => {
         if (filter === 'all' || card.dataset.cat === filter) {
@@ -212,8 +221,12 @@ document.addEventListener('DOMContentLoaded', function () {
       const cell    = document.createElement('div');
       cell.className = 'cal-day';
       cell.textContent = d;
+      // Accessible amb teclat: cada dia és un botó (Enter / Espai)
+      cell.setAttribute('role', 'button');
+      cell.setAttribute('tabindex', '0');
 
       const dateStr = `${currentYear}-${pad(currentMonth + 1)}-${pad(d)}`;
+      cell.dataset.date = dateStr;
 
       if (
         today.getFullYear() === currentYear &&
@@ -221,6 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
         today.getDate()     === d
       ) {
         cell.classList.add('cal-day--today');
+        cell.setAttribute('aria-current', 'date');
       }
 
       if (events[dateStr]) {
@@ -230,15 +244,29 @@ document.addEventListener('DOMContentLoaded', function () {
       if (selectedDay === dateStr) {
         cell.classList.add('cal-day--selected');
       }
+      cell.setAttribute('aria-pressed', selectedDay === dateStr ? 'true' : 'false');
 
       cell.addEventListener('click', function () {
-        selectedDay = dateStr;
-        renderCalendar();
-        showEvents(dateStr);
+        selectDay(dateStr);
+      });
+      cell.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectDay(dateStr);
+          // El graella es torna a pintar: recuperem el focus al dia triat
+          const again = calGrid.querySelector('[data-date="' + dateStr + '"]');
+          if (again) again.focus();
+        }
       });
 
       calGrid.appendChild(cell);
     }
+  }
+
+  function selectDay(dateStr) {
+    selectedDay = dateStr;
+    renderCalendar();
+    showEvents(dateStr);
   }
 
   function showEvents(dateStr) {
@@ -306,6 +334,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Si l'usuari canvia d'idioma, repinta el calendari
   // (el títol del mes es genera des d'aquí, no des de l'i18n)
-  document.addEventListener('rotaract:lang', renderCalendar);
+  document.addEventListener('rotaract:lang', function () {
+    renderCalendar();
+    // El text de la llista d'esdeveniments també es genera des d'aquí
+    if (selectedDay) {
+      showEvents(selectedDay);
+    } else {
+      calEvents.innerHTML = '<p class="cal-events__empty">' + t('Selecciona un dia per veure els detalls.', 'Select a day to see the details.', 'Selecciona un día para ver los detalles.') + '</p>';
+    }
+  });
 
 });

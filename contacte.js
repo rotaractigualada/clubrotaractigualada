@@ -4,32 +4,43 @@
 
   // ── Reveal on scroll ────────────────────────
   const revealEls = document.querySelectorAll('.reveal-left, .reveal-right');
-  const io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-  revealEls.forEach(function (el) { io.observe(el); });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    // Navegadors sense IntersectionObserver: mostra-ho tot directament
+    revealEls.forEach(function (el) { el.classList.add('active'); });
+  }
 
   // ── Char count ──────────────────────────────
   const textarea  = document.getElementById('contactMessage');
   const charCount = document.getElementById('charCount');
   const MAX_CHARS = 500;
 
+  function updateCharCount() {
+    if (!textarea || !charCount) return;
+    const len = textarea.value.length;
+    charCount.textContent = len + ' / ' + MAX_CHARS + ' ' + t('caràcters', 'characters', 'caracteres');
+    if (len > MAX_CHARS * 0.9) {
+      charCount.style.color = 'var(--pink)';
+    } else {
+      charCount.style.color = '';
+    }
+  }
+
   if (textarea && charCount) {
-    textarea.addEventListener('input', function () {
-      const len = textarea.value.length;
-      charCount.textContent = len + ' / ' + MAX_CHARS + ' ' + t('caràcters', 'characters', 'caracteres');
-      if (len > MAX_CHARS * 0.9) {
-        charCount.style.color = 'var(--pink)';
-      } else {
-        charCount.style.color = '';
-      }
-    });
+    textarea.addEventListener('input', updateCharCount);
+    // i18n.js reescriu el comptador amb «0 / 500» en canviar d'idioma:
+    // el tornem a calcular amb la longitud real del missatge.
+    document.addEventListener('rotaract:lang', updateCharCount);
   }
 
   // ── Targetes d'email: en lloc d'obrir el client de correu,
@@ -134,12 +145,17 @@
       error.className = 'form-field-error';
       group.appendChild(error);
     }
+    if (!error.id) error.id = (input.id || input.name || 'field') + 'Error';
     error.textContent = message;
     input.classList.add('input-invalid');
+    input.setAttribute('aria-invalid', 'true');
+    input.setAttribute('aria-describedby', error.id);
   }
 
   function clearFieldError(input) {
     input.classList.remove('input-invalid');
+    input.removeAttribute('aria-invalid');
+    input.removeAttribute('aria-describedby');
     const group = input.closest('.form-group');
     if (group) {
       const error = group.querySelector('.form-field-error');
@@ -150,7 +166,14 @@
   if (form) {
     form.querySelectorAll('input, select, textarea').forEach(function (field) {
       field.addEventListener('input', function () { clearFieldError(field); });
-      field.addEventListener('change', function () { clearFieldError(field); });
+      field.addEventListener('change', function () {
+        clearFieldError(field);
+        // L'error de l'assumpte es marca al grup de botons, no a cada botó
+        if (field.type === 'radio') {
+          var pills = field.closest('.subject-pills');
+          if (pills) clearFieldError(pills);
+        }
+      });
     });
 
     form.addEventListener('submit', function (e) {
@@ -233,11 +256,8 @@
           return response.json();
         })
         .then(function () {
-          form.querySelectorAll('input:not([type="radio"]):not([type="checkbox"]), select, textarea')
-              .forEach(function (el) { el.value = ''; });
-          form.querySelectorAll('input[type="radio"]')
-              .forEach(function (el) { el.checked = false; });
-          if (charCount) charCount.textContent = t('0 / 500 caràcters', '0 / 500 characters', '0 / 500 caracteres');
+          form.reset();
+          updateCharCount();
           var recipientNote = document.getElementById('recipientNote');
           if (recipientNote) recipientNote.hidden = true;
           restoreSubmit();

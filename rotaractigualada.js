@@ -59,12 +59,17 @@ document.addEventListener('DOMContentLoaded', () => {
       error.className = 'form-field-error';
       group.appendChild(error);
     }
+    if (!error.id) error.id = (input.id || input.name || 'field') + 'Error';
     error.textContent = message;
     input.classList.add('input-invalid');
+    input.setAttribute('aria-invalid', 'true');
+    input.setAttribute('aria-describedby', error.id);
   }
 
   function clearFieldError(input) {
     input.classList.remove('input-invalid');
+    input.removeAttribute('aria-invalid');
+    input.removeAttribute('aria-describedby');
     const group = input.closest('.form-group');
     if (group) {
       const error = group.querySelector('.form-field-error');

@@ -548,6 +548,10 @@ body.nav-open { overflow: hidden; }
 .contact-main {
   padding: clamp(4rem, 8vw, 6rem) 1.25rem;
   background: var(--surface-soft);
+  /* El desplaçament inicial de .reveal-right (translateX) eixamplava la
+     pàgina en mòbil. clip no crea un contenidor de scroll, així que el
+     formulari continua sent sticky. */
+  overflow-x: clip;
 }
 
 .contact-main__inner {
@@ -766,6 +770,13 @@ body.nav-open { overflow: hidden; }
 .subject-pill input:checked + span {
   background: var(--blue); color: #fff; border-color: var(--blue);
   box-shadow: 0 6px 14px rgba(47,47,150,.2);
+}
+
+/* Focus de teclat a les «pastilles» d'assumpte: el radio és invisible,
+   així que el mateix indicador de focus del lloc es mostra a la pastilla. */
+.subject-pill input:focus-visible + span {
+  outline: 3px solid rgba(218, 26, 93, 0.35);
+  outline-offset: 3px;
 }
 
 /* Char count */

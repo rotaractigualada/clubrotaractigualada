@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     /* Botons */
     tabBtns.forEach(btn => {
       btn.classList.toggle('is-active', btn.dataset.tab === tabId);
+      btn.setAttribute('aria-pressed', btn.dataset.tab === tabId ? 'true' : 'false');
     });
 
     /* Panells: amaga tots, mostra el correcte */

@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     mobileOverlay.classList.add('is-open');
     hamburger.setAttribute('aria-expanded', 'true');
     mobileNav.setAttribute('aria-hidden', 'false');
+    mobileNav.inert = false;
     mobileOverlay.setAttribute('aria-hidden', 'false');
     document.body.classList.add('nav-open');
     mobileNavClose.focus();
@@ -32,6 +33,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // treu el focus de l'enllaç tocat i cancel·la l'acció per defecte.
     setTimeout(function () {
       mobileNav.setAttribute('aria-hidden', 'true');
+      // inert: mentre està tancat, els enllaços del menú no reben el focus
+      mobileNav.inert = true;
       mobileOverlay.setAttribute('aria-hidden', 'true');
       hamburger.focus();
     }, 0);
