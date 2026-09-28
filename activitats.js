@@ -306,6 +306,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Si l'usuari canvia d'idioma, repinta el calendari
   // (el títol del mes es genera des d'aquí, no des de l'i18n)
-  document.addEventListener('rotaract:lang', renderCalendar);
+  document.addEventListener('rotaract:lang', function () {
+    renderCalendar();
+    // El text de la llista d'esdeveniments també es genera des d'aquí
+    if (selectedDay) {
+      showEvents(selectedDay);
+    } else {
+      calEvents.innerHTML = '<p class="cal-events__empty">' + t('Selecciona un dia per veure els detalls.', 'Select a day to see the details.', 'Selecciona un día para ver los detalles.') + '</p>';
+    }
+  });
 
 });

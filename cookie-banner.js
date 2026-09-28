@@ -77,7 +77,7 @@
     if (e.key === 'Escape') {
       var banner = document.getElementById('cookieBanner');
       if (banner) {
-        setConsent('rejected');
+        setConsent('reject');
         hideBanner();
       }
     }

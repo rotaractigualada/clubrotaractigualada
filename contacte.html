@@ -327,8 +327,8 @@
 
             <!-- Assumpte -->
             <div class="form-group">
-              <label for="contactSubject"><span data-en="Subject">Assumpte</span> <span class="required">*</span></label>
-              <div class="subject-pills" role="group" aria-label="Selecciona un assumpte">
+              <label id="contactSubjectLabel"><span data-en="Subject">Assumpte</span> <span class="required">*</span></label>
+              <div class="subject-pills" role="radiogroup" aria-labelledby="contactSubjectLabel" aria-required="true">
                 <label class="subject-pill">
                   <input type="radio" name="subject" value="dubte" id="contactSubject" required>
                   <span data-en="❓ A question">❓ Un dubte</span>

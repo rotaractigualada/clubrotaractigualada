@@ -20,16 +20,22 @@
   const charCount = document.getElementById('charCount');
   const MAX_CHARS = 500;
 
+  function updateCharCount() {
+    if (!textarea || !charCount) return;
+    const len = textarea.value.length;
+    charCount.textContent = len + ' / ' + MAX_CHARS + ' ' + t('caràcters', 'characters', 'caracteres');
+    if (len > MAX_CHARS * 0.9) {
+      charCount.style.color = 'var(--pink)';
+    } else {
+      charCount.style.color = '';
+    }
+  }
+
   if (textarea && charCount) {
-    textarea.addEventListener('input', function () {
-      const len = textarea.value.length;
-      charCount.textContent = len + ' / ' + MAX_CHARS + ' ' + t('caràcters', 'characters', 'caracteres');
-      if (len > MAX_CHARS * 0.9) {
-        charCount.style.color = 'var(--pink)';
-      } else {
-        charCount.style.color = '';
-      }
-    });
+    textarea.addEventListener('input', updateCharCount);
+    // i18n.js reescriu el comptador amb «0 / 500» en canviar d'idioma:
+    // el tornem a calcular amb la longitud real del missatge.
+    document.addEventListener('rotaract:lang', updateCharCount);
   }
 
   // ── Targetes d'email: en lloc d'obrir el client de correu,
@@ -233,11 +239,8 @@
           return response.json();
         })
         .then(function () {
-          form.querySelectorAll('input:not([type="radio"]):not([type="checkbox"]), select, textarea')
-              .forEach(function (el) { el.value = ''; });
-          form.querySelectorAll('input[type="radio"]')
-              .forEach(function (el) { el.checked = false; });
-          if (charCount) charCount.textContent = t('0 / 500 caràcters', '0 / 500 characters', '0 / 500 caracteres');
+          form.reset();
+          updateCharCount();
           var recipientNote = document.getElementById('recipientNote');
           if (recipientNote) recipientNote.hidden = true;
           restoreSubmit();
