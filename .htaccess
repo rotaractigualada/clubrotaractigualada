@@ -23,6 +23,9 @@ Redirect 301 /rotaractigualada.html /index.html
   Header always set Cross-Origin-Opener-Policy "same-origin"
   Header always set Cross-Origin-Resource-Policy "same-origin"
   Header always set X-Permitted-Cross-Domain-Policies "none"
+  # No revelis la versió de PHP del servidor
+  Header always unset X-Powered-By
+  Header unset X-Powered-By
   # El formulari d'inscripció (JotForm) pot demanar càmera/micròfon
   # (atribut allow de l'embed); es permet només per als iframes de jotform.com.
   Header always set Permissions-Policy "geolocation=(), camera=(self \"https://*.jotform.com\"), microphone=(self \"https://*.jotform.com\"), payment=(), usb=(), magnetometer=(), gyroscope=()"
@@ -42,6 +45,10 @@ Redirect 301 /rotaractigualada.html /index.html
 </FilesMatch>
 
 # ── Protecció del directori de dades del formulari ──
+# Tot el directori form-data/ (CSV de trameses i fitxers de límit
+# d'enviaments) queda inaccessible per web, sigui quina sigui l'extensió.
+RedirectMatch 404 ^/form-data(/|$)
+
 # El fitxer submissions.csv conté dades personals dels usuaris;
 # no s'ha de poder descarregar per web en cap cas.
 <IfModule mod_authz_core.c>

@@ -172,7 +172,6 @@ $body .= "\n---\nEnviat des de " . ($_SERVER['HTTP_HOST'] ?? 'web') . " (IP: {$i
 $headers  = 'From: ' . FROM_EMAIL . "\r\n";
 $headers .= 'Reply-To: ' . $email . "\r\n";
 $headers .= 'Content-Type: text/plain; charset=UTF-8' . "\r\n";
-$headers .= 'X-Mailer: PHP/' . phpversion() . "\r\n";
 
 $mailOk = @mail(TO_EMAIL, SUBJECT_PREFIX . 'Contacte: ' . $subjectLabel, $body, $headers);
 
