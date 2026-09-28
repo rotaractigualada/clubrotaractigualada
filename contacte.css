@@ -548,6 +548,10 @@ body.nav-open { overflow: hidden; }
 .contact-main {
   padding: clamp(4rem, 8vw, 6rem) 1.25rem;
   background: var(--surface-soft);
+  /* El desplaçament inicial de .reveal-right (translateX) eixamplava la
+     pàgina en mòbil. clip no crea un contenidor de scroll, així que el
+     formulari continua sent sticky. */
+  overflow-x: clip;
 }
 
 .contact-main__inner {
