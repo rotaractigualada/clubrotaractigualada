@@ -339,20 +339,74 @@
       <p class="galeria__subtitle" data-en="Moments we've shared together throughout our journey.">Moments que hem viscut junts al llarg de la nostra trajectòria.</p>
     </div>
 
-    <!-- Quan tingueu fotos d'activitats, substituïu aquest bloc per la
-         graella de fotos. Exemple de peça:
-           <div class="galeria__grid">
-             <div class="galeria__item">
-               <img src="NOM_FOTO.jpg" alt="Descripció">
-               <div class="galeria__caption" data-en="Activity name">Nom de l'activitat</div>
-             </div>
-           </div>
-         (les peces amples fan servir la classe galeria__item--wide) -->
-    <div class="galeria__empty">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M9.4 4l-1.8 2H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3.6L14.6 4H9.4zm2.6 13.5A4.75 4.75 0 1 1 12 8a4.75 4.75 0 0 1 0 9.5zM12 15.5a2.75 2.75 0 1 0 0-5.5 2.75 2.75 0 0 0 0 5.5z"/>
-      </svg>
-      <p data-en="When we have activities, we will post photos here!">Quan tinguem activitats, ja hi penjarem fotos!</p>
+    <!-- Galeria de fotos (mosaic). Per afegir-ne una de nova:
+         1) Desa la foto a galeria/ en dues mides: NOM-800.jpg i NOM-1600.jpg
+            (costat llarg de 800 i 1600 px).
+         2) Copia un bloc <a class="galeria__item ..."> i canvia'n les rutes,
+            l'alt (descripció de la foto) i el peu (català i data-en en anglès).
+         Modificadors: galeria__item--featured (gran), --tall (vertical),
+         --wide (horitzontal). Clicar una foto l'obre en gran (galeria.js). -->
+    <div class="galeria__grid galeria__grid--mosaic" id="galeriaGrid">
+      <a class="galeria__item galeria__item--featured" href="galeria/grup-1600.jpg">
+        <img src="galeria/grup-800.jpg"
+             srcset="galeria/grup-800.jpg 800w, galeria/grup-1600.jpg 1600w"
+             sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px"
+             width="800" height="534" loading="lazy" decoding="async"
+             style="object-position: center 40%;"
+             alt="Foto de grup de tots els assistents al sopar, joves de Rotaract i socis de Rotary">
+        <span class="galeria__zoom" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+        </span>
+        <span class="galeria__caption" data-en="The whole Rotary family, all together">La família rotària, tots junts</span>
+      </a>
+      <a class="galeria__item galeria__item--tall" href="galeria/certificat-1600.jpg">
+        <img src="galeria/certificat-800.jpg"
+             srcset="galeria/certificat-800.jpg 800w, galeria/certificat-1600.jpg 1600w"
+             sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px"
+             width="534" height="800" loading="lazy" decoding="async"
+             style="object-position: center 30%;"
+             alt="Dos socis de Rotaract Igualada sostenen el certificat de Rotary International del club, amb una dona al mig">
+        <span class="galeria__zoom" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+        </span>
+        <span class="galeria__caption" data-en="Presentation of the Rotary International certificate">Lliurament del certificat de Rotary International</span>
+      </a>
+      <a class="galeria__item galeria__item--tall" href="galeria/campana-1600.jpg">
+        <img src="galeria/campana-800.jpg"
+             srcset="galeria/campana-800.jpg 800w, galeria/campana-1600.jpg 1600w"
+             sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px"
+             width="534" height="800" loading="lazy" decoding="async"
+             style="object-position: center 30%;"
+             alt="Un soci de Rotaract Igualada sosté la campana del club, acompanyat de dues dones">
+        <span class="galeria__zoom" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+        </span>
+        <span class="galeria__caption" data-en="Presenting the club bell">Entrega de la campana del club</span>
+      </a>
+      <a class="galeria__item galeria__item--wide" href="galeria/equip-1600.jpg">
+        <img src="galeria/equip-800.jpg"
+             srcset="galeria/equip-800.jpg 800w, galeria/equip-1600.jpg 1600w"
+             sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px"
+             width="800" height="534" loading="lazy" decoding="async"
+             style="object-position: center 35%;"
+             alt="Els joves de Rotaract Igualada posen junts, dempeus, amb un soci de Rotary amb el collar del càrrec">
+        <span class="galeria__zoom" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+        </span>
+        <span class="galeria__caption" data-en="The Rotaract Igualada team">L'equip de Rotaract Igualada</span>
+      </a>
+      <a class="galeria__item galeria__item--wide" href="galeria/sopar-1600.jpg">
+        <img src="galeria/sopar-800.jpg"
+             srcset="galeria/sopar-800.jpg 800w, galeria/sopar-1600.jpg 1600w"
+             sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px"
+             width="800" height="534" loading="lazy" decoding="async"
+             style="object-position: center 45%;"
+             alt="Assistents asseguts a les taules del sopar escoltant els parlaments">
+        <span class="galeria__zoom" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+        </span>
+        <span class="galeria__caption" data-en="A dinner to remember">Un sopar per recordar</span>
+      </a>
     </div>
   </section>
 
@@ -601,6 +655,7 @@
   ============================================= -->
   <script src="nav.js"></script>
   <script src="rotaractigualada.js"></script>
+  <script src="galeria.js"></script>
   <script src="legal-modals.js"></script>
 
   <div id="avisLegalModal" class="legal-modal-overlay">

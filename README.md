@@ -18,6 +18,7 @@ servidor Apache (fa servir `.htaccess`).
 | `cookie-banner.js`, `analytics.js` | Consentiment de cookies i Google Analytics (només si s'accepta) |
 | `rotaractigualada.js`, `contacte.js` | Formularis de contacte (validació + enviament) |
 | `activitats.js`, `directiu.js`, `nosaltres.js`, `scroll-top.js` | Interaccions de cada pàgina |
+| `galeria.js`, `galeria/` | Mosaic de fotos de la portada i visor a pantalla completa (fotos en mides 800 i 1600 px) |
 | `csrf.php`, `form-handler.php` | Backend del formulari: token CSRF, validació, correu i còpia a `form-data/submissions.csv` |
 | `.htaccess` | HTTPS, capçaleres de seguretat (CSP), compressió, memòria cau i fitxers protegits |
 | `sitemap.xml`, `robots.txt` | SEO |

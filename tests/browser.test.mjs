@@ -161,3 +161,32 @@ test('canvi d\'idioma: tradueix i es recorda en canviar de pàgina', async (t) =
   assert.equal(await page.getAttribute('html', 'lang'), 'en');
   await context.close();
 });
+
+test('galeria: el visor s\'obre, navega amb les fletxes i torna el focus', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context, errors } = await open('index.html');
+  const items = page.locator('#galeriaGrid .galeria__item');
+  assert.ok((await items.count()) >= 1);
+  // Les imatges de la graella existeixen
+  const broken = await page.evaluate(async () => {
+    const imgs = [...document.querySelectorAll('#galeriaGrid img')];
+    await Promise.all(imgs.map((i) => (i.loading = 'eager', i.decode().catch(() => {}))));
+    return imgs.filter((i) => !i.naturalWidth).map((i) => i.src);
+  });
+  assert.deepEqual(broken, []);
+
+  await items.first().focus();
+  await page.keyboard.press('Enter');
+  const box = page.locator('.lightbox');
+  await page.waitForFunction(() => document.querySelector('.lightbox').classList.contains('is-open'));
+  assert.equal(await box.getAttribute('role'), 'dialog');
+  assert.ok(await page.evaluate(() => document.activeElement.classList.contains('lightbox__close')));
+  assert.match(await page.locator('.lightbox__counter').innerText(), /^1 \//);
+  await page.keyboard.press('ArrowRight');
+  assert.match(await page.locator('.lightbox__counter').innerText(), /^2 \//);
+  await page.keyboard.press('Escape');
+  assert.ok(!(await box.evaluate((b) => b.classList.contains('is-open'))));
+  assert.ok(await page.evaluate(() => document.activeElement.matches('#galeriaGrid .galeria__item')));
+  assert.deepEqual(errors, []);
+  await context.close();
+});
