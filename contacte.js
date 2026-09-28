@@ -140,12 +140,17 @@
       error.className = 'form-field-error';
       group.appendChild(error);
     }
+    if (!error.id) error.id = (input.id || input.name || 'field') + 'Error';
     error.textContent = message;
     input.classList.add('input-invalid');
+    input.setAttribute('aria-invalid', 'true');
+    input.setAttribute('aria-describedby', error.id);
   }
 
   function clearFieldError(input) {
     input.classList.remove('input-invalid');
+    input.removeAttribute('aria-invalid');
+    input.removeAttribute('aria-describedby');
     const group = input.closest('.form-group');
     if (group) {
       const error = group.querySelector('.form-field-error');
@@ -156,7 +161,14 @@
   if (form) {
     form.querySelectorAll('input, select, textarea').forEach(function (field) {
       field.addEventListener('input', function () { clearFieldError(field); });
-      field.addEventListener('change', function () { clearFieldError(field); });
+      field.addEventListener('change', function () {
+        clearFieldError(field);
+        // L'error de l'assumpte es marca al grup de botons, no a cada botó
+        if (field.type === 'radio') {
+          var pills = field.closest('.subject-pills');
+          if (pills) clearFieldError(pills);
+        }
+      });
     });
 
     form.addEventListener('submit', function (e) {

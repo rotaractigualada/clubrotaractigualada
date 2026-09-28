@@ -30,8 +30,8 @@
   <!-- Mobile overlay -->
   <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
 
-  <nav class="mobile-nav" id="mobileNav" aria-label="Menú mòbil" aria-hidden="true">
-    <button class="mobile-nav__close" id="mobileNavClose" type="button" aria-label="Tancar menú">
+  <nav class="mobile-nav" id="mobileNav" aria-label="Menú mòbil" aria-hidden="true" inert>
+    <button type="button" class="mobile-nav__close" id="mobileNavClose" type="button" aria-label="Tancar menú">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -487,7 +487,7 @@
       </div>
 
       <div>
-        <h4 class="footer__heading" data-en="Navigation">Navegació</h4>
+        <h3 class="footer__heading" data-en="Navigation">Navegació</h3>
         <ul class="footer__links">
           <li><a href="index.html" data-en="Home">Inici</a></li>
           <li><a href="nosaltres.html" data-en="About us">Nosaltres</a></li>
@@ -499,7 +499,7 @@
       </div>
 
       <div>
-        <h4 class="footer__heading" data-en="Legal">Legal</h4>
+        <h3 class="footer__heading" data-en="Legal">Legal</h3>
         <ul class="footer__links">
           <li><a href="#" class="open-politica-privacitat" data-en="Privacy policy">Política de privacitat</a></li>
           <li><a href="#" class="open-politica-cookies" data-en="Cookie policy">Política de cookies</a></li>
@@ -508,7 +508,7 @@
       </div>
 
       <div>
-        <h4 class="footer__heading" data-en="Contact">Contacte</h4>
+        <h3 class="footer__heading" data-en="Contact">Contacte</h3>
         <div class="footer__contact-item">
           <span aria-hidden="true">✉️</span>
           <a href="contacte.html?correu=club">rotaractigualada@gmail.com</a>
@@ -537,7 +537,7 @@
   ============================================= -->
   <div id="avisLegalModal" class="legal-modal-overlay">
     <div class="legal-modal-content">
-      <button class="legal-modal-close" aria-label="Tancar">&times;</button>
+      <button type="button" class="legal-modal-close" aria-label="Tancar">&times;</button>
 
       <div class="legal-container">
         <h2 data-en="Legal Notice">Avís Legal</h2>
@@ -636,7 +636,7 @@
   ============================================= -->
   <div id="politicaPrivacitatModal" class="legal-modal-overlay">
     <div class="legal-modal-content">
-      <button class="legal-modal-close" aria-label="Tancar">&times;</button>
+      <button type="button" class="legal-modal-close" aria-label="Tancar">&times;</button>
 
       <div class="legal-container">
         <h2 data-en="Privacy Policy">Política de Privacitat</h2>
@@ -734,7 +734,7 @@
   ============================================= -->
   <div id="politicaCookiesModal" class="legal-modal-overlay">
     <div class="legal-modal-content">
-      <button class="legal-modal-close" aria-label="Tancar">&times;</button>
+      <button type="button" class="legal-modal-close" aria-label="Tancar">&times;</button>
 
       <div class="legal-container">
         <h2 data-en="Cookie Policy">Política de Cookies</h2>
@@ -847,7 +847,7 @@
   ============================================= -->
   <div id="signupFormModal" class="legal-modal-overlay">
     <div class="legal-modal-content legal-modal-content--wide">
-      <button class="legal-modal-close" aria-label="Tancar">&times;</button>
+      <button type="button" class="legal-modal-close" aria-label="Tancar">&times;</button>
       <div class="legal-container signup-modal">
         <h2 data-en="Registration form">Formulari d'inscripció</h2>
         <div class="signup-modal__embed" id="signupFormEmbed"></div>
