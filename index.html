@@ -2,30 +2,33 @@
 <html lang="ca">
 <head>
   <meta charset="UTF-8">
+  <script src="redirect-domini.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Club Rotaract d'Igualada</title>
+<title>Rotaract Igualada — Club Rotaract d'Igualada, joves de l'Anoia</title>
   <meta name="description" content="Rotaract Igualada: joves compromesos amb projectes socials i de lideratge a l'Anoia. Descobreix les nostres activitats, la nostra història i com unir-t'hi.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Rotaract Igualada">
   <meta property="og:locale" content="ca_ES">
   <meta property="og:title" content="Rotaract Igualada — Joventut i lideratge a l'Anoia">
   <meta property="og:description" content="Joves compromesos amb projectes socials i de lideratge a l'Anoia. Descobreix les nostres activitats i com unir-t'hi.">
-  <meta property="og:url" content="https://www.rotaractigualada.org/">
-  <meta property="og:image" content="https://www.rotaractigualada.org/FOTO_1.jpg">
-  <meta property="og:image:width" content="1024">
-  <meta property="og:image:height" content="423">
-  <meta property="og:image:alt" content="Rotaract Igualada">
+  <meta property="og:url" content="https://rotaractigualada.org/">
+  <meta property="og:image" content="https://rotaractigualada.org/og-rotaract-igualada.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Els joves del Club Rotaract d'Igualada">
+  <meta name="twitter:image" content="https://rotaractigualada.org/og-rotaract-igualada.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="https://www.rotaractigualada.org/">
+  <link rel="canonical" href="https://rotaractigualada.org/">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "NGO",
     "name": "Club Rotaract d'Igualada",
     "alternateName": "Rotaract Igualada",
-    "url": "https://www.rotaractigualada.org/",
-    "logo": "https://www.rotaractigualada.org/logorotaractbo_square.png",
-    "image": "https://www.rotaractigualada.org/FOTO_1.jpg",
+    "url": "https://rotaractigualada.org/",
+    "logo": "https://rotaractigualada.org/logorotaractbo_square.png",
+    "image": "https://rotaractigualada.org/og-rotaract-igualada.jpg",
     "description": "Joves compromesos amb projectes socials i de lideratge a l'Anoia.",
     "email": "rotaractigualada@gmail.com",
     "address": {
@@ -508,27 +511,28 @@
               <div class="contact__channel-icon" aria-hidden="true">✉️</div>
               <div class="contact__channel-text">
                 <h4 data-en="General">General</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
+                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com" data-recipient="club">rotaractigualada@gmail.com</a>
               </div>
             </div>
             <div class="contact__channel">
               <div class="contact__channel-icon" aria-hidden="true">👤</div>
               <div class="contact__channel-text">
                 <h4 data-en="Presidency">Presidència</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
+                <a href="#contactForm" class="contact-email-link" data-email="gerard.lopez@rotary2202.org" data-recipient="presidencia">gerard.lopez@rotary2202.org</a>
               </div>
             </div>
             <div class="contact__channel">
               <div class="contact__channel-icon" aria-hidden="true">🤝</div>
               <div class="contact__channel-text">
                 <h4 data-en="Secretary">Secretari</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
+                <a href="#contactForm" class="contact-email-link" data-email="luca.santos@rotary2202.org" data-recipient="secretaria">luca.santos@rotary2202.org</a>
               </div>
             </div>
           </div>
         </div>
         <form class="contact__form reveal-right" id="contactForm" novalidate>
           <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field">
+          <input type="hidden" name="recipient" id="contactRecipient" value="club">
           <p class="contact-form__recipient" id="recipientNote" hidden>
             <span data-en="Writing to:">Escrivint a:</span> <strong id="recipientEmailDisplay"></strong>
           </p>

@@ -13,6 +13,14 @@ declare(strict_types=1);
    FROM_EMAIL  → remitent; molts hostings exigeixen que sigui un
                  correu del mateix domini (web@el-teu-domini).      */
 const TO_EMAIL          = 'rotaractigualada@gmail.com';
+/* Destinataris que es poden triar des de les targetes de contacte.
+   El formulari només envia la clau; l'adreça es decideix aquí
+   (mai es llegeix una adreça de la petició). Clau desconeguda → club. */
+const RECIPIENTS = [
+    'club'        => ['email' => TO_EMAIL,                      'label' => 'General'],
+    'presidencia' => ['email' => 'gerard.lopez@rotary2202.org', 'label' => 'Presidència'],
+    'secretaria'  => ['email' => 'luca.santos@rotary2202.org',  'label' => 'Secretaria'],
+];
 const FROM_EMAIL        = 'web@rotaractigualada.org';
 const SUBJECT_PREFIX    = '[Web Rotaract] ';
 const LOG_FILE          = __DIR__ . '/form-data/submissions.csv';
@@ -105,6 +113,11 @@ if (function_exists('mb_substr')) {
     $message = substr($message, 0, 2000);
 }
 $privacy = (string) ($_POST['privacy'] ?? '');
+$recipientKey = (string) ($_POST['recipient'] ?? 'club');
+if (!array_key_exists($recipientKey, RECIPIENTS)) {
+    $recipientKey = 'club';
+}
+$recipient = RECIPIENTS[$recipientKey];
 
 $errors = [];
 if ($name === '')                                  { $errors[] = 'name'; }
@@ -146,6 +159,7 @@ $csvLine = implode(';', [
     $csvField($subjectLabel),
     $csvField($message),
     $csvField($phone),
+    $csvField($recipient['label']),
 ]) . "\n";
 
 if (!is_dir(dirname(LOG_FILE))) {
@@ -166,14 +180,24 @@ if ($phone !== '') {
     $body .= "Telèfon: {$phone}\n";
 }
 $body .= "Assumpte: {$subjectLabel}\n";
+$body .= "Per a: {$recipient['label']} ({$recipient['email']})\n";
 $body .= "\nMissatge:\n{$message}\n";
 $body .= "\n---\nEnviat des de " . ($_SERVER['HTTP_HOST'] ?? 'web') . " (IP: {$ip})\n";
 
 $headers  = 'From: ' . FROM_EMAIL . "\r\n";
 $headers .= 'Reply-To: ' . $email . "\r\n";
+/* Si el missatge és per a presidència o secretaria, el club en rep còpia */
+if ($recipient['email'] !== TO_EMAIL) {
+    $headers .= 'Cc: ' . TO_EMAIL . "\r\n";
+}
 $headers .= 'Content-Type: text/plain; charset=UTF-8' . "\r\n";
 
-$mailOk = @mail(TO_EMAIL, SUBJECT_PREFIX . 'Contacte: ' . $subjectLabel, $body, $headers);
+$mailSubject = SUBJECT_PREFIX . 'Contacte: ' . $subjectLabel
+    . ($recipientKey !== 'club' ? ' (' . $recipient['label'] . ')' : '');
+if (function_exists('mb_encode_mimeheader')) {
+    $mailSubject = mb_encode_mimeheader($mailSubject, 'UTF-8');
+}
+$mailOk = @mail($recipient['email'], $mailSubject, $body, $headers);
 
 if (!$mailOk) {
     /* El missatge no s'ha perdut (queda al CSV), però cal avisar */

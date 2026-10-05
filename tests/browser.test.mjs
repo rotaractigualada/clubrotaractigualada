@@ -122,7 +122,7 @@ test('formulari de contacte: enviament complet fins al backend', async (t) => {
   // vol dir que ha passat el CSRF i la validació del servidor.
   assert.ok([200, 500].includes(response.status()), 'estat ' + response.status());
   const csv = readFileSync(join(server.dir, 'form-data', 'submissions.csv'), 'utf8');
-  assert.match(csv, /"Anna Puig";"anna@example\.com";"Proposta";"Una proposta de prova";"600000000"/);
+  assert.match(csv, /"Anna Puig";"anna@example\.com";"Proposta";"Una proposta de prova";"600000000";"General"/);
   await context.close();
 });
 
@@ -188,5 +188,41 @@ test('galeria: el visor s\'obre, navega amb les fletxes i torna el focus', async
   assert.ok(!(await box.evaluate((b) => b.classList.contains('is-open'))));
   assert.ok(await page.evaluate(() => document.activeElement.matches('#galeriaGrid .galeria__item')));
   assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('targetes de correu: mostren l\'adreça i el missatge va a la persona triada', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context } = await open('contacte.html');
+  const cards = page.locator('.qc-card.contact-email-link');
+  assert.deepEqual(
+    (await cards.locator('.qc-card__text span').allInnerTexts()).map((x) => x.trim()),
+    ['rotaractigualada@gmail.com', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org']
+  );
+  await page.click('.qc-card[data-recipient="secretaria"]');
+  assert.equal((await page.locator('#recipientEmailDisplay').innerText()).trim(), 'luca.santos@rotary2202.org');
+  assert.equal(await page.inputValue('#contactRecipient'), 'secretaria');
+  await context.close();
+});
+
+test('còpia de GitHub Pages: redirigeix a rotaractigualada.org mantenint la pàgina', async (t) => {
+  if (skip) return t.skip(skip);
+  const context = await browser.newContext();
+  // Simula la web servida des de github.io amb els fitxers locals
+  await context.route('https://rotaractigualada.github.io/**', async (route) => {
+    const path = new URL(route.request().url()).pathname.replace('/clubrotaractigualada/', '/') || '/';
+    const res = await fetch(server.url + path);
+    await route.fulfill({ status: res.status, headers: { 'content-type': res.headers.get('content-type') || 'text/html' }, body: Buffer.from(await res.arrayBuffer()) });
+  });
+  const visited = [];
+  await context.route('https://rotaractigualada.org/**', (route) => {
+    visited.push(route.request().url());
+    route.fulfill({ status: 200, contentType: 'text/html', body: '<p>oficial</p>' });
+  });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1|rotaractigualada\.)/, (route) => route.abort());
+  const page = await context.newPage();
+  await page.goto('https://rotaractigualada.github.io/clubrotaractigualada/nosaltres.html#rotaract-igualada');
+  await page.waitForURL('https://rotaractigualada.org/**');
+  assert.equal(page.url(), 'https://rotaractigualada.org/nosaltres.html#rotaract-igualada');
   await context.close();
 });
