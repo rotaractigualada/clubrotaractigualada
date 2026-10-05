@@ -212,35 +212,35 @@
     <!-- Canals ràpids -->
     <section class="quick-channels">
       <div class="quick-channels__inner">
-        <a href="#contactForm" class="qc-card qc-card--blue contact-email-link" data-email="rotaractigualada@gmail.com">
+        <a href="#contactForm" class="qc-card qc-card--blue contact-email-link" data-email="rotaractigualada@gmail.com" data-recipient="club">
           <div class="qc-card__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
           <div class="qc-card__text">
             <h3 data-en="General">General</h3>
-            <span data-en="general email">correu general</span>
+            <span>rotaractigualada@gmail.com</span>
           </div>
           <svg class="qc-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
 
-        <a href="#contactForm" class="qc-card qc-card--pink contact-email-link" data-email="rotaractigualada@gmail.com">
+        <a href="#contactForm" class="qc-card qc-card--pink contact-email-link" data-email="gerard.lopez@rotary2202.org" data-recipient="presidencia">
           <div class="qc-card__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
           <div class="qc-card__text">
             <h3 data-en="Presidency">Presidència</h3>
-            <span data-en="president's email">correu president</span>
+            <span>gerard.lopez@rotary2202.org</span>
           </div>
           <svg class="qc-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
 
-        <a href="#contactForm" class="qc-card qc-card--blue contact-email-link" data-email="rotaractigualada@gmail.com">
+        <a href="#contactForm" class="qc-card qc-card--blue contact-email-link" data-email="luca.santos@rotary2202.org" data-recipient="secretaria">
           <div class="qc-card__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
           <div class="qc-card__text">
             <h3 data-en="Secretary">Secretari</h3>
-            <span data-en="secretary's email">correu secretari</span>
+            <span>luca.santos@rotary2202.org</span>
           </div>
           <svg class="qc-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
@@ -297,6 +297,7 @@
         <div class="contact-form-wrap reveal-right">
           <form class="contact-form" id="contactForm" novalidate>
             <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field">
+            <input type="hidden" name="recipient" id="contactRecipient" value="club">
             <div class="contact-form__header">
               <h2 class="contact-form__title" data-en="Send us a message">Envia'ns un missatge</h2>
               <p class="contact-form__subtitle" data-en="Use this form for questions, proposals or anything else. All fields marked with * are required.">Fes servir aquest formulari per a dubtes, propostes o qüestions diverses. Tots els camps marcats amb * són obligatoris.</p>

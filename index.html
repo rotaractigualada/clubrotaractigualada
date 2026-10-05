@@ -510,27 +510,28 @@
               <div class="contact__channel-icon" aria-hidden="true">✉️</div>
               <div class="contact__channel-text">
                 <h4 data-en="General">General</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
+                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com" data-recipient="club">rotaractigualada@gmail.com</a>
               </div>
             </div>
             <div class="contact__channel">
               <div class="contact__channel-icon" aria-hidden="true">👤</div>
               <div class="contact__channel-text">
                 <h4 data-en="Presidency">Presidència</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
+                <a href="#contactForm" class="contact-email-link" data-email="gerard.lopez@rotary2202.org" data-recipient="presidencia">gerard.lopez@rotary2202.org</a>
               </div>
             </div>
             <div class="contact__channel">
               <div class="contact__channel-icon" aria-hidden="true">🤝</div>
               <div class="contact__channel-text">
                 <h4 data-en="Secretary">Secretari</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="rotaractigualada@gmail.com">rotaractigualada@gmail.com</a>
+                <a href="#contactForm" class="contact-email-link" data-email="luca.santos@rotary2202.org" data-recipient="secretaria">luca.santos@rotary2202.org</a>
               </div>
             </div>
           </div>
         </div>
         <form class="contact__form reveal-right" id="contactForm" novalidate>
           <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field">
+          <input type="hidden" name="recipient" id="contactRecipient" value="club">
           <p class="contact-form__recipient" id="recipientNote" hidden>
             <span data-en="Writing to:">Escrivint a:</span> <strong id="recipientEmailDisplay"></strong>
           </p>

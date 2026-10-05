@@ -122,7 +122,7 @@ test('formulari de contacte: enviament complet fins al backend', async (t) => {
   // vol dir que ha passat el CSRF i la validació del servidor.
   assert.ok([200, 500].includes(response.status()), 'estat ' + response.status());
   const csv = readFileSync(join(server.dir, 'form-data', 'submissions.csv'), 'utf8');
-  assert.match(csv, /"Anna Puig";"anna@example\.com";"Proposta";"Una proposta de prova";"600000000"/);
+  assert.match(csv, /"Anna Puig";"anna@example\.com";"Proposta";"Una proposta de prova";"600000000";"General"/);
   await context.close();
 });
 
@@ -188,5 +188,19 @@ test('galeria: el visor s\'obre, navega amb les fletxes i torna el focus', async
   assert.ok(!(await box.evaluate((b) => b.classList.contains('is-open'))));
   assert.ok(await page.evaluate(() => document.activeElement.matches('#galeriaGrid .galeria__item')));
   assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('targetes de correu: mostren l\'adreça i el missatge va a la persona triada', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context } = await open('contacte.html');
+  const cards = page.locator('.qc-card.contact-email-link');
+  assert.deepEqual(
+    (await cards.locator('.qc-card__text span').allInnerTexts()).map((x) => x.trim()),
+    ['rotaractigualada@gmail.com', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org']
+  );
+  await page.click('.qc-card[data-recipient="secretaria"]');
+  assert.equal((await page.locator('#recipientEmailDisplay').innerText()).trim(), 'luca.santos@rotary2202.org');
+  assert.equal(await page.inputValue('#contactRecipient'), 'secretaria');
   await context.close();
 });

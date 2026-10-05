@@ -49,6 +49,10 @@
     link.addEventListener('click', function (e) {
       e.preventDefault();
       var email = link.getAttribute('data-email');
+      // Destinatari real de l'enviament: només una clau de la llista
+      // blanca de form-handler.php (club, presidencia, secretaria)
+      var recipientInput = document.getElementById('contactRecipient');
+      if (recipientInput) recipientInput.value = link.getAttribute('data-recipient') || 'club';
       var note = document.getElementById('recipientNote');
       var display = document.getElementById('recipientEmailDisplay');
       if (note && display) {
@@ -257,6 +261,8 @@
         })
         .then(function () {
           form.reset();
+          var recipientReset = document.getElementById('contactRecipient');
+          if (recipientReset) recipientReset.value = 'club';
           updateCharCount();
           var recipientNote = document.getElementById('recipientNote');
           if (recipientNote) recipientNote.hidden = true;
