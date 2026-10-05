@@ -36,7 +36,7 @@ for (const page of PAGES) {
     assert.match(html, /<html lang="ca">/);
     assert.match(html, /<title>[^<]{10,}<\/title>/);
     assert.match(html, /<meta name="description" content="[^"]{50,}">/);
-    assert.match(html, /<link rel="canonical" href="https:\/\/www\.rotaractigualada\.org\//);
+    assert.match(html, /<link rel="canonical" href="https:\/\/rotaractigualada\.org\//);
     assert.match(html, /<meta property="og:image" content="https:\/\//);
     assert.equal((html.match(/<h1[\s>]/g) || []).length, 1, 'ha de tenir exactament un <h1>');
   });
@@ -60,13 +60,13 @@ for (const page of PAGES) {
 
 test('sitemap.xml: cada URL correspon a una pàgina existent', () => {
   const xml = read('sitemap.xml');
-  const locs = [...xml.matchAll(/<loc>https:\/\/www\.rotaractigualada\.org\/([^<]*)<\/loc>/g)].map((m) => m[1] || 'index.html');
+  const locs = [...xml.matchAll(/<loc>https:\/\/rotaractigualada\.org\/([^<]*)<\/loc>/g)].map((m) => m[1] || 'index.html');
   assert.equal(locs.length, PAGES.length);
   for (const loc of locs) assert.ok(PAGES.includes(loc), `${loc} no és una pàgina`);
 });
 
 test('robots.txt: permès i apunta al sitemap', () => {
-  assert.match(read('robots.txt'), /Sitemap: https:\/\/www\.rotaractigualada\.org\/sitemap\.xml/);
+  assert.match(read('robots.txt'), /Sitemap: https:\/\/rotaractigualada\.org\/sitemap\.xml/);
   // .htaccess bloqueja els .txt però ha de fer una excepció per a robots.txt
   assert.match(read('.htaccess'), /<Files "robots\.txt">\s*Require all granted/);
 });
@@ -80,5 +80,5 @@ test('index.html: JSON-LD vàlid', () => {
   assert.ok(m, 'falta el JSON-LD');
   const data = JSON.parse(m[1]);
   assert.equal(data['@context'], 'https://schema.org');
-  assert.equal(data.url, 'https://www.rotaractigualada.org/');
+  assert.equal(data.url, 'https://rotaractigualada.org/');
 });
