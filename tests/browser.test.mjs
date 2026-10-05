@@ -204,3 +204,25 @@ test('targetes de correu: mostren l\'adreça i el missatge va a la persona triad
   assert.equal(await page.inputValue('#contactRecipient'), 'secretaria');
   await context.close();
 });
+
+test('còpia de GitHub Pages: redirigeix a rotaractigualada.org mantenint la pàgina', async (t) => {
+  if (skip) return t.skip(skip);
+  const context = await browser.newContext();
+  // Simula la web servida des de github.io amb els fitxers locals
+  await context.route('https://rotaractigualada.github.io/**', async (route) => {
+    const path = new URL(route.request().url()).pathname.replace('/clubrotaractigualada/', '/') || '/';
+    const res = await fetch(server.url + path);
+    await route.fulfill({ status: res.status, headers: { 'content-type': res.headers.get('content-type') || 'text/html' }, body: Buffer.from(await res.arrayBuffer()) });
+  });
+  const visited = [];
+  await context.route('https://rotaractigualada.org/**', (route) => {
+    visited.push(route.request().url());
+    route.fulfill({ status: 200, contentType: 'text/html', body: '<p>oficial</p>' });
+  });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1|rotaractigualada\.)/, (route) => route.abort());
+  const page = await context.newPage();
+  await page.goto('https://rotaractigualada.github.io/clubrotaractigualada/nosaltres.html#rotaract-igualada');
+  await page.waitForURL('https://rotaractigualada.org/**');
+  assert.equal(page.url(), 'https://rotaractigualada.org/nosaltres.html#rotaract-igualada');
+  await context.close();
+});
