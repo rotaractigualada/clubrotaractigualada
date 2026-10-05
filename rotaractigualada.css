@@ -2459,6 +2459,67 @@ body.lightbox-open { overflow: hidden; }
   gap: 8px;
 }
 
+/* Contacte del Districte 2202 (bloc «Rotaract Internacional i Districte») */
+.nosaltres-contacte {
+  margin: 0.4rem 0 0.2rem;
+  padding: 1rem 1.15rem;
+  border-radius: 14px;
+  background: rgba(47, 47, 150, 0.05);
+  border: 1px solid rgba(47, 47, 150, 0.08);
+}
+
+.nosaltres-contacte__title {
+  margin: 0 0 0.65rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+
+.nosaltres-contacte__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+}
+
+.nosaltres-contacte__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--text);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color 0.2s ease;
+}
+
+.nosaltres-contacte__item:hover,
+.nosaltres-contacte__item:focus-visible {
+  color: var(--pink);
+}
+
+.nosaltres-contacte__icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: var(--pink);
+  box-shadow: 0 2px 8px rgba(47, 47, 150, 0.08);
+}
+
+.nosaltres-contacte__icon svg { width: 16px; height: 16px; }
+
 /* ── Visual / Imatge del bloc ── */
 .nosaltres-bloc__visual {
   display: flex;
