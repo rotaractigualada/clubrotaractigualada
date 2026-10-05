@@ -4,10 +4,13 @@
 Options -Indexes
 ServerSignature Off
 
-# HTTPS obligatori (CANVIA el domini pel real abans de publicar)
+# HTTPS obligatori. Manté el domini amb què s'accedeix (%{HTTP_HOST}),
+# així funciona igual amb el domini definitiu, amb www o sense, i amb el
+# domini temporal del hosting. (Abans redirigia sempre a
+# www.rotaractigualada.org, i amb un altre domini la web no es veia.)
 RewriteEngine On
 RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://www.rotaractigualada.org/$1 [R=301,L]
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # Redirecció de la pàgina antiga (SEO / enllaços ja indexats)
 Redirect 301 /rotaractigualada.html /index.html
