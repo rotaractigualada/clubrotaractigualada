@@ -1,15 +1,18 @@
 # ── Rotaract Igualada — configuracions d'Apache ──
 
-# Seguretat bàsica del servidor
-Options -Indexes
-ServerSignature Off
+# Pàgina d'inici de cada carpeta
+DirectoryIndex index.html index.php
 
-# HTTPS obligatori. Manté el domini amb què s'accedeix (%{HTTP_HOST}),
-# així funciona igual amb el domini definitiu, amb www o sense, i amb el
-# domini temporal del hosting. (Abans redirigia sempre a
-# www.rotaractigualada.org, i amb un altre domini la web no es veia.)
+# Seguretat bàsica: no mostrar el llistat de fitxers de les carpetes
+Options -Indexes
+
+# HTTPS obligatori. Manté el domini amb què s'accedeix (%{HTTP_HOST}).
+# La segona condició evita bucles darrere del CDN de Hostinger, que
+# rep la visita per HTTPS i l'envia al servidor indicant-ho amb
+# la capçalera X-Forwarded-Proto.
 RewriteEngine On
 RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # Redirecció de la pàgina antiga (SEO / enllaços ja indexats)
