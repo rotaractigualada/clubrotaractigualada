@@ -1,33 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- CANVIA el domini pel real abans de publicar -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!-- Generat per scripts/build-idiomes.mjs -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://rotaractigualada.org/</loc>
-    <lastmod>2026-10-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/"/>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://rotaractigualada.org/nosaltres.html</loc>
-    <lastmod>2026-10-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/nosaltres.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/nosaltres.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/nosaltres.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/nosaltres.html"/>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://rotaractigualada.org/activitats.html</loc>
-    <lastmod>2026-10-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/activitats.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/activitats.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/activitats.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/activitats.html"/>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://rotaractigualada.org/directiu.html</loc>
-    <lastmod>2026-10-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/directiu.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/directiu.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/directiu.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/directiu.html"/>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://rotaractigualada.org/contacte.html</loc>
-    <lastmod>2026-10-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/contacte.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/contacte.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/contacte.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/contacte.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rotaractigualada.org/es/</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://rotaractigualada.org/es/nosaltres.html</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/nosaltres.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/nosaltres.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/nosaltres.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/nosaltres.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rotaractigualada.org/es/activitats.html</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/activitats.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/activitats.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/activitats.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/activitats.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rotaractigualada.org/es/directiu.html</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/directiu.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/directiu.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/directiu.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/directiu.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rotaractigualada.org/es/contacte.html</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/contacte.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/contacte.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/contacte.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/contacte.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rotaractigualada.org/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://rotaractigualada.org/en/nosaltres.html</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/nosaltres.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/nosaltres.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/nosaltres.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/nosaltres.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rotaractigualada.org/en/activitats.html</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/activitats.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/activitats.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/activitats.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/activitats.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rotaractigualada.org/en/directiu.html</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/directiu.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/directiu.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/directiu.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/directiu.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rotaractigualada.org/en/contacte.html</loc>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://rotaractigualada.org/contacte.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rotaractigualada.org/es/contacte.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rotaractigualada.org/en/contacte.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rotaractigualada.org/contacte.html"/>
+    <lastmod>2026-10-06</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>

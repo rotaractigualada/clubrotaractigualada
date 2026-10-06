@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function ensureCsrf() {
     if (csrfToken) return Promise.resolve(csrfToken);
     if (csrfPromise) return csrfPromise;
-    csrfPromise = fetch('csrf.php', { method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json' } })
+    csrfPromise = fetch('/csrf.php', { method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json' } })
       .then((r) => r.json())
       .then((d) => { csrfToken = (d && d.csrf) ? d.csrf : null; return csrfToken; })
       .catch(() => { csrfToken = null; return csrfToken; });
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!submitBtn) return;
 
     // Backend propi: rep i envia els missatges (form-handler.php)
-    const FORM_ENDPOINT = 'form-handler.php';
+    const FORM_ENDPOINT = '/form-handler.php';
 
     const label = submitBtn.querySelector('span[data-en]');
     const originalLabel = label ? label.textContent : '';

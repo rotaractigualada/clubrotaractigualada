@@ -89,7 +89,7 @@
     'Coming soon': 'Próximamente',
     'Committed people who are an active part of Rotaract Club Igualada, driving service and leadership in our community.': 'Personas comprometidas que forman parte activa del Club Rotaract de Igualada e impulsan el servicio y el liderazgo en nuestra comunidad.',
     'Community': 'Comunidad',
-    'Completed': 'Realizadas',
+    'Completed': 'Realizada',
     'Contact': 'Contacto',
     'Contact channels': 'Canales de contacto',
     'Cookie Policy': 'Política de Cookies',
@@ -112,6 +112,12 @@
     'Frequently asked questions': 'Preguntas frecuentes',
     'Full name': 'Nombre completo',
     'Gallery': 'Galería',
+    '24 September 2026': '24 de septiembre de 2026',
+    'Dinner': 'Cena',
+    'On Thursday 24 September we officially presented Rotaract Club Igualada at Ses Oliveres, in front of Rotary Igualada: we received our Rotary International certificate and the club bell. Then we shared the fellowship dinner and, to round off the evening, we held a bingo with everyone there.': 'El jueves 24 de septiembre presentamos oficialmente el Club Rotaract de Igualada en Ses Oliveres, ante Rotary Igualada: recibimos el certificado de Rotary International y la campana del club. A continuación compartimos la cena colegial y, para terminar la noche, hicimos un bingo con todos los asistentes.',
+    'Club presentation at the Rotary Igualada fellowship dinner': 'Presentación del club en la cena colegial de Rotary Igualada',
+    'Presentation': 'Presentación',
+    'See the photos': 'Ver las fotos',
     'Home | Rotaract Club of Igualada': 'Inicio | Club Rotaract de Igualada',
     'About us | Rotaract Club of Igualada': 'Nosotros | Club Rotaract de Igualada',
     'Activities | Rotaract Club of Igualada': 'Actividades | Club Rotaract de Igualada',
@@ -332,33 +338,19 @@
   };
   var MENU_LIST_LABEL = { ca: 'Idioma', en: 'Language', es: 'Idioma' };
 
-  /* Primera visita: idioma del navegador. Es recorre la llista
-     d'idiomes preferits i es tria el primer que tenim (gallec i basc
-     → castellà). Si cap coincideix, anglès. */
-  function detectBrowserLang() {
-    // Cercadors (Googlebot navega en anglès): sempre la versió original en
-    // català, perquè el títol i la descripció de Google surtin en català.
-    if (/bot|crawl|spider|slurp|lighthouse|facebookexternalhit|whatsapp/i.test(navigator.userAgent || '')) {
-      return 'ca';
-    }
-    var prefs = (navigator.languages && navigator.languages.length)
-      ? navigator.languages
-      : [navigator.language || navigator.userLanguage || ''];
-    var map = { ca: 'ca', es: 'es', gl: 'es', eu: 'es', en: 'en' };
-    for (var i = 0; i < prefs.length; i++) {
-      var code = String(prefs[i] || '').toLowerCase().split('-')[0];
-      if (map[code]) return map[code];
-    }
-    return 'en';
+  /* Idioma de la pàgina: cada versió té el seu fitxer (arrel = català,
+     /es/ = castellà, /en/ = anglès) i el declara a <html lang>. */
+  function pageLang() {
+    var lang = (document.documentElement.getAttribute('lang') || 'ca').toLowerCase();
+    return LANGS.indexOf(lang) !== -1 ? lang : 'ca';
   }
 
-  function getSavedLang() {
-    var saved = null;
-    try {
-      saved = localStorage.getItem(STORAGE_KEY);
-    } catch (e) { /* sense localStorage: es fa servir l'idioma del navegador */ }
-    if (saved && LANGS.indexOf(saved) !== -1) return saved;
-    return detectBrowserLang();
+  /* Adreça de la mateixa pàgina en un altre idioma */
+  function urlFor(lang) {
+    var file = window.location.pathname.split('/').pop() || '';
+    if (file === 'index.html') file = '';
+    var prefix = lang === 'ca' ? '/' : '/' + lang + '/';
+    return prefix + file + window.location.search + window.location.hash;
   }
 
   function saveLang(lang) {
@@ -367,7 +359,9 @@
     } catch (e) { /* localStorage no disponible: no passa res greu */ }
   }
 
-  function applyLang(lang) {
+  /* Tradueix el contingut de la pàgina. També la fa servir
+     scripts/build-idiomes.mjs per generar les versions /es/ i /en/. */
+  function translateDom(lang) {
     var elements = document.querySelectorAll('[data-en]');
 
     elements.forEach(function (el) {
@@ -416,9 +410,10 @@
     });
 
     document.documentElement.setAttribute('lang', lang);
-    document.body.classList.toggle('lang-ca', lang === 'ca');
-    document.body.classList.toggle('lang-en', lang === 'en');
-    document.body.classList.toggle('lang-es', lang === 'es');
+  }
+
+  function applyLang(lang) {
+    translateDom(lang);
 
     document.querySelectorAll('.lang-menu__btn').forEach(function (btn) {
       btn.setAttribute('aria-label', MENU_BTN_LABEL[lang] + LANG_NAMES[lang] + ')');
@@ -440,9 +435,9 @@
     // Notifica la resta de scripts (p. ex. el calendari d'activitats)
     // que generen text dinàmic, perquè es repintin en l'idioma nou.
     document.dispatchEvent(new CustomEvent('rotaract:lang', { detail: { lang: lang } }));
-
-    saveLang(lang);
   }
+
+  window.RotaractI18n = { translateDom: translateDom };
 
   function openLangMenu(menu) {
     document.querySelectorAll('.lang-menu.is-open').forEach(function (other) {
@@ -466,7 +461,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    applyLang(getSavedLang());
+    applyLang(pageLang());
 
     document.querySelectorAll('.lang-menu').forEach(function (menu) {
       var btn = menu.querySelector('.lang-menu__btn');
@@ -486,7 +481,11 @@
         var opt = event.target.closest ? event.target.closest('[data-lang-opt]') : null;
         if (!opt) return;
         closeLangMenus();
-        applyLang(opt.dataset.langOpt);
+        var lang = opt.dataset.langOpt;
+        // La tria es desa i es porta el visitant a la mateixa pàgina
+        // en l'idioma triat (p. ex. /nosaltres.html → /en/nosaltres.html)
+        saveLang(lang);
+        if (lang !== pageLang()) window.location.href = urlFor(lang);
       });
     });
 

@@ -566,6 +566,83 @@
 .act-card__tag--esport   { background: rgba(249,115,22,0.15); color: #ea580c; }
 
 /* ─────────────────────────────────────────────
+   ACTIVITAT DESTACADA (targeta gran amb mosaic de fotos)
+───────────────────────────────────────────── */
+.act-card--feature {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+}
+
+.act-card--feature:hover { transform: translateY(-4px); }
+
+.act-card--feature .act-card__badge {
+  z-index: 2;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.act-feature__photos {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 4px;
+  min-height: 360px;
+  background: #f5f5fb;
+}
+
+.act-feature__photo {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+.act-feature__photo--main { grid-row: span 2; }
+
+.act-feature__photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transition: transform 0.4s ease;
+}
+
+.act-feature__photo:hover img,
+.act-feature__photo:focus-visible img { transform: scale(1.05); }
+
+.act-feature__photo:focus-visible {
+  outline: 3px solid rgba(218, 26, 93, 0.45);
+  outline-offset: -3px;
+}
+
+.act-card--feature .act-card__body {
+  padding: 2rem 2.2rem;
+  justify-content: center;
+  gap: 0.9rem;
+}
+
+.act-card--feature .act-card__title { font-size: clamp(1.25rem, 2.2vw, 1.6rem); }
+
+.act-card--feature .act-card__desc {
+  font-size: 0.95rem;
+  flex: 0 0 auto;
+}
+
+.act-feature__cta {
+  align-self: flex-start;
+  margin-top: 0.4rem;
+}
+
+@media (max-width: 860px) {
+  .act-card--feature { grid-template-columns: 1fr; }
+  .act-feature__photos { min-height: 0; aspect-ratio: 16 / 10; }
+  .act-card--feature .act-card__body { padding: 1.4rem 1.3rem 1.6rem; }
+}
+
+/* ─────────────────────────────────────────────
    BOTÓ CTA GENERAL
 ───────────────────────────────────────────── */
 .act-section__cta-wrap {

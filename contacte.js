@@ -119,7 +119,7 @@
   function ensureCsrf() {
     if (csrfToken) return Promise.resolve(csrfToken);
     if (csrfPromise) return csrfPromise;
-    csrfPromise = fetch('csrf.php', { method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json' } })
+    csrfPromise = fetch('/csrf.php', { method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json' } })
       .then(function (r) { return r.json(); })
       .then(function (d) { csrfToken = (d && d.csrf) ? d.csrf : null; return csrfToken; })
       .catch(function () { csrfToken = null; return csrfToken; });
@@ -225,7 +225,7 @@
       if (!valid) return;
 
       // Backend propi: rep i envia els missatges (form-handler.php)
-      var FORM_ENDPOINT = 'form-handler.php';
+      var FORM_ENDPOINT = '/form-handler.php';
       var submitText = submitBtn.querySelector('.btn-submit__text');
       var originalText = submitText ? submitText.textContent : '';
 

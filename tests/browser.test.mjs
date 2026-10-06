@@ -5,7 +5,7 @@ import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { hasPhp, startServer, PAGES } from './helpers.mjs';
+import { hasPhp, startServer, PAGES, ROOT } from './helpers.mjs';
 
 let chromium;
 try {
@@ -150,15 +150,18 @@ test('pestanyes de directiu: aria-pressed segueix la pestanya activa', async (t)
   await context.close();
 });
 
-test('canvi d\'idioma: tradueix i es recorda en canviar de pàgina', async (t) => {
+test('canvi d\'idioma: el menú porta a /en/ i la tria es recorda', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context } = await open('index.html');
   await page.click('.header__lang .lang-menu__btn');
   await page.click('.header__lang [data-lang-opt="en"]');
+  await page.waitForURL('**/en/');
   assert.equal(await page.getAttribute('html', 'lang'), 'en');
   assert.equal((await page.locator('.hero__title').innerText()).trim(), 'ROTARACT CLUB OF IGUALADA');
-  await page.goto(server.url + '/contacte.html');
-  assert.equal(await page.getAttribute('html', 'lang'), 'en');
+  // Un enllaç a la versió catalana porta a l'anglesa (preferència desada)
+  await page.goto(server.url + '/contacte.html#inscripcio');
+  await page.waitForURL('**/en/contacte.html#inscripcio');
+  assert.equal(await page.title(), 'Contact | Rotaract Club of Igualada');
   await context.close();
 });
 
@@ -205,9 +208,9 @@ test('targetes de correu: mostren l\'adreça i el missatge va a la persona triad
   await context.close();
 });
 
-test('còpia de GitHub Pages: redirigeix a rotaractigualada.org mantenint la pàgina', async (t) => {
+test('còpia de GitHub Pages: redirigeix a rotaractigualada.org mantenint la pàgina i l\'idioma', async (t) => {
   if (skip) return t.skip(skip);
-  const context = await browser.newContext();
+  const context = await browser.newContext({ locale: 'ca-ES' });
   // Simula la web servida des de github.io amb els fitxers locals
   await context.route('https://rotaractigualada.github.io/**', async (route) => {
     const path = new URL(route.request().url()).pathname.replace('/clubrotaractigualada/', '/') || '/';
@@ -224,45 +227,44 @@ test('còpia de GitHub Pages: redirigeix a rotaractigualada.org mantenint la pà
   await page.goto('https://rotaractigualada.github.io/clubrotaractigualada/nosaltres.html#rotaract-igualada');
   await page.waitForURL('https://rotaractigualada.org/**');
   assert.equal(page.url(), 'https://rotaractigualada.org/nosaltres.html#rotaract-igualada');
+  await page.goto('https://rotaractigualada.github.io/clubrotaractigualada/es/contacte.html');
+  await page.waitForURL('https://rotaractigualada.org/es/**');
+  assert.equal(page.url(), 'https://rotaractigualada.org/es/contacte.html');
   await context.close();
 });
 
-test('idioma: la primera visita surt en l\'idioma del navegador i el títol es tradueix', async (t) => {
+test('idioma: la primera visita porta a la versió de l\'idioma del navegador', async (t) => {
   if (skip) return t.skip(skip);
   const cases = [
-    ['ca-ES', 'ca', "Inici | Club Rotaract d'Igualada"],
-    ['es-ES', 'es', 'Inicio | Club Rotaract de Igualada'],
-    ['en-GB', 'en', 'Home | Rotaract Club of Igualada'],
-    ['fr-FR', 'en', 'Home | Rotaract Club of Igualada']
+    ['ca-ES', '/', "Inici | Club Rotaract d'Igualada"],
+    ['es-ES', '/es/', 'Inicio | Club Rotaract de Igualada'],
+    ['en-GB', '/en/', 'Home | Rotaract Club of Igualada'],
+    ['fr-FR', '/en/', 'Home | Rotaract Club of Igualada']
   ];
-  for (const [locale, lang, title] of cases) {
+  for (const [locale, path, title] of cases) {
     const context = await browser.newContext({ locale });
     await context.addInitScript(() => {
       try { localStorage.setItem('rotaract-cookie-consent-v3', 'reject'); } catch (e) { /* res */ }
     });
     await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
     const page = await context.newPage();
-    await page.goto(server.url + '/index.html');
-    assert.equal(await page.getAttribute('html', 'lang'), lang, locale);
+    await page.goto(server.url + '/');
+    await page.waitForURL((u) => new URL(u).pathname === path);
+    await page.waitForLoadState('load');
     assert.equal(await page.title(), title, locale);
     await context.close();
   }
-  // Si el visitant ja ha triat idioma, es respecta encara que el navegador sigui un altre
+  // Una adreça d'idioma concreta (/en/) no es redirigeix si no hi ha cap tria desada
   const context = await browser.newContext({ locale: 'es-ES' });
-  await context.addInitScript(() => {
-    try {
-      localStorage.setItem('rotaract-cookie-consent-v3', 'reject');
-      localStorage.setItem('rotaract-lang', 'ca');
-    } catch (e) { /* res */ }
-  });
   await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
   const page = await context.newPage();
-  await page.goto(server.url + '/contacte.html');
-  assert.equal(await page.title(), "Contacte | Club Rotaract d'Igualada");
+  await page.goto(server.url + '/en/nosaltres.html');
+  await page.waitForTimeout(300);
+  assert.equal(new URL(page.url()).pathname, '/en/nosaltres.html');
   await context.close();
 });
 
-test('idioma: els cercadors (Googlebot) sempre veuen la versió en català', async (t) => {
+test('idioma: els cercadors (Googlebot) no es redirigeixen i veuen cada versió tal com és', async (t) => {
   if (skip) return t.skip(skip);
   const context = await browser.newContext({
     locale: 'en-US',
@@ -271,7 +273,53 @@ test('idioma: els cercadors (Googlebot) sempre veuen la versió en català', asy
   await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
   const page = await context.newPage();
   await page.goto(server.url + '/index.html');
+  await page.waitForTimeout(300);
+  assert.equal(new URL(page.url()).pathname, '/index.html');
   assert.equal(await page.getAttribute('html', 'lang'), 'ca');
   assert.equal(await page.title(), "Inici | Club Rotaract d'Igualada");
+  await page.goto(server.url + '/es/');
+  assert.equal(await page.title(), 'Inicio | Club Rotaract de Igualada');
   await context.close();
+});
+
+test('versions /es/ i /en/: sense errors ni recursos trencats', async (t) => {
+  if (skip) return t.skip(skip);
+  for (const dir of ['es', 'en']) {
+    for (const file of PAGES) {
+      const context = await browser.newContext({ locale: dir === 'es' ? 'es-ES' : 'en-GB', viewport: { width: 375, height: 800 } });
+      await context.addInitScript(() => {
+        try { localStorage.setItem('rotaract-cookie-consent-v3', 'reject'); } catch (e) { /* res */ }
+      });
+      await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+      const page = await context.newPage();
+      const errors = [];
+      const broken = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      page.on('response', (r) => { if (r.status() >= 400) broken.push(r.status() + ' ' + r.url()); });
+      await page.goto(`${server.url}/${dir}/${file}`, { waitUntil: 'load' });
+      assert.equal(await page.getAttribute('html', 'lang'), dir);
+      assert.deepEqual(errors, [], `${dir}/${file}`);
+      assert.deepEqual(broken, [], `${dir}/${file}`);
+      await context.close();
+    }
+  }
+});
+
+test('les versions /es/ i /en/ estan al dia (npm run build:idiomes)', async (t) => {
+  if (skip) return t.skip(skip);
+  const { mkdtempSync, readFileSync, rmSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { execFileSync } = await import('node:child_process');
+  const out = mkdtempSync(join(tmpdir(), 'idiomes-'));
+  try {
+    execFileSync(process.execPath, [join(ROOT, 'scripts', 'build-idiomes.mjs'), out], { stdio: 'ignore' });
+    for (const dir of ['es', 'en']) {
+      for (const file of PAGES) {
+        assert.equal(readFileSync(join(out, dir, file), 'utf8'), readFileSync(join(ROOT, dir, file), 'utf8'),
+          `${dir}/${file} no està al dia: executa npm run build:idiomes`);
+      }
+    }
+  } finally {
+    rmSync(out, { recursive: true, force: true });
+  }
 });
