@@ -180,9 +180,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const events = {
     '2026-09-24': [{
       title: {
-        ca: 'Presentació del club al sopar col·legial de Rotary Igualada',
-        en: 'Club presentation at the Rotary Igualada fellowship dinner',
-        es: 'Presentación del club en la cena colegial de Rotary Igualada'
+        ca: 'Presentació del club al sopar col·loqui de Rotary Igualada',
+        en: 'Club presentation at the Rotary Igualada dinner talk',
+        es: 'Presentación del club en la cena coloquio de Rotary Igualada'
       },
       loc: 'Ses Oliveres, Igualada',
       cat: { ca: 'Presentació · Sopar · Bingo', en: 'Presentation · Dinner · Bingo', es: 'Presentación · Cena · Bingo' },
