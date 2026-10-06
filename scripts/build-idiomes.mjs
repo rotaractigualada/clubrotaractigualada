@@ -14,12 +14,15 @@
      des de la subcarpeta (../).
    - Posa l'adreça canònica, Open Graph i la descripció de l'idioma.
    - Afegeix les etiquetes hreflang (també a les pàgines catalanes).
+   - Posa la versió (?v=hash) als CSS i JS propis de totes les pàgines,
+     perquè els navegadors no facin servir còpies antigues.
 
    Ús: node scripts/build-idiomes.mjs [carpeta_de_sortida]
    (per defecte, l'arrel del projecte: escriu es/ i en/). */
 import { createServer } from 'node:http';
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from 'node:fs';
 import { join, extname, dirname } from 'node:path';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -81,13 +84,32 @@ function updateSourceHreflang(page) {
   writeFileSync(file, html);
 }
 
+/* Versió als CSS i JS propis (?v=<hash del contingut>): quan un fitxer
+   canvia, l'adreça canvia i els navegadors no fan servir la còpia antiga
+   de la memòria cau. */
+function updateSourceVersions(page) {
+  const file = join(ROOT, page);
+  const html = readFileSync(file, 'utf8').replace(
+    /(\s(?:href|src)=")([\w./-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?"/g,
+    (all, attr, asset) => {
+      const path = join(ROOT, asset);
+      if (!existsSync(path)) return all;
+      const hash = createHash('md5').update(readFileSync(path)).digest('hex').slice(0, 8);
+      return `${attr}${asset}?v=${hash}"`;
+    });
+  writeFileSync(file, html);
+}
+
 /* Servidor estàtic mínim per obrir les pàgines al navegador */
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript' };
 function startStatic() {
   const server = createServer((req, res) => {
     const path = decodeURIComponent(new URL(req.url, 'http://x').pathname);
     const file = join(ROOT, path === '/' ? 'index.html' : path);
-    if (!file.startsWith(ROOT) || !existsSync(file)) { res.writeHead(404); return res.end(); }
+    if (!file.startsWith(ROOT) || !existsSync(file) || !statSync(file).isFile()) {
+      if (process.env.DEBUG_BUILD) console.error('404', path);
+      res.writeHead(404); return res.end();
+    }
     res.writeHead(200, { 'Content-Type': TYPES[extname(file)] || 'application/octet-stream' });
     res.end(readFileSync(file));
   });
@@ -116,7 +138,10 @@ function writeSitemap(dir) {
 
 async function main() {
   const { chromium } = await import('playwright');
-  for (const page of PAGES) updateSourceHreflang(page);
+  for (const page of PAGES) {
+    updateSourceHreflang(page);
+    updateSourceVersions(page);
+  }
 
   const server = await startStatic();
   const base = `http://127.0.0.1:${server.address().port}`;
@@ -129,7 +154,7 @@ async function main() {
         // Cap script de la pàgina s'executa: el DOM queda tal com és a l'HTML
         await context.route('**/*', (route) => {
           const url = route.request().url();
-          if (!url.startsWith(base) || url.endsWith('.js')) return route.abort();
+          if (!url.startsWith(base) || new URL(url).pathname.endsWith('.js')) return route.abort();
           return route.continue();
         });
         const tab = await context.newPage();
