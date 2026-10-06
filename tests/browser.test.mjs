@@ -323,3 +323,23 @@ test('les versions /es/ i /en/ estan al dia (npm run build:idiomes)', async (t) 
     rmSync(out, { recursive: true, force: true });
   }
 });
+
+test('calendari: la presentació del 24 de setembre de 2026 hi surt', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context } = await open('activitats.html#calendari');
+  // Navega fins al mes de l'activitat (endavant o enrere segons la data d'avui)
+  const target = '[data-date="2026-09-24"]';
+  for (let i = 0; i < 36 && !(await page.locator(target).count()); i++) {
+    const shown = await page.locator('.cal-day:not(.cal-day--empty)').first().getAttribute('data-date');
+    await page.click(shown > '2026-09-24' ? '#cal-prev' : '#cal-next');
+  }
+  const day = page.locator(target);
+  assert.ok((await day.getAttribute('class')).includes('cal-day--has-event'));
+  await day.click();
+  const list = page.locator('#cal-events-list');
+  assert.match(await list.innerText(), /Presentació del club al sopar col·legial de Rotary Igualada/);
+  assert.match(await list.innerText(), /Ses Oliveres, Igualada/);
+  assert.equal(await list.locator('a').getAttribute('href'), 'index.html#galeria');
+  assert.match(await list.locator('a').innerText(), /Veure les fotos/);
+  await context.close();
+});

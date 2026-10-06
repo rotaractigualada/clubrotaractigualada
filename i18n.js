@@ -275,7 +275,7 @@
     'Visit the Rotaract information →': 'Visitar la información de Rotaract →',
     'Want to be part of Rotaract?': '¿Quieres formar parte de Rotaract?',
     'Want to be part of Rotaract Igualada? The process is simple and transparent.': '¿Quieres formar parte del Rotaract Igualada? El proceso es sencillo y transparente.',
-    'We': 'Nosotros',
+    'We': 'Mi',
     'We are a community of committed young people driving social and leadership projects in the Anoia region. As part of the global Rotary network, we turn our energy into community service and real action.': 'Somos una comunidad de jóvenes comprometidos que impulsamos proyectos sociales y de liderazgo en la comarca de la Anoia. Como parte de la red global de Rotary, transformamos nuestra energía en servicio comunitario y acción real.',
     'We are a community of committed young people driving social and leadership projects in the Anoia region. As part of the global Rotary network, we turn our energy into community service and real action. We bring together talent, friendship and values to create a positive impact and grow together.': 'Somos una comunidad de jóvenes comprometidos que impulsamos proyectos sociales y de liderazgo en la comarca de la Anoia. Como parte de la red global de Rotary, transformamos nuestra energía en servicio comunitario y acción real. Unimos talento, amistad y valores para generar un impacto positivo en nuestro entorno y crecer juntos.',
     'We don\'t have any activities scheduled yet, but we\'re already working on what\'s coming next. They\'ll be posted here very soon!': 'Todavía no tenemos actividades programadas, pero ya estamos trabajando en lo que viene. ¡Las publicaremos aquí muy pronto!',

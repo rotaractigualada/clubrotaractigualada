@@ -171,10 +171,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   /* ── Calendari interactiu ── */
-  // Encara no hi ha cap activitat confirmada. Quan en tingueu,
-  // afegiu-les aquí amb el mateix format que abans, per exemple:
-  // '2026-09-15': [ { title: 'Nom', time: '10:00h', loc: 'Igualada', emoji: '🤝', cat: 'Solidari', link: 'contacte.html' } ]
-  const events = {};
+  // Activitats del calendari, per data (AAAA-MM-DD). Per afegir-ne una:
+  // '2026-11-15': [{ title: { ca: 'Nom', en: 'Name', es: 'Nombre' }, time: '10:00h',
+  //                  loc: 'Igualada', emoji: '🤝', cat: 'Solidari', link: 'contacte.html' }]
+  // (amb done: true si ja s'ha fet: el botó passa a «Veure les fotos»).
+  // Els textos poden ser una cadena o un objecte { ca, en, es }.
+  // done: true → activitat ja feta (el botó porta a les fotos).
+  const events = {
+    '2026-09-24': [{
+      title: {
+        ca: 'Presentació del club al sopar col·legial de Rotary Igualada',
+        en: 'Club presentation at the Rotary Igualada fellowship dinner',
+        es: 'Presentación del club en la cena colegial de Rotary Igualada'
+      },
+      loc: 'Ses Oliveres, Igualada',
+      cat: { ca: 'Presentació · Sopar · Bingo', en: 'Presentation · Dinner · Bingo', es: 'Presentación · Cena · Bingo' },
+      emoji: '🎉',
+      link: 'index.html#galeria',
+      done: true
+    }]
+  };
 
   const monthNames = {
     ca: ['Gener','Febrer','Març','Abril','Maig','Juny','Juliol','Agost','Setembre','Octubre','Novembre','Desembre'],
@@ -186,6 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
     return document.documentElement.getAttribute('lang');
   };
   const t = function (ca, en, es) { return getLang() === 'en' ? en : getLang() === 'es' ? (es || en) : ca; };
+  const txt = function (v) { return (v && typeof v === 'object') ? t(v.ca, v.en, v.es) : (v || ''); };
 
   const today = new Date();
   let currentYear  = today.getFullYear();
@@ -294,16 +311,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const title = document.createElement('div');
       title.className = 'cal-event-item__title';
-      title.textContent = ev.title || '';
+      title.textContent = txt(ev.title);
 
       const meta = document.createElement('div');
       meta.className = 'cal-event-item__meta';
-      meta.textContent = [ev.time, ev.loc, ev.cat].filter(Boolean).join(' · ');
+      meta.textContent = [txt(ev.time), txt(ev.loc), txt(ev.cat)].filter(Boolean).join(' · ');
 
       const link = document.createElement('a');
       link.className = 'cal-event-item__cta';
       link.href = ev.link || '#';
-      link.textContent = t('Inscriu-te →', 'Sign up →', 'Inscríbete →');
+      link.textContent = ev.done
+        ? t('Veure les fotos →', 'See the photos →', 'Ver las fotos →')
+        : t('Inscriu-te →', 'Sign up →', 'Inscríbete →');
 
       info.appendChild(title);
       info.appendChild(meta);
