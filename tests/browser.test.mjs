@@ -261,3 +261,17 @@ test('idioma: la primera visita surt en l\'idioma del navegador i el títol es t
   assert.equal(await page.title(), "Contacte | Club Rotaract d'Igualada");
   await context.close();
 });
+
+test('idioma: els cercadors (Googlebot) sempre veuen la versió en català', async (t) => {
+  if (skip) return t.skip(skip);
+  const context = await browser.newContext({
+    locale: 'en-US',
+    userAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+  });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+  const page = await context.newPage();
+  await page.goto(server.url + '/index.html');
+  assert.equal(await page.getAttribute('html', 'lang'), 'ca');
+  assert.equal(await page.title(), "Inici | Club Rotaract d'Igualada");
+  await context.close();
+});
