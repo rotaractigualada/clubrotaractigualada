@@ -337,7 +337,7 @@ test('calendari: la presentació del 24 de setembre de 2026 hi surt', async (t) 
   assert.ok((await day.getAttribute('class')).includes('cal-day--has-event'));
   await day.click();
   const list = page.locator('#cal-events-list');
-  assert.match(await list.innerText(), /Presentació del club al sopar col·legial de Rotary Igualada/);
+  assert.match(await list.innerText(), /Presentació del club al sopar col·loqui de Rotary Igualada/);
   assert.match(await list.innerText(), /Ses Oliveres, Igualada/);
   assert.equal(await list.locator('a').getAttribute('href'), 'index.html#galeria');
   assert.match(await list.locator('a').innerText(), /Veure les fotos/);
