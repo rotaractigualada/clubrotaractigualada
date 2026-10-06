@@ -34,7 +34,7 @@ for (const page of PAGES) {
 
   test(`${page}: metadades SEO bàsiques`, () => {
     assert.match(html, /<html lang="ca">/);
-    assert.match(html, /<title>[^<]{10,}<\/title>/);
+    assert.match(html, /<title[^>]*>[^<]{10,}<\/title>/);
     assert.match(html, /<meta name="description" content="[^"]{50,}">/);
     assert.match(html, /<link rel="canonical" href="https:\/\/rotaractigualada\.org\//);
     assert.match(html, /<meta property="og:image" content="https:\/\//);

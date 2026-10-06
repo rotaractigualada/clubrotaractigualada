@@ -112,6 +112,11 @@
     'Frequently asked questions': 'Preguntas frecuentes',
     'Full name': 'Nombre completo',
     'Gallery': 'Galería',
+    'Home | Rotaract Club of Igualada': 'Inicio | Club Rotaract de Igualada',
+    'About us | Rotaract Club of Igualada': 'Nosotros | Club Rotaract de Igualada',
+    'Activities | Rotaract Club of Igualada': 'Actividades | Club Rotaract de Igualada',
+    'Board | Rotaract Club of Igualada': 'Junta directiva | Club Rotaract de Igualada',
+    'Contact | Rotaract Club of Igualada': 'Contacto | Club Rotaract de Igualada',
     'District 2202 contact': 'Contacto del Distrito 2202',
     'What is Rotaract?': '¿Qué es Rotaract?',
     'Young people who act, connect and lead': 'Jóvenes que actúan, conectan y lideran',
@@ -327,13 +332,28 @@
   };
   var MENU_LIST_LABEL = { ca: 'Idioma', en: 'Language', es: 'Idioma' };
 
-  function getSavedLang() {
-    try {
-      var saved = localStorage.getItem(STORAGE_KEY) || 'ca';
-      return LANGS.indexOf(saved) !== -1 ? saved : 'ca';
-    } catch (e) {
-      return 'ca';
+  /* Primera visita: idioma del navegador. Es recorre la llista
+     d'idiomes preferits i es tria el primer que tenim (gallec i basc
+     → castellà). Si cap coincideix, anglès. */
+  function detectBrowserLang() {
+    var prefs = (navigator.languages && navigator.languages.length)
+      ? navigator.languages
+      : [navigator.language || navigator.userLanguage || ''];
+    var map = { ca: 'ca', es: 'es', gl: 'es', eu: 'es', en: 'en' };
+    for (var i = 0; i < prefs.length; i++) {
+      var code = String(prefs[i] || '').toLowerCase().split('-')[0];
+      if (map[code]) return map[code];
     }
+    return 'en';
+  }
+
+  function getSavedLang() {
+    var saved = null;
+    try {
+      saved = localStorage.getItem(STORAGE_KEY);
+    } catch (e) { /* sense localStorage: es fa servir l'idioma del navegador */ }
+    if (saved && LANGS.indexOf(saved) !== -1) return saved;
+    return detectBrowserLang();
   }
 
   function saveLang(lang) {

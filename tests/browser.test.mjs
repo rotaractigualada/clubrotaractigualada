@@ -34,7 +34,7 @@ after(async () => {
 /* Pàgina nova amb el bàner de cookies ja respost i sense recursos externs
    (fonts, Instagram…) perquè els tests no depenguin de la xarxa. */
 async function open(path, viewport = { width: 1280, height: 900 }) {
-  const context = await browser.newContext({ viewport, reducedMotion: 'reduce' });
+  const context = await browser.newContext({ viewport, reducedMotion: 'reduce', locale: 'ca-ES' });
   await context.addInitScript(() => {
     try { localStorage.setItem('rotaract-cookie-consent-v3', 'reject'); } catch (e) { /* res */ }
   });
@@ -224,5 +224,40 @@ test('còpia de GitHub Pages: redirigeix a rotaractigualada.org mantenint la pà
   await page.goto('https://rotaractigualada.github.io/clubrotaractigualada/nosaltres.html#rotaract-igualada');
   await page.waitForURL('https://rotaractigualada.org/**');
   assert.equal(page.url(), 'https://rotaractigualada.org/nosaltres.html#rotaract-igualada');
+  await context.close();
+});
+
+test('idioma: la primera visita surt en l\'idioma del navegador i el títol es tradueix', async (t) => {
+  if (skip) return t.skip(skip);
+  const cases = [
+    ['ca-ES', 'ca', "Inici | Club Rotaract d'Igualada"],
+    ['es-ES', 'es', 'Inicio | Club Rotaract de Igualada'],
+    ['en-GB', 'en', 'Home | Rotaract Club of Igualada'],
+    ['fr-FR', 'en', 'Home | Rotaract Club of Igualada']
+  ];
+  for (const [locale, lang, title] of cases) {
+    const context = await browser.newContext({ locale });
+    await context.addInitScript(() => {
+      try { localStorage.setItem('rotaract-cookie-consent-v3', 'reject'); } catch (e) { /* res */ }
+    });
+    await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+    const page = await context.newPage();
+    await page.goto(server.url + '/index.html');
+    assert.equal(await page.getAttribute('html', 'lang'), lang, locale);
+    assert.equal(await page.title(), title, locale);
+    await context.close();
+  }
+  // Si el visitant ja ha triat idioma, es respecta encara que el navegador sigui un altre
+  const context = await browser.newContext({ locale: 'es-ES' });
+  await context.addInitScript(() => {
+    try {
+      localStorage.setItem('rotaract-cookie-consent-v3', 'reject');
+      localStorage.setItem('rotaract-lang', 'ca');
+    } catch (e) { /* res */ }
+  });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+  const page = await context.newPage();
+  await page.goto(server.url + '/contacte.html');
+  assert.equal(await page.title(), "Contacte | Club Rotaract d'Igualada");
   await context.close();
 });

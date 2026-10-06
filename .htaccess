@@ -80,6 +80,12 @@ RedirectMatch 404 ^/(tests|node_modules)(/|$)
   AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/json application/javascript text/javascript image/svg+xml
 </IfModule>
 
+# Tipus MIME del manifest i de les icones
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+  AddType image/x-icon .ico
+</IfModule>
+
 # ── Memòria cau del navegador ──
 # Imatges i icones canvien poc: 30 dies. CSS i JS no porten versió al
 # nom del fitxer, així que es mantenen curts (1 dia) perquè els canvis
