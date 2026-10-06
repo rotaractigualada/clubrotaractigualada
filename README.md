@@ -39,8 +39,10 @@ i mostra a cada persona el títol en el seu idioma.
   ```bash
   npm run build:idiomes
   ```
-  (actualitza `es/`, `en/`, els `hreflang` i el `sitemap.xml`; els tests
-  avisen si les versions no estan al dia).
+  (actualitza `es/`, `en/`, els `hreflang`, el `sitemap.xml` i la versió
+  `?v=…` dels CSS i JS; els tests avisen si les versions no estan al dia).
+- **Executa-ho també després de canviar qualsevol CSS o JS**: la versió `?v=…`
+  canvia i així els navegadors no fan servir la còpia antiga de la memòria cau.
 - El menú d'idioma porta a la mateixa pàgina en l'altre idioma i desa la tria.
   A la primera visita es fa servir l'idioma del navegador.
 
