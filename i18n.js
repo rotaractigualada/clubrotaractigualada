@@ -336,6 +336,11 @@
      d'idiomes preferits i es tria el primer que tenim (gallec i basc
      → castellà). Si cap coincideix, anglès. */
   function detectBrowserLang() {
+    // Cercadors (Googlebot navega en anglès): sempre la versió original en
+    // català, perquè el títol i la descripció de Google surtin en català.
+    if (/bot|crawl|spider|slurp|lighthouse|facebookexternalhit|whatsapp/i.test(navigator.userAgent || '')) {
+      return 'ca';
+    }
     var prefs = (navigator.languages && navigator.languages.length)
       ? navigator.languages
       : [navigator.language || navigator.userLanguage || ''];
