@@ -18,11 +18,31 @@ servidor Apache (fa servir `.htaccess`).
 | `cookie-banner.js`, `analytics.js` | Consentiment de cookies i Google Analytics (només si s'accepta) |
 | `rotaractigualada.js`, `contacte.js` | Formularis de contacte (validació + enviament) |
 | `activitats.js`, `directiu.js`, `nosaltres.js`, `scroll-top.js` | Interaccions de cada pàgina |
-| `redirect-domini.js` | Redirigeix la còpia antiga de GitHub Pages (*.github.io) a rotaractigualada.org |
+| `redireccions.js` | Al `<head>`: còpia de GitHub Pages → rotaractigualada.org, i idioma (tria desada o idioma del navegador) → `/`, `/es/` o `/en/` |
+| `es/`, `en/` | Versions en castellà i anglès **generades** (no s'editen a mà) |
+| `scripts/build-idiomes.mjs` | Genera `es/`, `en/`, les etiquetes hreflang i el `sitemap.xml` |
 | `galeria.js`, `galeria/` | Mosaic de fotos de la portada i visor a pantalla completa (fotos en mides 800 i 1600 px) |
 | `csrf.php`, `form-handler.php` | Backend del formulari: token CSRF, validació, correu i còpia a `form-data/submissions.csv` |
 | `.htaccess` | HTTPS, capçaleres de seguretat (CSP), compressió, memòria cau i fitxers protegits |
 | `sitemap.xml`, `robots.txt` | SEO |
+
+## Idiomes
+
+La web té tres versions amb adreça pròpia: català a l'arrel (`/`), castellà a
+`/es/` i anglès a `/en/`. Google les indexa per separat (etiquetes `hreflang`)
+i mostra a cada persona el títol en el seu idioma.
+
+- **Només s'editen les pàgines catalanes de l'arrel.** Els textos en anglès van
+  a l'atribut `data-en` de cada element i els castellans al diccionari
+  `ES_MAP` d'`i18n.js`.
+- Després de canviar textos, regenera les versions:
+  ```bash
+  npm run build:idiomes
+  ```
+  (actualitza `es/`, `en/`, els `hreflang` i el `sitemap.xml`; els tests
+  avisen si les versions no estan al dia).
+- El menú d'idioma porta a la mateixa pàgina en l'altre idioma i desa la tria.
+  A la primera visita es fa servir l'idioma del navegador.
 
 ## Executar en local
 
