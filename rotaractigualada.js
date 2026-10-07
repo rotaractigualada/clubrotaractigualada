@@ -202,9 +202,9 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(() => {
         submitError.textContent = t(
-          'No s\'ha pogut enviar el missatge. Torna-ho a provar en uns minuts o escriu-nos a rotaractigualada@gmail.com.',
-          'The message could not be sent. Try again in a few minutes or email us at rotaractigualada@gmail.com.',
-          'No se ha podido enviar el mensaje. Inténtalo de nuevo en unos minutos o escríbenos a rotaractigualada@gmail.com.'
+          'No s\'ha pogut enviar el missatge. Torna-ho a provar en uns minuts o escriu-nos a ayuda@rotaractigualada.org.',
+          'The message could not be sent. Try again in a few minutes or email us at ayuda@rotaractigualada.org.',
+          'No se ha podido enviar el mensaje. Inténtalo de nuevo en unos minutos o escríbenos a ayuda@rotaractigualada.org.'
         );
         submitError.hidden = false;
         restoreSubmitButton();

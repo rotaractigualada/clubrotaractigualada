@@ -200,7 +200,7 @@ test('targetes de correu: mostren l\'adreça i el missatge va a la persona triad
   const cards = page.locator('.qc-card.contact-email-link');
   assert.deepEqual(
     (await cards.locator('.qc-card__text span').allInnerTexts()).map((x) => x.trim()),
-    ['rotaractigualada@gmail.com', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org']
+    ['ayuda@rotaractigualada.org', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org']
   );
   await page.click('.qc-card[data-recipient="secretaria"]');
   assert.equal((await page.locator('#recipientEmailDisplay').innerText()).trim(), 'luca.santos@rotary2202.org');
