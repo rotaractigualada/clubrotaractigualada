@@ -12,7 +12,7 @@ declare(strict_types=1);
    TO_EMAIL    → correu on vols rebre els missatges del formulari.
    FROM_EMAIL  → remitent; molts hostings exigeixen que sigui un
                  correu del mateix domini (web@el-teu-domini).      */
-const TO_EMAIL          = 'rotaractigualada@gmail.com';
+const TO_EMAIL          = 'ayuda@rotaractigualada.org';
 /* Destinataris que es poden triar des de les targetes de contacte.
    El formulari només envia la clau; l'adreça es decideix aquí
    (mai es llegeix una adreça de la petició). Clau desconeguda → club. */
@@ -21,7 +21,7 @@ const RECIPIENTS = [
     'presidencia' => ['email' => 'gerard.lopez@rotary2202.org', 'label' => 'Presidència'],
     'secretaria'  => ['email' => 'luca.santos@rotary2202.org',  'label' => 'Secretaria'],
 ];
-const FROM_EMAIL        = 'web@rotaractigualada.org';
+const FROM_EMAIL        = 'ayuda@rotaractigualada.org'; // bústia real del domini (Hostinger)
 const SUBJECT_PREFIX    = '[Web Rotaract] ';
 const LOG_FILE          = __DIR__ . '/form-data/submissions.csv';
 const MIN_INTERVAL_SECS = 30;      // antispam: mínim de segons entre enviaments d'una mateixa IP
