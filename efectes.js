@@ -132,14 +132,20 @@
     footerObs.observe(footer);
   }
   if (footer && finePointer) {
+    var FOOTER_TILT = 2.5; // graus: la placa de vidre s'inclina poc
     footer.addEventListener('pointermove', function (e) {
       var rect = footer.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width;
+      var y = (e.clientY - rect.top) / rect.height;
       footer.style.setProperty('--fx-fx', (e.clientX - rect.left) + 'px');
       footer.style.setProperty('--fx-fy', (e.clientY - rect.top) + 'px');
+      footer.style.setProperty('--fx-fry', ((x - 0.5) * 2 * FOOTER_TILT).toFixed(2) + 'deg');
+      footer.style.setProperty('--fx-frx', ((0.5 - y) * 2 * FOOTER_TILT).toFixed(2) + 'deg');
+      footer.classList.add('fx-footer-tilting');
     });
     footer.addEventListener('pointerleave', function () {
-      footer.style.removeProperty('--fx-fx');
-      footer.style.removeProperty('--fx-fy');
+      ['--fx-fx', '--fx-fy', '--fx-frx', '--fx-fry'].forEach(function (v) { footer.style.removeProperty(v); });
+      footer.classList.remove('fx-footer-tilting');
     });
   }
 
