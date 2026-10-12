@@ -337,6 +337,7 @@
 
   /* Placeholders de formularis */
   var ES_MAP_PH = {
+    'Optional': 'Opcional',
     'Tell us who you are, what you like and what you would like to do in the club...': 'Cuéntanos quién eres, qué te gusta y qué te gustaría hacer en el club...',
     'Tell us what you need...': 'Cuéntanos qué necesitas...',
     'Write your message here...': 'Escribe tu mensaje aquí...',
