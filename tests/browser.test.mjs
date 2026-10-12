@@ -3,7 +3,6 @@
    Instal·lació: npm install && npx playwright install chromium */
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { hasPhp, startServer, PAGES, ROOT } from './helpers.mjs';
 
@@ -86,43 +85,28 @@ test('modals legals: rol de diàleg i el focus torna a l\'enllaç', async (t) =>
   await context.close();
 });
 
-test('formulari de contacte: validació al client amb errors accessibles', async (t) => {
+test('escriu-nos: correus de contacte i formulari d\'inscripció al mateix lloc, sense formulari de contacte', async (t) => {
   if (skip) return t.skip(skip);
-  const { page, context } = await open('contacte.html');
-  // Clicar l'etiqueta «Assumpte» no ha de seleccionar cap opció
-  await page.click('#contactSubjectLabel');
-  assert.equal(await page.locator('input[name="subject"]:checked').count(), 0);
-
-  await page.click('#submitBtn');
-  assert.equal(await page.getAttribute('#contactName', 'aria-invalid'), 'true');
-  const errId = await page.getAttribute('#contactName', 'aria-describedby');
-  assert.ok(errId && (await page.locator('#' + errId).isVisible()));
-
-  await page.fill('#contactName', 'Anna');
-  assert.equal(await page.getAttribute('#contactName', 'aria-invalid'), null);
+  const { page, context, errors } = await open('contacte.html');
+  assert.equal(await page.locator('form').count(), 0, 'ja no hi ha formulari');
+  const card = page.locator('#escriu-nos');
+  assert.deepEqual(
+    (await card.locator('.contact-card__text a').allInnerTexts()).map((x) => x.trim()),
+    ['ayuda@rotaractigualada.org', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org', '@rotaractigualada']
+  );
+  assert.equal(await card.locator('a.contact-card__btn[href="mailto:gerard.lopez@rotary2202.org"]').count(), 1);
+  await card.locator('.open-signup-form').click();
+  assert.equal(await page.isVisible('#signupFormModal'), true);
   await context.close();
+  assert.deepEqual(errors, []);
 });
 
-test('formulari de contacte: enviament complet fins al backend', async (t) => {
+test('escriu-nos: també a la portada (en castellà), i la inscripció porta a contacte', async (t) => {
   if (skip) return t.skip(skip);
-  const { page, context } = await open('contacte.html');
-  await page.fill('#contactName', 'Anna');
-  await page.fill('#contactSurname', 'Puig');
-  await page.fill('#contactEmail', 'anna@example.com');
-  await page.fill('#contactPhone', '600000000');
-  await page.click('label.subject-pill:has(input[value="proposta"])');
-  assert.ok(await page.isChecked('input[name="subject"][value="proposta"]'));
-  await page.fill('#contactMessage', 'Una proposta de prova');
-  await page.check('#contactPrivacy');
-  const [response] = await Promise.all([
-    page.waitForResponse((r) => r.url().endsWith('/form-handler.php')),
-    page.click('#submitBtn')
-  ]);
-  // En local mail() falla (500), però la tramesa ja s'ha desat al CSV:
-  // vol dir que ha passat el CSRF i la validació del servidor.
-  assert.ok([200, 500].includes(response.status()), 'estat ' + response.status());
-  const csv = readFileSync(join(server.dir, 'form-data', 'submissions.csv'), 'utf8');
-  assert.match(csv, /"Anna Puig";"anna@example\.com";"Proposta";"Una proposta de prova";"600000000";"General"/);
+  const { page, context } = await open('es/index.html');
+  const card = page.locator('#escriu-nos');
+  assert.equal((await card.locator('.contact-form__title').innerText()).trim(), 'Escríbenos');
+  assert.equal(await card.locator('.open-signup-form').getAttribute('href'), 'contacte.html#inscripcio');
   await context.close();
 });
 
@@ -194,17 +178,18 @@ test('galeria: el visor s\'obre, navega amb les fletxes i torna el focus', async
   await context.close();
 });
 
-test('targetes de correu: mostren l\'adreça i el missatge va a la persona triada', async (t) => {
+test('targetes de correu: mostren l\'adreça i obren el correu', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context } = await open('contacte.html');
-  const cards = page.locator('.qc-card.contact-email-link');
+  const cards = page.locator('.quick-channels a.qc-card[href^="mailto:"]');
   assert.deepEqual(
     (await cards.locator('.qc-card__text span').allInnerTexts()).map((x) => x.trim()),
     ['ayuda@rotaractigualada.org', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org']
   );
-  await page.click('.qc-card[data-recipient="secretaria"]');
-  assert.equal((await page.locator('#recipientEmailDisplay').innerText()).trim(), 'luca.santos@rotary2202.org');
-  assert.equal(await page.inputValue('#contactRecipient'), 'secretaria');
+  assert.deepEqual(
+    await cards.evaluateAll((els) => els.map((e) => e.getAttribute('href'))),
+    ['mailto:ayuda@rotaractigualada.org', 'mailto:gerard.lopez@rotary2202.org', 'mailto:luca.santos@rotary2202.org']
+  );
   await context.close();
 });
 

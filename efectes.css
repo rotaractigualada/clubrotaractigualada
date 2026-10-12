@@ -1,0 +1,104 @@
+/* =============================================
+   EFECTES.CSS — Rotaract Igualada
+   Animacions suaus, efectes 3D i transicions entre pàgines.
+   No canvia cap contingut. Tot el moviment es desactiva si el
+   sistema té activat «reduir moviment».
+   (La lògica és a efectes.js.)
+   ============================================= */
+
+/* Transició suau entre pàgines i en canviar d'idioma (navegadors amb
+   View Transitions; la resta, simplement canvien de pàgina). */
+@view-transition { navigation: auto; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+
+  ::view-transition-old(root) { animation: fx-page-out .28s cubic-bezier(.4, 0, 1, 1) both; }
+  ::view-transition-new(root) { animation: fx-page-in .42s cubic-bezier(0, 0, .2, 1) both; }
+
+  /* Sense View Transitions: entrada suau de la pàgina */
+  @supports not (view-transition-name: none) {
+    body { animation: fx-page-in .42s cubic-bezier(0, 0, .2, 1) both; }
+  }
+
+  /* ── Botons: elevació, premut i onada al clicar ── */
+  .btn, .btn-submit, .contact-card__btn, .signup-process__cta-btn,
+  .instagram-section__cta, .header__cta, .mobile-nav__cta, .act-filter-btn,
+  .act-hero__tab-btn, .lang-menu__btn, .lang-menu__opt, .qc-card {
+    transition-property: transform, box-shadow, background-color, border-color, color, opacity;
+    transition-duration: .25s;
+    transition-timing-function: cubic-bezier(.2, .8, .2, 1);
+  }
+  .btn:active, .btn-submit:active, .contact-card__btn:active, .signup-process__cta-btn:active,
+  .instagram-section__cta:active, .header__cta:active, .mobile-nav__cta:active, .act-filter-btn:active,
+  .act-hero__tab-btn:active, .lang-menu__btn:active, .lang-menu__opt:active, .qc-card:active {
+    transform: scale(.97);
+    transition-duration: .08s;
+  }
+
+  .fx-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: .22;
+    transform: scale(0);
+    pointer-events: none;
+    animation: fx-ripple .6s cubic-bezier(.2, .8, .2, 1) forwards;
+  }
+
+  /* ── Menú d'idioma: les opcions apareixen una rere l'altra ── */
+  .lang-menu.is-open .lang-menu__opt { animation: fx-pop .28s cubic-bezier(.2, .8, .2, 1) both; }
+  .lang-menu.is-open li:nth-child(2) .lang-menu__opt { animation-delay: .04s; }
+  .lang-menu.is-open li:nth-child(3) .lang-menu__opt { animation-delay: .08s; }
+
+  /* ── Preguntes freqüents: la resposta s'obre suaument ── */
+  .faq-item[open] .faq-item__a { animation: fx-reveal .32s cubic-bezier(.2, .8, .2, 1) both; }
+
+  /* ── Targetes en 3D: s'inclinen seguint el ratolí (efectes.js) ── */
+  .fx-tilt {
+    transform-style: preserve-3d;
+    transition: transform .45s cubic-bezier(.2, .8, .2, 1), box-shadow .45s cubic-bezier(.2, .8, .2, 1);
+  }
+  .fx-tilt.fx-tilting {
+    transform: perspective(900px) rotateX(var(--fx-rx, 0deg)) rotateY(var(--fx-ry, 0deg)) translateY(-4px);
+    box-shadow: 0 18px 40px rgba(47, 47, 150, .16);
+    transition-duration: .12s;
+  }
+  .fx-glare {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at var(--fx-mx, 50%) var(--fx-my, 50%), rgba(255, 255, 255, .28), rgba(255, 255, 255, 0) 55%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .35s ease;
+    z-index: 2;
+  }
+  .fx-tilting > .fx-glare { opacity: 1; }
+}
+
+/* Contenidors de l'onada i de la brillantor (els posa efectes.js) */
+.fx-host { overflow: hidden; }
+.fx-host-pos { position: relative; }
+
+/* ── Barra de progrés de lectura (a dalt de tot) ── */
+.fx-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 3000;
+  background: linear-gradient(90deg, #2f2f96, #da1a5d);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+@keyframes fx-page-out { to { opacity: 0; transform: translateY(-6px) scale(.995); } }
+@keyframes fx-page-in { from { opacity: 0; transform: translateY(8px) scale(.995); } }
+@keyframes fx-ripple { to { transform: scale(1); opacity: 0; } }
+@keyframes fx-pop { from { opacity: 0; transform: translateY(-4px) scale(.98); } }
+@keyframes fx-reveal { from { opacity: 0; transform: translateY(-6px); } }
+
+@media print {
+  .fx-progress, .fx-ripple, .fx-glare { display: none; }
+}
