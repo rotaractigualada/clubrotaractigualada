@@ -32,7 +32,7 @@
     for (var r = 0; r < 8; r++) {
       var row = document.createElement('span');
       // Text repetit: en desplaçar-lo la meitat, el bucle no es nota
-      row.textContent = new Array(9).join('ROTARACT ✦ ');
+      row.textContent = new Array(9).join('ROTARACT · ');
       navMark.appendChild(row);
     }
     mobileNav.insertBefore(navMark, mobileNav.firstChild);

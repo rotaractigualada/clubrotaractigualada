@@ -1,9 +1,9 @@
 # Club Rotaract d'Igualada — web
 
-Web estàtica (HTML, CSS i JavaScript sense framework ni compilació). Es
-publica en un servidor Apache (fa servir `.htaccess`). No té formulari de
-contacte propi: el requadre «Escriu-nos» mostra els correus (vegeu
-`RESTAURAR-FORMULARI.md` per tornar al formulari antic).
+Web estàtica (HTML, CSS i JavaScript sense framework ni compilació) amb un
+petit backend en PHP per als dos formularis de Contacte («Vull informació» i
+«Vull unir-me»). Es publica en un servidor Apache (fa servir `.htaccess`).
+Cap enllaç de la web obre el programa de correu: tot es fa des de la pàgina.
 
 ## Estructura
 
@@ -15,9 +15,10 @@ contacte propi: el requadre «Escriu-nos» mostra els correus (vegeu
 | `cookie-banner.css`, `i18n.css` | Bàner de cookies i selector d'idioma |
 | `nav.js` | Menú mòbil |
 | `i18n.js` | Traducció català / anglès / castellà (atributs `data-en` + diccionari) |
-| `legal-modals.js` | Modals d'avís legal, privacitat, cookies i formulari d'inscripció (JotForm) |
+| `legal-modals.js` | Modals d'avís legal, privacitat i cookies |
 | `cookie-banner.js`, `analytics.js` | Consentiment de cookies i Google Analytics (només si s'accepta) |
-| `correu.js` | «Escriu-nos»: botons per copiar les adreces de correu |
+| `correu.js` | «Escriu-nos» de Contacte: pestanyes «Vull informació» / «Vull unir-me», validació i enviament |
+| `form-handler.php` | Backend dels formularis: validació, antispam, correu i còpia a `form-data/submissions.csv` |
 | `rotaractigualada.js`, `contacte.js` | Animacions d'aparició |
 | `activitats.js`, `directiu.js`, `nosaltres.js`, `scroll-top.js` | Interaccions de cada pàgina |
 | `redireccions.js` | Al `<head>`: còpia de GitHub Pages → rotaractigualada.org, i idioma (tria desada o idioma del navegador) → `/`, `/es/` o `/en/` |
@@ -49,13 +50,15 @@ i mostra a cada persona el títol en el seu idioma.
 
 ## Executar en local
 
-Qualsevol servidor estàtic serveix; per exemple, amb PHP:
+Cal PHP 8 (per als formularis):
 
 ```bash
 php -S 127.0.0.1:8765      # o: npm start
 ```
 
-i obrir <http://127.0.0.1:8765/>.
+i obrir <http://127.0.0.1:8765/>. En local `mail()` normalment no pot
+enviar correu: el formulari mostrarà un error, però la tramesa es desa a
+`form-data/submissions.csv` (ignorat per git).
 
 ## Tests
 
@@ -70,6 +73,9 @@ npm test
 - `tests/static.test.mjs`: enllaços i recursos locals, àncores, metadades SEO,
   `alt` de les imatges, ids duplicats, scripts inline (bloquejats per la CSP),
   sitemap i robots.txt.
+- `tests/form-handler.test.mjs`: origen, validació dels dos formularis,
+  honeypot, enviaments massa ràpids, límit d'enviaments, destinataris,
+  protecció contra fórmules al CSV i retorn sense JavaScript.
 - `tests/browser.test.mjs`: errors de JavaScript, desbordament en mòbil, menú
   mòbil, modals, «Escriu-nos», calendari amb teclat, pestanyes i canvi d'idioma.
 

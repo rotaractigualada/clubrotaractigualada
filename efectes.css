@@ -468,10 +468,10 @@ body::before {
   line-height: 1;
   letter-spacing: .03em;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, .13);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, .07);
 }
-.fx-nav-mark span:nth-child(2n) { color: rgba(255, 255, 255, .05); -webkit-text-stroke-width: 0; }
-.fx-nav-mark span:nth-child(3n) { -webkit-text-stroke-color: rgba(255, 140, 185, .28); }
+.fx-nav-mark span:nth-child(2n) { color: rgba(255, 255, 255, .035); -webkit-text-stroke-width: 0; }
+.fx-nav-mark span:nth-child(3n) { -webkit-text-stroke-color: rgba(255, 140, 185, .14); }
 
 .mobile-nav__close {
   background: rgba(255, 255, 255, .12);
