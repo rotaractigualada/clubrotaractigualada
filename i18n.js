@@ -15,6 +15,12 @@
 
   /* Diccionari castellà: clau = text en anglès (data-en) */
   var ES_MAP = {
+    'Join us': 'Únete',
+    'If you are 18 to 30 and want to do things for your community, we\'re waiting for you. No experience needed: just the will to contribute, learn and meet people.': 'Si tienes entre 18 y 30 años y ganas de hacer cosas por tu comunidad, te estamos esperando. No hace falta experiencia: solo ganas de aportar, aprender y conocer gente.',
+    'We reply within 48 hours': 'Respondemos en menos de 48 horas',
+    'All contact channels': 'Todos los canales de contacto',
+    'Come to two meetings to meet the members and see how we work.': 'Ven a dos reuniones para conocer a los socios y ver cómo funcionamos.',
+    'Members vote and we reply by email within 48 hours.': 'Los socios votan y te respondemos por correo en menos de 48 horas.',
     'View on Instagram': 'Ver en Instagram',
     'Choose who you want to write to and your email app will open. We reply within 48 hours.': 'Elige a quién quieres escribir y se abrirá tu correo. Respondemos en menos de 48 horas.',
     'Write': 'Escribir',

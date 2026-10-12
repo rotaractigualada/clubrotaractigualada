@@ -1,16 +1,30 @@
 /* efectes.js — Rotaract Igualada
    Animacions de la interfície: onada en clicar els botons, targetes
-   en 3D que segueixen el ratolí i barra de progrés de lectura.
-   No toca cap contingut i respecta «reduir moviment». */
+   en 3D que segueixen el ratolí, barra de progrés de lectura i peu de
+   pàgina animat. No toca cap contingut i respecta «reduir moviment». */
 (function () {
   'use strict';
+
+  var footer = document.querySelector('.footer');
+
+  // ── Peu de pàgina: marca la pàgina actual als enllaços de navegació ──
+  // (es fa sempre, també amb «reduir moviment»: és accessibilitat)
+  if (footer) {
+    var pageOf = function (path) {
+      return path.endsWith('/') ? path + 'index.html' : path;
+    };
+    var current = pageOf(window.location.pathname);
+    footer.querySelectorAll('.footer__links a[href$=".html"]').forEach(function (link) {
+      if (pageOf(new URL(link.href).pathname) === current) link.setAttribute('aria-current', 'page');
+    });
+  }
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) return;
 
   var BUTTONS = '.btn, .btn-submit, .contact-card__btn, .signup-process__cta-btn, .instagram-section__cta, ' +
     '.header__cta, .mobile-nav__cta, .act-filter-btn, .act-hero__tab-btn, .lang-menu__btn, .lang-menu__opt, .qc-card';
-  var TILT = '.ig-post, .qc-card, .act-card, .junta-card, .soci-card, .aboutus__pillar, .galeria__item';
+  var TILT = '.ig-post, .qc-card, .act-card, .junta-card, .soci-card, .aboutus__pillar, .galeria__item, .join-cta__step';
   var MAX_TILT = 6; // graus
 
   // L'element ha de poder contenir l'onada o la brillantor sense
@@ -78,6 +92,35 @@
         if (frame) { window.cancelAnimationFrame(frame); frame = null; }
         card.classList.remove('fx-tilting');
       });
+    });
+  }
+
+  // ── Peu de pàgina: marca d'aigua, entrada en 3D i llum que segueix el ratolí ──
+  if (footer) {
+    var mark = document.createElement('span');
+    mark.className = 'fx-footer-mark';
+    mark.setAttribute('aria-hidden', 'true');
+    mark.textContent = 'Rotaract';
+    footer.appendChild(mark);
+  }
+  if (footer && 'IntersectionObserver' in window) {
+    footer.classList.add('fx-footer-ready');
+    var footerObs = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      footer.classList.add('fx-footer-in');
+      footerObs.disconnect();
+    }, { threshold: 0.12 });
+    footerObs.observe(footer);
+  }
+  if (footer && finePointer) {
+    footer.addEventListener('pointermove', function (e) {
+      var rect = footer.getBoundingClientRect();
+      footer.style.setProperty('--fx-fx', (e.clientX - rect.left) + 'px');
+      footer.style.setProperty('--fx-fy', (e.clientY - rect.top) + 'px');
+    });
+    footer.addEventListener('pointerleave', function () {
+      footer.style.removeProperty('--fx-fx');
+      footer.style.removeProperty('--fx-fy');
     });
   }
 
