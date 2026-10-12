@@ -109,10 +109,25 @@
   margin: 0 0.75rem;
 }
 
-/* ── Dins del menú mòbil ── */
+/* ── Dins del menú mòbil ──
+   Les opcions s'obren dins del mateix menú (empenyen «Uneix-te» cap
+   avall) en lloc de flotar-hi per sobre: així mai no queden tapades. */
 .mobile-nav__lang {
   margin: 0.75rem 0 0.25rem;
   align-self: flex-start;
+}
+
+.mobile-nav__lang .lang-menu__list {
+  position: static;
+  display: none;
+  width: max-content;
+  min-width: 170px;
+  margin-top: 10px;
+  transform: none;
+}
+
+.mobile-nav__lang.is-open .lang-menu__list {
+  display: block;
 }
 
 @media (max-width: 992px) {

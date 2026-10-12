@@ -72,6 +72,25 @@ test('menú mòbil: obre, tanca amb Escape i no és enfocable tancat', async (t)
   await context.close();
 });
 
+test('menú mòbil: els idiomes no queden tapats per «Uneix-te» i es poden triar', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context } = await open('index.html', { width: 375, height: 800 });
+  await page.click('#hamburger');
+  await page.click('.mobile-nav .lang-menu__btn');
+  const covered = await page.evaluate(() => [...document.querySelectorAll('.mobile-nav .lang-menu__opt')]
+    .filter((opt) => {
+      opt.scrollIntoView({ block: 'center' });
+      const r = opt.getBoundingClientRect();
+      const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      return !opt.contains(hit);
+    })
+    .map((opt) => opt.dataset.langOpt));
+  assert.deepEqual(covered, [], 'opcions tapades: ' + covered.join(', '));
+  await page.click('.mobile-nav [data-lang-opt="es"]');
+  await page.waitForURL('**/es/');
+  await context.close();
+});
+
 test('modals legals: rol de diàleg i el focus torna a l\'enllaç', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context } = await open('index.html');
