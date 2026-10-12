@@ -134,7 +134,7 @@
     message: function () { return t('Escriu el teu missatge.', 'Write your message.', 'Escribe tu mensaje.'); },
     privacy: function () { return t('Has d\'acceptar la política de privacitat.', 'You must accept the privacy policy.', 'Debes aceptar la política de privacidad.'); },
     phone: function () { return t('El telèfon no és vàlid.', 'The phone number is not valid.', 'El teléfono no es válido.'); },
-    age: function () { return t('L\'edat no és vàlida.', 'The age is not valid.', 'La edad no es válida.'); }
+    age: function () { return t('Escriu la teva edat.', 'Enter your age.', 'Escribe tu edad.'); }
   };
 
   // Element on es marca l'error de cada camp
@@ -152,8 +152,11 @@
     if (!get('message')) bad.push('message');
     var phone = get('phone');
     if (phone && !/^[0-9+()\s.-]{6,30}$/.test(phone)) bad.push('phone');
-    var age = get('age');
-    if (age && (!/^\d{1,2}$/.test(age) || +age < 14)) bad.push('age');
+    // L'edat només és obligatòria al formulari «Vull unir-me»
+    if (form.querySelector('[name="age"]')) {
+      var age = get('age');
+      if (!/^\d{1,2}$/.test(age) || +age < 14) bad.push('age');
+    }
     var privacy = form.querySelector('[name="privacy"]');
     if (privacy && !privacy.checked) bad.push('privacy');
     return bad;
