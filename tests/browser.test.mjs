@@ -101,12 +101,14 @@ test('escriu-nos: correus de contacte i formulari d\'inscripció al mateix lloc,
   assert.deepEqual(errors, []);
 });
 
-test('escriu-nos: també a la portada (en castellà), i la inscripció porta a contacte', async (t) => {
+test('portada: la zona «Uneix-te» porta a la inscripció i al correu (en castellà)', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context } = await open('es/index.html');
-  const card = page.locator('#escriu-nos');
-  assert.equal((await card.locator('.contact-form__title').innerText()).trim(), 'Escríbenos');
-  assert.equal(await card.locator('.open-signup-form').getAttribute('href'), 'contacte.html#inscripcio');
+  const zone = page.locator('#contacte.join-cta');
+  assert.equal((await zone.locator('.join-cta__title').innerText()).trim(), '¿Quieres formar parte del club?');
+  assert.equal(await zone.locator('a[href="contacte.html#inscripcio"]').count(), 1);
+  assert.equal(await zone.locator('a[href="mailto:ayuda@rotaractigualada.org"]').count(), 1);
+  assert.equal(await zone.locator('.join-cta__step').count(), 3);
   await context.close();
 });
 
