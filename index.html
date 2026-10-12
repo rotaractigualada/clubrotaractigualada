@@ -74,7 +74,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="image" href="sopar.jpg" fetchpriority="high">
-  <link rel="stylesheet" href="rotaractigualada.css?v=94aaa270">
+  <link rel="stylesheet" href="rotaractigualada.css?v=93556698">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
@@ -539,78 +539,134 @@
               <div class="contact__channel-icon" aria-hidden="true">✉️</div>
               <div class="contact__channel-text">
                 <h4 data-en="General">General</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="ayuda@rotaractigualada.org" data-recipient="club">ayuda@rotaractigualada.org</a>
+                <a href="#escriu-nos" class="contact-email-link" data-email="ayuda@rotaractigualada.org" data-recipient="club">ayuda@rotaractigualada.org</a>
               </div>
             </div>
             <div class="contact__channel">
               <div class="contact__channel-icon" aria-hidden="true">👤</div>
               <div class="contact__channel-text">
                 <h4 data-en="Presidency">Presidència</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="gerard.lopez@rotary2202.org" data-recipient="presidencia">gerard.lopez@rotary2202.org</a>
+                <a href="#escriu-nos" class="contact-email-link" data-email="gerard.lopez@rotary2202.org" data-recipient="presidencia">gerard.lopez@rotary2202.org</a>
               </div>
             </div>
             <div class="contact__channel">
               <div class="contact__channel-icon" aria-hidden="true">🤝</div>
               <div class="contact__channel-text">
                 <h4 data-en="Secretary">Secretari</h4>
-                <a href="#contactForm" class="contact-email-link" data-email="luca.santos@rotary2202.org" data-recipient="secretaria">luca.santos@rotary2202.org</a>
+                <a href="#escriu-nos" class="contact-email-link" data-email="luca.santos@rotary2202.org" data-recipient="secretaria">luca.santos@rotary2202.org</a>
               </div>
             </div>
           </div>
         </div>
-        <form class="contact__form reveal-right" id="contactForm" novalidate>
-          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field">
-          <input type="hidden" name="recipient" id="contactRecipient" value="club">
-          <p class="contact-form__recipient" id="recipientNote" hidden>
-            <span data-en="Writing to:">Escrivint a:</span> <strong id="recipientEmailDisplay"></strong>
-          </p>
-          <div class="form-group">
-            <label for="contactName"><span data-en="Full name">Nom complet</span> <span class="required">*</span></label>
-            <input type="text" id="contactName" name="name" required placeholder="El teu nom complet" data-en-placeholder="Your full name" />
+        <div class="contact__form mail-composer reveal-right" id="escriu-nos">
+          <div class="mail-composer__tabs" role="tablist" aria-label="Contacte">
+            <button type="button" class="mail-composer__tab" role="tab" id="tab-correu" aria-controls="panel-correu" aria-selected="true">
+              <span data-en="✉️ Write to us">✉️ Escriu-nos</span>
+            </button>
+            <button type="button" class="mail-composer__tab" role="tab" id="tab-unir" aria-controls="panel-unir" aria-selected="false" tabindex="-1">
+              <span data-en="🙋 Join us">🙋 Uneix-te</span>
+            </button>
           </div>
-          <div class="form-group">
-            <label for="contactEmail"><span data-en="Email">Correu electrònic</span> <span class="required">*</span></label>
-            <input type="email" id="contactEmail" name="email" required placeholder="Tu@email.com" data-en-placeholder="you@email.com" />
-          </div>
-<div class="form-group">
-            <label id="contactSubjectLabel"><span data-en="Subject">Assumpte</span> <span class="required">*</span></label>
-            <div class="subject-pills" role="radiogroup" aria-labelledby="contactSubjectLabel" aria-required="true">
-              <label class="subject-pill">
-                <input type="radio" name="subject" value="dubte" id="contactSubject" required>
-                <span data-en="❓ A question">❓ Un dubte</span>
-              </label>
-              <label class="subject-pill">
-                <input type="radio" name="subject" value="proposta">
-                <span data-en="💡 A proposal">💡 Una proposta</span>
-              </label>
-              <label class="subject-pill">
-                <input type="radio" name="subject" value="altre">
-                <span data-en="💬 Something else">💬 Altres</span>
-              </label>
+
+          <div class="mail-composer__panel" id="panel-correu" role="tabpanel" aria-labelledby="tab-correu">
+            <div class="contact-form__header">
+              <h2 class="contact-form__title" data-en="Send us an email">Envia'ns un correu</h2>
+              <p class="contact-form__subtitle" data-en="Choose who you want to write to and why, and your email app will open with the message ready.">Tria a qui vols escriure i el motiu, i s'obrirà el teu correu amb el missatge preparat.</p>
             </div>
+
+            <!-- A qui escrius -->
+            <div class="form-group">
+              <p class="form-group__label" id="composerToLabel" data-en="Who are you writing to?">A qui escrius?</p>
+              <div class="subject-pills" role="radiogroup" aria-labelledby="composerToLabel">
+                <label class="subject-pill">
+                  <input type="radio" name="to" value="club" data-email="ayuda@rotaractigualada.org" checked>
+                  <span data-en="✉️ General">✉️ General</span>
+                </label>
+                <label class="subject-pill">
+                  <input type="radio" name="to" value="presidencia" data-email="gerard.lopez@rotary2202.org">
+                  <span data-en="👤 Presidency">👤 Presidència</span>
+                </label>
+                <label class="subject-pill">
+                  <input type="radio" name="to" value="secretaria" data-email="luca.santos@rotary2202.org">
+                  <span data-en="🤝 Secretary">🤝 Secretaria</span>
+                </label>
+              </div>
+            </div>
+
+            <p class="contact-form__recipient" id="recipientNote">
+              <span data-en="Writing to:">Escrivint a:</span> <strong id="recipientEmailDisplay">ayuda@rotaractigualada.org</strong>
+              <button type="button" class="copy-email" id="copyEmail" data-en="Copy">Copiar</button>
+            </p>
+
+            <!-- Motiu -->
+            <div class="form-group">
+              <p class="form-group__label" id="composerReasonLabel" data-en="Reason">Motiu</p>
+              <div class="subject-pills" role="radiogroup" aria-labelledby="composerReasonLabel">
+                <label class="subject-pill">
+                  <input type="radio" name="motiu" value="dubte">
+                  <span data-en="❓ A question">❓ Un dubte</span>
+                </label>
+                <label class="subject-pill">
+                  <input type="radio" name="motiu" value="proposta">
+                  <span data-en="💡 A proposal">💡 Una proposta</span>
+                </label>
+                <label class="subject-pill">
+                  <input type="radio" name="motiu" value="unir">
+                  <span data-en="🙋 I want to join">🙋 Vull unir-me</span>
+                </label>
+                <label class="subject-pill">
+                  <input type="radio" name="motiu" value="altre">
+                  <span data-en="💬 Something else">💬 Altres</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="join-hint" id="joinHint" hidden>
+              <p data-en="To become a member, the quickest way is the sign-up form.">Per fer-te soci o sòcia, el més ràpid és el formulari d'inscripció.</p>
+              <a class="open-signup-form" href="contacte.html#inscripcio" data-en="Open the form">Obrir el formulari</a>
+            </div>
+
+            <!-- Missatge -->
+            <div class="form-group">
+              <label for="contactMessage"><span data-en="Message">Missatge</span> <span class="form-group__optional" data-en="(optional)">(opcional)</span></label>
+              <textarea id="contactMessage" maxlength="500" placeholder="Explica'ns el que necessites..." data-en-placeholder="Tell us what you need..."></textarea>
+              <span class="char-count" id="charCount" data-en="0 / 500 characters">0 / 500 caràcters</span>
+            </div>
+
+            <a class="btn btn--primary mail-composer__btn" id="mailLink" href="mailto:ayuda@rotaractigualada.org">
+              <span data-en="Write the email">Escriure el correu</span>
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </a>
+
+            <p class="mail-composer__help">
+              <span data-en="If your email app doesn't open, copy the address or">Si no s'obre el teu programa de correu, copia l'adreça o</span>
+              <a id="gmailLink" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=ayuda@rotaractigualada.org" target="_blank" rel="noopener noreferrer" data-en="open it in Gmail">obre'l amb Gmail</a>.
+            </p>
           </div>
-          <div class="form-group">
-            <label for="contactMessage"><span data-en="Message">Missatge</span> <span class="required">*</span></label>
-            <textarea id="contactMessage" name="message" required maxlength="500" placeholder="Escriu el teu missatge aquí..." data-en-placeholder="Write your message here..."></textarea>
+
+          <div class="mail-composer__panel" id="panel-unir" role="tabpanel" aria-labelledby="tab-unir" hidden>
+            <div class="contact-form__header">
+              <h2 class="contact-form__title" data-en="Become a member">Fes-te soci o sòcia</h2>
+              <p class="contact-form__subtitle" data-en="Are you 18 to 30 and keen to do things for your community? Fill in the sign-up form: it only takes a few minutes.">Tens entre 18 i 30 anys i ganes de fer coses per la teva comunitat? Omple el formulari d'inscripció: només són uns minuts.</p>
+            </div>
+            <ol class="join-steps">
+              <li><span class="join-steps__num">1</span><span data-en="Fill in the sign-up form">Omple el formulari d'inscripció</span></li>
+              <li><span class="join-steps__num">2</span><span data-en="Come to two meetings to get to know the club">Vine a dues reunions per conèixer el club</span></li>
+              <li><span class="join-steps__num">3</span><span data-en="Members' vote and reply within 48 hours">Votació dels socis i resposta en 48 hores</span></li>
+            </ol>
+            <a class="btn btn--primary mail-composer__btn open-signup-form" href="contacte.html#inscripcio">
+              <span data-en="Open the sign-up form">Obrir el formulari d'inscripció</span>
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+            <p class="mail-composer__help">
+              <span data-en="Any questions first?">Abans tens dubtes?</span>
+              <button type="button" class="link-button" id="joinAsk" data-en="Write to us">Escriu-nos</button>
+            </p>
           </div>
-          <div class="form-group">
-            <label class="form-checkbox">
-              <input type="checkbox" id="contactPrivacy" name="privacy" value="1" required />
-              <span data-en-is-html="true" data-en="I have read and accept the &lt;a href=&quot;#&quot; class=&quot;open-avis-legal&quot;&gt;legal notice&lt;/a&gt; and the &lt;a href=&quot;#&quot; class=&quot;open-politica-privacitat&quot;&gt;privacy policy&lt;/a&gt;.">He llegit i accepto l'<a href="#" class="open-avis-legal" data-en="legal notice">avís legal</a> i la <a href="#" class="open-politica-privacitat" data-en="privacy policy">política de privacitat</a>.</span>
-            </label>
-          </div>
-          <button type="submit" class="btn btn--primary" style="width:100%; justify-content:center;">
-            <span data-en="Send message">Enviar missatge</span>
-            <svg aria-hidden="true" focusable="false" class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-          </button>
-          <div id="formSuccess" class="form-success" aria-live="polite">
-            <span data-en="✅ Message sent successfully! We'll reply soon.">✅ Missatge enviat correctament! Et respondrem aviat.</span>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   </section>
@@ -671,7 +727,7 @@
         <h3 class="footer__heading" data-en="Contact">Contacte</h3>
         <div class="footer__contact-item">
           <span aria-hidden="true">✉️</span>
-          <a href="contacte.html?correu=club">ayuda@rotaractigualada.org</a>
+          <a href="mailto:ayuda@rotaractigualada.org">ayuda@rotaractigualada.org</a>
         </div>
         <div class="footer__contact-item">
           <span aria-hidden="true">📝</span>
@@ -688,7 +744,8 @@
        SCRIPTS
   ============================================= -->
   <script src="nav.js?v=35a73008"></script>
-  <script src="rotaractigualada.js?v=5df3a7db"></script>
+  <script src="rotaractigualada.js?v=15d577cf"></script>
+  <script src="correu.js?v=a06b0bbb"></script>
   <script src="galeria.js?v=961b85ec"></script>
   <script src="legal-modals.js?v=9e5da8c9"></script>
 
@@ -811,10 +868,10 @@
 
         <section class="legal-section">
           <h3 data-en="2. What data we collect">2. Quines dades recollim</h3>
-          <p data-en="Through the contact form we collect your name, email address, selected subject and the content of the message you send us. This data is used solely to manage your request and respond to you.">
-            A través del formulari de contacte recollim el nom, el correu electrònic, l'assumpte
-            seleccionat i el contingut del missatge que ens envies. Aquestes dades s'utilitzen
-            únicament per gestionar la teva sol·licitud i donar-te resposta.
+          <p data-en="When you email us, we process your name, your email address and the content of your message. This data is used solely to manage your request and respond to you. This website does not collect or store any personal data through forms.">
+            Quan ens escrius per correu electrònic, tractem el teu nom, la teva adreça de correu i el contingut
+            del missatge. Aquestes dades s'utilitzen únicament per gestionar la teva sol·licitud i donar-te
+            resposta. Aquest lloc web no recull ni desa dades personals a través de formularis.
           </p>
         </section>
 
@@ -831,9 +888,9 @@
 
         <section class="legal-section">
           <h3 data-en="4. Legal basis">4. Base legal</h3>
-          <p data-en="The processing of data is based on the user's consent, given by submitting the contact form and accepting this privacy policy.">
+          <p data-en="The processing of data is based on the user's consent, given by writing to us on their own initiative.">
             El tractament de les dades es basa en el consentiment de la persona usuària, atorgat en
-            enviar el formulari de contacte i acceptar aquesta política de privacitat.
+            escriure'ns per iniciativa pròpia.
           </p>
         </section>
 
@@ -847,10 +904,8 @@
 
         <section class="legal-section">
           <h3 data-en="6. Data disclosure to third parties">6. Cessió de dades a tercers</h3>
-          <p data-en="Data submitted through the contact form is processed directly by the organisation's own channels: messages are received by email and a copy is kept on the website's server as proof of receipt. Rotaract Club Igualada does not disclose or sell personal data to third parties, except where there is a legal obligation.">
-            Les dades enviades a través del formulari de contacte es tramiten directament pels canals
-            propis de l'entitat: els missatges es reben per correu electrònic i se'n conserva una còpia
-            al servidor del lloc web com a resguard de recepció. Fora d'això, Club Rotaract d'Igualada
+          <p data-en="Messages you send us are received in the organisation's email inboxes. Rotaract Club Igualada does not disclose or sell personal data to third parties, except where there is a legal obligation.">
+            Els missatges que ens envies es reben a les bústies de correu de l'entitat. Club Rotaract d'Igualada
             no cedeix ni ven dades personals a tercers, excepte quan existeixi una obligació legal.
           </p>
         </section>
@@ -991,7 +1046,7 @@
 
 <script src="cookie-banner.js?v=b26b13ba"></script>
   <script src="analytics.js?v=9dacceee"></script>
-  <script src="i18n.js?v=a9b437dd"></script>
+  <script src="i18n.js?v=0f60f7c7"></script>
   <script async src="https://www.instagram.com/embed.js" charset="utf-8"></script>
 </body>
 </html>

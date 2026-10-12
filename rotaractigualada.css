@@ -2872,3 +2872,80 @@ body.lightbox-open { overflow: hidden; }
     font-size: 0.78rem;
   }
 }
+/* ── Escriu-nos (correu.js): prepara un correu en lloc d'un formulari ── */
+.mail-composer .contact-form__header { margin-bottom: 1.2rem; }
+.mail-composer .contact-form__title {
+  margin: 0 0 .35rem;
+  font-size: 1.25rem; font-weight: 800; color: var(--text);
+}
+.mail-composer .contact-form__subtitle {
+  margin: 0;
+  font-size: .82rem; color: var(--text-light);
+}
+.form-group__label {
+  display: block; margin: 0 0 6px;
+  font-size: .82rem; font-weight: 500; color: var(--text);
+}
+.form-group__optional { color: var(--text-light); font-size: .76rem; }
+.mail-composer .subject-pills { flex-wrap: wrap; }
+.mail-composer .contact-form__recipient {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .5rem;
+  word-break: break-all;
+}
+.copy-email {
+  margin-left: auto;
+  padding: .3rem .8rem;
+  border: 1px solid rgba(47, 47, 150, .25); border-radius: 999px;
+  background: #fff; color: var(--primary);
+  font: inherit; font-size: .76rem; font-weight: 600;
+  cursor: pointer; word-break: normal;
+}
+.copy-email:hover, .copy-email:focus-visible { background: var(--bg-light); }
+.mail-composer .char-count {
+  display: block; margin-top: 4px;
+  font-size: .74rem; color: var(--text-light); text-align: right;
+}
+.mail-composer__btn { width: 100%; justify-content: center; text-decoration: none; }
+.mail-composer__help {
+  margin: .9rem 0 0;
+  font-size: .78rem; line-height: 1.6; color: var(--text-light); text-align: center;
+}
+.mail-composer__help a { color: var(--primary); font-weight: 600; }
+.mail-composer__tabs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .35rem;
+  padding: .3rem; margin: 0 0 1.4rem;
+  border-radius: 999px; background: rgba(47, 47, 150, .07);
+}
+.mail-composer__tab {
+  padding: .65rem .8rem;
+  border: 0; border-radius: 999px; background: transparent;
+  color: var(--primary); font: inherit; font-size: .86rem; font-weight: 700;
+  cursor: pointer; transition: background .2s, color .2s, box-shadow .2s;
+}
+.mail-composer__tab[aria-selected="true"] {
+  background: #fff; color: var(--primary);
+  box-shadow: 0 4px 14px rgba(47, 47, 150, .15);
+}
+.mail-composer__tab:hover { background: rgba(255, 255, 255, .6); }
+.mail-composer__tab:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.mail-composer__panel[hidden] { display: none; }
+.mail-composer__btn svg, .mail-composer a.btn-submit svg { width: 18px; height: 18px; flex: 0 0 auto; }
+.join-hint {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem .8rem;
+  margin: -.2rem 0 1.2rem; padding: .75rem .95rem;
+  border-radius: 14px; background: rgba(218, 26, 93, .07); border: 1px solid rgba(218, 26, 93, .18);
+}
+.join-hint[hidden] { display: none; }
+.join-hint p { margin: 0; font-size: .82rem; color: var(--text); }
+.join-hint a { color: var(--accent); font-size: .82rem; font-weight: 800; white-space: nowrap; }
+.join-steps { list-style: none; margin: 0 0 1.4rem; padding: 0; display: grid; gap: .7rem; }
+.join-steps li { display: flex; align-items: center; gap: .75rem; font-size: .9rem; color: var(--text); }
+.join-steps__num {
+  flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent); color: #fff; font-size: .82rem; font-weight: 800;
+}
+.link-button {
+  padding: 0; border: 0; background: none;
+  color: var(--primary); font: inherit; font-weight: 700; text-decoration: underline; cursor: pointer;
+}
