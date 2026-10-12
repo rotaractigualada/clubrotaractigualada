@@ -3,6 +3,7 @@
    Instal·lació: npm install && npx playwright install chromium */
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { hasPhp, startServer, PAGES, ROOT } from './helpers.mjs';
 
@@ -85,33 +86,59 @@ test('modals legals: rol de diàleg i el focus torna a l\'enllaç', async (t) =>
   await context.close();
 });
 
-test('escriu-nos: correus de contacte i formulari d\'inscripció al mateix lloc, sense formulari de contacte', async (t) => {
+test('escriu-nos: pestanyes «Vull informació» / «Vull unir-me» i validació accessible', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context, errors } = await open('contacte.html');
-  assert.equal(await page.locator('form').count(), 0, 'ja no hi ha formulari');
-  const card = page.locator('#escriu-nos');
-  assert.deepEqual(
-    (await card.locator('.contact-card__text a').allInnerTexts()).map((x) => x.trim()),
-    ['ayuda@rotaractigualada.org', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org', '@rotaractigualada']
-  );
-  assert.equal(await card.locator('a.contact-card__btn[href="mailto:gerard.lopez@rotary2202.org"]').count(), 1);
-  await card.locator('.open-signup-form').click();
-  assert.equal(await page.isVisible('#signupFormModal'), true);
+  assert.equal(await page.isVisible('#form-info'), true);
+  assert.equal(await page.isVisible('#form-unir'), false);
+  // Errors accessibles en enviar buit
+  await page.click('#form-info button[type="submit"]');
+  assert.equal(await page.getAttribute('#infoName', 'aria-invalid'), 'true');
+  const errId = await page.getAttribute('#infoName', 'aria-describedby');
+  assert.ok(errId && (await page.locator('#' + errId).isVisible()));
+  await page.fill('#infoName', 'Anna');
+  assert.equal(await page.getAttribute('#infoName', 'aria-invalid'), null);
+  // Canvi de pestanya
+  await page.click('#tab-unir');
+  assert.equal(await page.getAttribute('#tab-unir', 'aria-selected'), 'true');
+  assert.equal(await page.isVisible('#form-unir'), true);
+  assert.equal(await page.isVisible('#form-info'), false);
   await context.close();
   assert.deepEqual(errors, []);
 });
 
-test('portada: la zona «Uneix-te» porta a la inscripció i al correu (en castellà)', async (t) => {
+test('escriu-nos: «Vull unir-me» s\'envia fins al servidor i mostra el resultat', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context } = await open('contacte.html#uneix-te');
+  assert.equal(await page.isVisible('#form-unir'), true, '#uneix-te obre la pestanya «Vull unir-me»');
+  await page.fill('#unirName', 'Pau');
+  await page.fill('#unirSurname', 'Vila');
+  await page.fill('#unirEmail', 'pau@example.com');
+  await page.fill('#unirAge', '23');
+  await page.fill('#unirMessage', 'Vull fer voluntariat');
+  await page.check('#unirPrivacy');
+  await page.waitForTimeout(3100); // el servidor ignora els enviaments de menys de 3 s (bots)
+  const [response] = await Promise.all([
+    page.waitForResponse((r) => r.url().endsWith('/form-handler.php')),
+    page.click('#form-unir button[type="submit"]')
+  ]);
+  // En local mail() falla (500), però la tramesa ja s'ha desat al CSV
+  assert.ok([200, 500].includes(response.status()), 'estat ' + response.status());
+  await page.waitForSelector('#form-unir .form-status:not([hidden])');
+  const csv = readFileSync(join(server.dir, 'form-data', 'submissions.csv'), 'utf8');
+  assert.match(csv, /"Pau Vila";"pau@example\.com";"Uneix-te";"Vull fer voluntariat";"";"General";"23"/);
+  await context.close();
+});
+test('portada: la zona «Uneix-te» porta als formularis de Contacte (en castellà)', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context } = await open('es/index.html');
   const zone = page.locator('#contacte.join-cta');
   assert.equal((await zone.locator('.join-cta__title').innerText()).trim(), '¿Quieres formar parte del club?');
-  assert.equal(await zone.locator('a[href="contacte.html#inscripcio"]').count(), 1);
-  assert.equal(await zone.locator('a[href="mailto:ayuda@rotaractigualada.org"]').count(), 1);
+  assert.equal(await zone.locator('a[href="contacte.html#uneix-te"]').count(), 1);
+  assert.equal(await zone.locator('a[href="contacte.html#escriu-nos"]').count(), 1);
   assert.equal(await zone.locator('.join-cta__step').count(), 3);
   await context.close();
 });
-
 test('calendari: es pot triar un dia amb el teclat', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context } = await open('activitats.html#calendari');
@@ -180,21 +207,29 @@ test('galeria: el visor s\'obre, navega amb les fletxes i torna el focus', async
   await context.close();
 });
 
-test('targetes de correu: mostren l\'adreça i obren el correu', async (t) => {
+test('targetes de correu: mostren l\'adreça i trien la persona al formulari (sense obrir cap aplicació)', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context } = await open('contacte.html');
-  const cards = page.locator('.quick-channels a.qc-card[href^="mailto:"]');
+  const cards = page.locator('.quick-channels a.qc-card.contact-email-link');
   assert.deepEqual(
     (await cards.locator('.qc-card__text span').allInnerTexts()).map((x) => x.trim()),
     ['ayuda@rotaractigualada.org', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org']
   );
-  assert.deepEqual(
-    await cards.evaluateAll((els) => els.map((e) => e.getAttribute('href'))),
-    ['mailto:ayuda@rotaractigualada.org', 'mailto:gerard.lopez@rotary2202.org', 'mailto:luca.santos@rotary2202.org']
-  );
+  await page.click('#tab-unir');
+  await page.click('.qc-card[data-recipient="secretaria"]');
+  assert.equal(await page.isVisible('#form-info'), true);
+  assert.ok(await page.isChecked('#form-info input[name="recipient"][value="secretaria"]'));
   await context.close();
 });
 
+test('procés d\'inscripció: «Accedeix al formulari» obre «Vull unir-me»', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context } = await open('contacte.html');
+  await page.click('.signup-process__cta-btn');
+  assert.equal(await page.isVisible('#form-unir'), true);
+  assert.equal(await page.getAttribute('#tab-unir', 'aria-selected'), 'true');
+  await context.close();
+});
 test('còpia de GitHub Pages: redirigeix a rotaractigualada.org mantenint la pàgina i l\'idioma', async (t) => {
   if (skip) return t.skip(skip);
   const context = await browser.newContext({ locale: 'ca-ES' });

@@ -29,7 +29,7 @@
   <!-- /hreflang -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="contacte.css?v=ce2ef909">
+  <link rel="stylesheet" href="contacte.css?v=584a2107">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="favicon.ico" sizes="48x48">
   <link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
@@ -96,7 +96,7 @@
           </ul>
         </div>
       </li>
-      <li><a href="contacte.html" class="mobile-nav__cta" data-en="JOIN US">UNEIX-TE</a></li>
+      <li><a href="contacte.html#uneix-te" class="mobile-nav__cta" data-en="JOIN US">UNEIX-TE</a></li>
     </ul>
   </nav>
 
@@ -169,7 +169,7 @@
           <li><button type="button" role="menuitem" class="lang-menu__opt" data-lang-opt="es">Castellà</button></li>
         </ul>
       </div>
-      <a href="contacte.html" class="header__cta" data-en="JOIN US">UNEIX-TE</a>
+      <a href="contacte.html#uneix-te" class="header__cta" data-en="JOIN US">UNEIX-TE</a>
 
       <button
         class="hamburger"
@@ -225,7 +225,7 @@
     <!-- Canals ràpids -->
     <section class="quick-channels">
       <div class="quick-channels__inner">
-        <a href="mailto:ayuda@rotaractigualada.org" class="qc-card qc-card--blue">
+        <a href="#escriu-nos" class="qc-card qc-card--blue contact-email-link" data-recipient="club">
           <div class="qc-card__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
@@ -236,7 +236,7 @@
           <svg class="qc-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
 
-        <a href="mailto:gerard.lopez@rotary2202.org" class="qc-card qc-card--pink">
+        <a href="#escriu-nos" class="qc-card qc-card--pink contact-email-link" data-recipient="presidencia">
           <div class="qc-card__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
@@ -247,7 +247,7 @@
           <svg class="qc-card__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
         </a>
 
-        <a href="mailto:luca.santos@rotary2202.org" class="qc-card qc-card--blue">
+        <a href="#escriu-nos" class="qc-card qc-card--blue contact-email-link" data-recipient="secretaria">
           <div class="qc-card__icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
@@ -300,78 +300,153 @@
               </details>
               <details class="faq-item">
                 <summary class="faq-item__q" data-en="How can I propose projects or collaborations?">Com es poden proposar projectes o col·laboracions?</summary>
-                <p class="faq-item__a" data-en="Send us an email and we'll explain the process.">Envia'ns un correu i t'expliquem el procés.</p>
+                <p class="faq-item__a" data-en="Write to us from this page and we'll explain the process.">Escriu-nos des d'aquesta pàgina i t'expliquem el procés.</p>
               </details>
             </div>
           </div>
         </div>
 
-        <!-- Escriu-nos: correus de contacte i inscripció -->
+<!-- Escriu-nos: dos formularis, un per demanar informació i un per
+             unir-se al club (els envia form-handler.php; correu.js) -->
         <div class="contact-form-wrap reveal-right">
-          <div class="contact-form contact-card" id="escriu-nos">
-          <div class="contact-form__header">
-            <h2 class="contact-form__title" data-en="Write to us">Escriu-nos</h2>
-            <p class="contact-form__subtitle" data-en="Choose who you want to write to and your email app will open. We reply within 48 hours.">Tria a qui vols escriure i s'obrirà el teu correu. Responem en menys de 48 hores.</p>
-          </div>
+          <div class="contact-form contact-forms" id="escriu-nos">
 
-          <ul class="contact-card__list">
-            <li class="contact-card__item">
-              <span class="contact-card__icon" aria-hidden="true">✉️</span>
-              <div class="contact-card__text">
-                <strong data-en="General">General</strong>
-                <a href="mailto:ayuda@rotaractigualada.org">ayuda@rotaractigualada.org</a>
-              </div>
-              <div class="contact-card__actions">
-                <a class="contact-card__btn" href="mailto:ayuda@rotaractigualada.org"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span data-en="Write">Escriure</span></a>
-                <button type="button" class="contact-card__btn contact-card__btn--ghost copy-email" data-email="ayuda@rotaractigualada.org" data-en="Copy">Copiar</button>
-              </div>
-            </li>
-            <li class="contact-card__item">
-              <span class="contact-card__icon" aria-hidden="true">👤</span>
-              <div class="contact-card__text">
-                <strong data-en="Presidency">Presidència</strong>
-                <a href="mailto:gerard.lopez@rotary2202.org">gerard.lopez@rotary2202.org</a>
-              </div>
-              <div class="contact-card__actions">
-                <a class="contact-card__btn" href="mailto:gerard.lopez@rotary2202.org"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span data-en="Write">Escriure</span></a>
-                <button type="button" class="contact-card__btn contact-card__btn--ghost copy-email" data-email="gerard.lopez@rotary2202.org" data-en="Copy">Copiar</button>
-              </div>
-            </li>
-            <li class="contact-card__item">
-              <span class="contact-card__icon" aria-hidden="true">🤝</span>
-              <div class="contact-card__text">
-                <strong data-en="Secretary">Secretari</strong>
-                <a href="mailto:luca.santos@rotary2202.org">luca.santos@rotary2202.org</a>
-              </div>
-              <div class="contact-card__actions">
-                <a class="contact-card__btn" href="mailto:luca.santos@rotary2202.org"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span data-en="Write">Escriure</span></a>
-                <button type="button" class="contact-card__btn contact-card__btn--ghost copy-email" data-email="luca.santos@rotary2202.org" data-en="Copy">Copiar</button>
-              </div>
-            </li>
-            <li class="contact-card__item">
-              <span class="contact-card__icon contact-card__icon--insta" aria-hidden="true"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></span>
-              <div class="contact-card__text">
-                <strong>Instagram</strong>
-                <a href="https://www.instagram.com/rotaractigualada/" target="_blank" rel="noopener noreferrer">@rotaractigualada</a>
-              </div>
-              <div class="contact-card__actions">
-                <a class="contact-card__btn" href="https://www.instagram.com/rotaractigualada/" target="_blank" rel="noopener noreferrer"><span data-en="Follow">Segueix-nos</span></a>
-              </div>
-            </li>
-          </ul>
-
-          <div class="contact-card__join">
-            <span class="contact-card__join-icon" aria-hidden="true">🙋</span>
-            <div class="contact-card__join-text">
-              <strong data-en="Want to join the club?">Vols formar part del club?</strong>
-              <p data-en="If you are 18 to 30, fill in the sign-up form: it only takes a few minutes.">Si tens entre 18 i 30 anys, omple el formulari d'inscripció: només són uns minuts.</p>
+            <div class="form-switch" role="tablist" aria-label="Què vols fer?">
+              <button type="button" class="form-switch__btn" role="tab" id="tab-info" aria-controls="form-info" aria-selected="true">
+                <span class="form-switch__icon" aria-hidden="true">💬</span>
+                <span class="form-switch__text">
+                  <strong data-en="I want information">Vull informació</strong>
+                  <small data-en="Questions and proposals">Dubtes i propostes</small>
+                </span>
+              </button>
+              <button type="button" class="form-switch__btn" role="tab" id="tab-unir" aria-controls="form-unir" aria-selected="false" tabindex="-1">
+                <span class="form-switch__icon" aria-hidden="true">🙋</span>
+                <span class="form-switch__text">
+                  <strong data-en="I want to join">Vull unir-me</strong>
+                  <small data-en="Become a member">Fes-te soci o sòcia</small>
+                </span>
+              </button>
             </div>
-            <a class="btn-submit contact-card__join-btn open-signup-form" href="#inscripcio">
-              <span data-en="Open the sign-up form">Obrir el formulari d'inscripció</span>
-              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
+
+            <!-- Formulari 1: informació -->
+            <form class="contact-form__panel" id="form-info" role="tabpanel" aria-labelledby="tab-info" action="/form-handler.php" method="post" novalidate>
+              <input type="hidden" name="tipus" value="info">
+              <input type="hidden" name="elapsed" value="">
+              <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field">
+
+              <div class="contact-form__header">
+                <h2 class="contact-form__title" data-en="Write to us">Escriu-nos</h2>
+                <p class="contact-form__subtitle" data-en="For questions, proposals or anything else. We reply within 48 hours. Fields marked with * are required.">Per a dubtes, propostes o qualsevol altra cosa. Et respondrem en menys de 48 hores. Els camps amb * són obligatoris.</p>
+              </div>
+
+              <div class="form-group">
+                <p class="form-group__label" id="infoToLabel" data-en="Who are you writing to?">A qui escrius?</p>
+                <div class="subject-pills" role="radiogroup" aria-labelledby="infoToLabel">
+                  <label class="subject-pill"><input type="radio" name="recipient" value="club" checked><span data-en="✉️ General">✉️ General</span></label>
+                  <label class="subject-pill"><input type="radio" name="recipient" value="presidencia"><span data-en="👤 Presidency">👤 Presidència</span></label>
+                  <label class="subject-pill"><input type="radio" name="recipient" value="secretaria"><span data-en="🤝 Secretary">🤝 Secretaria</span></label>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="infoName"><span data-en="Name">Nom</span> <span class="required">*</span></label>
+                  <input type="text" id="infoName" name="name" required maxlength="120" placeholder="El teu nom" data-en-placeholder="Your name" autocomplete="name">
+                </div>
+                <div class="form-group">
+                  <label for="infoEmail"><span data-en="Email">Correu electrònic</span> <span class="required">*</span></label>
+                  <input type="email" id="infoEmail" name="email" required maxlength="190" placeholder="tu@email.com" data-en-placeholder="you@email.com" autocomplete="email">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <p class="form-group__label" id="infoSubjectLabel"><span data-en="Subject">Assumpte</span> <span class="required">*</span></p>
+                <div class="subject-pills" role="radiogroup" aria-labelledby="infoSubjectLabel" aria-required="true">
+                  <label class="subject-pill"><input type="radio" name="subject" value="dubte" required><span data-en="❓ A question">❓ Un dubte</span></label>
+                  <label class="subject-pill"><input type="radio" name="subject" value="proposta"><span data-en="💡 A proposal">💡 Una proposta</span></label>
+                  <label class="subject-pill"><input type="radio" name="subject" value="altre"><span data-en="💬 Something else">💬 Altres</span></label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="infoMessage"><span data-en="Message">Missatge</span> <span class="required">*</span></label>
+                <textarea id="infoMessage" name="message" required maxlength="1000" placeholder="Explica'ns el que necessites..." data-en-placeholder="Tell us what you need..."></textarea>
+                <span class="char-count" data-for="infoMessage" data-en="0 / 1000 characters">0 / 1000 caràcters</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-checkbox">
+                  <input type="checkbox" id="infoPrivacy" name="privacy" value="1" required>
+                  <span data-en-is-html="true" data-en="I have read and accept the &lt;a href=&quot;#&quot; class=&quot;open-avis-legal&quot;&gt;legal notice&lt;/a&gt; and the &lt;a href=&quot;#&quot; class=&quot;open-politica-privacitat&quot;&gt;privacy policy&lt;/a&gt;.">He llegit i accepto l'<a href="#" class="open-avis-legal" data-en="legal notice">avís legal</a> i la <a href="#" class="open-politica-privacitat" data-en="privacy policy">política de privacitat</a>.</span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn-submit">
+                <span class="btn-submit__text" data-en="Send message">Enviar missatge</span>
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+              <div class="form-status" role="status" aria-live="polite" hidden></div>
+            </form>
+
+            <!-- Formulari 2: unir-se al club -->
+            <form class="contact-form__panel" id="form-unir" role="tabpanel" aria-labelledby="tab-unir" action="/form-handler.php" method="post" novalidate>
+              <span class="form-anchor" id="uneix-te" aria-hidden="true"></span>
+              <input type="hidden" name="tipus" value="unir">
+              <input type="hidden" name="elapsed" value="">
+              <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field">
+
+              <div class="contact-form__header">
+                <h2 class="contact-form__title" data-en="Join the club">Uneix-te al club</h2>
+                <p class="contact-form__subtitle" data-en="If you are 18 to 30 and want to be part of Rotaract Igualada, tell us about yourself. We reply within 48 hours. Fields marked with * are required.">Si tens entre 18 i 30 anys i vols formar part del Rotaract Igualada, explica'ns qui ets. Et respondrem en menys de 48 hores. Els camps amb * són obligatoris.</p>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="unirName"><span data-en="Name">Nom</span> <span class="required">*</span></label>
+                  <input type="text" id="unirName" name="name" required maxlength="120" placeholder="El teu nom" data-en-placeholder="Your name" autocomplete="given-name">
+                </div>
+                <div class="form-group">
+                  <label for="unirSurname" data-en="Surname">Cognoms</label>
+                  <input type="text" id="unirSurname" name="surname" maxlength="120" placeholder="Els teus cognoms" data-en-placeholder="Your surname" autocomplete="family-name">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="unirEmail"><span data-en="Email">Correu electrònic</span> <span class="required">*</span></label>
+                  <input type="email" id="unirEmail" name="email" required maxlength="190" placeholder="tu@email.com" data-en-placeholder="you@email.com" autocomplete="email">
+                </div>
+                <div class="form-group">
+                  <label for="unirPhone"><span data-en="Phone">Telèfon</span> <span class="form-group__optional" data-en="(optional)">(opcional)</span></label>
+                  <input type="tel" id="unirPhone" name="phone" maxlength="30" placeholder="+34 600 000 000" autocomplete="tel">
+                </div>
+              </div>
+
+              <div class="form-group form-group--short">
+                <label for="unirAge"><span data-en="Age">Edat</span> <span class="form-group__optional" data-en="(optional)">(opcional)</span></label>
+                <input type="number" id="unirAge" name="age" min="14" max="99" inputmode="numeric" placeholder="18–30">
+              </div>
+
+              <div class="form-group">
+                <label for="unirMessage"><span data-en="Why do you want to join the club?">Per què vols formar part del club?</span> <span class="required">*</span></label>
+                <textarea id="unirMessage" name="message" required maxlength="1000" placeholder="Explica'ns qui ets, què t'agrada i què t'agradaria fer al club..." data-en-placeholder="Tell us who you are, what you like and what you would like to do in the club..."></textarea>
+                <span class="char-count" data-for="unirMessage" data-en="0 / 1000 characters">0 / 1000 caràcters</span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-checkbox">
+                  <input type="checkbox" id="unirPrivacy" name="privacy" value="1" required>
+                  <span data-en-is-html="true" data-en="I have read and accept the &lt;a href=&quot;#&quot; class=&quot;open-avis-legal&quot;&gt;legal notice&lt;/a&gt; and the &lt;a href=&quot;#&quot; class=&quot;open-politica-privacitat&quot;&gt;privacy policy&lt;/a&gt;.">He llegit i accepto l'<a href="#" class="open-avis-legal" data-en="legal notice">avís legal</a> i la <a href="#" class="open-politica-privacitat" data-en="privacy policy">política de privacitat</a>.</span>
+                </label>
+              </div>
+
+              <button type="submit" class="btn-submit btn-submit--pink">
+                <span class="btn-submit__text" data-en="Send request">Enviar sol·licitud</span>
+                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+              <div class="form-status" role="status" aria-live="polite" hidden></div>
+            </form>
           </div>
-        </div>
         </div>
       </div>
     </section>
@@ -439,13 +514,13 @@
 
           </ol>
 
-          <!-- CTA: botó per obrir el formulari -->
+          <!-- CTA: porta al formulari «Vull unir-me» de dalt -->
           <div class="signup-process__cta-col">
             <p class="signup-process__cta-label" data-en="Ready to get started?">Ja tens ganes de començar?</p>
-            <button type="button" class="signup-process__cta-btn open-signup-form">
+            <a href="#uneix-te" class="signup-process__cta-btn">
               <span data-en="Access the form">Accedeix al formulari</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
+            </a>
             <p class="signup-process__cta-note" data-en="We will get back to you as soon as possible.">Et respondrem el més aviat possible.</p>
           </div>
 
@@ -508,11 +583,11 @@
         <h3 class="footer__heading" data-en="Contact">Contacte</h3>
         <div class="footer__contact-item">
           <span aria-hidden="true">✉️</span>
-          <a href="mailto:ayuda@rotaractigualada.org">ayuda@rotaractigualada.org</a>
+          <a href="contacte.html#escriu-nos">ayuda@rotaractigualada.org</a>
         </div>
         <div class="footer__contact-item">
           <span aria-hidden="true">📝</span>
-          <a href="#inscripcio" data-en="Sign-up form">Formulari d'inscripció</a>
+          <a href="#uneix-te" data-en="Sign-up form">Formulari d'inscripció</a>
         </div>
       </div>
     </div>
@@ -523,12 +598,12 @@
   </footer>
 
   <script src="contacte.js?v=55fccb7e"></script>
-  <script src="correu.js?v=47cc99b3"></script>
+  <script src="correu.js?v=ca5c5fc6"></script>
 
   <script src="nav.js?v=35a73008"></script>
 
 
-  <script src="legal-modals.js?v=9e5da8c9"></script>
+  <script src="legal-modals.js?v=b58cd3e3"></script>
 
   <!-- =============================================
        MODAL AVÍS LEGAL
@@ -641,21 +716,21 @@
 
         <section class="legal-section">
           <h3 data-en="1. Data controller">1. Responsable del tractament</h3>
-          <p data-en-is-html="true" data-en="The data controller for personal data collected through this website is Rotaract Club Igualada, a non-profit organisation registered in the [corresponding Association/Foundation Register] under number [Registration number], with Tax ID [Entity Tax ID] and registered office at [Address]. You can contact the organisation by email at &lt;a href=&quot;mailto:ayuda@rotaractigualada.org&quot;&gt;ayuda@rotaractigualada.org&lt;/a&gt;.">
+          <p data-en-is-html="true" data-en="The data controller for personal data collected through this website is Rotaract Club Igualada, a non-profit organisation registered in the [corresponding Association/Foundation Register] under number [Registration number], with Tax ID [Entity Tax ID] and registered office at [Address]. You can contact the organisation by email at &lt;strong&gt;ayuda@rotaractigualada.org&lt;/strong&gt;.">
             El responsable del tractament de les dades personals recollides a través d'aquest lloc web és
             Club Rotaract d'Igualada, entitat sense ànim de lucre inscrita al
             [Registre d'Associacions/Fundacions corresponent] amb el número [Número de registre], amb NIF
             [NIF de l'entitat] i domicili social a [Adreça]. Es pot contactar amb l'entitat a través del
-            correu <a href="mailto:ayuda@rotaractigualada.org">ayuda@rotaractigualada.org</a>.
+            correu <strong>ayuda@rotaractigualada.org</strong>.
           </p>
         </section>
 
         <section class="legal-section">
           <h3 data-en="2. What data we collect">2. Quines dades recollim</h3>
-          <p data-en="When you email us, we process your name, your email address and the content of your message. This data is used solely to manage your request and respond to you. This website does not collect or store any personal data through forms.">
-            Quan ens escrius per correu electrònic, tractem el teu nom, la teva adreça de correu i el contingut
-            del missatge. Aquestes dades s'utilitzen únicament per gestionar la teva sol·licitud i donar-te
-            resposta. Aquest lloc web no recull ni desa dades personals a través de formularis.
+          <p data-en="Through the contact forms («I want information» and «I want to join») we collect your name, surname, email address, phone number and age (optional), the reason and the content of your message. This data is used solely to manage your request and respond to you.">
+            A través dels formularis de contacte («Vull informació» i «Vull unir-me») recollim el nom, els cognoms,
+            el correu electrònic, el telèfon i l'edat (opcionals), el motiu i el contingut del missatge. Aquestes
+            dades s'utilitzen únicament per gestionar la teva sol·licitud i donar-te resposta.
           </p>
         </section>
 
@@ -672,9 +747,9 @@
 
         <section class="legal-section">
           <h3 data-en="4. Legal basis">4. Base legal</h3>
-          <p data-en="The processing of data is based on the user's consent, given by writing to us on their own initiative.">
-            El tractament de les dades es basa en el consentiment de la persona usuària, atorgat en
-            escriure'ns per iniciativa pròpia.
+          <p data-en="The processing of data is based on the user's consent, given by submitting the form and accepting this privacy policy.">
+            El tractament de les dades es basa en el consentiment de la persona usuària, atorgat en enviar el
+            formulari i acceptar aquesta política de privacitat.
           </p>
         </section>
 
@@ -688,18 +763,20 @@
 
         <section class="legal-section">
           <h3 data-en="6. Data disclosure to third parties">6. Cessió de dades a tercers</h3>
-          <p data-en="Messages you send us are received in the organisation's email inboxes. Rotaract Club Igualada does not disclose or sell personal data to third parties, except where there is a legal obligation.">
-            Els missatges que ens envies es reben a les bústies de correu de l'entitat. Club Rotaract d'Igualada
-            no cedeix ni ven dades personals a tercers, excepte quan existeixi una obligació legal.
+          <p data-en="Data submitted through the forms is processed by the organisation's own channels: messages are received by email and a copy is kept on the website's server as proof of receipt. Apart from this, Rotaract Club Igualada does not disclose or sell personal data to third parties, except where there is a legal obligation.">
+            Les dades enviades a través dels formularis es tramiten pels canals propis de l'entitat: els missatges
+            es reben per correu electrònic i se'n conserva una còpia al servidor del lloc web com a resguard de
+            recepció. Fora d'això, Club Rotaract d'Igualada no cedeix ni ven dades personals a tercers, excepte
+            quan existeixi una obligació legal.
           </p>
         </section>
 
         <section class="legal-section">
           <h3 data-en="7. Users' rights">7. Drets de les persones usuàries</h3>
-          <p data-en-is-html="true" data-en="In accordance with the General Data Protection Regulation (GDPR) and applicable Spanish law, you can exercise your rights of access, rectification, erasure, objection, restriction of processing and data portability by emailing &lt;a href=&quot;mailto:ayuda@rotaractigualada.org&quot;&gt;ayuda@rotaractigualada.org&lt;/a&gt;, stating which right you wish to exercise and attaching a copy of a document proving your identity.">D'acord amb el Reglament General de Protecció de Dades (RGPD) i la normativa espanyola
+          <p data-en-is-html="true" data-en="In accordance with the General Data Protection Regulation (GDPR) and applicable Spanish law, you can exercise your rights of access, rectification, erasure, objection, restriction of processing and data portability by emailing &lt;strong&gt;ayuda@rotaractigualada.org&lt;/strong&gt;, stating which right you wish to exercise and attaching a copy of a document proving your identity.">D'acord amb el Reglament General de Protecció de Dades (RGPD) i la normativa espanyola
             aplicable, pots exercir els teus drets d'accés, rectificació, supressió, oposició,
             limitació del tractament i portabilitat de les dades enviant un correu a
-            <a href="mailto:ayuda@rotaractigualada.org">ayuda@rotaractigualada.org</a>, indicant el dret
+            <strong>ayuda@rotaractigualada.org</strong>, indicant el dret
             que vols exercir i adjuntant una còpia d'un document que acrediti la teva identitat.</p>
         </section>
 
@@ -838,26 +915,9 @@
     </div>
   </div>
 
-  <!-- =============================================
-       MODAL FORMULARI D'INSCRIPCIÓ (JotForm)
-  ============================================= -->
-  <div id="signupFormModal" class="legal-modal-overlay">
-    <div class="legal-modal-content legal-modal-content--wide">
-      <button type="button" class="legal-modal-close" aria-label="Tancar">&times;</button>
-      <div class="legal-container signup-modal">
-        <h2 data-en="Registration form">Formulari d'inscripció</h2>
-        <div class="signup-modal__embed" id="signupFormEmbed"></div>
-        <noscript>
-          <p data-en="If the form does not load, open it in a new window.">Si el formulari no es carrega, obre'l en una finestra nova:</p>
-          <p><a href="https://www.jotform.com/262316885101050" target="_blank" rel="noopener noreferrer" data-en="Open registration form">Obrir formulari d'inscripció</a></p>
-        </noscript>
-      </div>
-    </div>
-  </div>
-
   <script src="cookie-banner.js?v=b26b13ba"></script>
   <script src="analytics.js?v=9dacceee"></script>
   <script src="efectes.js?v=79267446"></script>
-  <script src="i18n.js?v=b82fa95b"></script>
+  <script src="i18n.js?v=861e234d"></script>
 </body>
 </html>

@@ -114,14 +114,31 @@ test('index.html: publicacions d\'Instagram com a targetes pròpies (sense embed
   for (const [, , img] of posts) assert.ok(existsSync(join(ROOT, img)), `falta la imatge ${img}`);
 });
 
-test('.htaccess: sense PHP, fitxers ocults bloquejats i security.txt accessible', () => {
+test('.htaccess: només form-handler.php, fitxers ocults bloquejats i security.txt accessible', () => {
   const h = read('.htaccess');
   assert.match(h, /<FilesMatch "\\\.\(php/);
   assert.match(h, /RedirectMatch 404 \/\\\.\(\?!well-known/);
-  assert.match(h, /form-action 'none'/);
+  assert.match(h, /form-action 'self'/);
+  assert.doesNotMatch(h, /jotform/i);
   assert.match(h, /<Files "security\.txt">\s*Require all granted/);
   const sec = read('.well-known/security.txt');
   assert.match(sec, /^Contact: mailto:/m);
   const expires = sec.match(/^Expires: (.+)$/m);
   assert.ok(expires && new Date(expires[1]) > new Date(), 'security.txt caducat');
+});
+
+test('cap enllaç obre una aplicació externa de correu (mailto:)', () => {
+  for (const { dir } of VERSIONS) {
+    for (const page of PAGES) {
+      assert.ok(!read(dir + page).includes('mailto:'), `${dir + page} té un enllaç mailto:`);
+    }
+  }
+});
+
+test('Contacte: dos formularis que s\'envien a form-handler.php', () => {
+  const html = read('contacte.html');
+  for (const id of ['form-info', 'form-unir']) {
+    assert.match(html, new RegExp(`<form[^>]*id="${id}"[^>]*action="/form-handler\\.php" method="post"`));
+  }
+  assert.match(read('.htaccess'), /<Files "form-handler\.php">\s*Require all granted/);
 });

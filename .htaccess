@@ -37,17 +37,14 @@ Redirect 301 /rotaractigualada.html /index.html
   # No revelis la versió de PHP del servidor
   Header always unset X-Powered-By
   Header unset X-Powered-By
-  # El formulari d'inscripció (JotForm) pot demanar càmera/micròfon
-  # (atribut allow de l'embed); es permet només per als iframes de jotform.com.
-  Header always set Permissions-Policy "geolocation=(), camera=(self \"https://*.jotform.com\"), microphone=(self \"https://*.jotform.com\"), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), browsing-topics=(), display-capture=(), serial=(), bluetooth=(), hid=()"
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), browsing-topics=(), display-capture=(), serial=(), bluetooth=(), hid=()"
   # style-src 'unsafe-inline' és necessari pels estils inline propis
-  # (atributs style= de l'HTML i del formulari d'inscripció); cap script inline.
-  # jotform.com per al formulari d'inscripció (script d'incrustació + iframe).
+  # (atributs style= de l'HTML); cap script inline.
   # google-analytics / googletagmanager: només si l'usuari accepta les
   # cookies d'anàlisi (analytics.js no les carrega si no hi ha consentiment).
-  # form-action 'none': la web no té cap formulari propi (el d'inscripció és
-  # dins l'iframe de JotForm, amb les seves pròpies regles).
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://*.jotform.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://*.jotform.com https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com; media-src 'self'; manifest-src 'self'; worker-src 'none'; object-src 'none'; frame-src https://*.jotform.com; frame-ancestors 'self'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
+  # form-action 'self': els formularis de Contacte només s'envien a la
+  # mateixa web (form-handler.php).
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com; media-src 'self'; manifest-src 'self'; worker-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 </IfModule>
 
 # ── Bloqueig de fitxers sensibles ──
@@ -55,17 +52,21 @@ Redirect 301 /rotaractigualada.html /index.html
   Require all denied
 </FilesMatch>
 
-# ── La web no fa servir PHP: cap fitxer PHP s'ha d'executar ni servir ──
-# (protegeix contra fitxers maliciosos que algú hi pogués pujar)
+# ── PHP: només s'executa form-handler.php (els formularis de Contacte) ──
+# Qualsevol altre fitxer PHP o script queda bloquejat (protegeix contra
+# fitxers maliciosos que algú hi pogués pujar).
 <FilesMatch "\.(php\d?|phtml|phar|pl|py|cgi|sh)$">
   Require all denied
 </FilesMatch>
+<Files "form-handler.php">
+  Require all granted
+</Files>
 
 # Fitxers i carpetes ocults (.git, .env…): no existeixen per web,
 # excepte .well-known (security.txt i verificacions de domini)
 RedirectMatch 404 /\.(?!well-known(/|$))
 
-# ── Protecció del directori de dades del formulari antic ──
+# ── Protecció del directori de dades dels formularis ──
 # Tot el directori form-data/ (CSV de trameses i fitxers de límit
 # d'enviaments) queda inaccessible per web, sigui quina sigui l'extensió.
 RedirectMatch 404 ^/form-data(/|$)
