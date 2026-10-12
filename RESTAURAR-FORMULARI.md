@@ -1,9 +1,9 @@
 # Com tornar al formulari de contacte antic
 
 El 12 d'octubre de 2026 el formulari de contacte (PHP) es va substituir per
-l'apartat **«Escriu-nos»**, que prepara un correu (`mailto:`) amb la persona
-destinatària, el motiu i el missatge, i té una pestanya **«Uneix-te»** que
-obre el formulari d'inscripció (JotForm). El formulari antic fallava de vegades
+el requadre **«Escriu-nos»**, amb les adreces de contacte (cada una obre el
+correu o es pot copiar), l'Instagram i el botó del formulari d'inscripció
+(JotForm). El formulari antic fallava de vegades
 (la pàgina es quedava en blanc en enviar).
 
 ## On és la versió antiga
@@ -20,8 +20,8 @@ Es pot descarregar sencera des de:
 | Abans (formulari) | Ara («Escriu-nos») |
 | --- | --- |
 | `csrf.php`, `form-handler.php` (enviament i còpia a `form-data/submissions.csv`) | Eliminats: la web ja no rep dades |
-| Formulari a `contacte.html` i a la portada (`index.html`, `#contactForm`) | Bloc `#escriu-nos` amb pestanyes «Escriu-nos» i «Uneix-te» |
-| Lògica a `contacte.js` i `rotaractigualada.js` | Lògica a `correu.js` |
+| Formulari a `contacte.html` i a la portada (`index.html`, `#contactForm`) | Requadre `#escriu-nos`: correus, Instagram i botó d'inscripció |
+| Lògica a `contacte.js` i `rotaractigualada.js` | `correu.js` (botons «Copiar») |
 | `tests/form-handler.test.mjs` | Eliminat; proves noves a `tests/browser.test.mjs` |
 | Política de privacitat: dades del formulari i còpia al servidor | Política de privacitat: dades rebudes per correu |
 | Enllaços del peu: `contacte.html?correu=club` | Enllaços del peu: `mailto:ayuda@rotaractigualada.org` |

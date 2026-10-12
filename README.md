@@ -2,7 +2,7 @@
 
 Web estàtica (HTML, CSS i JavaScript sense framework ni compilació). Es
 publica en un servidor Apache (fa servir `.htaccess`). No té formulari de
-contacte propi: l'apartat «Escriu-nos» prepara un correu (vegeu
+contacte propi: el requadre «Escriu-nos» mostra els correus (vegeu
 `RESTAURAR-FORMULARI.md` per tornar al formulari antic).
 
 ## Estructura
@@ -17,7 +17,7 @@ contacte propi: l'apartat «Escriu-nos» prepara un correu (vegeu
 | `i18n.js` | Traducció català / anglès / castellà (atributs `data-en` + diccionari) |
 | `legal-modals.js` | Modals d'avís legal, privacitat, cookies i formulari d'inscripció (JotForm) |
 | `cookie-banner.js`, `analytics.js` | Consentiment de cookies i Google Analytics (només si s'accepta) |
-| `correu.js` | «Escriu-nos»: prepara el correu (`mailto:`) i pestanya «Uneix-te» amb el formulari d'inscripció |
+| `correu.js` | «Escriu-nos»: botons per copiar les adreces de correu |
 | `rotaractigualada.js`, `contacte.js` | Animacions d'aparició |
 | `activitats.js`, `directiu.js`, `nosaltres.js`, `scroll-top.js` | Interaccions de cada pàgina |
 | `redireccions.js` | Al `<head>`: còpia de GitHub Pages → rotaractigualada.org, i idioma (tria desada o idioma del navegador) → `/`, `/es/` o `/en/` |

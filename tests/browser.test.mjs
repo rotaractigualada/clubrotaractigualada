@@ -85,58 +85,28 @@ test('modals legals: rol de diàleg i el focus torna a l\'enllaç', async (t) =>
   await context.close();
 });
 
-test('escriu-nos: el botó prepara el correu amb la persona, el motiu i el missatge', async (t) => {
+test('escriu-nos: correus de contacte i formulari d\'inscripció al mateix lloc, sense formulari de contacte', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context, errors } = await open('contacte.html');
-  const href = () => page.getAttribute('#mailLink', 'href');
-  assert.match(await href(), /^mailto:ayuda@rotaractigualada\.org\?subject=/);
-
-  await page.click('label.subject-pill:has(input[name="to"][value="presidencia"])');
-  await page.click('label.subject-pill:has(input[name="motiu"][value="unir"])');
-  await page.fill('#contactMessage', 'Hola! Tinc 22 anys');
-  const url = new URL(await href());
-  assert.equal(url.protocol + url.pathname, 'mailto:gerard.lopez@rotary2202.org');
-  assert.equal(url.searchParams.get('subject'), 'Rotaract Igualada · Vull unir-me al club');
-  assert.equal(url.searchParams.get('body'), 'Hola! Tinc 22 anys');
-  assert.equal((await page.locator('#recipientEmailDisplay').innerText()).trim(), 'gerard.lopez@rotary2202.org');
-  assert.equal((await page.locator('#charCount').innerText()).trim(), '18 / 500 caràcters');
-  const gmail = new URL(await page.getAttribute('#gmailLink', 'href'));
-  assert.equal(gmail.searchParams.get('to'), 'gerard.lopez@rotary2202.org');
-  assert.equal(gmail.searchParams.get('su'), 'Rotaract Igualada · Vull unir-me al club');
   assert.equal(await page.locator('form').count(), 0, 'ja no hi ha formulari');
+  const card = page.locator('#escriu-nos');
+  assert.deepEqual(
+    (await card.locator('.contact-card__text a').allInnerTexts()).map((x) => x.trim()),
+    ['ayuda@rotaractigualada.org', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org', '@rotaractigualada']
+  );
+  assert.equal(await card.locator('a.contact-card__btn[href="mailto:gerard.lopez@rotary2202.org"]').count(), 1);
+  await card.locator('.open-signup-form').click();
+  assert.equal(await page.isVisible('#signupFormModal'), true);
   await context.close();
   assert.deepEqual(errors, []);
 });
 
-test('escriu-nos: la pestanya «Uneix-te» obre el formulari d\'inscripció des del mateix lloc', async (t) => {
-  if (skip) return t.skip(skip);
-  const { page, context } = await open('contacte.html');
-  // Amb el motiu «Vull unir-me» apareix l'avís del formulari d'inscripció
-  assert.equal(await page.isVisible('#joinHint'), false);
-  await page.click('label.subject-pill:has(input[name="motiu"][value="unir"])');
-  assert.equal(await page.isVisible('#joinHint'), true);
-
-  await page.click('#tab-unir');
-  assert.equal(await page.getAttribute('#tab-unir', 'aria-selected'), 'true');
-  assert.equal(await page.isVisible('#panel-correu'), false);
-  await page.click('#panel-unir .open-signup-form');
-  assert.equal(await page.isVisible('#signupFormModal'), true);
-  await page.keyboard.press('Escape');
-
-  // «Abans tens dubtes? Escriu-nos» torna al correu
-  await page.click('#joinAsk');
-  assert.equal(await page.isVisible('#panel-correu'), true);
-  assert.ok(await page.isChecked('input[name="motiu"][value="unir"]'));
-  await context.close();
-});
-
-test('escriu-nos: també a la portada, i en castellà l\'assumpte va en castellà', async (t) => {
+test('escriu-nos: també a la portada (en castellà), i la inscripció porta a contacte', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context } = await open('es/index.html');
-  await page.click('label.subject-pill:has(input[name="motiu"][value="dubte"])');
-  const url = new URL(await page.getAttribute('#mailLink', 'href'));
-  assert.equal(url.protocol + url.pathname, 'mailto:ayuda@rotaractigualada.org');
-  assert.equal(url.searchParams.get('subject'), 'Rotaract Igualada · Una duda');
+  const card = page.locator('#escriu-nos');
+  assert.equal((await card.locator('.contact-form__title').innerText()).trim(), 'Escríbenos');
+  assert.equal(await card.locator('.open-signup-form').getAttribute('href'), 'contacte.html#inscripcio');
   await context.close();
 });
 
@@ -208,18 +178,18 @@ test('galeria: el visor s\'obre, navega amb les fletxes i torna el focus', async
   await context.close();
 });
 
-test('targetes de correu: mostren l\'adreça i trien la persona a l\'Escriu-nos', async (t) => {
+test('targetes de correu: mostren l\'adreça i obren el correu', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context } = await open('contacte.html');
-  const cards = page.locator('.qc-card.contact-email-link');
+  const cards = page.locator('.quick-channels a.qc-card[href^="mailto:"]');
   assert.deepEqual(
     (await cards.locator('.qc-card__text span').allInnerTexts()).map((x) => x.trim()),
     ['ayuda@rotaractigualada.org', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org']
   );
-  await page.click('.qc-card[data-recipient="secretaria"]');
-  assert.ok(await page.isChecked('input[name="to"][value="secretaria"]'));
-  assert.equal((await page.locator('#recipientEmailDisplay').innerText()).trim(), 'luca.santos@rotary2202.org');
-  assert.match(await page.getAttribute('#mailLink', 'href'), /^mailto:luca\.santos@rotary2202\.org\?/);
+  assert.deepEqual(
+    await cards.evaluateAll((els) => els.map((e) => e.getAttribute('href'))),
+    ['mailto:ayuda@rotaractigualada.org', 'mailto:gerard.lopez@rotary2202.org', 'mailto:luca.santos@rotary2202.org']
+  );
   await context.close();
 });
 
