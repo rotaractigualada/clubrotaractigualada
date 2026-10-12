@@ -56,7 +56,7 @@ button { cursor: pointer; }
 
 .skip-link {
   position: absolute;
-  left: 1rem; top: -3rem;
+  left: 1rem; top: -100px; /* prou amunt perquè ni la vora ni l'ombra es vegin */
   z-index: 3000;
   padding: .8rem 1rem;
   border-radius: 999px;
