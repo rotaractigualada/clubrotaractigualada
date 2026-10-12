@@ -100,44 +100,61 @@
 @keyframes fx-reveal { from { opacity: 0; transform: translateY(-6px); } }
 
 /* =============================================
-   PEU DE PÀGINA: línia de colors, llums suaus, entrada en 3D,
-   icones socials en 3D i enllaços amb subratllat animat.
+   PEU DE PÀGINA: placa de vidre gris fosc en 3D (estil Apple).
+   Flota sobre el fons de la pàgina, deixa veure'n els colors a través
+   del vidre i s'inclina lleugerament seguint el ratolí.
    ============================================= */
-.footer { position: relative; overflow: hidden; isolation: isolate; }
+.footer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  margin: 0 clamp(10px, 1.6vw, 18px) clamp(10px, 1.6vw, 18px);
+  border-radius: 32px;
+  color: rgba(255, 255, 255, .92);
+  background-color: transparent;
+  background-image:
+    radial-gradient(420px circle at var(--fx-fx, -999px) var(--fx-fy, -999px), rgba(255, 255, 255, .09), transparent 70%),
+    linear-gradient(180deg, rgba(58, 58, 66, .78) 0%, rgba(30, 30, 36, .86) 55%, rgba(20, 20, 25, .9) 100%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  backdrop-filter: blur(28px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, .1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .22),
+    inset 0 -1px 0 rgba(0, 0, 0, .35),
+    0 30px 70px rgba(20, 20, 40, .28),
+    0 10px 24px rgba(20, 20, 40, .18);
+  transform: perspective(1600px) rotateX(var(--fx-frx, 0deg)) rotateY(var(--fx-fry, 0deg));
+  transform-origin: 50% 100%;
+}
+@media (max-width: 600px) {
+  .footer { margin: 0 10px 10px; border-radius: 24px; }
+}
 
-/* Línia de colors del club i de Rotary a dalt de tot */
+/* Reflex del vidre: llum a la vora de dalt */
 .footer::before {
   content: "";
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #2f2f96, #da1a5d, #f7a81b, #da1a5d, #2f2f96);
-  background-size: 200% 100%;
+  top: 0; left: 8%; right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent);
   z-index: 1;
+  pointer-events: none;
 }
 
-/* Llums de fons (blau i rosa) */
+/* Reflex del vidre: brillantor en diagonal */
 .footer::after {
   content: "";
   position: absolute;
-  inset: -40%;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(closest-side at 18% 28%, rgba(47, 47, 150, .5), transparent),
-    radial-gradient(closest-side at 82% 72%, rgba(218, 26, 93, .28), transparent);
-  opacity: .5;
+  background: linear-gradient(115deg, rgba(255, 255, 255, .07) 0%, rgba(255, 255, 255, 0) 32%, rgba(255, 255, 255, 0) 68%, rgba(255, 255, 255, .04) 100%);
 }
 
-/* Llum que segueix el ratolí (efectes.js posa --fx-fx i --fx-fy) */
-.footer {
-  background-image: radial-gradient(380px circle at var(--fx-fx, -999px) var(--fx-fy, -999px), rgba(255, 255, 255, .07), transparent 70%);
-}
-
-/* Marca: el nom del club amb una brillantor que hi passa per sobre */
+/* Marca: el nom del club amb una brillantor platejada */
 @supports ((background-clip: text) or (-webkit-background-clip: text)) {
   .footer__brand-name {
-    background: linear-gradient(100deg, #fff 0%, #fff 42%, #ff9ec0 50%, #fff 58%, #fff 100%);
+    background: linear-gradient(100deg, #fff 0%, #fff 42%, #b9b9c6 50%, #fff 58%, #fff 100%);
     background-size: 250% 100%;
     background-position: 100% 0;
     -webkit-background-clip: text;
@@ -146,53 +163,67 @@
   }
 }
 
-/* Títols de columna amb una barreta de color */
-.footer__heading { position: relative; padding-bottom: .55rem; }
+.footer__brand-desc,
+.footer__links a,
+.footer__contact-item,
+.footer__contact-item a { color: rgba(255, 255, 255, .62); }
+.footer__copy { color: rgba(255, 255, 255, .45); }
+.footer__bottom { border-top-color: rgba(255, 255, 255, .1); }
+
+/* Títols de columna amb una barreta platejada */
+.footer__heading { position: relative; padding-bottom: .55rem; color: rgba(255, 255, 255, .95); }
 .footer__heading::after {
   content: "";
   position: absolute;
   left: 0; bottom: 0;
   width: 26px; height: 2px;
   border-radius: 2px;
-  background: linear-gradient(90deg, #da1a5d, #f7a81b);
+  background: linear-gradient(90deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, .15));
 }
 
-/* Enllaços: subratllat de color que creix */
+/* Enllaços: subratllat blanc que creix */
 .footer__links a,
 .footer__contact-item a {
-  background-image: linear-gradient(90deg, #da1a5d, #ff9ec0);
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, .9), rgba(255, 255, 255, .35));
   background-repeat: no-repeat;
   background-position: 0 100%;
-  background-size: 0 1.5px;
+  background-size: 0 1px;
   padding-bottom: 2px;
   transition: color .25s ease, transform .25s ease, background-size .35s cubic-bezier(.2, .8, .2, 1);
 }
 .footer__links a:hover, .footer__links a:focus-visible,
 .footer__contact-item a:hover, .footer__contact-item a:focus-visible {
   color: #fff;
-  background-size: 100% 1.5px;
+  background-size: 100% 1px;
 }
-.footer__links a[aria-current="page"] { color: #fff; background-size: 100% 1.5px; }
+.footer__links a[aria-current="page"] { color: #fff; background-size: 100% 1px; }
 
-/* Icones socials en 3D */
+/* Icones socials: botons de vidre en 3D */
 .footer__social { perspective: 500px; }
+.footer__social a,
+.footer__social-link {
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15);
+}
 .footer__social a { transform-style: preserve-3d; }
 .footer__social a svg { transition: transform .35s cubic-bezier(.2, .8, .2, 1); }
 .footer__social a:hover,
 .footer__social a:focus-visible {
-  background: linear-gradient(135deg, #f58529, #dd2a7b 55%, #8134af);
-  box-shadow: 0 12px 24px rgba(221, 42, 123, .4);
+  background: rgba(255, 255, 255, .2);
+  border-color: rgba(255, 255, 255, .35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 12px 26px rgba(0, 0, 0, .35);
 }
 
 .footer__contact-item > span[aria-hidden] { display: inline-block; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .footer::before { animation: fx-flow 8s linear infinite; }
-  .footer::after { animation: fx-aurora 18s ease-in-out infinite alternate; }
+  .footer { transition: transform .5s cubic-bezier(.2, .8, .2, 1); }
+  .footer.fx-footer-tilting { transition-duration: .15s; }
   .footer__brand-name { animation: fx-shimmer 7s ease-in-out infinite; }
 
   .footer__social a {
-    transition: transform .35s cubic-bezier(.2, .8, .2, 1), background .35s ease, box-shadow .35s ease;
+    transition: transform .35s cubic-bezier(.2, .8, .2, 1), background .35s ease, box-shadow .35s ease, border-color .35s ease;
   }
   .footer__social a:hover,
   .footer__social a:focus-visible {
@@ -203,7 +234,8 @@
 
   .footer__contact-item:hover > span[aria-hidden] { animation: fx-wiggle .5s ease; }
 
-  /* Entrada de les columnes en 3D quan el peu apareix (efectes.js) */
+  /* La placa s'aixeca en 3D quan apareix, i després les columnes */
+  .fx-footer-in.footer { animation: fx-footer-slab .9s cubic-bezier(.2, .8, .2, 1) backwards; }
   .fx-footer-ready .footer__grid > div,
   .fx-footer-ready .footer__bottom {
     opacity: 0;
@@ -212,17 +244,16 @@
   }
   .fx-footer-in .footer__grid > div,
   .fx-footer-in .footer__bottom { animation: fx-footer-col .8s cubic-bezier(.2, .8, .2, 1) both; }
-  .fx-footer-in .footer__grid > div:nth-child(2) { animation-delay: .08s; }
-  .fx-footer-in .footer__grid > div:nth-child(3) { animation-delay: .16s; }
-  .fx-footer-in .footer__grid > div:nth-child(4) { animation-delay: .24s; }
-  .fx-footer-in .footer__bottom { animation-delay: .36s; }
-  .fx-footer-in .footer__heading::after { animation: fx-grow .6s .35s cubic-bezier(.2, .8, .2, 1) both; }
+  .fx-footer-in .footer__grid > div:nth-child(1) { animation-delay: .15s; }
+  .fx-footer-in .footer__grid > div:nth-child(2) { animation-delay: .23s; }
+  .fx-footer-in .footer__grid > div:nth-child(3) { animation-delay: .31s; }
+  .fx-footer-in .footer__grid > div:nth-child(4) { animation-delay: .39s; }
+  .fx-footer-in .footer__bottom { animation-delay: .5s; }
+  .fx-footer-in .footer__heading::after { animation: fx-grow .6s .5s cubic-bezier(.2, .8, .2, 1) both; }
 }
 
-@keyframes fx-flow { to { background-position: 200% 0; } }
-@keyframes fx-aurora {
-  from { transform: translate(-4%, 3%) rotate(0deg); }
-  to   { transform: translate(5%, -4%) rotate(10deg); }
+@keyframes fx-footer-slab {
+  from { opacity: .4; transform: perspective(1600px) rotateX(14deg) translateY(40px); }
 }
 @keyframes fx-shimmer {
   0%, 55% { background-position: 100% 0; }
@@ -325,15 +356,6 @@ body::before {
   -webkit-backdrop-filter: blur(16px) saturate(160%);
   backdrop-filter: blur(16px) saturate(160%);
   border-color: rgba(255, 255, 255, .8);
-}
-
-/* Peu de pàgina flotant: cantonades rodones que deixen veure el fons */
-.footer {
-  border-radius: 32px 32px 0 0;
-  box-shadow: 0 -20px 50px rgba(47, 47, 150, .10);
-}
-@media (max-width: 600px) {
-  .footer { border-radius: 24px 24px 0 0; }
 }
 
 /* Marca d'aigua del peu (la posa efectes.js; és decorativa) */
