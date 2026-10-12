@@ -346,9 +346,8 @@ body::before {
   border-color: rgba(255, 255, 255, .85);
 }
 
-/* El menú mòbil tancat no ha de deixar ombra a la vora dreta */
+/* El menú mòbil tancat no ha de deixar ombra */
 .mobile-nav:not(.is-open) { box-shadow: none; }
-.mobile-nav { transition: transform .35s cubic-bezier(.77, 0, .175, 1), box-shadow .35s ease; }
 
 /* Pestanyes de Directiu: vidre en lloc d'una franja blanca */
 .directiu-tabs {
@@ -399,15 +398,31 @@ body::before {
   backdrop-filter: blur(6px);
 }
 
+/* Menú centrat a la pantalla, amb un petit marge a cada costat */
 .mobile-nav {
-  width: min(360px, 88vw);
+  top: 12px; right: 12px; bottom: 12px; left: 12px;
+  width: auto;
+  max-width: 520px;
+  margin: 0 auto;
   overflow-x: hidden;
   isolation: isolate;
-  border-radius: 28px 0 0 28px;
+  border-radius: 28px;
   color: #fff;
   background: linear-gradient(160deg, #2f2f96 0%, #1e1e6e 50%, #5a1550 100%);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(18px) scale(.96);
+  transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .3s ease, visibility 0s linear .45s, box-shadow .35s ease;
 }
-.mobile-nav.is-open { box-shadow: -24px 0 70px rgba(20, 10, 60, .45); }
+/* (la transformació no pot ser «none»: el menú ha de seguir sent la
+   referència dels elements decoratius fixos de dins) */
+.mobile-nav.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .3s ease, visibility 0s, box-shadow .35s ease;
+  box-shadow: 0 30px 80px rgba(20, 10, 60, .5);
+}
 
 /* Llums de colors dins del menú (fixes respecte al menú) */
 .mobile-nav::before,
@@ -549,7 +564,7 @@ body::before {
 }
 
 @keyframes fx-nav-item {
-  from { opacity: 0; transform: translateX(36px) rotateY(-24deg); }
+  from { opacity: 0; transform: translateY(18px) rotateX(-30deg); }
 }
 @keyframes fx-nav-close {
   from { opacity: 0; transform: rotate(-90deg) scale(.6); }
