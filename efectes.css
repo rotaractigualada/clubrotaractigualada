@@ -267,10 +267,21 @@ body::before {
   background: transparent;
 }
 
-/* Capçaleres de color de les pàgines: es fonen amb el fons de sota */
+/* Capçaleres de color: targetes flotants sobre el fons continu (sense
+   difuminats: el fons es veu al voltant, com al peu de pàgina) */
 .hero-section, .nosaltres-hero, .act-hero, .directiu-hero, .contact-hero {
-  -webkit-mask-image: linear-gradient(180deg, #000 0, #000 calc(100% - 64px), transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0, #000 calc(100% - 64px), transparent 100%);
+  width: auto;
+  margin: 14px clamp(10px, 1.6vw, 18px) 0;
+  border-radius: 32px;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: 0 26px 60px rgba(47, 47, 150, .18);
+}
+@media (max-width: 600px) {
+  .hero-section, .nosaltres-hero, .act-hero, .directiu-hero, .contact-hero {
+    margin: 10px 10px 0;
+    border-radius: 24px;
+  }
 }
 
 /* Capçalera de vidre */
@@ -356,7 +367,182 @@ body::before {
   from { opacity: 0; transform: translateX(-50%) translateY(30%); letter-spacing: .1em; }
 }
 
+/* =============================================
+   MENÚ MÒBIL: fons de colors del club, «ROTARACT» en diagonal
+   (la posa efectes.js), entrada dels enllaços en 3D i botó brillant.
+   ============================================= */
+.mobile-overlay {
+  background: rgba(16, 12, 48, .38);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.mobile-nav {
+  width: min(360px, 88vw);
+  overflow-x: hidden;
+  isolation: isolate;
+  border-radius: 28px 0 0 28px;
+  color: #fff;
+  background: linear-gradient(160deg, #2f2f96 0%, #1e1e6e 50%, #5a1550 100%);
+}
+.mobile-nav.is-open { box-shadow: -24px 0 70px rgba(20, 10, 60, .45); }
+
+/* Llums de colors dins del menú (fixes respecte al menú) */
+.mobile-nav::before,
+.mobile-nav::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.mobile-nav::before {
+  width: 320px; height: 320px;
+  top: -110px; right: -120px;
+  background: radial-gradient(closest-side, rgba(218, 26, 93, .55), transparent);
+}
+.mobile-nav::after {
+  width: 300px; height: 300px;
+  bottom: -120px; left: -110px;
+  background: radial-gradient(closest-side, rgba(110, 110, 255, .4), transparent);
+}
+
+/* «ROTARACT» en diagonal */
+.fx-nav-mark {
+  position: fixed;
+  inset: -40% -80%;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: .15em;
+  transform: rotate(-28deg);
+  pointer-events: none;
+  user-select: none;
+}
+.fx-nav-mark span {
+  display: block;
+  width: max-content;
+  white-space: nowrap;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 4.4rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: .03em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, .13);
+}
+.fx-nav-mark span:nth-child(2n) { color: rgba(255, 255, 255, .05); -webkit-text-stroke-width: 0; }
+.fx-nav-mark span:nth-child(3n) { -webkit-text-stroke-color: rgba(255, 140, 185, .28); }
+
+.mobile-nav__close {
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, .22);
+  width: 42px; height: 42px;
+}
+.mobile-nav__close:hover,
+.mobile-nav__close:focus-visible { background: #da1a5d; color: #fff; border-color: #da1a5d; }
+
+.mobile-nav__link,
+.mobile-nav__group-label {
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+.mobile-nav__link,
+.mobile-nav__group { border-color: rgba(255, 255, 255, .12); }
+.mobile-nav__link:hover, .mobile-nav__link:focus-visible,
+.mobile-nav__group-label:hover, .mobile-nav__group-label:focus-visible { color: #ff9ec0; }
+.mobile-nav__link--active,
+.mobile-nav a[aria-current="page"] { color: #ff9ec0; }
+
+.mobile-nav__sublink {
+  position: relative;
+  color: rgba(255, 255, 255, .72);
+  padding-left: .9rem;
+}
+.mobile-nav__sublink::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 50%;
+  width: 5px; height: 5px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: #ff9ec0;
+  opacity: .55;
+  transition: transform .25s ease, opacity .25s ease;
+}
+.mobile-nav__sublink:hover, .mobile-nav__sublink:focus-visible { color: #fff; padding-left: 1.2rem; }
+.mobile-nav__sublink:hover::before, .mobile-nav__sublink:focus-visible::before { transform: scale(1.6); opacity: 1; }
+
+.mobile-nav a:focus-visible,
+.mobile-nav button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.mobile-nav .lang-menu__btn {
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  border-color: rgba(255, 255, 255, .28);
+}
+
+.mobile-nav__cta {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #da1a5d, #ff5e8e);
+  box-shadow: 0 10px 28px rgba(218, 26, 93, .45);
+}
+.mobile-nav__cta::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; left: -60%;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .45), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Els enllaços entren un rere l'altre, amb un gir en 3D */
+  .mobile-nav__list { perspective: 900px; }
+  .mobile-nav.is-open .mobile-nav__list > li { animation: fx-nav-item .55s cubic-bezier(.2, .8, .2, 1) both; }
+  .mobile-nav.is-open .mobile-nav__list > li:nth-child(1) { animation-delay: .08s; }
+  .mobile-nav.is-open .mobile-nav__list > li:nth-child(2) { animation-delay: .13s; }
+  .mobile-nav.is-open .mobile-nav__list > li:nth-child(3) { animation-delay: .18s; }
+  .mobile-nav.is-open .mobile-nav__list > li:nth-child(4) { animation-delay: .23s; }
+  .mobile-nav.is-open .mobile-nav__list > li:nth-child(5) { animation-delay: .28s; }
+  .mobile-nav.is-open .mobile-nav__list > li:nth-child(6) { animation-delay: .33s; }
+  .mobile-nav.is-open .mobile-nav__list > li:nth-child(7) { animation-delay: .38s; }
+  .mobile-nav.is-open .mobile-nav__close { animation: fx-nav-close .5s cubic-bezier(.2, .8, .2, 1) both; }
+
+  /* «ROTARACT» es desplaça en diagonal mentre el menú és obert */
+  .mobile-nav.is-open .fx-nav-mark span { animation: fx-marquee 22s linear infinite; }
+  .mobile-nav.is-open .fx-nav-mark span:nth-child(2n) { animation-direction: reverse; animation-duration: 28s; }
+  .mobile-nav.is-open::before { animation: fx-nav-glow 6s ease-in-out infinite alternate; }
+  .mobile-nav.is-open::after { animation: fx-nav-glow 7s ease-in-out infinite alternate-reverse; }
+  .mobile-nav.is-open .mobile-nav__cta::after { animation: fx-shine 3.2s 1s ease-in-out infinite; }
+}
+
+@keyframes fx-nav-item {
+  from { opacity: 0; transform: translateX(36px) rotateY(-24deg); }
+}
+@keyframes fx-nav-close {
+  from { opacity: 0; transform: rotate(-90deg) scale(.6); }
+}
+@keyframes fx-marquee { to { transform: translateX(-50%); } }
+@keyframes fx-nav-glow {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-30px, 40px) scale(1.15); }
+}
+@keyframes fx-shine {
+  0%, 60% { left: -60%; }
+  100% { left: 130%; }
+}
+
 @media print {
-  .fx-progress, .fx-ripple, .fx-glare, .fx-footer-mark { display: none; }
+  .fx-progress, .fx-ripple, .fx-glare, .fx-footer-mark, .fx-nav-mark { display: none; }
   body::before { display: none; }
 }
