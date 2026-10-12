@@ -943,7 +943,7 @@ body.nav-open { overflow: hidden; }
     grid-template-columns: 1fr;
     padding: 1rem;
   }
-  .form-row { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; row-gap: 0; }
   .contact-hero { min-height: auto; }
 }
 
