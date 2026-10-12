@@ -54,6 +54,10 @@ test('unir-se: camps invàlids retornen 400 (edat i telèfon inclosos)', { skip 
   const res = await post(server, { ...UNIR, message: '', age: 'abc', phone: 'xx' });
   assert.equal(res.status, 400);
   assert.deepEqual((await res.json()).fields.sort(), ['age', 'message', 'phone']);
+  // L'edat és obligatòria per unir-se
+  const noAge = await post(server, { ...UNIR, age: '' });
+  assert.equal(noAge.status, 400);
+  assert.deepEqual((await noAge.json()).fields, ['age']);
 }));
 
 test('honeypot i enviaments massa ràpids: responen 200 però no es desa res', { skip }, () => withServer(async (server) => {

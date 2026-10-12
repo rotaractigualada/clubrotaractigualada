@@ -146,7 +146,7 @@ if ($tipus === 'info') {
 } else {
     $subject = '';
     $recipientKey = 'club'; // les sol·licituds per unir-se arriben sempre al club
-    if ($age !== '' && (!ctype_digit($age) || (int) $age < 14 || (int) $age > 99)) { $errors[] = 'age'; }
+    if (!ctype_digit($age) || (int) $age < 14 || (int) $age > 99) { $errors[] = 'age'; } // obligatòria
 }
 $recipient = RECIPIENTS[$recipientKey];
 
@@ -195,8 +195,8 @@ if ($tipus === 'unir') {
     $body  = "Nova sol·licitud per formar part del club\n\n";
     $body .= "Nom: {$fullName}\n";
     $body .= "Correu: {$email}\n";
+    $body .= "Edat: {$age}\n";
     if ($phone !== '') { $body .= "Telèfon: {$phone}\n"; }
-    if ($age !== '')   { $body .= "Edat: {$age}\n"; }
     $body .= "\nPer què vol formar part del club:\n{$message}\n";
 } else {
     $mailSubject = SUBJECT_PREFIX . 'Informació: ' . $typeLabel

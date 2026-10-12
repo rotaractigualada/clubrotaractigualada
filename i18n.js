@@ -275,7 +275,7 @@
     'This website may contain links to third-party websites (partners, funding organisations, social media, etc.). Rotaract Club Igualada is not responsible for the content or privacy policies of these external sites.': 'Este sitio web puede contener enlaces a sitios web de terceros (colaboradores, organizaciones financiadoras, redes sociales, etc.). Rotaract Club Igualada no se hace responsable del contenido ni de las políticas de privacidad de estos sitios externos.',
     'This website only uses strictly necessary local storage (localStorage) to remember your language preference — data that never leaves your device. Additionally, if you give your consent, Google Analytics (GA4) analytics cookies are installed to understand how the website is used. Without your consent, no cookies are installed and no measurement service is loaded.': 'Este sitio web solo utiliza almacenamiento local estrictamente necesario (localStorage) para recordar tu preferencia de idioma, un dato que nunca sale de tu dispositivo. Además, si das tu consentimiento, se instalan cookies de análisis de Google Analytics (GA4) para entender cómo se utiliza la web. Sin tu consentimiento no se instala ninguna cookie ni se carga ningún servicio de medición.',
     'This website only uses technical storage to remember your language. If you accept, we use Google analytics cookies to understand how the website is used.': 'Este sitio web solo utiliza almacenamiento técnico para recordar tu idioma. Si aceptas, usamos cookies de análisis de Google para entender cómo se utiliza la web.',
-    'Through the contact forms («I want information» and «I want to join») we collect your name, surname, email address, phone number and age (optional), the reason and the content of your message. This data is used solely to manage your request and respond to you.': 'A través de los formularios de contacto («Quiero información» y «Quiero unirme») recogemos tu nombre, apellidos, correo electrónico, teléfono y edad (opcionales), el motivo y el contenido del mensaje. Estos datos se utilizan únicamente para gestionar tu solicitud y responderte.',
+    'Through the contact forms («I want information» and «I want to join») we collect your name, surname, email address, age, phone number (optional), the reason and the content of your message. This data is used solely to manage your request and respond to you.': 'A través de los formularios de contacto («Quiero información» y «Quiero unirme») recogemos tu nombre, apellidos, correo electrónico, edad, teléfono (opcional), el motivo y el contenido del mensaje. Estos datos se utilizan únicamente para gestionar tu solicitud y responderte.',
     'Training': 'Formación',
     'Treasurer': 'Tesorero/a',
     'Tu': 'Ma',
@@ -337,7 +337,6 @@
 
   /* Placeholders de formularis */
   var ES_MAP_PH = {
-    'Optional': 'Opcional',
     'Tell us who you are, what you like and what you would like to do in the club...': 'Cuéntanos quién eres, qué te gusta y qué te gustaría hacer en el club...',
     'Tell us what you need...': 'Cuéntanos qué necesitas...',
     'Write your message here...': 'Escribe tu mensaje aquí...',
