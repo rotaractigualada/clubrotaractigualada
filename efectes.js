@@ -17,6 +17,25 @@
     footer.querySelectorAll('.footer__links a[href$=".html"]').forEach(function (link) {
       if (pageOf(new URL(link.href).pathname) === current) link.setAttribute('aria-current', 'page');
     });
+    // També als enllaços principals del menú mòbil
+    document.querySelectorAll('.mobile-nav__link[href$=".html"], .mobile-nav__group-label[href$=".html"]').forEach(function (link) {
+      if (pageOf(new URL(link.href).pathname) === current) link.setAttribute('aria-current', 'page');
+    });
+  }
+
+  // ── Menú mòbil: «ROTARACT» en diagonal de fons (decoratiu) ──
+  var mobileNav = document.getElementById('mobileNav');
+  if (mobileNav) {
+    var navMark = document.createElement('div');
+    navMark.className = 'fx-nav-mark';
+    navMark.setAttribute('aria-hidden', 'true');
+    for (var r = 0; r < 8; r++) {
+      var row = document.createElement('span');
+      // Text repetit: en desplaçar-lo la meitat, el bucle no es nota
+      row.textContent = new Array(9).join('ROTARACT ✦ ');
+      navMark.appendChild(row);
+    }
+    mobileNav.insertBefore(navMark, mobileNav.firstChild);
   }
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
