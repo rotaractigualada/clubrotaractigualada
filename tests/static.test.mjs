@@ -105,3 +105,11 @@ test('index.html: JSON-LD vàlid', () => {
   assert.equal(data['@context'], 'https://schema.org');
   assert.equal(data.url, 'https://rotaractigualada.org/');
 });
+
+test('index.html: publicacions d\'Instagram com a targetes pròpies (sense embed.js)', () => {
+  const html = read('index.html');
+  assert.ok(!html.includes('instagram.com/embed.js'), 'no ha de carregar el script d\'Instagram');
+  const posts = [...html.matchAll(/<a class="ig-post" href="(https:\/\/www\.instagram\.com\/p\/[\w-]+\/)"[\s\S]*?<img src="([^"]+)"/g)];
+  assert.ok(posts.length >= 3, 'hi ha d\'haver almenys 3 publicacions');
+  for (const [, , img] of posts) assert.ok(existsSync(join(ROOT, img)), `falta la imatge ${img}`);
+});

@@ -15,6 +15,7 @@
 
   /* Diccionari castellà: clau = text en anglès (data-en) */
   var ES_MAP = {
+    'View on Instagram': 'Ver en Instagram',
     'Choose who you want to write to and your email app will open. We reply within 48 hours.': 'Elige a quién quieres escribir y se abrirá tu correo. Respondemos en menos de 48 horas.',
     'Write': 'Escribir',
     'Follow': 'Síguenos',
@@ -67,7 +68,6 @@
     'After the meetings, members will conduct an anonymous vote to decide on your admission.': 'Tras las reuniones, los socios realizarán una votación anónima para decidir tu incorporación.',
     'Application review': 'Revisión de la solicitud',
     'Club meetings': 'Reuniones de socios',
-    'View this post on Instagram': 'Ver esta publicación en Instagram',
     'When we have activities, we will post photos here!': '¡Cuando tengamos actividades, subiremos fotos aquí!',
     'No photos yet, but we will post some very soon!': '¡Todavía no tenemos fotos, pero muy pronto subiremos!',
     'Access to this website is free of charge and its use implies full acceptance of the terms of use set out here. Users agree to make appropriate use of the content and services offered by Rotaract Club Igualada through its website, and not to use them for unlawful purposes or purposes contrary to the organisation\'s values.': 'El acceso a este sitio web es gratuito y su uso implica la plena aceptación de las condiciones de uso aquí expuestas. Los usuarios se comprometen a hacer un uso adecuado de los contenidos y servicios que ofrece Rotaract Club Igualada a través de su web, y a no utilizarlos con fines ilícitos o contrarios a los valores de la organización.',

@@ -41,13 +41,11 @@ Redirect 301 /rotaractigualada.html /index.html
   # (atribut allow de l'embed); es permet només per als iframes de jotform.com.
   Header always set Permissions-Policy "geolocation=(), camera=(self \"https://*.jotform.com\"), microphone=(self \"https://*.jotform.com\"), payment=(), usb=(), magnetometer=(), gyroscope=()"
   # style-src 'unsafe-inline' és necessari pels estils inline propis
-  # (atributs style= de l'HTML i dels embeds); cap script inline.
-  # instagram.com només per als posts incrustats de la secció d'Instagram
-  # (script d'incrustació oficial + iframes de cada post).
+  # (atributs style= de l'HTML i del formulari d'inscripció); cap script inline.
   # jotform.com per al formulari d'inscripció (script d'incrustació + iframe).
   # google-analytics / googletagmanager: només si l'usuari accepta les
   # cookies d'anàlisi (analytics.js no les carrega si no hi ha consentiment).
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.instagram.com https://*.jotform.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://*.jotform.com https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com; object-src 'none'; frame-src https://www.instagram.com https://instagram.com https://*.jotform.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://*.jotform.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://*.jotform.com https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com; object-src 'none'; frame-src https://*.jotform.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 </IfModule>
 
 # ── Bloqueig de fitxers sensibles ──
