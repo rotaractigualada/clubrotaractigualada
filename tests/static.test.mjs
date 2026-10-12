@@ -113,3 +113,15 @@ test('index.html: publicacions d\'Instagram com a targetes pròpies (sense embed
   assert.ok(posts.length >= 3, 'hi ha d\'haver almenys 3 publicacions');
   for (const [, , img] of posts) assert.ok(existsSync(join(ROOT, img)), `falta la imatge ${img}`);
 });
+
+test('.htaccess: sense PHP, fitxers ocults bloquejats i security.txt accessible', () => {
+  const h = read('.htaccess');
+  assert.match(h, /<FilesMatch "\\\.\(php/);
+  assert.match(h, /RedirectMatch 404 \/\\\.\(\?!well-known/);
+  assert.match(h, /form-action 'none'/);
+  assert.match(h, /<Files "security\.txt">\s*Require all granted/);
+  const sec = read('.well-known/security.txt');
+  assert.match(sec, /^Contact: mailto:/m);
+  const expires = sec.match(/^Expires: (.+)$/m);
+  assert.ok(expires && new Date(expires[1]) > new Date(), 'security.txt caducat');
+});

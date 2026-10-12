@@ -1,7 +1,7 @@
 # ── Rotaract Igualada — configuracions d'Apache ──
 
 # Pàgina d'inici de cada carpeta
-DirectoryIndex index.html index.php
+DirectoryIndex index.html
 
 # Seguretat bàsica: no mostrar el llistat de fitxers de les carpetes
 Options -Indexes
@@ -39,13 +39,15 @@ Redirect 301 /rotaractigualada.html /index.html
   Header unset X-Powered-By
   # El formulari d'inscripció (JotForm) pot demanar càmera/micròfon
   # (atribut allow de l'embed); es permet només per als iframes de jotform.com.
-  Header always set Permissions-Policy "geolocation=(), camera=(self \"https://*.jotform.com\"), microphone=(self \"https://*.jotform.com\"), payment=(), usb=(), magnetometer=(), gyroscope=()"
+  Header always set Permissions-Policy "geolocation=(), camera=(self \"https://*.jotform.com\"), microphone=(self \"https://*.jotform.com\"), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), browsing-topics=(), display-capture=(), serial=(), bluetooth=(), hid=()"
   # style-src 'unsafe-inline' és necessari pels estils inline propis
   # (atributs style= de l'HTML i del formulari d'inscripció); cap script inline.
   # jotform.com per al formulari d'inscripció (script d'incrustació + iframe).
   # google-analytics / googletagmanager: només si l'usuari accepta les
   # cookies d'anàlisi (analytics.js no les carrega si no hi ha consentiment).
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://*.jotform.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://*.jotform.com https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com; object-src 'none'; frame-src https://*.jotform.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+  # form-action 'none': la web no té cap formulari propi (el d'inscripció és
+  # dins l'iframe de JotForm, amb les seves pròpies regles).
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://*.jotform.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://*.jotform.com https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com; media-src 'self'; manifest-src 'self'; worker-src 'none'; object-src 'none'; frame-src https://*.jotform.com; frame-ancestors 'self'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
 </IfModule>
 
 # ── Bloqueig de fitxers sensibles ──
@@ -53,7 +55,17 @@ Redirect 301 /rotaractigualada.html /index.html
   Require all denied
 </FilesMatch>
 
-# ── Protecció del directori de dades del formulari ──
+# ── La web no fa servir PHP: cap fitxer PHP s'ha d'executar ni servir ──
+# (protegeix contra fitxers maliciosos que algú hi pogués pujar)
+<FilesMatch "\.(php\d?|phtml|phar|pl|py|cgi|sh)$">
+  Require all denied
+</FilesMatch>
+
+# Fitxers i carpetes ocults (.git, .env…): no existeixen per web,
+# excepte .well-known (security.txt i verificacions de domini)
+RedirectMatch 404 /\.(?!well-known(/|$))
+
+# ── Protecció del directori de dades del formulari antic ──
 # Tot el directori form-data/ (CSV de trameses i fitxers de límit
 # d'enviaments) queda inaccessible per web, sigui quina sigui l'extensió.
 RedirectMatch 404 ^/form-data(/|$)
@@ -71,6 +83,10 @@ RedirectMatch 404 ^/(tests|node_modules)(/|$)
   <Files "robots.txt">
     Require all granted
   </Files>
+  # Excepció: security.txt (com informar de problemes de seguretat)
+  <Files "security.txt">
+    Require all granted
+  </Files>
 </IfModule>
 
 # ── Compressió ──
@@ -85,9 +101,9 @@ RedirectMatch 404 ^/(tests|node_modules)(/|$)
 </IfModule>
 
 # ── Memòria cau del navegador ──
-# Imatges i icones canvien poc: 30 dies. CSS i JS no porten versió al
-# nom del fitxer, així que es mantenen curts (1 dia) perquè els canvis
-# publicats arribin aviat. L'HTML no es desa a la memòria cau.
+# Imatges i icones canvien poc: 30 dies. Els CSS i JS es carreguen amb
+# una versió (?v=hash, la posa npm run build:idiomes) que canvia quan
+# canvia el fitxer: es poden desar 1 any. L'HTML no es desa a la memòria cau.
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType image/jpeg "access plus 30 days"
@@ -95,8 +111,8 @@ RedirectMatch 404 ^/(tests|node_modules)(/|$)
   ExpiresByType image/webp "access plus 30 days"
   ExpiresByType image/svg+xml "access plus 30 days"
   ExpiresByType image/x-icon "access plus 30 days"
-  ExpiresByType text/css "access plus 1 day"
-  ExpiresByType application/javascript "access plus 1 day"
-  ExpiresByType text/javascript "access plus 1 day"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
   ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
