@@ -1,8 +1,8 @@
 /* Tests del backend dels formularis de Contacte (form-handler.php):
    «Vull informació» (tipus=info) i «Vull unir-me» (tipus=unir).
    Necessiten PHP instal·lat; si no n'hi ha, se salten.
-   En local mail() no pot enviar correu: form-handler respon 500
-   {"error":"mail"} però abans ja ha desat la tramesa al CSV. */
+   En local mail() no envia res: el servidor de prova desa cada correu a
+   mail.log (vegeu helpers.mjs). */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
@@ -96,4 +96,53 @@ test('sense JavaScript: l\'enviament normal torna a Contacte (mai una pàgina en
   const ok = await post(server, UNIR, { json: false, referer: server.url + '/es/contacte.html' });
   assert.equal(ok.status, 303);
   assert.match(ok.headers.get('location'), /^\/es\/contacte\.html\?enviat=(ok|error)#uneix-te$/);
+}));
+
+/* Parts d'un correu MIME desat a mail.log: { text, html } ja descodificades */
+function mailParts(raw) {
+  const boundary = raw.match(/boundary="([^"]+)"/)[1];
+  const parts = {};
+  for (const chunk of raw.split('--' + boundary).slice(1, -1)) {
+    const [head, ...rest] = chunk.split(/\r?\n\r?\n/);
+    const type = head.match(/Content-Type: text\/(plain|html)/)[1];
+    parts[type === 'plain' ? 'text' : 'html'] = Buffer.from(rest.join('').replace(/\s+/g, ''), 'base64').toString('utf8');
+  }
+  return parts;
+}
+
+test('el correu no porta la IP; només queda a la còpia de seguretat (CSV)', { skip }, () => withServer(async (server) => {
+  const res = await post(server, UNIR);
+  assert.equal(res.status, 200);
+  const { text, html } = mailParts(readFileSync(server.mailLog, 'utf8'));
+  assert.match(text, /Nom: Pau Vila/);
+  assert.match(text, /Edat: 22/);
+  // Al peu només hi ha el domini de la web, sense «(IP: …)»
+  assert.match(text, new RegExp(`Enviat des de ${new URL(server.url).host}\n`));
+  assert.doesNotMatch(text, /\bIP\b/);
+  assert.doesNotMatch(html, /\bIP\b|127\.0\.0\.1/);
+  assert.match(csv(server), /;127\.0\.0\.1;"Pau Vila";/);
+}));
+
+test('correu HTML «Vull unir-me»: logo, dades i botons per respondre, trucar i WhatsApp', { skip }, () => withServer(async (server) => {
+  await post(server, UNIR);
+  const raw = readFileSync(server.mailLog, 'utf8');
+  assert.match(raw, /Content-Type: multipart\/alternative; boundary="rotaract-/);
+  assert.match(raw, /Reply-To: pau@example\.com/);
+  const { html } = mailParts(raw);
+  assert.match(html, /<img src="https:\/\/rotaractigualada\.org\/logo-correu\.png"/);
+  assert.match(html, /Pau Vila vol unir-se al club/);
+  assert.match(html, /22 anys/);
+  assert.match(html, /href="mailto:pau@example\.com\?subject=Rotaract%20Igualada/);
+  assert.match(html, /href="tel:\+34600000000"/);
+  assert.match(html, /href="https:\/\/wa\.me\/34600000000"/);
+}));
+
+test('correu HTML «Vull informació»: el text de la persona s\'escapa i surt el destinatari', { skip }, () => withServer(async (server) => {
+  await post(server, { ...INFO, recipient: 'secretaria', name: 'Anna "la" <b>Puig</b>', message: 'Hola "amics" & <i>companys</i>\n<a href="x" onclick="y">clic</a>' });
+  const { html } = mailParts(readFileSync(server.mailLog, 'utf8'));
+  assert.match(html, /Missatge de Anna &quot;la&quot; Puig/);
+  assert.match(html, /Hola &quot;amics&quot; &amp; companys<br>/);
+  assert.doesNotMatch(html, /onclick|<i>|<b>|href="x"/);
+  assert.match(html, /Per a<\/td>[^]*?Secretaria/);
+  assert.doesNotMatch(html, /wa\.me|href="tel:/); // sense telèfon, sense botons de trucar
 }));
