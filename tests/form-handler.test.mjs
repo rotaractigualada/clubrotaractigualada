@@ -1,8 +1,8 @@
 /* Tests del backend dels formularis de Contacte (form-handler.php):
    «Vull informació» (tipus=info) i «Vull unir-me» (tipus=unir).
    Necessiten PHP instal·lat; si no n'hi ha, se salten.
-   En local mail() no pot enviar correu: form-handler respon 500
-   {"error":"mail"} però abans ja ha desat la tramesa al CSV. */
+   En local mail() no envia res: el servidor de prova desa cada correu a
+   mail.log (vegeu helpers.mjs). */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
@@ -96,4 +96,16 @@ test('sense JavaScript: l\'enviament normal torna a Contacte (mai una pàgina en
   const ok = await post(server, UNIR, { json: false, referer: server.url + '/es/contacte.html' });
   assert.equal(ok.status, 303);
   assert.match(ok.headers.get('location'), /^\/es\/contacte\.html\?enviat=(ok|error)#uneix-te$/);
+}));
+
+test('el correu no porta la IP; només queda a la còpia de seguretat (CSV)', { skip }, () => withServer(async (server) => {
+  const res = await post(server, UNIR);
+  assert.equal(res.status, 200);
+  const mail = readFileSync(server.mailLog, 'utf8');
+  assert.match(mail, /Nom: Pau Vila/);
+  assert.match(mail, /Edat: 22/);
+  // Al peu només hi ha el domini de la web, sense «(IP: …)»
+  assert.match(mail, new RegExp(`Enviat des de ${new URL(server.url).host}\n`));
+  assert.doesNotMatch(mail, /\bIP\b/);
+  assert.match(csv(server), /;127\.0\.0\.1;"Pau Vila";/);
 }));

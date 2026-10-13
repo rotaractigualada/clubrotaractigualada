@@ -207,7 +207,8 @@ if ($tipus === 'unir') {
     $body .= "Per a: {$recipient['label']} ({$recipient['email']})\n";
     $body .= "\nMissatge:\n{$message}\n";
 }
-$body .= "\n---\nEnviat des de " . ($_SERVER['HTTP_HOST'] ?? 'web') . " (IP: {$ip})\n";
+/* La IP no va al correu (no cal per respondre): només queda al CSV, per a l'antispam */
+$body .= "\n---\nEnviat des de " . ($_SERVER['HTTP_HOST'] ?? 'web') . "\n";
 $body .= "Per respondre, contesta aquest correu: anirà directament a {$email}.\n";
 
 $headers  = 'From: Web Rotaract Igualada <' . FROM_EMAIL . ">\r\n";

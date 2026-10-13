@@ -39,7 +39,9 @@ export async function startServer() {
     cpSync(join(ROOT, entry), join(dir, entry), { recursive: true });
   }
   const port = await freePort();
-  const proc = spawn('php', ['-S', `127.0.0.1:${port}`, '-t', dir], {
+  // mail() no envia res: desa cada correu a mail.log per poder-lo revisar
+  const mailLog = join(dir, 'mail.log');
+  const proc = spawn('php', ['-d', `sendmail_path=cat >> ${mailLog}`, '-S', `127.0.0.1:${port}`, '-t', dir], {
     stdio: 'ignore',
     // php -S és d'un sol fil: amb diversos workers, les connexions que el
     // navegador deixa obertes no bloquegen les peticions següents.
@@ -57,6 +59,7 @@ export async function startServer() {
   return {
     url,
     dir,
+    mailLog,
     stop() {
       proc.kill();
       rmSync(dir, { recursive: true, force: true });
