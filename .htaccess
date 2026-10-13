@@ -47,6 +47,17 @@ Redirect 301 /rotaractigualada.html /index.html
   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com; media-src 'self'; manifest-src 'self'; worker-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 </IfModule>
 
+# ── Logo dels correus ──
+# Els correus del formulari i les plantilles de resposta el mostren des
+# d'un altre domini (Gmail, Outlook…). Amb «same-origin» el navegador no
+# el deixa carregar mentre s'escriu el correu, així que aquest fitxer, i
+# només aquest, es pot fer servir des de fora.
+<Files "logo-correu.png">
+  <IfModule mod_headers.c>
+    Header always set Cross-Origin-Resource-Policy "cross-origin"
+  </IfModule>
+</Files>
+
 # ── Bloqueig de fitxers sensibles ──
 <FilesMatch "^(\.env|\.git|composer\.json|package\.json|package-lock\.json|\.htpasswd)|\.(log|sql|csv|bak|old|tmp|swp|mjs)$">
   Require all denied
