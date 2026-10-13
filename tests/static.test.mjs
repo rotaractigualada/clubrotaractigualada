@@ -114,6 +114,15 @@ test('index.html: publicacions d\'Instagram com a targetes pròpies (sense embed
   for (const [, , img] of posts) assert.ok(existsSync(join(ROOT, img)), `falta la imatge ${img}`);
 });
 
+test('.htaccess: el logo dels correus es pot carregar des de Gmail i altres programes de correu', () => {
+  const h = read('.htaccess');
+  // La resta de la web continua amb «same-origin»; només el logo n'és l'excepció
+  assert.match(h, /Header always set Cross-Origin-Resource-Policy "same-origin"/);
+  assert.match(h, /<Files "logo-correu\.png">\s*<IfModule mod_headers\.c>\s*Header always set Cross-Origin-Resource-Policy "cross-origin"/);
+  assert.ok(existsSync(join(ROOT, 'logo-correu.png')), 'falta logo-correu.png');
+  assert.match(read('form-handler.php'), /SITE_URL \. '\/logo-correu\.png'/);
+});
+
 test('.htaccess: només form-handler.php, fitxers ocults bloquejats i security.txt accessible', () => {
   const h = read('.htaccess');
   assert.match(h, /<FilesMatch "\\\.\(php/);
