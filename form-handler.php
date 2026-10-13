@@ -29,6 +29,7 @@ const RECIPIENTS = [
 ];
 const SUBJECTS          = ['dubte' => 'Dubte', 'proposta' => 'Proposta', 'altre' => 'Altres'];
 const SUBJECT_PREFIX    = '[Web Rotaract] ';
+const SITE_URL          = 'https://rotaractigualada.org'; // per al logo i els enllaços del correu
 const LOG_FILE          = __DIR__ . '/form-data/submissions.csv';
 const MIN_INTERVAL_SECS = 30; // antispam: mínim de segons entre enviaments d'una mateixa IP
 const MIN_FILL_SECS     = 3;  // antispam: menys temps omplint el formulari = bot
@@ -189,7 +190,9 @@ if (!is_dir($rlDir)) {
 }
 @file_put_contents($rlFile, (string) time(), LOCK_EX);
 
-/* Correu de notificació */
+/* Correu de notificació: versió HTML (amb el logo, les dades en targetes
+   i botons per respondre) i versió de text pla per als programes que no
+   mostren HTML. No porta signatura: en contestar s'hi afegeix la vostra. */
 if ($tipus === 'unir') {
     $mailSubject = SUBJECT_PREFIX . 'Vull unir-me al club: ' . $fullName;
     $body  = "Nova sol·licitud per formar part del club\n\n";
@@ -211,6 +214,25 @@ if ($tipus === 'unir') {
 $body .= "\n---\nEnviat des de " . ($_SERVER['HTTP_HOST'] ?? 'web') . "\n";
 $body .= "Per respondre, contesta aquest correu: anirà directament a {$email}.\n";
 
+$html = email_html([
+    'tipus'     => $tipus,
+    'name'      => $name,
+    'fullName'  => $fullName,
+    'email'     => $email,
+    'phone'     => $phone,
+    'age'       => $age,
+    'typeLabel' => $typeLabel,
+    'recipient' => $recipientKey !== 'club' ? $recipient['label'] : '',
+    'message'   => $message,
+]);
+
+$boundary = 'rotaract-' . bin2hex(random_bytes(12));
+$mime  = "--{$boundary}\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n";
+$mime .= chunk_split(base64_encode($body));
+$mime .= "--{$boundary}\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: base64\r\n\r\n";
+$mime .= chunk_split(base64_encode($html));
+$mime .= "--{$boundary}--\r\n";
+
 $headers  = 'From: Web Rotaract Igualada <' . FROM_EMAIL . ">\r\n";
 $headers .= 'Reply-To: ' . $email . "\r\n";
 /* Si el missatge és per a presidència o secretaria, el club en rep còpia */
@@ -218,12 +240,12 @@ if ($recipient['email'] !== TO_EMAIL) {
     $headers .= 'Cc: ' . TO_EMAIL . "\r\n";
 }
 $headers .= "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+$headers .= "Content-Type: multipart/alternative; boundary=\"{$boundary}\"\r\n";
 
 if (function_exists('mb_encode_mimeheader')) {
     $mailSubject = mb_encode_mimeheader($mailSubject, 'UTF-8');
 }
-$mailOk = @mail($recipient['email'], $mailSubject, $body, $headers);
+$mailOk = @mail($recipient['email'], $mailSubject, $mime, $headers);
 
 if (!$mailOk) {
     /* El missatge no s'ha perdut (queda al CSV), però cal avisar */
@@ -231,3 +253,130 @@ if (!$mailOk) {
 }
 
 respond(200, ['ok' => true]);
+
+/* ── Plantilla HTML del correu de notificació ────────────────────
+   HTML pensat per a programes de correu (Gmail, Outlook, Apple Mail…):
+   taules, estils en línia i el logo servit des de la web. Tot el que ha
+   escrit la persona passa per h() abans d'entrar a l'HTML. */
+function h(string $value): string {
+    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+/** Enllaç de WhatsApp per a mòbils espanyols (6xx/7xx) o números amb prefix internacional. */
+function whatsapp_url(string $phone): string {
+    $digits = preg_replace('/\D/', '', $phone);
+    if (strlen($digits) === 9 && in_array($digits[0], ['6', '7'], true)) {
+        $digits = '34' . $digits;
+    } elseif (strpos(ltrim($phone), '+') === 0 || strpos($digits, '00') === 0) {
+        $digits = ltrim($digits, '0');
+    } else {
+        return '';
+    }
+    return strlen($digits) >= 10 ? 'https://wa.me/' . $digits : '';
+}
+
+function email_html(array $d): string {
+    $font  = "'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif";
+    $unir  = $d['tipus'] === 'unir';
+    $first = $d['name'] !== '' ? $d['name'] : $d['fullName'];
+    $when  = new DateTime('now', new DateTimeZone('Europe/Madrid'));
+
+    $pill  = $unir ? 'Nova sol·licitud' : 'Nou missatge · ' . $d['typeLabel'];
+    $title = $unir ? $d['fullName'] . ' vol unir-se al club' : 'Missatge de ' . $d['fullName'];
+    $pre   = $unir
+        ? $d['fullName'] . ' (' . $d['age'] . ' anys) vol formar part del Rotaract Igualada'
+        : $d['typeLabel'] . ' de ' . $d['fullName'] . ($d['recipient'] !== '' ? ' per a ' . $d['recipient'] : '');
+
+    // Files de dades (etiqueta → valor ja en HTML)
+    $rows = [['Nom', h($d['fullName'])]];
+    $rows[] = ['Correu', '<a href="mailto:' . h($d['email']) . '" style="color:#2f2f96;text-decoration:none;font-weight:700;">' . h($d['email']) . '</a>'];
+    if ($d['phone'] !== '') {
+        $tel = preg_replace('/[^0-9+]/', '', $d['phone']);
+        $rows[] = ['Telèfon', '<a href="tel:' . h($tel) . '" style="color:#2f2f96;text-decoration:none;font-weight:700;">' . h($d['phone']) . '</a>'];
+    }
+    if ($unir) {
+        $rows[] = ['Edat', h($d['age']) . ' anys'];
+    } else {
+        $rows[] = ['Motiu', h($d['typeLabel'])];
+        $rows[] = ['Per a', $d['recipient'] !== '' ? h($d['recipient']) : 'General (club)'];
+    }
+    $rows[] = ['Rebut', $when->format('d/m/Y') . ' a les ' . $when->format('H:i')];
+
+    $rowsHtml = '';
+    foreach ($rows as $i => [$label, $value]) {
+        $border = $i === count($rows) - 1 ? '' : 'border-bottom:1px solid #ece9f5;';
+        $rowsHtml .= '<tr>'
+            . '<td style="padding:11px 0;' . $border . 'width:96px;vertical-align:top;font-family:' . $font . ';font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8a86a8;">' . $label . '</td>'
+            . '<td style="padding:11px 0;' . $border . 'vertical-align:top;font-family:' . $font . ';font-size:15px;color:#1e1e3c;">' . $value . '</td>'
+            . '</tr>';
+    }
+
+    // Botons: respondre (sempre), trucar i WhatsApp (si hi ha telèfon)
+    $button = static function (string $href, string $label, bool $main) use ($font): string {
+        $style = $main
+            ? 'background:#da1a5d;color:#ffffff;border:1px solid #da1a5d;'
+            : 'background:#ffffff;color:#2f2f96;border:1px solid #c9c6e6;';
+        // inline-block: en pantalles estretes els botons passen a la línia següent
+        return '<a href="' . h($href) . '" style="' . $style
+            . 'display:inline-block;margin:0 6px 8px 0;padding:11px 18px;border-radius:999px;font-family:' . $font
+            . ';font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;">' . $label . '</a>';
+    };
+    $replySubject = $unir ? 'Rotaract Igualada · La teva sol·licitud per unir-te al club' : 'Rotaract Igualada · Resposta al teu missatge';
+    $reply = 'mailto:' . $d['email'] . '?subject=' . rawurlencode($replySubject);
+    $buttons = $button($reply, '&#9993;&nbsp; Respondre a ' . h($first), true);
+    if ($d['phone'] !== '') {
+        $buttons .= $button('tel:' . preg_replace('/[^0-9+]/', '', $d['phone']), '&#9742;&nbsp; Trucar', false);
+        $wa = whatsapp_url($d['phone']);
+        if ($wa !== '') {
+            $buttons .= $button($wa, 'WhatsApp', false);
+        }
+    }
+
+    $messageLabel = $unir ? 'Per què vol formar part del club' : 'Missatge';
+    $message = nl2br(h($d['message']), false);
+    $logo = h(SITE_URL . '/logo-correu.png');
+    $site = h(SITE_URL);
+    $siteHost = h((string) parse_url(SITE_URL, PHP_URL_HOST));
+
+    return '<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<title>' . h($title) . '</title>
+</head>
+<body style="margin:0;padding:0;background:#f3f1f8;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">' . h($pre) . '</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f3f1f8" style="background:#f3f1f8;">
+<tr><td align="center" style="padding:28px 12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;background:#ffffff;border-radius:20px;overflow:hidden;border:1px solid #e6e2f2;">
+<tr><td height="6" bgcolor="#da1a5d" style="height:6px;line-height:6px;font-size:0;background:#da1a5d;background-image:linear-gradient(90deg,#2f2f96,#da1a5d);">&nbsp;</td></tr>
+<tr><td align="center" style="padding:28px 24px 8px;">
+<a href="' . $site . '" style="text-decoration:none;"><img src="' . $logo . '" width="200" height="67" alt="Club Rotaract d&#39;Igualada" style="display:block;border:0;width:200px;height:auto;"></a>
+</td></tr>
+<tr><td style="padding:18px 32px 6px;font-family:' . $font . ';">
+<span style="display:inline-block;padding:5px 12px;border-radius:999px;background:#fde7ef;color:#da1a5d;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;">' . h($pill) . '</span>
+<h1 style="margin:14px 0 0;font-family:' . $font . ';font-size:24px;line-height:1.25;font-weight:800;color:#1e1e3c;">' . h($title) . '</h1>
+</td></tr>
+<tr><td style="padding:14px 32px 4px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">' . $rowsHtml . '</table>
+</td></tr>
+<tr><td style="padding:16px 32px 4px;">
+<p style="margin:0 0 8px;font-family:' . $font . ';font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8a86a8;">' . $messageLabel . '</p>
+<div style="padding:16px 18px;background:#f7f5fc;border-left:4px solid #da1a5d;border-radius:10px;font-family:' . $font . ';font-size:15px;line-height:1.6;color:#1e1e3c;">' . $message . '</div>
+</td></tr>
+<tr><td style="padding:20px 26px 0;">' . $buttons . '</td></tr>
+<tr><td style="padding:14px 32px 28px;font-family:' . $font . ';font-size:13px;line-height:1.55;color:#6b6889;">
+Per respondre, també pots contestar directament aquest correu: anirà a <strong style="color:#1e1e3c;">' . h($d['email']) . '</strong>.
+</td></tr>
+<tr><td bgcolor="#1e1e3c" style="padding:16px 32px;background:#1e1e3c;font-family:' . $font . ';font-size:12px;color:#c9c6e6;" align="center">
+Enviat des del formulari de <a href="' . $site . '" style="color:#ffffff;text-decoration:none;font-weight:700;">' . $siteHost . '</a>
+</td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>';
+}
