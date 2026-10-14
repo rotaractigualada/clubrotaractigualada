@@ -1,5 +1,5 @@
 # Si trobes una vulnerabilitat en aquesta web, escriu-nos.
-Contact: mailto:ayuda@rotaractigualada.org
+Contact: mailto:rotaractigualada@gmail.com
 Expires: 2027-10-12T00:00:00.000Z
 Preferred-Languages: ca, es, en
 Canonical: https://rotaractigualada.org/.well-known/security.txt

@@ -17,8 +17,12 @@
 declare(strict_types=1);
 
 /* ── CONFIGURACIÓ ────────────────────────────────────────────── */
-const TO_EMAIL       = 'ayuda@rotaractigualada.org';
-const FROM_EMAIL     = 'ayuda@rotaractigualada.org'; // bústia real del domini (Hostinger)
+const TO_EMAIL       = 'rotaractigualada@gmail.com';
+/* El remitent ha de ser una bústia del domini (Hostinger): si el correu
+   sortís «de» una adreça de Gmail des d'aquest servidor, Gmail el marcaria
+   com a spam o el rebutjaria. Les respostes van igualment a qui ha escrit
+   (Reply-To) i les còpies, a TO_EMAIL. */
+const FROM_EMAIL     = 'ayuda@rotaractigualada.org';
 /* Destinataris que es poden triar al formulari d'informació. El formulari
    només envia la clau; l'adreça es decideix aquí (mai es llegeix una
    adreça de la petició). Clau desconeguda → club. */

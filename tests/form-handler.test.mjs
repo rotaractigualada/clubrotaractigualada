@@ -128,6 +128,9 @@ test('correu HTML «Vull unir-me»: logo, dades i botons per respondre, trucar i
   const raw = readFileSync(server.mailLog, 'utf8');
   assert.match(raw, /Content-Type: multipart\/alternative; boundary="rotaract-/);
   assert.match(raw, /Reply-To: pau@example\.com/);
+  // Arriba a la bústia del club; el remitent continua sent del domini (si no, Gmail el marcaria com a spam)
+  assert.match(raw, /^To: rotaractigualada@gmail\.com/m);
+  assert.match(raw, /^From: Web Rotaract Igualada <ayuda@rotaractigualada\.org>/m);
   const { html } = mailParts(raw);
   assert.match(html, /<img src="https:\/\/rotaractigualada\.org\/logo-correu\.png"/);
   assert.match(html, /Pau Vila vol unir-se al club/);
