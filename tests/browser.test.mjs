@@ -232,7 +232,7 @@ test('targetes de correu: mostren l\'adreça i trien la persona al formulari (se
   const cards = page.locator('.quick-channels a.qc-card.contact-email-link');
   assert.deepEqual(
     (await cards.locator('.qc-card__text span').allInnerTexts()).map((x) => x.trim()),
-    ['rotaractigualada@gmail.com', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org']
+    ['ayuda@rotaractigualada.org', 'gerard.lopez@rotary2202.org', 'luca.santos@rotary2202.org']
   );
   await page.click('#tab-unir');
   await page.click('.qc-card[data-recipient="secretaria"]');

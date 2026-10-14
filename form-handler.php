@@ -17,6 +17,8 @@
 declare(strict_types=1);
 
 /* ── CONFIGURACIÓ ────────────────────────────────────────────── */
+/* Els formularis arriben a la bústia de Gmail del club, que no caduca.
+   A la web es continua mostrant ayuda@rotaractigualada.org com a contacte. */
 const TO_EMAIL       = 'rotaractigualada@gmail.com';
 /* El remitent ha de ser una bústia del domini (Hostinger): si el correu
    sortís «de» una adreça de Gmail des d'aquest servidor, Gmail el marcaria
