@@ -441,3 +441,25 @@ test('estadístiques: no es compta qui té activat «no em segueixis» (GPC) ni 
   assert.equal(await page.locator('#cookieBanner').count(), 0, 'sense avís de cookies');
   await context.close();
 });
+
+test('nosaltres: el mapa d\'Igualada només es carrega quan es demana (abans no hi ha cap petició externa)', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context, errors } = await open('nosaltres.html');
+  const ext = [];
+  page.on('request', (r) => { if (!r.url().startsWith(server.url)) ext.push(r.url()); });
+  await page.reload({ waitUntil: 'load' });
+  await page.locator('#mapaIgualada').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(300);
+  assert.deepEqual(ext, [], 'abans de prémer el botó no es connecta amb cap servei extern');
+  assert.equal(await page.getAttribute('#mapaIgualada', 'aria-label'), 'Mapa d\'Igualada');
+  await page.click('#mapaIgualadaBtn');
+  await page.waitForSelector('#mapaIgualada .leaflet-container');
+  await page.waitForSelector('.leaflet-popup-content');
+  assert.match(await page.locator('.leaflet-popup-content').innerText(), /Igualada/);
+  assert.match(await page.locator('.mapa-tooltip').innerText(), /^\d+ km en línia recta$/);
+  assert.ok(ext.some((u) => u.startsWith('https://tile.openstreetmap.org/')), 'després carrega les imatges d\'OpenStreetMap');
+  assert.ok(ext.every((u) => u.startsWith('https://tile.openstreetmap.org/')), 'només OpenStreetMap: ' + ext.filter((u) => !u.startsWith('https://tile.openstreetmap.org/')).join(', '));
+  assert.deepEqual(await context.cookies(), []);
+  await context.close();
+  assert.deepEqual(errors, []);
+});
