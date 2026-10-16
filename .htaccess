@@ -40,11 +40,11 @@ Redirect 301 /rotaractigualada.html /index.html
   Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), browsing-topics=(), display-capture=(), serial=(), bluetooth=(), hid=()"
   # style-src 'unsafe-inline' és necessari pels estils inline propis
   # (atributs style= de l'HTML); cap script inline.
-  # google-analytics / googletagmanager: només si l'usuari accepta les
-  # cookies d'anàlisi (analytics.js no les carrega si no hi ha consentiment).
+  # goatcounter: estadístiques de visites sense cookies (analytics.js).
+  # tile.openstreetmap.org: el mapa d'Igualada de Nosaltres, només si es demana.
   # form-action 'self': els formularis de Contacte només s'envien a la
   # mateixa web (form-handler.php).
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com; media-src 'self'; manifest-src 'self'; worker-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://rotaractigualada.goatcounter.com https://tile.openstreetmap.org; connect-src 'self'; media-src 'self'; manifest-src 'self'; worker-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 </IfModule>
 
 # ── Logo dels correus ──

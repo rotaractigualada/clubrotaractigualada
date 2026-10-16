@@ -114,6 +114,24 @@ test('index.html: publicacions d\'Instagram com a targetes pròpies (sense embed
   for (const [, , img] of posts) assert.ok(existsSync(join(ROOT, img)), `falta la imatge ${img}`);
 });
 
+test('sense cookies: ni avís de cookies ni Google Analytics; estadístiques amb GoatCounter', () => {
+  for (const page of PAGES) {
+    const html = read(page);
+    assert.doesNotMatch(html, /cookie-banner/, `${page} encara carrega l'avís de cookies`);
+    assert.doesNotMatch(html, /googletagmanager|google-analytics|gtag\(/, `${page} encara fa referència a Google Analytics`);
+    assert.match(html, /<script src="analytics\.js(\?v=[0-9a-f]+)?"><\/script>/);
+    assert.match(html, /GoatCounter/, `${page}: la política de cookies ha d'explicar GoatCounter`);
+  }
+  const js = read('analytics.js');
+  assert.match(js, /https:\/\/rotaractigualada\.goatcounter\.com\/count/);
+  assert.doesNotMatch(js, /localStorage|document\.cookie/, 'analytics.js no ha de desar res al dispositiu');
+  assert.match(js, /globalPrivacyControl/);
+  const h = read('.htaccess');
+  assert.doesNotMatch(h, /googletagmanager|google-analytics/);
+  assert.match(h, /img-src 'self' data: https:\/\/rotaractigualada\.goatcounter\.com/);
+  assert.match(h, /script-src 'self';/);
+});
+
 test('tipografies servides des de la mateixa web (sense Google Fonts: no s\'envia la IP dels visitants a Google)', () => {
   for (const page of PAGES) {
     const html = read(page);

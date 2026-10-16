@@ -1,51 +1,57 @@
 /* =============================================
-   ANALYTICS.JS — Google Analytics 4 (GA4)
-   Amb consentiment RGPD:
-   - Només carrega el script de Google si l'usuari
-     ha acceptat les cookies d'anàlisi (clau
-     rotaract-cookie-consent-v3 = "accept").
-   - Si ha rebutjat (o encara no ha decidit),
-     NO es carrega res: cap sol·licitud a Google.
+   ANALYTICS.JS — Estadístiques de visites amb GoatCounter, sense cookies
+   - No desa res al dispositiu (ni cookies ni emmagatzematge local) i no carrega
+     cap script extern: envia una petició petita, com una imatge d'1×1,
+     amb la pàgina, el títol, d'on ve el visitant i la mida de la pantalla.
+   - GoatCounter no desa l'adreça IP (vegeu la política de cookies).
+   - Només compta a rotaractigualada.org: ni en local, ni als tests, ni a
+     còpies de la web.
+   - No compta qui té activat «no em segueixis» (Global Privacy Control o
+     Do Not Track), ni navegadors automàtics, ni la pàgina que es redirigeix
+     a un altre idioma (es compta la de destinació).
+   Panell d'estadístiques: https://rotaractigualada.goatcounter.com
    ============================================= */
 (function () {
   'use strict';
 
-  // ← Posa aquí el teu ID de GA4 (Google Analytics →
-  //   Administrador → Fluxos de dades → el teu flux).
-  //   Exemple: 'G-AB12CD34EF'. Deixa'l tal qual fins
-  //   que el tinguis: el seguiment no s'activarà.
-  var MEASUREMENT_ID = 'G-XXXXXXXXXX';
+  var ENDPOINT = 'https://rotaractigualada.goatcounter.com/count';
+  var HOSTS = ['rotaractigualada.org', 'www.rotaractigualada.org'];
 
-  var CONSENT_KEY = 'rotaract-cookie-consent-v3';
+  var nav = window.navigator;
+  if (HOSTS.indexOf(window.location.hostname) === -1) return;
+  if (window.__rotaractRedirect) return; // redireccions.js ja porta a una altra adreça
+  if (nav.webdriver) return;
+  if (nav.globalPrivacyControl || nav.doNotTrack === '1' || window.doNotTrack === '1') return;
 
-  function hasConsent() {
-    try { return localStorage.getItem(CONSENT_KEY) === 'accept'; } catch (e) { return false; }
+  function send() {
+    // La mateixa pàgina compta igual amb «/» que amb «/index.html»
+    var path = window.location.pathname.replace(/index\.html$/, '') || '/';
+    // Només interessa d'on ve el visitant, no la navegació dins de la web
+    var ref = '';
+    try {
+      if (document.referrer && new URL(document.referrer).hostname !== window.location.hostname) ref = document.referrer;
+    } catch (e) { /* referent no vàlid */ }
+    var params = {
+      p: path,
+      t: document.title,
+      r: ref,
+      s: [window.screen.width, window.screen.height, window.devicePixelRatio || 1].join(','),
+      rnd: Math.random().toString(36).slice(2)
+    };
+    var query = Object.keys(params).map(function (k) {
+      return k + '=' + encodeURIComponent(params[k]);
+    }).join('&');
+    new Image().src = ENDPOINT + '?' + query;
   }
 
-  function loadGtag() {
-    if (document.getElementById('ga4-gtag')) return;
-
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { window.dataLayer.push(arguments); };
-    window.gtag('js', new Date());
-    window.gtag('config', MEASUREMENT_ID);
-
-    var s = document.createElement('script');
-    s.id = 'ga4-gtag';
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + MEASUREMENT_ID;
-    document.head.appendChild(s);
+  // Les pàgines precarregades pel navegador només compten quan es mostren
+  if (document.visibilityState === 'prerender') {
+    document.addEventListener('visibilitychange', function onShow() {
+      if (document.visibilityState !== 'visible') return;
+      document.removeEventListener('visibilitychange', onShow);
+      send();
+    });
+  } else {
+    send();
   }
-
-  function tryLoad() {
-    if (!hasConsent()) return;
-    if (MEASUREMENT_ID.indexOf('G-XX') === 0) return; // ID encara pendent: no carregar
-    loadGtag();
-  }
-
-  // Si l'usuari accepta en aquesta mateixa visita (esdeveniment del bàner)
-  window.addEventListener('consent:accepted', tryLoad);
-
-  // Visitants que ja havien acceptat en visites anteriors
-  tryLoad();
 })();
