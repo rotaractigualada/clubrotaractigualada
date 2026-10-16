@@ -44,7 +44,7 @@ Redirect 301 /rotaractigualada.html /index.html
   # cookies d'anàlisi (analytics.js no les carrega si no hi ha consentiment).
   # form-action 'self': els formularis de Contacte només s'envien a la
   # mateixa web (form-handler.php).
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com; media-src 'self'; manifest-src 'self'; worker-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://www.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com; media-src 'self'; manifest-src 'self'; worker-src 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 </IfModule>
 
 # ── Logo dels correus ──
@@ -110,10 +110,11 @@ RedirectMatch 404 ^/(tests|node_modules)(/|$)
 <IfModule mod_mime.c>
   AddType application/manifest+json .webmanifest
   AddType image/x-icon .ico
+  AddType font/woff2 .woff2
 </IfModule>
 
 # ── Memòria cau del navegador ──
-# Imatges i icones canvien poc: 30 dies. Els CSS i JS es carreguen amb
+# Imatges i icones canvien poc: 30 dies. Les tipografies no canvien: 1 any. Els CSS i JS es carreguen amb
 # una versió (?v=hash, la posa npm run build:idiomes) que canvia quan
 # canvia el fitxer: es poden desar 1 any. L'HTML no es desa a la memòria cau.
 <IfModule mod_expires.c>
@@ -124,6 +125,7 @@ RedirectMatch 404 ^/(tests|node_modules)(/|$)
   ExpiresByType image/svg+xml "access plus 30 days"
   ExpiresByType image/x-icon "access plus 30 days"
   ExpiresByType text/css "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
   ExpiresByType application/javascript "access plus 1 year"
   ExpiresByType text/javascript "access plus 1 year"
   ExpiresByType text/html "access plus 0 seconds"
