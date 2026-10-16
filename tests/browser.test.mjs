@@ -621,3 +621,88 @@ test('portada en castellà: el test surt traduït, també la barreja de perfils'
   await context.close();
   assert.deepEqual(errors, []);
 });
+
+test('portada: Instagram (perfil, destacades i QR); sense Instagram automàtic es veuen les targetes fixes', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context, errors } = await open('index.html');
+  const ext = [];
+  const feed = [];
+  page.on('request', (r) => {
+    if (!r.url().startsWith(server.url)) ext.push(r.url());
+    if (r.url().includes('instagram-feed.php')) feed.push(r.url());
+  });
+  await page.reload({ waitUntil: 'networkidle' });
+  assert.equal(feed.length, 1, 'demana les publicacions automàtiques a la mateixa web');
+  assert.equal(await page.locator('.ig-grid .ig-post').count(), 3);
+  assert.equal(await page.locator('.ig-grid[data-ig-auto]').count(), 0);
+  assert.equal(await page.isVisible('[data-ig="stats"]'), false, 'sense dades no es mostren xifres');
+  assert.equal(await page.isVisible('.ig-qr__img'), true, 'el QR es veu a l\'ordinador');
+  assert.equal(await page.locator('.ig-qr__img').evaluate((i) => i.complete && i.naturalWidth > 0), true);
+  assert.equal(await page.getAttribute('.ig-profile__follow', 'href'), 'https://www.instagram.com/rotaractigualada/');
+  // Les destacades porten a la web (Galeria → pestanya Galeria d'Activitats)
+  await page.click('.ig-highlight[href="activitats.html#galeria"]');
+  await page.waitForURL(/activitats\.html#galeria$/);
+  await page.waitForFunction(() => document.getElementById('galeria')?.classList.contains('act-tab-section--active'));
+  assert.deepEqual(ext, [], 'no es connecta amb Instagram fins que no es clica un enllaç');
+  await context.close();
+  assert.deepEqual(errors, []);
+});
+
+test('portada: amb l\'Instagram automàtic hi surten les últimes publicacions, el tipus, la data i les xifres', async (t) => {
+  if (skip) return t.skip(skip);
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce', locale: 'ca-ES' });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+  const day = 86400000;
+  const posts = [
+    { url: 'https://www.instagram.com/p/AAA111/', img: 'instagram/auto/1001.jpg', caption: 'Castanyada solidària', date: new Date(Date.now() - day).toISOString(), type: 'carrusel' },
+    { url: 'https://www.instagram.com/reel/BBB222/', img: 'instagram/auto/1002.jpg', caption: 'Reel del Gran Recapte', date: '2026-01-15T10:00:00+0000', type: 'video' },
+    { url: 'https://www.instagram.com/p/CCC333/', img: 'instagram/auto/1003.jpg', caption: '', date: '', type: 'foto' },
+    { url: 'https://evil.example/p/x/', img: 'instagram/auto/1004.jpg', caption: 'no', type: 'foto' },
+    { url: 'https://www.instagram.com/p/DDD444/', img: 'https://evil.example/x.jpg', caption: 'no', type: 'foto' }
+  ];
+  await context.route('**/instagram-feed.php', (route) => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ profile: { username: 'rotaractigualada', posts: 48, followers: 12345 }, posts })
+  }));
+  await context.route(/\/instagram\/auto\/\d+\.jpg$/, (route) => route.fulfill({
+    status: 200, contentType: 'image/jpeg', body: readFileSync(join(ROOT, 'instagram', 'post-1.jpg'))
+  }));
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto(server.url + '/index.html', { waitUntil: 'load' });
+  await page.waitForSelector('.ig-grid[data-ig-auto]');
+  const tiles = page.locator('.ig-grid .ig-post');
+  assert.equal(await tiles.count(), 3, 'només les publicacions vàlides');
+  assert.deepEqual(await tiles.evaluateAll((as) => as.map((a) => [a.getAttribute('href'), a.getAttribute('data-tipus'), a.target])), [
+    ['https://www.instagram.com/p/AAA111/', 'carrusel', '_blank'],
+    ['https://www.instagram.com/reel/BBB222/', 'video', '_blank'],
+    ['https://www.instagram.com/p/CCC333/', null, '_blank']
+  ]);
+  assert.equal(await tiles.nth(0).locator('.ig-post__date').textContent(), 'ahir');
+  assert.match(await tiles.nth(1).locator('.ig-post__date').textContent(), /^15 (de )?gen\.? (del )?2026$/);
+  assert.equal(await tiles.nth(2).locator('img').getAttribute('alt'), 'Publicació de @rotaractigualada a Instagram');
+  assert.equal(await page.locator('.ig-grid img').evaluateAll((imgs) => imgs.every((i) => i.src.startsWith(location.origin + '/instagram/auto/'))), true);
+  assert.equal(await page.isVisible('[data-ig="stats"]'), true);
+  assert.equal(await page.textContent('[data-ig="posts"]'), '48');
+  assert.equal(await page.textContent('[data-ig="followers"]'), '12.345');
+  await context.close();
+  assert.deepEqual(errors, []);
+});
+
+test('portada en mòbil: Instagram com a l\'app (sense QR), destacades que es poden lliscar', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context, errors } = await open('index.html', { width: 375, height: 800 });
+  await page.locator('#instagram').scrollIntoViewIfNeeded();
+  assert.equal(await page.isVisible('.ig-qr'), false, 'al mòbil no cal el QR');
+  const list = await page.locator('.ig-highlights__list').evaluate((l) => {
+    const first = l.querySelector('li').getBoundingClientRect();
+    return { scrolls: l.scrollWidth > l.clientWidth, firstVisible: first.left >= l.getBoundingClientRect().left - 1 };
+  });
+  assert.deepEqual(list, { scrolls: true, firstVisible: true });
+  const follow = await page.locator('.ig-profile__follow').boundingBox();
+  const card = await page.locator('.ig-card').boundingBox();
+  assert.ok(follow.width > card.width * 0.75, 'el botó «Segueix-nos» ocupa tota l\'amplada');
+  await context.close();
+  assert.deepEqual(errors, []);
+});

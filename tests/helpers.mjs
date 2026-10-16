@@ -32,7 +32,7 @@ function freePort() {
   });
 }
 
-export async function startServer() {
+export async function startServer({ env = {} } = {}) {
   const dir = mkdtempSync(join(tmpdir(), 'rotaract-web-'));
   for (const entry of readdirSync(ROOT)) {
     if (['node_modules', '.git', 'tests', 'form-data'].includes(entry)) continue;
@@ -45,7 +45,7 @@ export async function startServer() {
     stdio: 'ignore',
     // php -S és d'un sol fil: amb diversos workers, les connexions que el
     // navegador deixa obertes no bloquegen les peticions següents.
-    env: { ...process.env, PHP_CLI_SERVER_WORKERS: '4' }
+    env: { ...process.env, PHP_CLI_SERVER_WORKERS: '4', ...env }
   });
   const url = `http://127.0.0.1:${port}`;
   // Espera que el servidor respongui

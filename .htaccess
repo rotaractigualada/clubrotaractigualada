@@ -63,15 +63,16 @@ Redirect 301 /rotaractigualada.html /index.html
   Require all denied
 </FilesMatch>
 
-# ── PHP: només s'executa form-handler.php (els formularis de Contacte) ──
+# ── PHP: només s'executen form-handler.php (els formularis de Contacte)
+# i instagram-feed.php (les últimes publicacions d'Instagram de la portada) ──
 # Qualsevol altre fitxer PHP o script queda bloquejat (protegeix contra
 # fitxers maliciosos que algú hi pogués pujar).
 <FilesMatch "\.(php\d?|phtml|phar|pl|py|cgi|sh)$">
   Require all denied
 </FilesMatch>
-<Files "form-handler.php">
+<FilesMatch "^(form-handler|instagram-feed)\.php$">
   Require all granted
-</Files>
+</FilesMatch>
 
 # Fitxers i carpetes ocults (.git, .env…): no existeixen per web,
 # excepte .well-known (security.txt i verificacions de domini)
