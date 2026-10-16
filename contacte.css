@@ -1107,30 +1107,6 @@ body.nav-open { overflow: hidden; }
 
 .legal-table tr:last-child td { border-bottom: none; }
 
-.legal-section .cookie-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 0 0 14px;
-  font-size: 0.85rem;
-}
-
-.cookie-table th,
-.cookie-table td {
-  border: 1px solid rgba(47, 47, 150, 0.15);
-  padding: 8px 10px;
-  text-align: left;
-  vertical-align: top;
-}
-
-.cookie-table th {
-  background: rgba(47, 47, 150, 0.06);
-  font-weight: 700;
-}
-
-@media (max-width: 600px) {
-  .legal-section .cookie-table { font-size: 0.78rem; }
-}
-
 @media (max-width: 600px) {
   .legal-modal-content { max-height: 90vh; padding: 16px 8px; }
   .legal-container { padding: 0 14px 24px; }

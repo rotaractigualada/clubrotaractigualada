@@ -77,7 +77,7 @@
 
 /* ============================================ */
 /* CONTINGUT DELS DOCUMENTS LEGALS               */
-/* (avís legal, privacitat, cookies)             */
+/* (avís legal i privacitat)                     */
 /* ============================================ */
 
 .legal-container {
@@ -151,7 +151,6 @@
   color: var(--accent);
 }
 
-/* Taula de cookies */
 .legal-table-wrapper {
   overflow-x: auto;
   margin: 12px 0 16px;
@@ -208,28 +207,3 @@
   }
 }
 
-.legal-section .cookie-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 0 0 14px;
-  font-size: 0.85rem;
-}
-
-.cookie-table th,
-.cookie-table td {
-  border: 1px solid rgba(47, 47, 150, 0.15);
-  padding: 8px 10px;
-  text-align: left;
-  vertical-align: top;
-}
-
-.cookie-table th {
-  background: rgba(47, 47, 150, 0.06);
-  font-weight: 700;
-}
-
-@media (max-width: 640px) {
-  .legal-section .cookie-table {
-    font-size: 0.78rem;
-  }
-}
