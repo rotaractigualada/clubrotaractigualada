@@ -321,3 +321,193 @@
 
 /* Municipis: el cursor indica que es poden tocar */
 .mapa-igualada__canvas path.leaflet-interactive { cursor: pointer; }
+
+/* ── Activitats del club (projectes.json) ── */
+.mapa-impacte {
+  position: relative;
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.3rem;
+  padding: 1rem 1rem 1.05rem;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(218, 26, 93, 0.12), transparent 55%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(252, 237, 243, 0.85));
+  border: 1px solid rgba(218, 26, 93, 0.16);
+  box-shadow: var(--shadow-sm);
+}
+.mapa-impacte[hidden] { display: none; }
+.mapa-impacte__title {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.mapa-impacte__spark { color: var(--pink); }
+.mapa-impacte__stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+.mapa-impacte__stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+}
+.mapa-impacte__stats strong {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+.mapa-impacte__stats span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--pink);
+  font-variant-numeric: tabular-nums;
+}
+.mapa-impacte__stats li:first-child span { color: var(--blue); }
+.mapa-impacte__next {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+.mapa-impacte__next[hidden] { display: none; }
+.mapa-impacte__next-label {
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+.mapa-impacte__next-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.mapa-impacte__btn {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.mapa-impacte__btn svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+.mapa-impacte__btn:hover { background: var(--primary-dark); }
+.mapa-impacte__btn:hover svg { transform: translateX(3px); }
+.mapa-impacte__btn:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+
+/* Filtres (Totes · Fetes · Properament) */
+.mapa-igualada__filtres {
+  display: inline-flex;
+  margin-left: auto;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(218, 26, 93, 0.08);
+  border: 1px solid rgba(218, 26, 93, 0.16);
+}
+.mapa-igualada__filtres[hidden] { display: none; }
+.mapa-igualada__filtre {
+  padding: 0.42rem 0.8rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--pink-dark);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.mapa-igualada__filtre:hover { background: rgba(218, 26, 93, 0.12); }
+.mapa-igualada__filtre[aria-pressed="true"] { background: var(--pink); color: #fff; box-shadow: 0 3px 10px rgba(218, 26, 93, 0.3); }
+.mapa-igualada__filtre:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+@media (max-width: 560px) {
+  .mapa-igualada__filtres { margin-left: 0; }
+}
+
+/* Números rosa al mapa */
+.mapa-projectes { cursor: pointer; }
+.mapa-projectes__num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ef3f7c, var(--pink));
+  border: 2px solid #fff;
+  box-shadow: 0 4px 12px rgba(218, 26, 93, 0.45);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1;
+  animation: mapa-pop 0.35s cubic-bezier(.2, 1.4, .4, 1) both;
+}
+.mapa-projectes:hover .mapa-projectes__num,
+.mapa-projectes:focus-visible .mapa-projectes__num { transform: scale(1.15); }
+.mapa-projectes:focus-visible { outline: none; }
+.mapa-projectes:focus-visible .mapa-projectes__num { box-shadow: 0 0 0 3px var(--blue); }
+@keyframes mapa-pop {
+  from { transform: scale(0.3); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mapa-projectes__num { animation: none; }
+  .mapa-impacte__btn, .mapa-impacte__btn svg { transition: none; }
+}
+
+/* Llista d'activitats dins la finestra del mapa */
+.mapa-acts { margin-top: 0.6rem; padding-top: 0.55rem; border-top: 1px solid rgba(47, 47, 150, 0.12); }
+.mapa-acts__title {
+  margin: 0 0 0.4rem !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.mapa-acts__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; }
+.mapa-acts__item { display: flex; gap: 0.55rem; align-items: flex-start; }
+.mapa-acts__ico {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  margin-top: 0.2rem;
+  border-radius: 50%;
+  border: 2px solid var(--pink);
+  background: #fff;
+}
+.mapa-acts__item.is-fet .mapa-acts__ico {
+  border-color: var(--blue);
+  background: var(--blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 9px no-repeat;
+}
+.mapa-acts__body { display: flex; flex-direction: column; min-width: 0; }
+.mapa-acts__name { font-weight: 600; color: var(--text); line-height: 1.3; }
+.mapa-acts__when { font-size: 0.75rem; color: var(--text-light); }
+.mapa-acts__xifra { font-size: 0.75rem; font-weight: 600; color: var(--pink); }
+.mapa-acts__hint { display: block; margin-top: 0.35rem; font-size: 0.78rem; color: var(--pink); font-weight: 600; }

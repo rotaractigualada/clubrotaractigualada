@@ -481,3 +481,131 @@ test('nosaltres: el mapa d\'Igualada i l\'Anoia només es carrega quan es demana
   await context.close();
   assert.deepEqual(errors, []);
 });
+
+/* Activitats de projectes.json, amb les mateixes regles que projectes.js
+   (els tests no depenen de la data d'avui) */
+function activitats() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const day = (d) => { const [y, m, dd] = d.split('-').map(Number); return new Date(y, m - 1, dd); };
+  return JSON.parse(readFileSync(join(ROOT, 'projectes.json'), 'utf8')).activitats
+    .filter((a) => !/^cancel/i.test(a.estat || ''))
+    .map((a) => ({ ...a, fet: a.estat ? /^fet/i.test(a.estat) : day(a.fi || a.data) < today }))
+    .sort((a, b) => (a.data < b.data ? -1 : a.data > b.data ? 1 : 0));
+}
+
+test('nosaltres: activitats del club al costat del mapa i, amb el mapa obert, números per municipi i filtres', async (t) => {
+  if (skip) return t.skip(skip);
+  const acts = activitats();
+  const fetes = acts.filter((a) => a.fet);
+  const properes = acts.filter((a) => !a.fet);
+  const igualada = acts.filter((a) => a.municipi === 'Igualada');
+  const { page, context, errors } = await open('nosaltres.html');
+  const ext = [];
+  page.on('request', (r) => { if (!r.url().startsWith(server.url)) ext.push(r.url()); });
+  await page.reload({ waitUntil: 'load' });
+  // Resum al costat del mapa (sense obrir-lo ni connectar-se enlloc)
+  await page.waitForSelector('#mapaImpacte:not([hidden])');
+  assert.equal(await page.textContent('[data-impacte="fetes"]'), String(fetes.length));
+  assert.equal(await page.textContent('[data-impacte="properes"]'), String(properes.length));
+  if (properes.length) assert.equal(await page.textContent('[data-impacte="nom"]'), properes[0].nom.ca);
+  assert.deepEqual(ext, [], 'el resum no es connecta amb cap servei extern');
+  // «Veure-les al mapa» obre el mapa a Igualada amb la llista
+  await page.click('#mapaImpacteBtn');
+  await page.waitForSelector('.mapa-projectes--igualada .mapa-projectes__num');
+  assert.equal(await page.textContent('.mapa-projectes--igualada .mapa-projectes__num'), String(igualada.length));
+  await page.waitForFunction((n) => document.querySelectorAll('.leaflet-popup-content .mapa-acts__item').length === n, igualada.length);
+  assert.match(await page.textContent('.leaflet-popup-content'), /seu del nostre club/);
+  assert.equal(await page.locator('.leaflet-popup-content .mapa-acts__item.is-fet').count(), igualada.filter((a) => a.fet).length);
+  // Filtres: Fetes / Properament / Totes
+  const badge = async () => (await page.locator('.mapa-projectes--igualada').count())
+    ? Number(await page.textContent('.mapa-projectes--igualada .mapa-projectes__num')) : 0;
+  await page.click('[data-filtre="fetes"]');
+  assert.equal(await page.getAttribute('[data-filtre="fetes"]', 'aria-pressed'), 'true');
+  assert.equal(await page.getAttribute('[data-filtre="totes"]', 'aria-pressed'), 'false');
+  assert.equal(await badge(), igualada.filter((a) => a.fet).length);
+  assert.equal(await page.locator('.leaflet-popup-content .mapa-acts__item:not(.is-fet)').count(), 0);
+  assert.match(await page.textContent('#mapaEstat'), new RegExp('^Activitats fetes: ' + fetes.length + '$'));
+  await page.click('[data-filtre="properament"]');
+  assert.equal(await badge(), igualada.filter((a) => !a.fet).length);
+  assert.equal(await page.locator('.leaflet-popup-content .mapa-acts__item.is-fet').count(), 0);
+  await page.click('[data-filtre="totes"]');
+  assert.equal(await badge(), igualada.length);
+  // Amb el teclat: Enter sobre el número obre la llista
+  await page.click('[data-mapa="anoia"]');
+  await page.waitForFunction(() => !document.querySelector('.leaflet-popup-content'));
+  await page.focus('.mapa-projectes--igualada');
+  await page.keyboard.press('Enter');
+  await page.waitForFunction((n) => document.querySelectorAll('.leaflet-popup-content .mapa-acts__item').length === n, igualada.length);
+  assert.ok(ext.every((u) => u.startsWith('https://tile.openstreetmap.org/')), 'només OpenStreetMap: ' + ext.join(', '));
+  assert.deepEqual(await context.cookies(), []);
+  await context.close();
+  assert.deepEqual(errors, []);
+});
+
+test('portada: el test «Quin voluntari ets?» dona un perfil, la barreja i activitats del club, i porta a Uneix-te', async (t) => {
+  if (skip) return t.skip(skip);
+  const acts = activitats();
+  const { page, context, errors } = await open('index.html');
+  const ext = [];
+  page.on('request', (r) => { if (!r.url().startsWith(server.url)) ext.push(r.url()); });
+  const answer = async (q, perfil) => {
+    await page.click(`.quiz__q[data-q="${q}"] .quiz__opt[data-perfil="${perfil}"]`);
+  };
+  await page.click('[data-quiz="start"]');
+  assert.equal(await page.isVisible('.quiz__q[data-q="1"]'), true);
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'quizQ1', 'el focus va a la pregunta');
+  // Enrere: es veu la resposta triada i es pot canviar
+  await answer(1, 'medi');
+  await page.waitForSelector('.quiz__q[data-q="2"]:not([hidden])');
+  assert.equal(await page.textContent('[data-quiz="num"]'), '2');
+  await page.click('[data-quiz="back"]');
+  await page.waitForSelector('.quiz__q[data-q="1"]:not([hidden])');
+  assert.equal(await page.getAttribute('.quiz__q[data-q="1"] [data-perfil="medi"]', 'aria-pressed'), 'true');
+  await answer(1, 'salut');
+  await answer(2, 'salut');
+  await answer(3, 'medi');
+  await answer(4, 'salut');
+  await answer(5, 'salut');
+  await page.waitForSelector('[data-step="resultat"]:not([hidden])');
+  assert.equal(await page.locator('.quiz__perfil:not([hidden])').count(), 1);
+  assert.equal(await page.isVisible('.quiz__perfil[data-perfil="salut"]'), true);
+  assert.match(await page.evaluate(() => document.activeElement.textContent), /Energia saludable/);
+  assert.deepEqual(await page.locator('.quiz__bar-pct').allTextContents(), ['80%', '20%', '0%', '0%', '0%']);
+  assert.match(await page.textContent('.quiz__bar.is-top'), /Energia saludable/);
+  // Activitats del club del mateix perfil (primer les que vindran)
+  const salut = acts.filter((a) => a.perfil === 'salut');
+  const expected = (salut.some((a) => !a.fet) ? salut.filter((a) => !a.fet) : salut.slice().reverse()).slice(0, 3).map((a) => a.nom.ca);
+  await page.waitForFunction(() => !document.querySelector('[data-quiz="acts"]').hidden || !document.querySelector('[data-quiz="empty"]').hidden);
+  assert.deepEqual(await page.locator('.quiz__act-name').allTextContents(), expected);
+  assert.equal(await page.getAttribute('.quiz__actions a.btn--primary', 'href'), 'contacte.html#uneix-te');
+  // Torna a començar; un perfil sense activitats mostra el missatge
+  await page.click('[data-quiz="again"]');
+  for (let q = 1; q <= 5; q++) await answer(q, 'generacions');
+  await page.waitForSelector('.quiz__perfil[data-perfil="generacions"]:not([hidden])');
+  assert.deepEqual(await page.locator('.quiz__bar-pct').allTextContents(), ['100%', '0%', '0%', '0%', '0%']);
+  if (!acts.some((a) => a.perfil === 'generacions')) {
+    await page.waitForSelector('[data-quiz="empty"]:not([hidden])');
+    assert.equal(await page.locator('.quiz__act').count(), 0);
+  }
+  // No s'envia ni es desa res
+  assert.deepEqual(ext, []);
+  assert.deepEqual(await page.evaluate(() => [Object.keys(localStorage), Object.keys(sessionStorage)]), [[], []]);
+  assert.deepEqual(await context.cookies(), []);
+  await context.close();
+  assert.deepEqual(errors, []);
+});
+
+test('portada en castellà: el test surt traduït, també la barreja de perfils', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context, errors } = await open('es/index.html');
+  assert.equal(await page.textContent('#quizTitle'), '¿Qué voluntario eres?');
+  await page.click('[data-quiz="start"]');
+  for (let q = 1; q <= 5; q++) await page.click(`.quiz__q[data-q="${q}"] .quiz__opt[data-perfil="motor"]`);
+  await page.waitForSelector('.quiz__perfil[data-perfil="motor"]:not([hidden])');
+  assert.equal((await page.textContent('.quiz__perfil[data-perfil="motor"] .quiz__perfil-name')).trim(), 'Motor del equipo');
+  assert.match(await page.textContent('.quiz__bar.is-top'), /Motor del equipo/);
+  assert.equal(await page.getAttribute('.quiz__actions a.btn--primary', 'href'), 'contacte.html#uneix-te');
+  await context.close();
+  assert.deepEqual(errors, []);
+});
