@@ -156,12 +156,17 @@
     'Get in touch': 'Ponte en contacto',
     'Get to know Rotaract Igualada, our Rotary family, and the international movement we\'re part of.': 'Conoce Rotaract Igualada, nuestra familia Rotary y el movimiento internacional del que formamos parte.',
     'Google Chrome': 'Google Chrome',
+    'Igualada is the capital of the Anoia region, in the centre of Catalonia and about 60 km from Barcelona. It is our club\'s home town, and from here we run projects for the whole region.': 'Igualada es la capital de la comarca del Anoia, en el centro de Cataluña y a unos 60 km de Barcelona. Es la ciudad de nuestro club, y desde aquí hacemos proyectos para toda la comarca.',
+    'Towns': 'Municipios',
+    'Search for any town in Anoia or tap it on the map to see where it is and how far it is from Igualada.': 'Busca cualquier municipio del Anoia o tócalo en el mapa para ver dónde está y a qué distancia queda de Igualada.',
+    'Search for a town in Anoia': 'Busca un municipio del Anoia',
+    'Search': 'Buscar',
+    'All of Anoia': 'Todo el Anoia',
+    'Full screen': 'Pantalla completa',
+    'Igualada': 'Igualada',
     'Where we are': 'Dónde estamos',
-    'Igualada is the capital of the Anoia region, in the centre of Catalonia and about 60 km from Barcelona. It is the city where Rotary Club Igualada and our Rotaract club are based.': 'Igualada es la capital de la comarca del Anoia, en el centro de Cataluña y a unos 60 km de Barcelona. Es la ciudad donde se encuentran el Rotary Club Igualada y nuestro Rotaract.',
     'Region': 'Comarca',
     'Province': 'Provincia',
-    'To Barcelona': 'Hasta Barcelona',
-    'about 60 km': 'unos 60 km',
     'View the interactive map': 'Ver el mapa interactivo',
     'It loads from OpenStreetMap when you open it.': 'Al abrirlo se carga desde OpenStreetMap.',
     'No. This website does not install any cookies, either its own or from third parties. That is why it does not ask for your consent when you visit it.': 'No. Este sitio web no instala ninguna cookie, ni propia ni de terceros. Por eso no te pide ningún consentimiento cuando lo visitas.',
@@ -344,6 +349,7 @@
 
   /* Placeholders de formularis */
   var ES_MAP_PH = {
+    'Search for a town in Anoia…': 'Busca un municipio del Anoia…',
     'Tell us who you are, what you like and what you would like to do in the club...': 'Cuéntanos quién eres, qué te gusta y qué te gustaría hacer en el club...',
     'Tell us what you need...': 'Cuéntanos qué necesitas...',
     'Write your message here...': 'Escribe tu mensaje aquí...',

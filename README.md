@@ -89,6 +89,15 @@ Puja els fitxers del lloc al servidor. **No cal** pujar `tests/`,
 bloqueja igualment si s'hi pugen). Abans de publicar, revisa els valors
 marcats amb «CANVIA» a `.htaccess` i `sitemap.xml`.
 
+## Mapa d'Igualada i l'Anoia
+
+La secció «On som» de `nosaltres.html` té un mapa interactiu (`mapa.js`,
+`mapa.css`) que només es carrega quan el visitant el demana. Fa servir
+Leaflet (`vendor/leaflet-1.9.4/`, llicència BSD-2), les imatges
+d'OpenStreetMap i els límits dels 33 municipis de l'Anoia (`anoia.json` i la
+previsualització `anoia.svg`), extrets de les dades de l'IGN (CC BY 4.0) amb
+el paquet `es-atlas`.
+
 ## Estadístiques de visites
 
 La web no fa servir cookies. Les visites es compten amb

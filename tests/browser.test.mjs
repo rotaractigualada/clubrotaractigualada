@@ -442,23 +442,41 @@ test('estadístiques: no es compta qui té activat «no em segueixis» (GPC) ni 
   await context.close();
 });
 
-test('nosaltres: el mapa d\'Igualada només es carrega quan es demana (abans no hi ha cap petició externa)', async (t) => {
+test('nosaltres: el mapa d\'Igualada i l\'Anoia només es carrega quan es demana, amb municipis i cercador', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context, errors } = await open('nosaltres.html');
   const ext = [];
   page.on('request', (r) => { if (!r.url().startsWith(server.url)) ext.push(r.url()); });
   await page.reload({ waitUntil: 'load' });
+  // El mapa és després de «Rotaract Igualada»
+  assert.ok(await page.evaluate(() => {
+    const ri = document.getElementById('rotaract-igualada');
+    return !!ri && ri.nextElementSibling && ri.nextElementSibling.id === 'on-som' && !document.querySelector('#rotary-igualada .mapa-igualada');
+  }), 'la secció «On som» va just després de Rotaract Igualada');
   await page.locator('#mapaIgualada').scrollIntoViewIfNeeded();
   await page.waitForTimeout(300);
-  assert.deepEqual(ext, [], 'abans de prémer el botó no es connecta amb cap servei extern');
-  assert.equal(await page.getAttribute('#mapaIgualada', 'aria-label'), 'Mapa d\'Igualada');
-  await page.click('#mapaIgualadaBtn');
+  assert.deepEqual(ext, [], 'abans de demanar-lo no es connecta amb cap servei extern');
+  assert.equal(await page.locator('#mapaEines').isVisible(), false);
+  // Cercar un municipi també obre el mapa
+  await page.fill('#mapaCercaInput', 'calaf');
+  await page.press('#mapaCercaInput', 'Enter');
   await page.waitForSelector('#mapaIgualada .leaflet-container');
-  await page.waitForSelector('.leaflet-popup-content');
-  assert.match(await page.locator('.leaflet-popup-content').innerText(), /Igualada/);
-  assert.match(await page.locator('.mapa-tooltip').innerText(), /^\d+ km en línia recta$/);
-  assert.ok(ext.some((u) => u.startsWith('https://tile.openstreetmap.org/')), 'després carrega les imatges d\'OpenStreetMap');
-  assert.ok(ext.every((u) => u.startsWith('https://tile.openstreetmap.org/')), 'només OpenStreetMap: ' + ext.filter((u) => !u.startsWith('https://tile.openstreetmap.org/')).join(', '));
+  await page.waitForFunction(() => /Calaf/.test(document.querySelector('.leaflet-popup-content')?.textContent || ''));
+  await page.waitForFunction(() => /^Calaf\s*A \d+ km d'Igualada en línia recta$/.test(document.querySelector('.leaflet-popup-content')?.textContent.trim() || ''));
+  assert.equal(await page.locator('#mapaIgualada path.leaflet-interactive').count(), 33, 'els 33 municipis de l\'Anoia');
+  assert.equal(await page.locator('#mapaEines').isVisible(), true);
+  // Sense accents ni article: «bruc» → El Bruc
+  await page.fill('#mapaCercaInput', 'bruc');
+  await page.press('#mapaCercaInput', 'Enter');
+  await page.waitForFunction(() => /El Bruc/.test(document.querySelector('.leaflet-popup-content')?.textContent || ''));
+  // Un nom que no és de l'Anoia
+  await page.fill('#mapaCercaInput', 'Manresa');
+  await page.press('#mapaCercaInput', 'Enter');
+  await page.waitForFunction(() => /No hem trobat/.test(document.getElementById('mapaEstat').textContent));
+  // Eina «Igualada»
+  await page.click('[data-mapa="igualada"]');
+  await page.waitForFunction(() => /seu del nostre club/.test(document.querySelector('.leaflet-popup-content')?.textContent || ''));
+  assert.ok(ext.length > 0 && ext.every((u) => u.startsWith('https://tile.openstreetmap.org/')), 'només OpenStreetMap: ' + ext.filter((u) => !u.startsWith('https://tile.openstreetmap.org/')).join(', '));
   assert.deepEqual(await context.cookies(), []);
   await context.close();
   assert.deepEqual(errors, []);
