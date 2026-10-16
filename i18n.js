@@ -125,6 +125,8 @@
     'Frequently asked questions': 'Preguntas frecuentes',
     'Full name': 'Nombre completo',
     'Gallery': 'Galería',
+    'Our moments': 'Nuestros momentos',
+    'Club presentation': 'Presentación del club',
     '24 September 2026': '24 de septiembre de 2026',
     'Dinner': 'Cena',
     'On Thursday 24 September we officially presented Rotaract Club Igualada at Ses Oliveres, in front of Rotary Igualada: we received our Rotary International certificate and the club bell. Then we shared the dinner talk and, to round off the evening, we held a bingo with everyone there.': 'El jueves 24 de septiembre presentamos oficialmente el Club Rotaract de Igualada en Ses Oliveres, ante Rotary Igualada: recibimos el certificado de Rotary International y la campana del club. A continuación compartimos la cena coloquio y, para terminar la noche, hicimos un bingo con todos los asistentes.',
@@ -393,7 +395,6 @@
     '❓ A question': '❓ Una duda',
     '💡 A proposal': '💡 Una propuesta',
     'Use this form for questions, proposals or anything else. All fields marked with * are required.': 'Usa este formulario para dudas, propuestas o cualquier otra cuestión. Todos los campos marcados con * son obligatorios.',
-    '📸 Our activities': '📸 Nuestras actividades',
   };
 
   /* Diccionari castellà per a elements amb contingut HTML (data-en-is-html) */

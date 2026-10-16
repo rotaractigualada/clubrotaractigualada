@@ -263,3 +263,19 @@ test('.htaccess: la web pot llegir els .json que fa servir (mapa i activitats), 
     assert.ok(!allowed(f), `${f} no hauria de ser públic`);
   }
 });
+
+test('la galeria és a Activitats (pestanya Galeria) i no a la portada; els menús hi porten', () => {
+  const home = stripComments(read('index.html'));
+  assert.doesNotMatch(home, /class="galeria__grid|galeria\.js/, 'la portada ja no té la galeria');
+  const act = stripComments(read('activitats.html'));
+  assert.match(act, /<button type="button" class="act-hero__tab-btn" data-tab="galeria">/);
+  assert.match(act, /<section class="act-section act-section--light act-tab-section" id="galeria">[\s\S]*class="galeria-album"[\s\S]*class="galeria__grid galeria__grid--mosaic"/);
+  assert.match(act, /<script src="galeria\.js[^"]*"><\/script>/);
+  assert.match(act, /<a href="#galeria" class="act-btn act-btn--primary act-feature__cta">/, '«Veure les fotos» porta a la pestanya');
+  assert.match(read('activitats.js'), /validTabs\s*=\s*\[[^\]]*'galeria'/);
+  for (const page of PAGES) {
+    const html = stripComments(read(page));
+    assert.doesNotMatch(html, /index\.html#galeria/, `${page}: encara enllaça la galeria de la portada`);
+    assert.equal((html.match(/href="activitats\.html#galeria"/g) || []).length, 3, `${page}: menú d'escriptori, menú mòbil i peu`);
+  }
+});

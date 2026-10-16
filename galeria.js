@@ -1,13 +1,16 @@
-/* galeria.js — Mosaic de fotos de la portada
+/* galeria.js — Galeria de fotos (Activitats → Galeria), un mosaic per àlbum
    - Entrada escalonada de les fotos en fer scroll
+   - Nombre de fotos de cada àlbum
    - Visor a pantalla completa (lightbox): teclat (←/→/Esc),
      botons, lliscament en mòbil i focus atrapat dins del visor.
+     Les fletxes passen per les fotos del mateix àlbum.
    Sense JavaScript, cada foto és un enllaç a la imatge gran. */
 document.addEventListener('DOMContentLoaded', function () {
-  var grid = document.getElementById('galeriaGrid');
-  if (!grid) return;
-  var items = Array.prototype.slice.call(grid.querySelectorAll('.galeria__item'));
-  if (!items.length) return;
+  var grids = Array.prototype.slice.call(document.querySelectorAll('.galeria__grid--mosaic'));
+  var itemsOf = function (grid) { return Array.prototype.slice.call(grid.querySelectorAll('.galeria__item')); };
+  grids = grids.filter(function (grid) { return itemsOf(grid).length; });
+  if (!grids.length) return;
+  var items = []; // fotos de l'àlbum obert al visor
 
   var getLang = function () { return document.documentElement.getAttribute('lang'); };
   var t = function (ca, en, es) {
@@ -18,22 +21,36 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ── Entrada escalonada ── */
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if ('IntersectionObserver' in window && !reduceMotion) {
-    grid.classList.add('galeria__grid--anim');
-    items.forEach(function (item, i) { item.style.setProperty('--i', i); });
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        // Mostra aquesta foto i totes les anteriors: si l'usuari salta
-        // directament més avall, les de dalt no es queden invisibles.
-        var upTo = items.indexOf(entry.target);
-        for (var k = 0; k <= upTo; k++) {
-          items[k].classList.add('is-visible');
-          io.unobserve(items[k]);
-        }
-      });
-    }, { threshold: 0.15 });
-    items.forEach(function (item) { io.observe(item); });
+    grids.forEach(function (grid) {
+      var photos = itemsOf(grid);
+      grid.classList.add('galeria__grid--anim');
+      photos.forEach(function (item, i) { item.style.setProperty('--i', i); });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          // Mostra aquesta foto i totes les anteriors: si l'usuari salta
+          // directament més avall, les de dalt no es queden invisibles.
+          var upTo = photos.indexOf(entry.target);
+          for (var k = 0; k <= upTo; k++) {
+            photos[k].classList.add('is-visible');
+            io.unobserve(photos[k]);
+          }
+        });
+      }, { threshold: 0.15 });
+      photos.forEach(function (item) { io.observe(item); });
+    });
   }
+
+  /* ── Nombre de fotos de cada àlbum ── */
+  function updateCounts() {
+    document.querySelectorAll('.galeria-album').forEach(function (album) {
+      var el = album.querySelector('[data-galeria-count]');
+      if (!el) return;
+      var n = album.querySelectorAll('.galeria__item').length;
+      el.textContent = n === 1 ? t('1 foto', '1 photo', '1 foto') : t(n + ' fotos', n + ' photos', n + ' fotos');
+    });
+  }
+  updateCounts();
 
   /* ── Visor (lightbox) ── */
   var ICON = {
@@ -104,7 +121,8 @@ document.addEventListener('DOMContentLoaded', function () {
     next.src = items[(current + 1) % items.length].getAttribute('href');
   }
 
-  function open(index) {
+  function open(album, index) {
+    items = album;
     lastFocus = document.activeElement;
     updateLabels();
     show(index);
@@ -125,10 +143,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
   }
 
-  items.forEach(function (item, i) {
-    item.addEventListener('click', function (e) {
-      e.preventDefault();
-      open(i);
+  grids.forEach(function (grid) {
+    var photos = itemsOf(grid);
+    photos.forEach(function (item, i) {
+      item.addEventListener('click', function (e) {
+        e.preventDefault();
+        open(photos, i);
+      });
     });
   });
 
@@ -170,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Si es canvia d'idioma amb el visor obert, actualitza textos
   document.addEventListener('rotaract:lang', function () {
     updateLabels();
+    updateCounts();
     if (box.classList.contains('is-open')) show(current);
   });
 });

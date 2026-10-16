@@ -194,14 +194,21 @@ test('canvi d\'idioma: el menú porta a /en/ i la tria es recorda', async (t) =>
   await context.close();
 });
 
-test('galeria: el visor s\'obre, navega amb les fletxes i torna el focus', async (t) => {
+test('galeria (Activitats → Galeria): àlbums, el visor s\'obre, navega amb les fletxes i torna el focus', async (t) => {
   if (skip) return t.skip(skip);
-  const { page, context, errors } = await open('index.html');
-  const items = page.locator('#galeriaGrid .galeria__item');
-  assert.ok((await items.count()) >= 1);
-  // Les imatges de la graella existeixen
+  const { page, context, errors } = await open('activitats.html#galeria');
+  // L'enllaç directe obre la pestanya Galeria
+  assert.equal(await page.isVisible('#galeria'), true);
+  assert.equal(await page.isVisible('#programades'), false);
+  assert.equal(await page.getAttribute('[data-tab="galeria"]', 'aria-pressed'), 'true');
+  const album = page.locator('#galeria .galeria-album').first();
+  const items = album.locator('.galeria__item');
+  const n = await items.count();
+  assert.ok(n >= 1);
+  assert.equal(await album.locator('[data-galeria-count]').innerText(), n === 1 ? '1 FOTO' : `${n} FOTOS`);
+  // Les imatges de la galeria existeixen
   const broken = await page.evaluate(async () => {
-    const imgs = [...document.querySelectorAll('#galeriaGrid img')];
+    const imgs = [...document.querySelectorAll('#galeria .galeria__grid img')];
     await Promise.all(imgs.map((i) => (i.loading = 'eager', i.decode().catch(() => {}))));
     return imgs.filter((i) => !i.naturalWidth).map((i) => i.src);
   });
@@ -213,12 +220,12 @@ test('galeria: el visor s\'obre, navega amb les fletxes i torna el focus', async
   await page.waitForFunction(() => document.querySelector('.lightbox').classList.contains('is-open'));
   assert.equal(await box.getAttribute('role'), 'dialog');
   assert.ok(await page.evaluate(() => document.activeElement.classList.contains('lightbox__close')));
-  assert.match(await page.locator('.lightbox__counter').innerText(), /^1 \//);
+  assert.equal(await page.locator('.lightbox__counter').innerText(), `1 / ${n}`);
   await page.keyboard.press('ArrowRight');
   assert.match(await page.locator('.lightbox__counter').innerText(), /^2 \//);
   await page.keyboard.press('Escape');
   assert.ok(!(await box.evaluate((b) => b.classList.contains('is-open'))));
-  assert.ok(await page.evaluate(() => document.activeElement.matches('#galeriaGrid .galeria__item')));
+  assert.ok(await page.evaluate(() => document.activeElement.matches('#galeria .galeria__item')));
   assert.deepEqual(errors, []);
   await context.close();
 });
@@ -371,8 +378,13 @@ test('calendari: la presentació del 24 de setembre de 2026 hi surt', async (t) 
   const list = page.locator('#cal-events-list');
   assert.match(await list.innerText(), /Presentació del club al sopar col·loqui de Rotary Igualada/);
   assert.match(await list.innerText(), /Ses Oliveres, Igualada/);
-  assert.equal(await list.locator('a').getAttribute('href'), 'index.html#galeria');
+  assert.equal(await list.locator('a').getAttribute('href'), '#galeria');
   assert.match(await list.locator('a').innerText(), /Veure les fotos/);
+  // «Veure les fotos» obre la pestanya Galeria
+  await list.locator('a').click();
+  await page.waitForFunction(() => document.getElementById('galeria').classList.contains('act-tab-section--active'));
+  assert.equal(await page.isVisible('#calendari'), false);
+  assert.match(page.url(), /#galeria$/);
   await context.close();
 });
 

@@ -24,7 +24,7 @@ Cap enllaç de la web obre el programa de correu: tot es fa des de la pàgina.
 | `redireccions.js` | Al `<head>`: còpia de GitHub Pages → rotaractigualada.org, i idioma (tria desada o idioma del navegador) → `/`, `/es/` o `/en/` |
 | `es/`, `en/` | Versions en castellà i anglès **generades** (no s'editen a mà) |
 | `scripts/build-idiomes.mjs` | Genera `es/`, `en/`, les etiquetes hreflang i el `sitemap.xml` |
-| `galeria.js`, `galeria/` | Mosaic de fotos de la portada i visor a pantalla completa (fotos en mides 800 i 1600 px) |
+| `galeria.js`, `galeria/` | Galeria de fotos (Activitats → pestanya Galeria): un mosaic per àlbum i visor a pantalla completa (fotos en mides 800 i 1600 px) |
 | `mapa.js`, `mapa.css`, `anoia.json`, `anoia.svg` | Mapa d'Igualada i l'Anoia (Nosaltres → On som) |
 | `projectes.json`, `projectes.js` | Activitats del club per al mapa i el test de la portada |
 | `test-voluntari.js`, `test-voluntari.css` | Test «Quin voluntari ets?» de la portada |

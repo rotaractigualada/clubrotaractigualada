@@ -29,7 +29,7 @@
   <!-- /hreflang -->
   <link rel="stylesheet" href="../rotaractigualada.css?v=4e388f8c">
   <link rel="stylesheet" href="../legal-modals.css?v=0ae94be3">
-  <link rel="stylesheet" href="../activitats.css?v=19d59c97">
+  <link rel="stylesheet" href="../activitats.css?v=46081a07">
   <link rel="preload" href="../fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin="">
   <link rel="stylesheet" href="../fonts.css?v=d6f9c1e4">
   <link rel="icon" href="../favicon.ico" sizes="48x48">
@@ -73,6 +73,7 @@
         <ul class="mobile-nav__sub">
             <li><a href="activitats.html#programades" class="mobile-nav__sublink" data-en="Upcoming activities" data-ca="Activitats programades">Próximas actividades</a></li>
             <li><a href="activitats.html#realitzades" class="mobile-nav__sublink" data-en="Past activities" data-ca="Activitats realitzades">Actividades pasadas</a></li>
+            <li><a href="activitats.html#galeria" class="mobile-nav__sublink" data-en="Gallery" data-ca="Galeria">Galería</a></li>
             <li><a href="activitats.html#calendari" class="mobile-nav__sublink" data-en="Calendar" data-ca="Calendari">Calendario</a></li>
         </ul>
       </li>
@@ -129,6 +130,7 @@
           <ul class="nav__dropdown">
             <li><a href="activitats.html#programades" data-en="Upcoming activities" data-ca="Activitats programades">Próximas actividades</a></li>
             <li><a href="activitats.html#realitzades" data-en="Past activities" data-ca="Activitats realitzades">Actividades pasadas</a></li>
+            <li><a href="activitats.html#galeria" data-en="Gallery" data-ca="Galeria">Galería</a></li>
             <li><a href="activitats.html#calendari" data-en="Calendar" data-ca="Calendari">Calendario</a></li>
           </ul>
         </div>
@@ -187,6 +189,10 @@
         <button type="button" class="act-hero__tab-btn" data-tab="realitzades">
           <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
           <span data-en="Past" data-ca="Realitzades">Pasadas</span>
+        </button>
+        <button type="button" class="act-hero__tab-btn" data-tab="galeria">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          <span data-en="Gallery" data-ca="Galeria">Galería</span>
         </button>
         <button type="button" class="act-hero__tab-btn" data-tab="calendari">
           <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -250,7 +256,7 @@
 
       <!-- ================================================
            ACTIVITAT DESTACADA — presentació del club.
-           Les fotos són a la galeria de la portada (botó «Veure les fotos»).
+           Les fotos són a la pestanya Galeria (botó «Veure les fotos»).
            Quan n'hi hagi més, es poden afegir com a targetes al
            bloc «FILTRES + GRID» de sota (ara comentat).
       ================================================ -->
@@ -268,7 +274,7 @@
             <span class="act-card__tag act-card__tag--formacio" data-en="Dinner" data-ca="Sopar">Cena</span>
             <span class="act-card__tag act-card__tag--social">Bingo</span>
           </div>
-          <a href="index.html#galeria" class="act-btn act-btn--primary act-feature__cta"><span data-en="See the photos" data-ca="Veure les fotos">Ver las fotos</span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+          <a href="#galeria" class="act-btn act-btn--primary act-feature__cta"><span data-en="See the photos" data-ca="Veure les fotos">Ver las fotos</span><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
         </div>
       </article>
 
@@ -444,7 +450,84 @@
   </section>
 
   <!-- ============================================
-       SECCIÓ 3: CALENDARI
+       SECCIÓ 3: GALERIA DE FOTOS
+       Un àlbum per activitat (<article class="galeria-album">), el més
+       nou a dalt. Per afegir un àlbum, copia'n un de sencer i canvia'n
+       el títol, la data, el lloc i les fotos.
+       Per afegir una foto a un àlbum:
+         1) Desa-la a galeria/ en dues mides: NOM-800.jpg i NOM-1600.jpg
+            (costat llarg de 800 i 1600 px).
+         2) Copia un bloc <a class="galeria__item ..."> i canvia'n les rutes,
+            l'alt (descripció de la foto) i el peu (català i data-en en anglès).
+       Modificadors: galeria__item--featured (gran), --tall (vertical),
+       --wide (horitzontal). Clicar una foto l'obre en gran (galeria.js);
+       el nombre de fotos de cada àlbum es posa sol.
+  ============================================ -->
+  <section class="act-section act-section--light act-tab-section" id="galeria">
+    <div class="act-section__inner">
+      <div class="act-section__header act-reveal">
+        <span class="act-tag act-tag--pink">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          <span data-en="Our moments" data-ca="Els nostres moments">Nuestros momentos</span>
+        </span>
+        <h2 class="act-section__title"><span data-en="Gallery" style="color: inherit;" data-ca="Galeria">Galería</span> <span>Rotaract Igualada</span></h2>
+        <div class="act-section__divider act-section__divider--pink"></div>
+        <p class="act-section__desc" data-en="Moments we've shared together throughout our journey." data-ca="Moments que hem viscut junts al llarg de la nostra trajectòria.">Momentos que hemos compartido a lo largo de nuestro recorrido.</p>
+      </div>
+
+      <div class="galeria-albums">
+        <article class="galeria-album" aria-labelledby="album-presentacio">
+          <header class="galeria-album__head">
+            <div class="galeria-album__info">
+              <h3 class="galeria-album__title" id="album-presentacio" data-en="Club presentation" data-ca="Presentació del club">Presentación del club</h3>
+              <p class="galeria-album__meta"><time datetime="2026-09-24" data-en="24 September 2026" data-ca="24 de setembre de 2026">24 de septiembre de 2026</time> · Ses Oliveres, Igualada</p>
+            </div>
+            <span class="galeria-album__count" data-galeria-count=""></span>
+          </header>
+          <div class="galeria__grid galeria__grid--mosaic">
+            <a class="galeria__item galeria__item--featured" href="../galeria/grup-1600.jpg">
+              <img src="../galeria/grup-800.jpg" srcset="../galeria/grup-800.jpg 800w, ../galeria/grup-1600.jpg 1600w" sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px" width="800" height="534" loading="lazy" decoding="async" style="object-position: center 40%;" alt="Foto de grup de tots els assistents al sopar, joves de Rotaract i socis de Rotary">
+              <span class="galeria__zoom" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path></svg>
+              </span>
+              <span class="galeria__caption" data-en="The whole Rotary family, all together" data-ca="La família rotària, tots junts">La familia rotaria, todos juntos</span>
+            </a>
+            <a class="galeria__item galeria__item--tall" href="../galeria/certificat-1600.jpg">
+              <img src="../galeria/certificat-800.jpg" srcset="../galeria/certificat-800.jpg 800w, ../galeria/certificat-1600.jpg 1600w" sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px" width="534" height="800" loading="lazy" decoding="async" style="object-position: center 30%;" alt="Dos socis de Rotaract Igualada sostenen el certificat de Rotary International del club, amb una dona al mig">
+              <span class="galeria__zoom" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path></svg>
+              </span>
+              <span class="galeria__caption" data-en="Presentation of the Rotary International certificate" data-ca="Lliurament del certificat de Rotary International">Entrega del certificado de Rotary International</span>
+            </a>
+            <a class="galeria__item galeria__item--tall" href="../galeria/campana-1600.jpg">
+              <img src="../galeria/campana-800.jpg" srcset="../galeria/campana-800.jpg 800w, ../galeria/campana-1600.jpg 1600w" sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px" width="534" height="800" loading="lazy" decoding="async" style="object-position: center 30%;" alt="Un soci de Rotaract Igualada sosté la campana del club, acompanyat de dues dones">
+              <span class="galeria__zoom" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path></svg>
+              </span>
+              <span class="galeria__caption" data-en="Presenting the club bell" data-ca="Entrega de la campana del club">Entrega de la campana del club</span>
+            </a>
+            <a class="galeria__item galeria__item--wide" href="../galeria/equip-1600.jpg">
+              <img src="../galeria/equip-800.jpg" srcset="../galeria/equip-800.jpg 800w, ../galeria/equip-1600.jpg 1600w" sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px" width="800" height="534" loading="lazy" decoding="async" style="object-position: center 35%;" alt="Els joves de Rotaract Igualada posen junts, dempeus, amb un soci de Rotary amb el collar del càrrec">
+              <span class="galeria__zoom" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path></svg>
+              </span>
+              <span class="galeria__caption" data-en="The Rotaract Igualada team" data-ca="L'equip de Rotaract Igualada">El equipo de Rotaract Igualada</span>
+            </a>
+            <a class="galeria__item galeria__item--wide" href="../galeria/sopar-1600.jpg">
+              <img src="../galeria/sopar-800.jpg" srcset="../galeria/sopar-800.jpg 800w, ../galeria/sopar-1600.jpg 1600w" sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px" width="800" height="534" loading="lazy" decoding="async" style="object-position: center 45%;" alt="Assistents asseguts a les taules del sopar escoltant els parlaments">
+              <span class="galeria__zoom" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path></svg>
+              </span>
+              <span class="galeria__caption" data-en="A dinner to remember" data-ca="Un sopar per recordar">Una cena para recordar</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SECCIÓ 4: CALENDARI
   ============================================ -->
   <section class="act-section act-section--light act-tab-section" id="calendari">
     <div class="act-section__inner">
@@ -535,7 +618,7 @@
           <li><a href="nosaltres.html" data-en="About us" data-ca="Nosaltres">Nosotros</a></li>
           <li><a href="directiu.html" data-en="Board" data-ca="Directiu">Junta directiva</a></li>
           <li><a href="activitats.html" data-en="Activities" data-ca="Activitats">Actividades</a></li>
-          <li><a href="index.html#galeria" data-en="Gallery" data-ca="Galeria">Galería</a></li>
+          <li><a href="activitats.html#galeria" data-en="Gallery" data-ca="Galeria">Galería</a></li>
           <li><a href="contacte.html" data-en="Contact" data-ca="Contacte">Contacto</a></li>
         </ul>
       </div>
@@ -565,7 +648,8 @@
   </footer>
 
   <script src="../nav.js?v=35a73008"></script>
-  <script src="../activitats.js?v=9a28dbfa"></script>
+  <script src="../activitats.js?v=8e9971e1"></script>
+  <script src="../galeria.js?v=b38b67b5"></script>
 
 
   <script src="../legal-modals.js?v=8b4503ac"></script>
@@ -893,6 +977,6 @@
 
   <script src="../analytics.js?v=a0662709"></script>
   <script src="../efectes.js?v=db87b92c"></script>
-  <script src="../i18n.js?v=98d6744e"></script>
+  <script src="../i18n.js?v=92b19e07"></script>
 
 </body></html>
