@@ -31,13 +31,10 @@ after(async () => {
   if (server) server.stop();
 });
 
-/* Pàgina nova amb el bàner de cookies ja respost i sense recursos externs
-   (fonts, Instagram…) perquè els tests no depenguin de la xarxa. */
+/* Pàgina nova sense recursos externs (Instagram, mapes, estadístiques…)
+   perquè els tests no depenguin de la xarxa. */
 async function open(path, viewport = { width: 1280, height: 900 }) {
   const context = await browser.newContext({ viewport, reducedMotion: 'reduce', locale: 'ca-ES' });
-  await context.addInitScript(() => {
-    try { localStorage.setItem('rotaract-cookie-consent-v3', 'reject'); } catch (e) { /* res */ }
-  });
   await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
   const page = await context.newPage();
   const errors = [];
@@ -284,9 +281,6 @@ test('idioma: la primera visita porta a la versió de l\'idioma del navegador', 
   ];
   for (const [locale, path, title] of cases) {
     const context = await browser.newContext({ locale });
-    await context.addInitScript(() => {
-      try { localStorage.setItem('rotaract-cookie-consent-v3', 'reject'); } catch (e) { /* res */ }
-    });
     await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
     const page = await context.newPage();
     await page.goto(server.url + '/');
@@ -328,9 +322,6 @@ test('versions /es/ i /en/: sense errors ni recursos trencats', async (t) => {
   for (const dir of ['es', 'en']) {
     for (const file of PAGES) {
       const context = await browser.newContext({ locale: dir === 'es' ? 'es-ES' : 'en-GB', viewport: { width: 375, height: 800 } });
-      await context.addInitScript(() => {
-        try { localStorage.setItem('rotaract-cookie-consent-v3', 'reject'); } catch (e) { /* res */ }
-      });
       await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
       const page = await context.newPage();
       const errors = [];
@@ -383,4 +374,92 @@ test('calendari: la presentació del 24 de setembre de 2026 hi surt', async (t) 
   assert.equal(await list.locator('a').getAttribute('href'), 'index.html#galeria');
   assert.match(await list.locator('a').innerText(), /Veure les fotos/);
   await context.close();
+});
+
+/* Estadístiques (GoatCounter): la web es «serveix» a https://rotaractigualada.org
+   des del servidor de prova i es recullen les peticions a GoatCounter. */
+async function openAsProduction(path, { locale = 'ca-ES', init } = {}) {
+  const context = await browser.newContext({ locale, reducedMotion: 'reduce' });
+  await context.addInitScript(() => { Object.defineProperty(navigator, 'webdriver', { get: () => false }); });
+  if (init) await context.addInitScript(init);
+  const counts = [];
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1|rotaractigualada\.org)/, (route) => {
+    const url = route.request().url();
+    if (url.startsWith('https://rotaractigualada.goatcounter.com/count?')) {
+      counts.push(new URL(url).searchParams);
+      return route.fulfill({ status: 200, contentType: 'image/gif', body: Buffer.from('R0lGODlhAQABAAAAACw=', 'base64') });
+    }
+    return route.abort();
+  });
+  await context.route('https://rotaractigualada.org/**', async (route) => {
+    const u = new URL(route.request().url());
+    route.fulfill({ response: await route.fetch({ url: server.url + u.pathname + u.search }) });
+  });
+  const page = await context.newPage();
+  await page.goto('https://rotaractigualada.org/' + path, { waitUntil: 'load' });
+  await page.waitForTimeout(300);
+  return { page, context, counts };
+}
+
+test('estadístiques: a rotaractigualada.org es compta la visita a GoatCounter, sense cookies', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context, counts } = await openAsProduction('nosaltres.html');
+  assert.equal(counts.length, 1, 'una sola visita comptada');
+  assert.equal(counts[0].get('p'), '/nosaltres.html');
+  assert.match(counts[0].get('t'), /Nosaltres/);
+  assert.equal(counts[0].get('r'), '');
+  assert.match(counts[0].get('s'), /^\d+,\d+,[\d.]+$/);
+  await page.goto('https://rotaractigualada.org/index.html', { waitUntil: 'load' });
+  await page.waitForTimeout(300);
+  assert.equal(counts.length, 2);
+  assert.equal(counts[1].get('p'), '/', '«/index.html» compta com «/»');
+  assert.equal(counts[1].get('r'), '', 'la navegació dins de la web no compta com a procedència');
+  assert.deepEqual(await context.cookies(), [], 'cap cookie');
+  await context.close();
+});
+
+test('estadístiques: la pàgina que es redirigeix a un altre idioma no compta dues vegades', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context, counts } = await openAsProduction('', { locale: 'es-ES' });
+  await page.waitForURL('**/es/');
+  await page.waitForTimeout(300);
+  assert.deepEqual(counts.map((c) => c.get('p')), ['/es/']);
+  await context.close();
+});
+
+test('estadístiques: no es compta qui té activat «no em segueixis» (GPC) ni les proves en local', async (t) => {
+  if (skip) return t.skip(skip);
+  const gpc = await openAsProduction('index.html', { init: () => { Object.defineProperty(navigator, 'globalPrivacyControl', { get: () => true }); } });
+  assert.equal(gpc.counts.length, 0);
+  await gpc.context.close();
+  const { page, context } = await open('index.html');
+  const sent = [];
+  page.on('request', (r) => { if (r.url().includes('goatcounter')) sent.push(r.url()); });
+  await page.reload({ waitUntil: 'load' });
+  await page.waitForTimeout(300);
+  assert.deepEqual(sent, []);
+  assert.equal(await page.locator('#cookieBanner').count(), 0, 'sense avís de cookies');
+  await context.close();
+});
+
+test('nosaltres: el mapa d\'Igualada només es carrega quan es demana (abans no hi ha cap petició externa)', async (t) => {
+  if (skip) return t.skip(skip);
+  const { page, context, errors } = await open('nosaltres.html');
+  const ext = [];
+  page.on('request', (r) => { if (!r.url().startsWith(server.url)) ext.push(r.url()); });
+  await page.reload({ waitUntil: 'load' });
+  await page.locator('#mapaIgualada').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(300);
+  assert.deepEqual(ext, [], 'abans de prémer el botó no es connecta amb cap servei extern');
+  assert.equal(await page.getAttribute('#mapaIgualada', 'aria-label'), 'Mapa d\'Igualada');
+  await page.click('#mapaIgualadaBtn');
+  await page.waitForSelector('#mapaIgualada .leaflet-container');
+  await page.waitForSelector('.leaflet-popup-content');
+  assert.match(await page.locator('.leaflet-popup-content').innerText(), /Igualada/);
+  assert.match(await page.locator('.mapa-tooltip').innerText(), /^\d+ km en línia recta$/);
+  assert.ok(ext.some((u) => u.startsWith('https://tile.openstreetmap.org/')), 'després carrega les imatges d\'OpenStreetMap');
+  assert.ok(ext.every((u) => u.startsWith('https://tile.openstreetmap.org/')), 'només OpenStreetMap: ' + ext.filter((u) => !u.startsWith('https://tile.openstreetmap.org/')).join(', '));
+  assert.deepEqual(await context.cookies(), []);
+  await context.close();
+  assert.deepEqual(errors, []);
 });

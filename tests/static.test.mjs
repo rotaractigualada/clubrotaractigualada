@@ -114,6 +114,40 @@ test('index.html: publicacions d\'Instagram com a targetes pròpies (sense embed
   for (const [, , img] of posts) assert.ok(existsSync(join(ROOT, img)), `falta la imatge ${img}`);
 });
 
+test('sense cookies: ni avís de cookies ni Google Analytics; estadístiques amb GoatCounter', () => {
+  for (const page of PAGES) {
+    const html = read(page);
+    assert.doesNotMatch(html, /cookie-banner/, `${page} encara carrega l'avís de cookies`);
+    assert.doesNotMatch(html, /googletagmanager|google-analytics|gtag\(/, `${page} encara fa referència a Google Analytics`);
+    assert.match(html, /<script src="analytics\.js(\?v=[0-9a-f]+)?"><\/script>/);
+    assert.match(html, /GoatCounter/, `${page}: la política de cookies ha d'explicar GoatCounter`);
+  }
+  const js = read('analytics.js');
+  assert.match(js, /https:\/\/rotaractigualada\.goatcounter\.com\/count/);
+  assert.doesNotMatch(js, /localStorage|document\.cookie/, 'analytics.js no ha de desar res al dispositiu');
+  assert.match(js, /globalPrivacyControl/);
+  const h = read('.htaccess');
+  assert.doesNotMatch(h, /googletagmanager|google-analytics/);
+  assert.match(h, /img-src 'self' data: https:\/\/rotaractigualada\.goatcounter\.com/);
+  assert.match(h, /script-src 'self';/);
+});
+
+test('tipografies servides des de la mateixa web (sense Google Fonts: no s\'envia la IP dels visitants a Google)', () => {
+  for (const page of PAGES) {
+    const html = read(page);
+    assert.doesNotMatch(html, /fonts\.(googleapis|gstatic)\.com/, `${page} encara carrega Google Fonts`);
+    assert.match(html, /<link rel="stylesheet" href="fonts\.css(\?v=[0-9a-f]+)?">/, `${page} no carrega fonts.css`);
+  }
+  const css = read('fonts.css');
+  const files = [...css.matchAll(/url\(fonts\/([\w.-]+\.woff2)\)/g)].map((m) => m[1]);
+  assert.ok(files.length >= 16, 'falten @font-face a fonts.css');
+  for (const f of files) assert.ok(existsSync(join(ROOT, 'fonts', f)), `falta fonts/${f}`);
+  for (const family of ['Montserrat', 'Poppins', 'Playfair Display']) assert.match(css, new RegExp(`font-family: '${family}'`));
+  const h = read('.htaccess');
+  assert.doesNotMatch(h, /fonts\.(googleapis|gstatic)\.com/);
+  assert.match(h, /font-src 'self';/);
+});
+
 test('.htaccess: el logo dels correus es pot carregar des de Gmail i altres programes de correu', () => {
   const h = read('.htaccess');
   // La resta de la web continua amb «same-origin»; només el logo n'és l'excepció

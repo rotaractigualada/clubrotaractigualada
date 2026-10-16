@@ -2,8 +2,8 @@
 /* JS - Obrir/tancar els modals legals           */
 /* (Avís legal, Política de privacitat, Cookies) */
 /* Usa delegació d'esdeveniments: els enllaços   */
-/* que i18n.js re-crea (innerHTML) o que el      */
-/* bàner de cookies injecta continuen funcionant */
+/* que i18n.js re-crea (innerHTML) continuen    */
+/* funcionant                                   */
 /* ============================================ */
 
 document.addEventListener('DOMContentLoaded', function () {

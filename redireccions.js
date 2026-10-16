@@ -24,6 +24,7 @@
   }
 
   if (onGithub) {
+    window.__rotaractRedirect = true; // analytics.js no compta aquesta pàgina
     loc.replace(target(folder, 'https://rotaractigualada.org'));
     return;
   }
@@ -48,5 +49,8 @@
     }
   }
 
-  if (wanted && wanted !== folder) loc.replace(target(wanted, ''));
+  if (wanted && wanted !== folder) {
+    window.__rotaractRedirect = true; // analytics.js no compta aquesta pàgina
+    loc.replace(target(wanted, ''));
+  }
 })();

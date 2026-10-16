@@ -12,11 +12,11 @@ Cap enllaç de la web obre el programa de correu: tot es fa des de la pàgina.
 | `index.html`, `nosaltres.html`, `activitats.html`, `directiu.html`, `contacte.html` | Pàgines |
 | `rotaractigualada.css` | Estils comuns (totes les pàgines excepte contacte) |
 | `contacte.css`, `activitats.css`, `directiu.css`, `legal-modals.css` | Estils propis de pàgina |
-| `cookie-banner.css`, `i18n.css` | Bàner de cookies i selector d'idioma |
+| `i18n.css` | Selector d'idioma |
 | `nav.js` | Menú mòbil |
 | `i18n.js` | Traducció català / anglès / castellà (atributs `data-en` + diccionari) |
 | `legal-modals.js` | Modals d'avís legal, privacitat i cookies |
-| `cookie-banner.js`, `analytics.js` | Consentiment de cookies i Google Analytics (només si s'accepta) |
+| `analytics.js` | Estadístiques de visites amb GoatCounter, sense cookies (només a rotaractigualada.org) |
 | `correu.js` | «Escriu-nos» de Contacte: pestanyes «Vull informació» / «Vull unir-me», validació i enviament |
 | `form-handler.php` | Backend dels formularis: validació, antispam, correu i còpia a `form-data/submissions.csv` |
 | `rotaractigualada.js`, `contacte.js` | Animacions d'aparició |
@@ -87,5 +87,13 @@ al repositori. Els tests de PHP o de navegador se salten si falta l'eina.
 Puja els fitxers del lloc al servidor. **No cal** pujar `tests/`,
 `node_modules/`, `package.json` ni `package-lock.json` (l'`.htaccess` els
 bloqueja igualment si s'hi pugen). Abans de publicar, revisa els valors
-marcats amb «CANVIA» a `.htaccess` i `sitemap.xml`, i
-l'identificador de GA4 a `analytics.js`.
+marcats amb «CANVIA» a `.htaccess` i `sitemap.xml`.
+
+## Estadístiques de visites
+
+La web no fa servir cookies. Les visites es compten amb
+[GoatCounter](https://www.goatcounter.com), que no desa res al dispositiu
+ni l'adreça IP, i per això no cal cap avís de cookies. El panell és a
+<https://rotaractigualada.goatcounter.com> (el codi del compte,
+`rotaractigualada`, és a `analytics.js`). Només es compten les visites a
+rotaractigualada.org, no les proves en local.

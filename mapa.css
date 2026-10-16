@@ -1,0 +1,204 @@
+/* mapa.css — Mapa interactiu d'Igualada (Nosaltres → Rotary Igualada) */
+.mapa-igualada {
+  max-width: 1100px;
+  margin: clamp(2.5rem, 6vw, 4rem) auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+  align-items: stretch;
+}
+@media (max-width: 860px) {
+  .mapa-igualada { grid-template-columns: 1fr; }
+}
+
+.mapa-igualada__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.8rem;
+  min-width: 0;
+}
+.mapa-igualada__eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pink);
+}
+.mapa-igualada__title {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.45rem, 2.6vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--blue);
+}
+.mapa-igualada__text {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.97rem;
+  line-height: 1.7;
+  color: var(--text-light);
+}
+.mapa-igualada__facts {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+.mapa-igualada__facts li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(47, 47, 150, 0.1);
+  box-shadow: var(--shadow-sm);
+}
+.mapa-igualada__facts strong {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+.mapa-igualada__facts span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--blue);
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .mapa-igualada__facts { gap: 0.45rem; }
+  .mapa-igualada__facts li { padding: 0.6rem 0.65rem; }
+  .mapa-igualada__facts strong { font-size: 0.6rem; letter-spacing: 0.06em; }
+  .mapa-igualada__facts span { font-size: 0.85rem; }
+  .mapa-igualada__map { min-height: 320px; }
+}
+
+/* ── Caixa del mapa ── */
+.mapa-igualada__map {
+  position: relative;
+  min-height: 360px;
+  border-radius: 24px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(47, 47, 150, 0.1);
+  box-shadow: var(--shadow-md);
+  background:
+    radial-gradient(circle at 46% 50%, rgba(218, 26, 93, 0.16), transparent 40%),
+    linear-gradient(135deg, #eef0fb 0%, #f7f3fb 55%, #fcedf3 100%);
+}
+/* Textura de quadrícula, com un plànol, mentre el mapa no s'ha carregat */
+.mapa-igualada__map::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(47, 47, 150, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(47, 47, 150, 0.07) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+.mapa-igualada__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+.mapa-igualada__place {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--blue);
+}
+.mapa-igualada__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--pink);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(218, 26, 93, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.mapa-igualada__btn:hover { background: var(--pink-dark); transform: translateY(-2px); box-shadow: 0 14px 28px rgba(218, 26, 93, 0.35); }
+.mapa-igualada__btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.mapa-igualada__btn[disabled] { opacity: 0.75; cursor: progress; transform: none; }
+.mapa-igualada__btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.mapa-igualada__note {
+  margin: 0;
+  max-width: 30ch;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem;
+  color: var(--text-light);
+}
+.mapa-igualada__map.is-loaded .mapa-igualada__placeholder { display: none; }
+.mapa-igualada__canvas { position: absolute; inset: 0; }
+.mapa-igualada__canvas.leaflet-container { font-family: 'Poppins', sans-serif; background: #eef0fb; }
+/* Mapa una mica més suau perquè hi destaqui el punt d'Igualada */
+.mapa-igualada__canvas .leaflet-tile-pane { filter: saturate(0.45) contrast(0.96) brightness(1.03); }
+
+/* ── Marcadors ── */
+.mapa-pin { position: relative; }
+.mapa-pin__dot {
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  background: var(--pink);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(218, 26, 93, 0.5);
+}
+.mapa-pin--small .mapa-pin__dot { inset: 1px; border-width: 2px; background: var(--blue); box-shadow: 0 2px 6px rgba(47, 47, 150, 0.4); }
+.mapa-pin__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(218, 26, 93, 0.35);
+  animation: mapa-pulse 2s ease-out infinite;
+}
+.mapa-igualada__placeholder .mapa-pin { width: 30px; height: 30px; }
+@keyframes mapa-pulse {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mapa-pin__pulse { animation: none; opacity: 0.35; }
+  .mapa-igualada__btn { transition: none; }
+}
+
+/* ── Etiquetes ── */
+.leaflet-tooltip.mapa-tooltip,
+.leaflet-tooltip.mapa-label {
+  padding: 0.3rem 0.65rem;
+  border: 0;
+  border-radius: 999px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  box-shadow: 0 4px 14px rgba(47, 47, 150, 0.18);
+}
+.leaflet-tooltip.mapa-tooltip { background: var(--blue); color: #fff; }
+.leaflet-tooltip.mapa-label { background: #fff; color: var(--blue); }
+.leaflet-tooltip.mapa-tooltip::before,
+.leaflet-tooltip.mapa-label::before { display: none; }
+.mapa-igualada__canvas .leaflet-popup-content-wrapper { border-radius: 14px; }
+.mapa-igualada__canvas .leaflet-popup-content { margin: 0.7rem 1rem; font-family: 'Poppins', sans-serif; font-size: 0.85rem; line-height: 1.45; }
+.mapa-igualada__canvas .leaflet-popup-content strong { font-family: 'Montserrat', sans-serif; color: var(--pink); font-size: 0.95rem; }
