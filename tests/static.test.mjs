@@ -185,3 +185,81 @@ test('Contacte: dos formularis que s\'envien a form-handler.php', () => {
   }
   assert.match(read('.htaccess'), /<Files "form-handler\.php">\s*Require all granted/);
 });
+
+/* Diccionaris castellans d'i18n.js (clau = text de data-en) */
+function esMaps() {
+  const src = read('i18n.js');
+  const get = (name) => new Function('return ' + src.match(new RegExp(`var ${name} = (\\{[\\s\\S]*?\\n  \\});`))[1])();
+  return { text: get('ES_MAP'), html: get('ES_MAP_HTML'), ph: get('ES_MAP_PH') };
+}
+const decode = (s) => s.replace(/&quot;/g, '"').replace(/&#0?39;|&#x27;/g, '\'').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+
+test('tots els textos amb data-en tenen traducció al castellà (i18n.js)', () => {
+  const es = esMaps();
+  for (const page of PAGES) {
+    const html = stripComments(read(page));
+    for (const m of html.matchAll(/<[^>]*\sdata-en="([^"]*)"[^>]*>/g)) {
+      const key = decode(m[1]);
+      const map = /\sdata-en-is-html/.test(m[0]) ? es.html : es.text;
+      assert.ok(key in map, `${page}: falta la traducció al castellà de «${key}»`);
+    }
+    for (const m of html.matchAll(/\sdata-en-placeholder="([^"]*)"/g)) {
+      assert.ok(decode(m[1]) in es.ph, `${page}: falta el placeholder en castellà «${m[1]}»`);
+    }
+  }
+});
+
+const PERFILS = ['generacions', 'medi', 'motor', 'salut', 'social'];
+
+test('projectes.json: activitats vàlides (municipi de l\'Anoia, dates, perfil del test i nom en 3 idiomes)', () => {
+  const { activitats } = JSON.parse(read('projectes.json'));
+  const municipis = new Set(JSON.parse(read('anoia.json')).features
+    .filter((f) => !f.properties.comarca).map((f) => f.properties.name));
+  const isDate = (d) => /^\d{4}-\d{2}-\d{2}$/.test(d) && new Date(d + 'T00:00:00Z').toISOString().slice(0, 10) === d;
+  assert.ok(Array.isArray(activitats) && activitats.length > 0, 'hi ha d\'haver activitats');
+  for (const a of activitats) {
+    const nom = a.nom && a.nom.ca;
+    assert.ok(a.nom && a.nom.ca && a.nom.es && a.nom.en, `nom en català, castellà i anglès: ${JSON.stringify(a.nom)}`);
+    assert.ok(municipis.has(a.municipi), `${nom}: «${a.municipi}» no és cap dels 33 municipis de l'Anoia (escriu-lo com al mapa)`);
+    assert.ok(isDate(a.data), `${nom}: la data ha de ser AAAA-MM-DD i existir (${a.data})`);
+    if (a.fi) assert.ok(isDate(a.fi) && a.fi >= a.data, `${nom}: la data de fi (${a.fi}) no és vàlida`);
+    assert.ok(PERFILS.includes(a.perfil), `${nom}: el perfil «${a.perfil}» no és cap dels del test`);
+    if (a.estat) assert.match(a.estat, /^(feta|cancel·lada)$/, `${nom}: estat «${a.estat}» (feta o cancel·lada)`);
+  }
+});
+
+test('portada: test «Quin voluntari ets?» entre Instagram i Uneix-te, amb 5 preguntes i un resultat per perfil', () => {
+  const html = stripComments(read('index.html'));
+  const pos = (id) => html.indexOf(`id="${id}"`);
+  assert.ok(pos('instagram') < pos('test') && pos('test') < pos('contacte'), 'el test va entre Instagram i Uneix-te');
+  const sec = html.slice(pos('test'), pos('contacte'));
+  const questions = sec.split('<div class="quiz__q"').slice(1);
+  assert.equal(questions.length, 5, '5 preguntes');
+  questions.forEach((q, i) => {
+    const perfils = [...q.split('<div class="quiz__step')[0].matchAll(/class="quiz__opt" data-perfil="(\w+)"/g)].map((m) => m[1]).sort();
+    assert.deepEqual(perfils, PERFILS, `pregunta ${i + 1}: una resposta de cada perfil`);
+  });
+  for (const p of PERFILS) assert.match(sec, new RegExp(`class="quiz__perfil" data-perfil="${p}" hidden`), `resultat del perfil ${p}`);
+  assert.match(sec, /href="contacte\.html#uneix-te"/, 'el resultat porta a «Uneix-te»');
+  assert.match(html, /<script src="projectes\.js[^"]*"><\/script>\s*<script src="test-voluntari\.js/);
+});
+
+test('.htaccess: la web pot llegir els .json que fa servir (mapa i activitats), però no la resta', () => {
+  const h = read('.htaccess');
+  const granted = [...h.matchAll(/<(Files|FilesMatch) "([^"]+)">\s*Require all granted/g)]
+    .map(([, kind, v]) => (kind === 'Files' ? (f) => f === v : (f) => new RegExp(v).test(f)));
+  const allowed = (f) => granted.some((ok) => ok(f));
+  // .json que demana el JavaScript de la web
+  const used = new Set();
+  for (const js of ['mapa.js', 'projectes.js', 'test-voluntari.js']) {
+    for (const m of read(js).matchAll(/['"]([\w-]+\.json)['"]/g)) used.add(m[1]);
+  }
+  assert.ok(used.has('anoia.json') && used.has('projectes.json'));
+  for (const f of used) {
+    assert.ok(existsSync(join(ROOT, f)), `falta ${f}`);
+    assert.ok(allowed(f), `${f}: el bloqueig de .json de l'.htaccess el deixaria en 403`);
+  }
+  for (const f of ['package.json', 'package-lock.json', 'composer.json', 'dades.json']) {
+    assert.ok(!allowed(f), `${f} no hauria de ser públic`);
+  }
+});

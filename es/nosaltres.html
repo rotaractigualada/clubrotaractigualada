@@ -37,7 +37,7 @@
   <link rel="manifest" href="../site.webmanifest">
   <meta name="theme-color" content="#da1a5d">
   <link rel="stylesheet" href="../i18n.css?v=788d4587">
-  <link rel="stylesheet" href="../mapa.css?v=375e55da">
+  <link rel="stylesheet" href="../mapa.css?v=700f12d3">
   <link rel="stylesheet" href="../efectes.css?v=516ee587">
 </head>
 <body>
@@ -250,31 +250,6 @@
           </div>
         </div>
       </div>
-        <div class="mapa-igualada">
-          <div class="mapa-igualada__info">
-            <span class="mapa-igualada__eyebrow" data-en="Where we are" data-ca="On som">Dónde estamos</span>
-            <h3 class="mapa-igualada__title">Igualada, Anoia</h3>
-            <p class="mapa-igualada__text" data-en="Igualada is the capital of the Anoia region, in the centre of Catalonia and about 60 km from Barcelona. It is the city where Rotary Club Igualada and our Rotaract club are based." data-ca="
-              Igualada és la capital de la comarca de l'Anoia, al centre de Catalunya i a uns 60 km de Barcelona. És la ciutat on es troben el Rotary Club d'Igualada i el nostre Rotaract.
-            ">Igualada es la capital de la comarca del Anoia, en el centro de Cataluña y a unos 60 km de Barcelona. Es la ciudad donde se encuentran el Rotary Club Igualada y nuestro Rotaract.</p>
-            <ul class="mapa-igualada__facts">
-              <li><strong data-en="Region" data-ca="Comarca">Comarca</strong><span>Anoia</span></li>
-              <li><strong data-en="Province" data-ca="Província">Provincia</strong><span>Barcelona</span></li>
-              <li><strong data-en="To Barcelona" data-ca="Fins a Barcelona">Hasta Barcelona</strong><span data-en="about 60 km" data-ca="uns 60 km">unos 60 km</span></li>
-            </ul>
-          </div>
-          <div class="mapa-igualada__map" id="mapaIgualada" role="region" aria-label="Mapa d'Igualada">
-            <div class="mapa-igualada__placeholder">
-              <span class="mapa-pin" aria-hidden="true"><span class="mapa-pin__pulse"></span><span class="mapa-pin__dot"></span></span>
-              <span class="mapa-igualada__place">Igualada</span>
-              <button type="button" class="mapa-igualada__btn" id="mapaIgualadaBtn">
-                <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-                <span data-en="View the interactive map" data-ca="Veure el mapa interactiu">Ver el mapa interactivo</span>
-              </button>
-              <p class="mapa-igualada__note" data-en="It loads from OpenStreetMap when you open it." data-ca="En obrir-lo es carrega des d'OpenStreetMap.">Al abrirlo se carga desde OpenStreetMap.</p>
-            </div>
-          </div>
-        </div>
     </section>
 
     <!-- ── Rotaract Internacional i Districte ── -->
@@ -349,6 +324,107 @@
       </div>
     </section>
 
+    <!-- ── On som: mapa interactiu d'Igualada i l'Anoia ── -->
+    <section class="nosaltres-bloc" id="on-som">
+      <div class="mapa-igualada">
+        <div class="mapa-igualada__info">
+          <span class="mapa-igualada__eyebrow" data-en="Where we are" data-ca="On som">Dónde estamos</span>
+          <h2 class="mapa-igualada__title">Igualada, Anoia</h2>
+          <p class="mapa-igualada__text" data-en="Igualada is the capital of the Anoia region, in the centre of Catalonia and about 60 km from Barcelona. It is our club's home town, and from here we run projects for the whole region." data-ca="
+            Igualada és la capital de la comarca de l'Anoia, al centre de Catalunya i a uns 60 km de Barcelona. És la ciutat del nostre club, i des d'aquí fem projectes per a tota la comarca.
+          ">Igualada es la capital de la comarca del Anoia, en el centro de Cataluña y a unos 60 km de Barcelona. Es la ciudad de nuestro club, y desde aquí hacemos proyectos para toda la comarca.</p>
+          <ul class="mapa-igualada__facts">
+            <li><strong data-en="Region" data-ca="Comarca">Comarca</strong><span>Anoia</span></li>
+            <li><strong data-en="Towns" data-ca="Municipis">Municipios</strong><span>33</span></li>
+            <li><strong data-en="Province" data-ca="Província">Provincia</strong><span>Barcelona</span></li>
+          </ul>
+          <!-- Activitats del club: es llegeixen de projectes.json (vegeu README) -->
+          <div class="mapa-impacte" id="mapaImpacte" hidden="">
+            <p class="mapa-impacte__title"><span class="mapa-impacte__spark" aria-hidden="true">✦</span> <span data-en="Club activities" data-ca="Activitats del club">Actividades del club</span></p>
+            <ul class="mapa-impacte__stats">
+              <li><strong data-en="Done" data-ca="Fetes">Hechas</strong><span data-impacte="fetes">0</span></li>
+              <li><strong data-en="Coming soon" data-ca="Properament">Próximamente</strong><span data-impacte="properes">0</span></li>
+            </ul>
+            <p class="mapa-impacte__next" data-impacte="seguent" hidden="">
+              <span class="mapa-impacte__next-label"><span data-en="Next one" data-ca="La propera">La próxima</span> · <span data-impacte="quan"></span></span>
+              <strong class="mapa-impacte__next-name" data-impacte="nom"></strong>
+            </p>
+            <button type="button" class="mapa-impacte__btn" id="mapaImpacteBtn">
+              <span data-en="See them on the map" data-ca="Veure-les al mapa">Verlas en el mapa</span>
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+          <p class="mapa-igualada__hint" data-en="Search for any town in Anoia or tap it on the map to see where it is and how far it is from Igualada. The pink numbers show the club's activities in each place." data-ca="Cerca qualsevol municipi de l'Anoia o toca'l al mapa per veure on és i a quina distància queda d'Igualada. Els números rosa són les activitats del club a cada lloc.">Busca cualquier municipio del Anoia o tócalo en el mapa para ver dónde está y a qué distancia queda de Igualada. Los números rosa son las actividades del club en cada lugar.</p>
+        </div>
+        <div class="mapa-igualada__panel">
+          <form class="mapa-igualada__search" id="mapaCerca" role="search" novalidate="">
+            <label class="mapa-sr" for="mapaCercaInput" data-en="Search for a town in Anoia" data-ca="Cerca un municipi de l'Anoia">Busca un municipio del Anoia</label>
+            <svg class="mapa-igualada__search-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+            <input type="search" id="mapaCercaInput" name="municipi" list="mapaMunicipis" autocomplete="off" enterkeyhint="search" placeholder="Busca un municipio del Anoia…" data-en-placeholder="Search for a town in Anoia…" data-ca-placeholder="Cerca un municipi de l'Anoia…">
+            <datalist id="mapaMunicipis">
+              <option value="Argençola"></option>
+              <option value="Bellprat"></option>
+              <option value="Cabrera d'Anoia"></option>
+              <option value="Calaf"></option>
+              <option value="Calonge de Segarra"></option>
+              <option value="Capellades"></option>
+              <option value="Carme"></option>
+              <option value="Castellfollit de Riubregós"></option>
+              <option value="Castellolí"></option>
+              <option value="Copons"></option>
+              <option value="El Bruc"></option>
+              <option value="Els Hostalets de Pierola"></option>
+              <option value="Els Prats de Rei"></option>
+              <option value="Igualada"></option>
+              <option value="Jorba"></option>
+              <option value="La Llacuna"></option>
+              <option value="La Pobla de Claramunt"></option>
+              <option value="La Torre de Claramunt"></option>
+              <option value="Masquefa"></option>
+              <option value="Montmaneu"></option>
+              <option value="Òdena"></option>
+              <option value="Orpí"></option>
+              <option value="Piera"></option>
+              <option value="Pujalt"></option>
+              <option value="Rubió"></option>
+              <option value="Sant Martí de Tous"></option>
+              <option value="Sant Martí Sesgueioles"></option>
+              <option value="Sant Pere Sallavinera"></option>
+              <option value="Santa Margarida de Montbui"></option>
+              <option value="Santa Maria de Miralles"></option>
+              <option value="Vallbona d'Anoia"></option>
+              <option value="Veciana"></option>
+              <option value="Vilanova del Camí"></option>
+            </datalist>
+            <button type="submit" class="mapa-igualada__search-btn"><span data-en="Search" data-ca="Cerca">Buscar</span></button>
+          </form>
+          <div class="mapa-igualada__map" id="mapaIgualada" role="region" aria-label="Mapa d'Igualada i l'Anoia">
+            <div class="mapa-igualada__placeholder">
+              <img class="mapa-igualada__preview" src="../anoia.svg" alt="" width="600" height="595" loading="lazy" decoding="async">
+              <div class="mapa-igualada__cta">
+                <button type="button" class="mapa-igualada__btn" id="mapaIgualadaBtn">
+                  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                  <span data-en="View the interactive map" data-ca="Veure el mapa interactiu">Ver el mapa interactivo</span>
+                </button>
+                <p class="mapa-igualada__note" data-en="It loads from OpenStreetMap when you open it." data-ca="En obrir-lo es carrega des d'OpenStreetMap.">Al abrirlo se carga desde OpenStreetMap.</p>
+              </div>
+            </div>
+          </div>
+          <div class="mapa-igualada__tools" id="mapaEines" hidden="">
+            <button type="button" class="mapa-igualada__tool" data-mapa="igualada"><span data-en="Igualada" data-ca="Igualada">Igualada</span></button>
+            <button type="button" class="mapa-igualada__tool" data-mapa="anoia"><span data-en="All of Anoia" data-ca="Tota l'Anoia">Todo el Anoia</span></button>
+            <button type="button" class="mapa-igualada__tool" data-mapa="pantalla" hidden=""><span data-en="Full screen" data-ca="Pantalla completa">Pantalla completa</span></button>
+            <div class="mapa-igualada__filtres" id="mapaFiltres" role="group" hidden="">
+              <button type="button" class="mapa-igualada__filtre" data-filtre="totes" aria-pressed="true"><span data-en="All" data-ca="Totes">Todas</span></button>
+              <button type="button" class="mapa-igualada__filtre" data-filtre="fetes" aria-pressed="false"><span data-en="Done" data-ca="Fetes">Hechas</span></button>
+              <button type="button" class="mapa-igualada__filtre" data-filtre="properament" aria-pressed="false"><span data-en="Coming soon" data-ca="Properament">Próximamente</span></button>
+            </div>
+          </div>
+          <p class="mapa-igualada__status" id="mapaEstat" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
 </main>
 
   <!-- =============================================
@@ -414,7 +490,8 @@
        SCRIPTS
   ============================================= -->
   <script src="../nav.js?v=35a73008"></script>
-  <script src="../mapa.js?v=16bd175b"></script>
+  <script src="../projectes.js?v=c875be58"></script>
+  <script src="../mapa.js?v=7b6cad63"></script>
   <script src="../nosaltres.js?v=9fc369be"></script>
 
 
@@ -743,6 +820,6 @@
 
   <script src="../analytics.js?v=a0662709"></script>
   <script src="../efectes.js?v=db87b92c"></script>
-  <script src="../i18n.js?v=77356ba3"></script>
+  <script src="../i18n.js?v=98d6744e"></script>
 
 </body></html>

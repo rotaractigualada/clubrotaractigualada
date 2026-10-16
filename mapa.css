@@ -1,9 +1,9 @@
-/* mapa.css — Mapa interactiu d'Igualada (Nosaltres → Rotary Igualada) */
+/* mapa.css — Mapa interactiu d'Igualada i l'Anoia (Nosaltres → On som) */
 .mapa-igualada {
   max-width: 1100px;
-  margin: clamp(2.5rem, 6vw, 4rem) auto 0;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.35fr);
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.4fr);
   gap: clamp(1.25rem, 3vw, 2.25rem);
   align-items: stretch;
 }
@@ -79,13 +79,13 @@
   .mapa-igualada__facts li { padding: 0.6rem 0.65rem; }
   .mapa-igualada__facts strong { font-size: 0.6rem; letter-spacing: 0.06em; }
   .mapa-igualada__facts span { font-size: 0.85rem; }
-  .mapa-igualada__map { min-height: 320px; }
+  .mapa-igualada__map { min-height: 360px; }
 }
 
 /* ── Caixa del mapa ── */
 .mapa-igualada__map {
   position: relative;
-  min-height: 360px;
+  min-height: 420px;
   border-radius: 24px;
   overflow: hidden;
   isolation: isolate;
@@ -117,11 +117,24 @@
   padding: 1.5rem;
   text-align: center;
 }
-.mapa-igualada__place {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--blue);
+.mapa-igualada__preview {
+  position: absolute;
+  inset: 8% 10% 26%;
+  width: 80%;
+  height: 66%;
+  object-fit: contain;
+  opacity: 0.9;
+  pointer-events: none;
+}
+.mapa-igualada__cta {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.25rem 1rem 1.4rem;
+  background: linear-gradient(180deg, rgba(247, 243, 251, 0) 0%, rgba(247, 243, 251, 0.92) 45%);
 }
 .mapa-igualada__btn {
   display: inline-flex;
@@ -202,3 +215,299 @@
 .mapa-igualada__canvas .leaflet-popup-content-wrapper { border-radius: 14px; }
 .mapa-igualada__canvas .leaflet-popup-content { margin: 0.7rem 1rem; font-family: 'Poppins', sans-serif; font-size: 0.85rem; line-height: 1.45; }
 .mapa-igualada__canvas .leaflet-popup-content strong { font-family: 'Montserrat', sans-serif; color: var(--pink); font-size: 0.95rem; }
+
+/* ── Text d'ajuda, cercador, eines i estat ── */
+.mapa-igualada__hint {
+  margin: 0.2rem 0 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text-light);
+}
+.mapa-igualada__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+.mapa-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.mapa-igualada__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.35rem 0.35rem 2.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(47, 47, 150, 0.14);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.mapa-igualada__search:focus-within { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(47, 47, 150, 0.12); }
+.mapa-igualada__search-icon {
+  position: absolute;
+  left: 1rem; top: 50%;
+  width: 18px; height: 18px;
+  margin-top: -9px;
+  color: var(--text-light);
+}
+.mapa-igualada__search input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.55rem 0;
+  border: 0;
+  background: transparent;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text);
+  outline: none;
+}
+.mapa-igualada__search input::-webkit-search-cancel-button { cursor: pointer; }
+.mapa-igualada__search-btn {
+  flex: 0 0 auto;
+  padding: 0.6rem 1.15rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.mapa-igualada__search-btn:hover { background: var(--primary-dark); }
+.mapa-igualada__search-btn:focus-visible,
+.mapa-igualada__tool:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+.mapa-igualada__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.mapa-igualada__tools[hidden], .mapa-igualada__tool[hidden] { display: none; }
+.mapa-igualada__tool {
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(47, 47, 150, 0.18);
+  background: #fff;
+  color: var(--blue);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.mapa-igualada__tool:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+.mapa-igualada__status {
+  min-height: 1.2em;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  color: var(--text-light);
+}
+.mapa-igualada__status:empty { display: none; }
+
+/* Pantalla completa */
+.mapa-igualada__map.is-fullscreen { border-radius: 0; min-height: 100vh; }
+.mapa-igualada__map:fullscreen { border-radius: 0; }
+
+/* Municipis: el cursor indica que es poden tocar */
+.mapa-igualada__canvas path.leaflet-interactive { cursor: pointer; }
+
+/* ── Activitats del club (projectes.json) ── */
+.mapa-impacte {
+  position: relative;
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.3rem;
+  padding: 1rem 1rem 1.05rem;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(218, 26, 93, 0.12), transparent 55%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(252, 237, 243, 0.85));
+  border: 1px solid rgba(218, 26, 93, 0.16);
+  box-shadow: var(--shadow-sm);
+}
+.mapa-impacte[hidden] { display: none; }
+.mapa-impacte__title {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.mapa-impacte__spark { color: var(--pink); }
+.mapa-impacte__stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+.mapa-impacte__stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+}
+.mapa-impacte__stats strong {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+.mapa-impacte__stats span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--pink);
+  font-variant-numeric: tabular-nums;
+}
+.mapa-impacte__stats li:first-child span { color: var(--blue); }
+.mapa-impacte__next {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+.mapa-impacte__next[hidden] { display: none; }
+.mapa-impacte__next-label {
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+.mapa-impacte__next-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.mapa-impacte__btn {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.mapa-impacte__btn svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+.mapa-impacte__btn:hover { background: var(--primary-dark); }
+.mapa-impacte__btn:hover svg { transform: translateX(3px); }
+.mapa-impacte__btn:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+
+/* Filtres (Totes · Fetes · Properament) */
+.mapa-igualada__filtres {
+  display: inline-flex;
+  margin-left: auto;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(218, 26, 93, 0.08);
+  border: 1px solid rgba(218, 26, 93, 0.16);
+}
+.mapa-igualada__filtres[hidden] { display: none; }
+.mapa-igualada__filtre {
+  padding: 0.42rem 0.8rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--pink-dark);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.mapa-igualada__filtre:hover { background: rgba(218, 26, 93, 0.12); }
+.mapa-igualada__filtre[aria-pressed="true"] { background: var(--pink); color: #fff; box-shadow: 0 3px 10px rgba(218, 26, 93, 0.3); }
+.mapa-igualada__filtre:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+@media (max-width: 560px) {
+  .mapa-igualada__filtres { margin-left: 0; }
+}
+
+/* Números rosa al mapa */
+.mapa-projectes { cursor: pointer; }
+.mapa-projectes__num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ef3f7c, var(--pink));
+  border: 2px solid #fff;
+  box-shadow: 0 4px 12px rgba(218, 26, 93, 0.45);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1;
+  animation: mapa-pop 0.35s cubic-bezier(.2, 1.4, .4, 1) both;
+}
+.mapa-projectes:hover .mapa-projectes__num,
+.mapa-projectes:focus-visible .mapa-projectes__num { transform: scale(1.15); }
+.mapa-projectes:focus-visible { outline: none; }
+.mapa-projectes:focus-visible .mapa-projectes__num { box-shadow: 0 0 0 3px var(--blue); }
+@keyframes mapa-pop {
+  from { transform: scale(0.3); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mapa-projectes__num { animation: none; }
+  .mapa-impacte__btn, .mapa-impacte__btn svg { transition: none; }
+}
+
+/* Llista d'activitats dins la finestra del mapa */
+.mapa-acts { margin-top: 0.6rem; padding-top: 0.55rem; border-top: 1px solid rgba(47, 47, 150, 0.12); }
+.mapa-acts__title {
+  margin: 0 0 0.4rem !important;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.mapa-acts__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; }
+.mapa-acts__item { display: flex; gap: 0.55rem; align-items: flex-start; }
+.mapa-acts__ico {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  margin-top: 0.2rem;
+  border-radius: 50%;
+  border: 2px solid var(--pink);
+  background: #fff;
+}
+.mapa-acts__item.is-fet .mapa-acts__ico {
+  border-color: var(--blue);
+  background: var(--blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 9px no-repeat;
+}
+.mapa-acts__body { display: flex; flex-direction: column; min-width: 0; }
+.mapa-acts__name { font-weight: 600; color: var(--text); line-height: 1.3; }
+.mapa-acts__when { font-size: 0.75rem; color: var(--text-light); }
+.mapa-acts__xifra { font-size: 0.75rem; font-weight: 600; color: var(--pink); }
+.mapa-acts__hint { display: block; margin-top: 0.35rem; font-size: 0.78rem; color: var(--pink); font-weight: 600; }

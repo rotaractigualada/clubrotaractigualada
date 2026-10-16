@@ -25,6 +25,9 @@ Cap enllaç de la web obre el programa de correu: tot es fa des de la pàgina.
 | `es/`, `en/` | Versions en castellà i anglès **generades** (no s'editen a mà) |
 | `scripts/build-idiomes.mjs` | Genera `es/`, `en/`, les etiquetes hreflang i el `sitemap.xml` |
 | `galeria.js`, `galeria/` | Mosaic de fotos de la portada i visor a pantalla completa (fotos en mides 800 i 1600 px) |
+| `mapa.js`, `mapa.css`, `anoia.json`, `anoia.svg` | Mapa d'Igualada i l'Anoia (Nosaltres → On som) |
+| `projectes.json`, `projectes.js` | Activitats del club per al mapa i el test de la portada |
+| `test-voluntari.js`, `test-voluntari.css` | Test «Quin voluntari ets?» de la portada |
 | `.htaccess` | HTTPS, capçaleres de seguretat (CSP), compressió, memòria cau i fitxers protegits |
 | `sitemap.xml`, `robots.txt` | SEO |
 
@@ -88,6 +91,34 @@ Puja els fitxers del lloc al servidor. **No cal** pujar `tests/`,
 `node_modules/`, `package.json` ni `package-lock.json` (l'`.htaccess` els
 bloqueja igualment si s'hi pugen). Abans de publicar, revisa els valors
 marcats amb «CANVIA» a `.htaccess` i `sitemap.xml`.
+
+## Mapa d'Igualada i l'Anoia
+
+La secció «On som» de `nosaltres.html` té un mapa interactiu (`mapa.js`,
+`mapa.css`) que només es carrega quan el visitant el demana. Fa servir
+Leaflet (`vendor/leaflet-1.9.4/`, llicència BSD-2), les imatges
+d'OpenStreetMap i els límits dels 33 municipis de l'Anoia (`anoia.json` i la
+previsualització `anoia.svg`), extrets de les dades de l'IGN (CC BY 4.0) amb
+el paquet `es-atlas`.
+
+## Activitats del club (mapa i test «Quin voluntari ets?»)
+
+Les activitats que surten al resum i als números rosa del mapa d'«On som», i
+les que el test de la portada recomana, són a `projectes.json` (les llegeix
+`projectes.js`). Per afegir-ne una, copia un bloc i canvia'n les dades:
+
+- `nom`: en català, castellà i anglès.
+- `municipi`: un dels 33 de l'Anoia, escrit com al mapa (p. ex. «El Bruc»).
+- `data` (i `fi`, si dura més d'un dia): `AAAA-MM-DD`. Quan passa la data,
+  l'activitat surt sola com a «Feta»; abans, només se'n mostra el mes.
+- `perfil`: `medi`, `social`, `salut`, `generacions` o `motor` (el perfil
+  del test al qual es recomana).
+- `xifra` (opcional): el resultat, p. ex. «120 kg d'aliments».
+- `estat` (opcional): `"cancel·lada"` perquè deixi de sortir, o `"feta"`.
+
+`npm test` comprova que cada activitat té un municipi, una data i un perfil
+vàlids. El calendari de la pàgina Activitats té les seves dades a
+`activitats.js`. El test no envia ni desa cap resposta.
 
 ## Estadístiques de visites
 

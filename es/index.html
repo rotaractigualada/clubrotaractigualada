@@ -82,6 +82,7 @@
   <link rel="manifest" href="../site.webmanifest">
   <meta name="theme-color" content="#da1a5d">
   <link rel="stylesheet" href="../i18n.css?v=788d4587">
+  <link rel="stylesheet" href="../test-voluntari.css?v=c18189d2">
   <link rel="stylesheet" href="../efectes.css?v=516ee587">
 </head>
 
@@ -480,6 +481,155 @@
   </section>
 
   <!-- =============================================
+       TEST «QUIN VOLUNTARI ETS?»
+       5 preguntes: cada resposta suma un punt a un perfil (medi, social,
+       salut, generacions o motor). El resultat proposa les activitats del
+       club del mateix perfil (camp «perfil» de projectes.json). Tot passa
+       al navegador: no s'envia ni es desa cap resposta.
+  ============================================= -->
+  <section class="quiz-section" id="test" aria-labelledby="quizTitle">
+    <div class="container">
+      <div class="quiz-section__header">
+        <div class="section__eyebrow">
+          <span class="section__eyebrow-dot"></span>
+          <span data-en="1-minute test" data-ca="Test d'1 minut">Test de 1 minuto</span>
+        </div>
+        <h2 class="quiz-section__title" id="quizTitle" data-en="What kind of volunteer are you?" data-ca="Quin voluntari ets?">¿Qué voluntario eres?</h2>
+        <p class="quiz-section__subtitle" data-en="Five quick questions to discover your profile and which club activities suit you best." data-ca="Cinc preguntes ràpides per descobrir el teu perfil i quines activitats del club et van més.">Cinco preguntas rápidas para descubrir tu perfil y qué actividades del club te van más.</p>
+      </div>
+
+      <div class="quiz" id="quiz">
+        <div class="quiz__glow" aria-hidden="true"></div>
+
+        <!-- Inici -->
+        <div class="quiz__step quiz__step--start" data-step="inici">
+          <div class="quiz__emojis" aria-hidden="true"><span>🌱</span><span>🤝</span><span>❤️</span><span>🧩</span><span>⚡</span></div>
+          <p class="quiz__lead" data-en="5 questions · 1 minute · 5 possible profiles" data-ca="5 preguntes · 1 minut · 5 perfils possibles">5 preguntas · 1 minuto · 5 perfiles posibles</p>
+          <button type="button" class="btn btn--primary quiz__start" data-quiz="start">
+            <span data-en="Start the test" data-ca="Comença el test">Empieza el test</span>
+            <svg aria-hidden="true" focusable="false" class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <p class="quiz__privacy" data-en="Your answers stay in your browser: nothing is sent or saved." data-ca="Les respostes es queden al teu navegador: no s'envia ni es desa res.">Las respuestas se quedan en tu navegador: no se envía ni se guarda nada.</p>
+        </div>
+
+        <!-- Preguntes -->
+        <div class="quiz__step quiz__step--questions" data-step="preguntes" hidden="">
+          <div class="quiz__top">
+            <button type="button" class="quiz__back" data-quiz="back">
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <span data-en="Back" data-ca="Enrere">Atrás</span>
+            </button>
+            <span class="quiz__count" aria-hidden="true"><span data-quiz="num">1</span>/5</span>
+          </div>
+          <div class="quiz__progress" aria-hidden="true"><span class="quiz__progress-bar" data-quiz="bar"></span></div>
+          <div class="quiz__q" data-q="1" role="group" aria-labelledby="quizQ1">
+            <h3 class="quiz__question" id="quizQ1" tabindex="-1" data-en="A perfect Saturday starts…" data-ca="Un dissabte perfecte comença…">Un sábado perfecto empieza…</h3>
+            <div class="quiz__opts">
+              <button type="button" class="quiz__opt" data-perfil="medi"><span class="quiz__opt-emoji" aria-hidden="true">🥾</span><span data-en="With a hike in nature" data-ca="Amb una excursió per la natura">Con una excursión por la naturaleza</span></button>
+              <button type="button" class="quiz__opt" data-perfil="social"><span class="quiz__opt-emoji" aria-hidden="true">🤲</span><span data-en="Lending a hand to someone who needs it" data-ca="Donant un cop de mà a qui ho necessita">Echando una mano a quien lo necesita</span></button>
+              <button type="button" class="quiz__opt" data-perfil="salut"><span class="quiz__opt-emoji" aria-hidden="true">🏃</span><span data-en="Going for a run or doing sport" data-ca="Sortint a córrer o fent esport">Saliendo a correr o haciendo deporte</span></button>
+              <button type="button" class="quiz__opt" data-perfil="generacions"><span class="quiz__opt-emoji" aria-hidden="true">☕</span><span data-en="Having breakfast with my grandparents" data-ca="Esmorzant amb els avis">Desayunando con los abuelos</span></button>
+              <button type="button" class="quiz__opt" data-perfil="motor"><span class="quiz__opt-emoji" aria-hidden="true">📋</span><span data-en="Organising plans for the whole group" data-ca="Organitzant el pla de tota la colla">Organizando el plan de todo el grupo</span></button>
+            </div>
+          </div>
+          <div class="quiz__q" data-q="2" role="group" aria-labelledby="quizQ2" hidden="">
+            <h3 class="quiz__question" id="quizQ2" tabindex="-1" data-en="What would get you off the sofa?" data-ca="Què et faria saltar del sofà?">¿Qué te haría saltar del sofá?</h3>
+            <div class="quiz__opts">
+              <button type="button" class="quiz__opt" data-perfil="social"><span class="quiz__opt-emoji" aria-hidden="true">🛒</span><span data-en="Knowing that some families can't make ends meet" data-ca="Saber que hi ha famílies que no arriben a final de mes">Saber que hay familias que no llegan a final de mes</span></button>
+              <button type="button" class="quiz__opt" data-perfil="motor"><span class="quiz__opt-emoji" aria-hidden="true">💡</span><span data-en="A good idea that nobody gets round to organising" data-ca="Una bona idea que ningú es posa a organitzar">Una buena idea que nadie se pone a organizar</span></button>
+              <button type="button" class="quiz__opt" data-perfil="medi"><span class="quiz__opt-emoji" aria-hidden="true">🧴</span><span data-en="Seeing plastic in the Anoia river" data-ca="Veure plàstics al riu Anoia">Ver plásticos en el río Anoia</span></button>
+              <button type="button" class="quiz__opt" data-perfil="generacions"><span class="quiz__opt-emoji" aria-hidden="true">👵</span><span data-en="An elderly person who feels lonely" data-ca="Una persona gran que se sent sola">Una persona mayor que se siente sola</span></button>
+              <button type="button" class="quiz__opt" data-perfil="salut"><span class="quiz__opt-emoji" aria-hidden="true">🚑</span><span data-en="Nobody knowing what to do if someone's heart stops" data-ca="Que ningú sàpiga què fer davant d'una aturada cardíaca">Que nadie sepa qué hacer ante una parada cardíaca</span></button>
+            </div>
+          </div>
+          <div class="quiz__q" data-q="3" role="group" aria-labelledby="quizQ3" hidden="">
+            <h3 class="quiz__question" id="quizQ3" tabindex="-1" data-en="In your group of friends, you're the one who…" data-ca="A la colla, tu ets qui…">En tu grupo, tú eres quien…</h3>
+            <div class="quiz__opts">
+              <button type="button" class="quiz__opt" data-perfil="generacions"><span class="quiz__opt-emoji" aria-hidden="true">🧩</span><span data-en="Brings everyone together, young and old" data-ca="Fa de pont entre tothom, petits i grans">Hace de puente entre todos, pequeños y mayores</span></button>
+              <button type="button" class="quiz__opt" data-perfil="salut"><span class="quiz__opt-emoji" aria-hidden="true">🍎</span><span data-en="Makes sure everyone is OK" data-ca="Vetlla perquè tothom estigui bé">Se asegura de que todos estén bien</span></button>
+              <button type="button" class="quiz__opt" data-perfil="motor"><span class="quiz__opt-emoji" aria-hidden="true">📣</span><span data-en="Gets everyone excited and has a thousand ideas" data-ca="Engresca tothom i té mil idees">Anima a todo el mundo y tiene mil ideas</span></button>
+              <button type="button" class="quiz__opt" data-perfil="social"><span class="quiz__opt-emoji" aria-hidden="true">👂</span><span data-en="Listens and is always there when needed" data-ca="Escolta i sempre hi és quan cal">Escucha y siempre está cuando hace falta</span></button>
+              <button type="button" class="quiz__opt" data-perfil="medi"><span class="quiz__opt-emoji" aria-hidden="true">♻️</span><span data-en="Recycles and reminds everyone not to waste anything" data-ca="Recicla i recorda que no llencem res">Recicla y recuerda que no tiremos nada</span></button>
+            </div>
+          </div>
+          <div class="quiz__q" data-q="4" role="group" aria-labelledby="quizQ4" hidden="">
+            <h3 class="quiz__question" id="quizQ4" tabindex="-1" data-en="You have €500 to improve Igualada. What do you do?" data-ca="Tens 500 € per millorar Igualada. Què hi fas?">Tienes 500 € para mejorar Igualada. ¿Qué haces?</h3>
+            <div class="quiz__opts">
+              <button type="button" class="quiz__opt" data-perfil="salut"><span class="quiz__opt-emoji" aria-hidden="true">❤️</span><span data-en="Defibrillators and first-aid courses" data-ca="Desfibril·ladors i cursos de primers auxilis">Desfibriladores y cursos de primeros auxilios</span></button>
+              <button type="button" class="quiz__opt" data-perfil="medi"><span class="quiz__opt-emoji" aria-hidden="true">🌳</span><span data-en="New trees and a river clean-up" data-ca="Arbres nous i una neteja del riu">Árboles nuevos y una limpieza del río</span></button>
+              <button type="button" class="quiz__opt" data-perfil="motor"><span class="quiz__opt-emoji" aria-hidden="true">🎉</span><span data-en="A charity party that gets the whole town moving" data-ca="Una festa solidària que mogui tota la ciutat">Una fiesta solidaria que mueva a toda la ciudad</span></button>
+              <button type="button" class="quiz__opt" data-perfil="generacions"><span class="quiz__opt-emoji" aria-hidden="true">📱</span><span data-en="Workshops where young and old learn together" data-ca="Tallers on joves i gent gran aprenguin junts">Talleres donde jóvenes y mayores aprendan juntos</span></button>
+              <button type="button" class="quiz__opt" data-perfil="social"><span class="quiz__opt-emoji" aria-hidden="true">🥫</span><span data-en="Food parcels for families in need" data-ca="Lots de menjar per a les famílies que ho necessiten">Lotes de comida para las familias que lo necesitan</span></button>
+            </div>
+          </div>
+          <div class="quiz__q" data-q="5" role="group" aria-labelledby="quizQ5" hidden="">
+            <h3 class="quiz__question" id="quizQ5" tabindex="-1" data-en="Which superpower would you choose?" data-ca="Quin superpoder triaries?">¿Qué superpoder elegirías?</h3>
+            <div class="quiz__opts">
+              <button type="button" class="quiz__opt" data-perfil="motor"><span class="quiz__opt-emoji" aria-hidden="true">⚡</span><span data-en="Endless energy" data-ca="Energia infinita">Energía infinita</span></button>
+              <button type="button" class="quiz__opt" data-perfil="social"><span class="quiz__opt-emoji" aria-hidden="true">🫶</span><span data-en="Knowing what anyone needs just by looking at them" data-ca="Saber què necessita cadascú només de mirar-lo">Saber qué necesita cada uno con solo mirarle</span></button>
+              <button type="button" class="quiz__opt" data-perfil="medi"><span class="quiz__opt-emoji" aria-hidden="true">🌱</span><span data-en="Making plants grow wherever I touch" data-ca="Fer créixer plantes allà on toco">Hacer crecer plantas allá donde toco</span></button>
+              <button type="button" class="quiz__opt" data-perfil="generacions"><span class="quiz__opt-emoji" aria-hidden="true">⏳</span><span data-en="Travelling in time to hear stories from the past" data-ca="Viatjar en el temps per escoltar històries d'abans">Viajar en el tiempo para escuchar historias de antes</span></button>
+              <button type="button" class="quiz__opt" data-perfil="salut"><span class="quiz__opt-emoji" aria-hidden="true">🩺</span><span data-en="Healing any wound" data-ca="Curar qualsevol ferida">Curar cualquier herida</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resultat -->
+        <div class="quiz__step quiz__step--result" data-step="resultat" hidden="">
+          <p class="quiz__result-eyebrow" data-en="Your profile" data-ca="El teu perfil">Tu perfil</p>
+          <div class="quiz__perfil" data-perfil="medi" hidden="">
+            <span class="quiz__perfil-emoji" aria-hidden="true">🌱</span>
+            <h3 class="quiz__perfil-name" tabindex="-1" data-en="Green spirit" data-ca="Esperit verd">Espíritu verde</h3>
+            <p class="quiz__perfil-desc" data-en="You care about the planet and you show it. You're the ideal person for river clean-ups, tree planting and anything that makes Anoia a little greener." data-ca="Et mou el planeta i ho demostres amb fets. Ets la persona ideal per a neteges del riu, plantades d'arbres i tot el que faci l'Anoia una mica més verda.">Te mueve el planeta y lo demuestras con hechos. Eres la persona ideal para limpiezas del río, plantadas de árboles y todo lo que haga el Anoia un poco más verde.</p>
+          </div>
+          <div class="quiz__perfil" data-perfil="social" hidden="">
+            <span class="quiz__perfil-emoji" aria-hidden="true">🤝</span>
+            <h3 class="quiz__perfil-name" tabindex="-1" data-en="Big heart" data-ca="Cor solidari">Corazón solidario</h3>
+            <p class="quiz__perfil-desc" data-en="When someone is having a hard time, you're the first to lend a hand. Food drives, charity stalls and projects with social organisations are where you belong." data-ca="Quan algú ho passa malament, ets qui primer hi dona un cop de mà. Recaptes d'aliments, paradetes solidàries i projectes amb entitats socials són el teu lloc.">Cuando alguien lo pasa mal, eres quien primero echa una mano. Recogidas de alimentos, puestos solidarios y proyectos con entidades sociales son tu sitio.</p>
+          </div>
+          <div class="quiz__perfil" data-perfil="salut" hidden="">
+            <span class="quiz__perfil-emoji" aria-hidden="true">❤️</span>
+            <h3 class="quiz__perfil-name" tabindex="-1" data-en="Healthy energy" data-ca="Energia saludable">Energía saludable</h3>
+            <p class="quiz__perfil-desc" data-en="Sport, health and wellbeing are in your DNA. Charity runs, first-aid workshops and blood donation drives have your name on them." data-ca="Esport, salut i benestar: ho portes a dins. Curses solidàries, tallers de primers auxilis i campanyes de donació de sang porten el teu nom.">Deporte, salud y bienestar: lo llevas dentro. Carreras solidarias, talleres de primeros auxilios y campañas de donación de sangre llevan tu nombre.</p>
+          </div>
+          <div class="quiz__perfil" data-perfil="generacions" hidden="">
+            <span class="quiz__perfil-emoji" aria-hidden="true">🧩</span>
+            <h3 class="quiz__perfil-name" tabindex="-1" data-en="Bridge between generations" data-ca="Pont entre generacions">Puente entre generaciones</h3>
+            <p class="quiz__perfil-desc" data-en="You love bringing people of all ages together. Workshops with older people, activities with children and projects where everyone learns from everyone." data-ca="T'encanta connectar persones de totes les edats. Tallers amb gent gran, activitats amb infants i projectes on tothom aprèn de tothom.">Te encanta conectar a personas de todas las edades. Talleres con gente mayor, actividades con niños y proyectos donde todos aprenden de todos.</p>
+          </div>
+          <div class="quiz__perfil" data-perfil="motor" hidden="">
+            <span class="quiz__perfil-emoji" aria-hidden="true">⚡</span>
+            <h3 class="quiz__perfil-name" tabindex="-1" data-en="Team engine" data-ca="Motor de l'equip">Motor del equipo</h3>
+            <p class="quiz__perfil-desc" data-en="You have ideas, energy and the drive to make them happen. Organising events, getting people on board and making things happen is your superpower." data-ca="Tens idees, energia i ganes de fer-les realitat. Organitzar esdeveniments, engrescar la gent i fer que les coses passin és el teu superpoder.">Tienes ideas, energía y ganas de hacerlas realidad. Organizar eventos, animar a la gente y hacer que las cosas pasen es tu superpoder.</p>
+          </div>
+          <div class="quiz__result-grid">
+            <div class="quiz__mix">
+              <p class="quiz__subhead" data-en="Your mix" data-ca="La teva barreja">Tu mezcla</p>
+              <ul class="quiz__bars" data-quiz="bars"></ul>
+            </div>
+            <div class="quiz__acts">
+              <p class="quiz__subhead" data-en="Club activities for you" data-ca="Activitats del club per a tu">Actividades del club para ti</p>
+              <ul class="quiz__acts-list" data-quiz="acts" hidden=""></ul>
+              <p class="quiz__acts-empty" data-quiz="empty" hidden="" data-en="We don't have an activity like this on the calendar yet… maybe you'll be the one to suggest it!" data-ca="Encara no tenim cap activitat d'aquest tipus al calendari… potser la proposes tu!">Todavía no tenemos ninguna actividad de este tipo en el calendario… ¡quizá la propongas tú!</p>
+              <a class="quiz__acts-more" href="activitats.html"><span data-en="See all activities" data-ca="Veure totes les activitats">Ver todas las actividades</span> <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+          <div class="quiz__actions">
+            <a class="btn btn--primary" href="contacte.html#uneix-te">
+              <span data-en="Join the club" data-ca="Uneix-te al club">Inscríbete al club</span>
+              <svg aria-hidden="true" focusable="false" class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+            <button type="button" class="btn quiz__again" data-quiz="again">
+              <svg aria-hidden="true" focusable="false" class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+              <span data-en="Take the test again" data-ca="Torna a fer el test">Repite el test</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
        UNEIX-TE (contacte de la portada)
        Un altre enfocament que la pàgina Contacte: com fer-se soci,
        en 3 passos, i les maneres ràpides de parlar amb nosaltres.
@@ -613,6 +763,8 @@
   <script src="../nav.js?v=35a73008"></script>
   <script src="../rotaractigualada.js?v=15d577cf"></script>
   <script src="../galeria.js?v=961b85ec"></script>
+  <script src="../projectes.js?v=c875be58"></script>
+  <script src="../test-voluntari.js?v=85fb7873"></script>
   <script src="../legal-modals.js?v=8b4503ac"></script>
 
   <div id="avisLegalModal" class="legal-modal-overlay">
@@ -935,6 +1087,6 @@
 
   <script src="../analytics.js?v=a0662709"></script>
   <script src="../efectes.js?v=db87b92c"></script>
-  <script src="../i18n.js?v=77356ba3"></script>
+  <script src="../i18n.js?v=98d6744e"></script>
 
 </body></html>
