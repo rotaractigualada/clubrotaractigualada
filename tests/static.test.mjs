@@ -114,13 +114,22 @@ test('index.html: publicacions d\'Instagram com a targetes pròpies (sense embed
   for (const [, , img] of posts) assert.ok(existsSync(join(ROOT, img)), `falta la imatge ${img}`);
 });
 
-test('sense cookies: ni avís de cookies ni Google Analytics; estadístiques amb GoatCounter', () => {
+test('sense cookies: ni avís ni política de cookies, ni Google Analytics; estadístiques amb GoatCounter', () => {
+  for (const { dir } of VERSIONS) {
+    for (const page of PAGES) {
+      const html = read(dir + page);
+      assert.doesNotMatch(html, /politicaCookiesModal|open-politica-cookies/, `${dir + page}: encara té la política de cookies`);
+      // La política de privacitat explica que no hi ha cookies
+      assert.match(html, /id="politicaPrivacitatModal"[\s\S]*data-en="This website does not use cookies\./, `${dir + page}: la privacitat ha de dir que no hi ha cookies`);
+    }
+  }
+  assert.doesNotMatch(read('legal-modals.js'), /cookies/i);
   for (const page of PAGES) {
     const html = read(page);
     assert.doesNotMatch(html, /cookie-banner/, `${page} encara carrega l'avís de cookies`);
     assert.doesNotMatch(html, /googletagmanager|google-analytics|gtag\(/, `${page} encara fa referència a Google Analytics`);
     assert.match(html, /<script src="analytics\.js(\?v=[0-9a-f]+)?"><\/script>/);
-    assert.match(html, /GoatCounter/, `${page}: la política de cookies ha d'explicar GoatCounter`);
+    assert.match(html, /GoatCounter/, `${page}: la política de privacitat ha d'explicar GoatCounter`);
   }
   const js = read('analytics.js');
   assert.match(js, /https:\/\/rotaractigualada\.goatcounter\.com\/count/);

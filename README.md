@@ -15,7 +15,7 @@ Cap enllaç de la web obre el programa de correu: tot es fa des de la pàgina.
 | `i18n.css` | Selector d'idioma |
 | `nav.js` | Menú mòbil |
 | `i18n.js` | Traducció català / anglès / castellà (atributs `data-en` + diccionari) |
-| `legal-modals.js` | Modals d'avís legal, privacitat i cookies |
+| `legal-modals.js` | Modals d'avís legal i política de privacitat |
 | `analytics.js` | Estadístiques de visites amb GoatCounter, sense cookies (només a rotaractigualada.org) |
 | `correu.js` | «Escriu-nos» de Contacte: pestanyes «Vull informació» / «Vull unir-me», validació i enviament |
 | `form-handler.php` | Backend dels formularis: validació, antispam, correu i còpia a `form-data/submissions.csv` |
@@ -165,7 +165,8 @@ publicacions fixes.
 
 La web no fa servir cookies. Les visites es compten amb
 [GoatCounter](https://www.goatcounter.com), que no desa res al dispositiu
-ni l'adreça IP, i per això no cal cap avís de cookies. El panell és a
+ni l'adreça IP, i per això no cal ni avís ni política de cookies (la política
+de privacitat ho explica). El panell és a
 <https://rotaractigualada.goatcounter.com> (el codi del compte,
 `rotaractigualada`, és a `analytics.js`). Només es compten les visites a
 rotaractigualada.org, no les proves en local.

@@ -3,7 +3,7 @@
    - No desa res al dispositiu (ni cookies ni emmagatzematge local) i no carrega
      cap script extern: envia una petició petita, com una imatge d'1×1,
      amb la pàgina, el títol, d'on ve el visitant i la mida de la pantalla.
-   - GoatCounter no desa l'adreça IP (vegeu la política de cookies).
+   - GoatCounter no desa l'adreça IP (vegeu la política de privacitat).
    - Només compta a rotaractigualada.org: ni en local, ni als tests, ni a
      còpies de la web.
    - No compta qui té activat «no em segueixis» (Global Privacy Control o

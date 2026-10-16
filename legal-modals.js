@@ -1,6 +1,6 @@
 /* ============================================ */
 /* JS - Obrir/tancar els modals legals           */
-/* (Avís legal, Política de privacitat, Cookies) */
+/* (Avís legal i Política de privacitat)        */
 /* Usa delegació d'esdeveniments: els enllaços   */
 /* que i18n.js re-crea (innerHTML) continuen    */
 /* funcionant                                   */
@@ -9,8 +9,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   var modals = {
     'open-avis-legal': 'avisLegalModal',
-    'open-politica-privacitat': 'politicaPrivacitatModal',
-    'open-politica-cookies': 'politicaCookiesModal'
+    'open-politica-privacitat': 'politicaPrivacitatModal'
   };
 
   var activeModal = null;
@@ -49,16 +48,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Delegació a document: funciona encara que els elements es re-creïn
   document.addEventListener('click', function (e) {
-    var trigger = e.target && e.target.closest ? e.target.closest('.open-avis-legal, .open-politica-privacitat, .open-politica-cookies') : null;
+    var trigger = e.target && e.target.closest ? e.target.closest('.open-avis-legal, .open-politica-privacitat') : null;
     if (!trigger) return;
-    var cls = null;
-    if (trigger.classList.contains('open-avis-legal')) {
-      cls = 'open-avis-legal';
-    } else if (trigger.classList.contains('open-politica-privacitat')) {
-      cls = 'open-politica-privacitat';
-    } else {
-      cls = 'open-politica-cookies';
-    }
+    var cls = trigger.classList.contains('open-avis-legal') ? 'open-avis-legal' : 'open-politica-privacitat';
     var modal = document.getElementById(modals[cls]);
     if (!modal) return;
     e.preventDefault();
