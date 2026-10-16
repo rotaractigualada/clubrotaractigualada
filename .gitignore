@@ -1,2 +1,5 @@
 node_modules/
 form-data/
+
+# Imatges que baixa instagram-feed.php (només al servidor)
+instagram/auto/

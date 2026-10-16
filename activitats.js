@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   /* ── Sistema de Tabs ── */
+  const validTabs   = ['programades', 'realitzades', 'galeria', 'calendari'];
   const tabBtns     = document.querySelectorAll('.act-hero__tab-btn');
   const tabSections = document.querySelectorAll('.act-tab-section');
 
@@ -65,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // Llegeix el hash de la URL per mostrar la tab correcta
   function initTabFromHash() {
     const hash = window.location.hash.replace('#', '');
-    const validTabs = ['programades', 'realitzades', 'calendari'];
     if (hash && validTabs.includes(hash)) {
       showTab(hash);
       // Entrada directa des d'una altra pàgina (p. ex. activitats.html#programades):
@@ -84,10 +84,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   initTabFromHash();
 
-  // Suport per a qualsevol enllaç que apunti a una tab (#programades, #realitzades, #calendari),
+  // Suport per a qualsevol enllaç que apunti a una tab (#programades, #realitzades, #galeria, #calendari),
   // tant des del menú d'escriptori (dropdown del header) com del menú mòbil, encara que
   // l'enllaç inclogui "activitats.html" al davant (com passa amb els del header).
-  const validTabs = ['programades', 'realitzades', 'calendari'];
 
   function isSamePageLink(href) {
     if (href.startsWith('#')) return true;
@@ -103,19 +102,19 @@ document.addEventListener('DOMContentLoaded', function () {
     targetSection.scrollIntoView({ behavior: instant ? 'auto' : 'smooth', block: 'start' });
   }
 
-  document
-    .querySelectorAll('a[href*="#programades"], a[href*="#realitzades"], a[href*="#calendari"]')
-    .forEach(link => {
-      link.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        const hash = href.split('#')[1];
-        if (validTabs.includes(hash) && isSamePageLink(href)) {
-          e.preventDefault();
-          showTab(hash);
-          scrollToTab(hash);
-        }
-      });
-    });
+  // Delegació: també serveix per als enllaços que es creen després
+  // (p. ex. «Veure les fotos» del calendari)
+  document.addEventListener('click', function (e) {
+    const link = e.target.closest ? e.target.closest('a[href*="#"]') : null;
+    if (!link) return;
+    const href = link.getAttribute('href');
+    const hash = href.split('#')[1];
+    if (validTabs.includes(hash) && isSamePageLink(href)) {
+      e.preventDefault();
+      showTab(hash);
+      scrollToTab(hash);
+    }
+  });
 
   // Si l'usuari navega amb endavant/enrere del navegador i el hash canvia
   window.addEventListener('hashchange', initTabFromHash);
@@ -187,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function () {
       loc: 'Ses Oliveres, Igualada',
       cat: { ca: 'Presentació · Sopar · Bingo', en: 'Presentation · Dinner · Bingo', es: 'Presentación · Cena · Bingo' },
       emoji: '🎉',
-      link: 'index.html#galeria',
+      link: '#galeria',
       done: true
     }]
   };

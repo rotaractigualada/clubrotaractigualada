@@ -3,7 +3,7 @@
    (arrel = català, /es/, /en/) i accessibilitat bàsica. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join, dirname, normalize } from 'node:path';
 import { ROOT, PAGES, read } from './helpers.mjs';
 
@@ -157,9 +157,14 @@ test('.htaccess: el logo dels correus es pot carregar des de Gmail i altres prog
   assert.match(read('form-handler.php'), /SITE_URL \. '\/logo-correu\.png'/);
 });
 
-test('.htaccess: només form-handler.php, fitxers ocults bloquejats i security.txt accessible', () => {
+test('.htaccess: només form-handler.php i instagram-feed.php, fitxers ocults bloquejats i security.txt accessible', () => {
   const h = read('.htaccess');
   assert.match(h, /<FilesMatch "\\\.\(php/);
+  // Els únics PHP permesos (el token d'Instagram és a form-data/, que dona 404)
+  const allowed = [...h.matchAll(/<(?:Files|FilesMatch) "([^"]+)">\s*Require all granted/g)].map((m) => m[1]).filter((v) => /php/.test(v));
+  assert.deepEqual(allowed, ['^(form-handler|instagram-feed)\\.php$']);
+  assert.match(h, /RedirectMatch 404 \^\/form-data\(\/\|\$\)/);
+  assert.match(read('instagram-feed.php'), /IG_TOKEN_FILE = __DIR__ \. '\/form-data\/instagram-token\.txt'/);
   assert.match(h, /RedirectMatch 404 \/\\\.\(\?!well-known/);
   assert.match(h, /form-action 'self'/);
   assert.doesNotMatch(h, /jotform/i);
@@ -183,7 +188,7 @@ test('Contacte: dos formularis que s\'envien a form-handler.php', () => {
   for (const id of ['form-info', 'form-unir']) {
     assert.match(html, new RegExp(`<form[^>]*id="${id}"[^>]*action="/form-handler\\.php" method="post"`));
   }
-  assert.match(read('.htaccess'), /<Files "form-handler\.php">\s*Require all granted/);
+  assert.match(read('.htaccess'), /<FilesMatch "\^\(form-handler\|instagram-feed\)\\\.php\$">\s*Require all granted/);
 });
 
 /* Diccionaris castellans d'i18n.js (clau = text de data-en) */
@@ -262,4 +267,48 @@ test('.htaccess: la web pot llegir els .json que fa servir (mapa i activitats), 
   for (const f of ['package.json', 'package-lock.json', 'composer.json', 'dades.json']) {
     assert.ok(!allowed(f), `${f} no hauria de ser públic`);
   }
+});
+
+test('la galeria és a Activitats (pestanya Galeria) i no a la portada; els menús hi porten', () => {
+  const home = stripComments(read('index.html'));
+  assert.doesNotMatch(home, /class="galeria__grid|galeria\.js/, 'la portada ja no té la galeria');
+  const act = stripComments(read('activitats.html'));
+  assert.match(act, /<button type="button" class="act-hero__tab-btn" data-tab="galeria">/);
+  assert.match(act, /<section class="act-section act-section--light act-tab-section" id="galeria">[\s\S]*class="galeria-album"[\s\S]*class="galeria__grid galeria__grid--mosaic"/);
+  assert.match(act, /<script src="galeria\.js[^"]*"><\/script>/);
+  assert.match(act, /<a href="#galeria" class="act-btn act-btn--primary act-feature__cta">/, '«Veure les fotos» porta a la pestanya');
+  assert.match(read('activitats.js'), /validTabs\s*=\s*\[[^\]]*'galeria'/);
+  for (const page of PAGES) {
+    const html = stripComments(read(page));
+    assert.doesNotMatch(html, /index\.html#galeria/, `${page}: encara enllaça la galeria de la portada`);
+    assert.match(html, /<li><a href="activitats\.html#galeria" class="mobile-nav__sublink" data-en="Gallery">Galeria<\/a><\/li>/, `${page}: menú mòbil`);
+    assert.match(html, /<li><a href="activitats\.html#galeria" data-en="Gallery">Galeria<\/a><\/li>[\s\S]*<li><a href="activitats\.html#galeria" data-en="Gallery">Galeria<\/a><\/li>/, `${page}: menú d'escriptori i peu`);
+  }
+});
+
+test('portada: Instagram amb perfil, destacades, publicacions, QR i Instagram automàtic', () => {
+  const html = stripComments(read('index.html'));
+  const start = html.indexOf('id="instagram"');
+  const sec = html.slice(start, html.indexOf('</section>', start));
+  const PROFILE = 'https://www.instagram.com/rotaractigualada/';
+  // Perfil i botó de seguir (enllaç normal: s'obre a Instagram en una pestanya nova)
+  assert.match(sec, /<h2 class="ig-profile__user" id="igTitle">@rotaractigualada<\/h2>/);
+  assert.match(sec, new RegExp(`<a class="ig-profile__follow" href="${PROFILE}" target="_blank" rel="noopener noreferrer">`));
+  // Destacades: 7 enllaços dins la mateixa web (els destins els comprova el test d'àncores)
+  const highlights = [...sec.matchAll(/<a class="ig-highlight" href="([^"]+)"/g)].map((m) => m[1]);
+  assert.equal(highlights.length, 7);
+  for (const href of highlights) assert.doesNotMatch(href, /^https?:/, `${href}: les destacades porten a la web`);
+  // Publicacions fixes (3 o 6) i el contenidor que omple instagram.js
+  const posts = sec.match(/<a class="ig-post" href="https:\/\/www\.instagram\.com\/p\/[\w-]+\/" target="_blank" rel="noopener noreferrer"/g) || [];
+  assert.ok([3, 6].includes(posts.length), `3 o 6 publicacions (n'hi ha ${posts.length})`);
+  assert.match(sec, /<div class="ig-grid" data-ig="grid">/);
+  assert.match(html, /<script src="instagram\.js[^"]*"><\/script>/);
+  assert.match(html, /<link rel="stylesheet" href="instagram\.css[^"]*">/);
+  // QR (SVG a la web, PNG per imprimir) que porta al perfil
+  assert.match(sec, /<img class="ig-qr__img" src="instagram\/qr-rotaractigualada\.svg"[^>]*alt="[^"]+"/);
+  assert.match(sec, /<a class="ig-qr__download" href="instagram\/qr-rotaractigualada\.png" download="[^"]+\.png">/);
+  const svg = read('instagram/qr-rotaractigualada.svg');
+  assert.match(svg, /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg"[\s\S]*<\/svg>\s*$/);
+  assert.doesNotMatch(svg, /(?:href|src)="https?:/, 'el QR no carrega res de fora');
+  assert.ok(readFileSync(join(ROOT, 'instagram', 'qr-rotaractigualada.png')).subarray(1, 4).toString() === 'PNG');
 });

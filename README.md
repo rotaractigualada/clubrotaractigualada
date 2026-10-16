@@ -24,9 +24,11 @@ Cap enllaç de la web obre el programa de correu: tot es fa des de la pàgina.
 | `redireccions.js` | Al `<head>`: còpia de GitHub Pages → rotaractigualada.org, i idioma (tria desada o idioma del navegador) → `/`, `/es/` o `/en/` |
 | `es/`, `en/` | Versions en castellà i anglès **generades** (no s'editen a mà) |
 | `scripts/build-idiomes.mjs` | Genera `es/`, `en/`, les etiquetes hreflang i el `sitemap.xml` |
-| `galeria.js`, `galeria/` | Mosaic de fotos de la portada i visor a pantalla completa (fotos en mides 800 i 1600 px) |
+| `galeria.js`, `galeria/` | Galeria de fotos (Activitats → pestanya Galeria): un mosaic per àlbum i visor a pantalla completa (fotos en mides 800 i 1600 px) |
 | `mapa.js`, `mapa.css`, `anoia.json`, `anoia.svg` | Mapa d'Igualada i l'Anoia (Nosaltres → On som) |
 | `projectes.json`, `projectes.js` | Activitats del club per al mapa i el test de la portada |
+| `instagram.css`, `instagram.js`, `instagram/` | Secció Instagram de la portada: perfil, destacades, publicacions i codi QR |
+| `instagram-feed.php` | Instagram automàtic: últimes publicacions des de l'API d'Instagram (opcional, vegeu més avall) |
 | `test-voluntari.js`, `test-voluntari.css` | Test «Quin voluntari ets?» de la portada |
 | `.htaccess` | HTTPS, capçaleres de seguretat (CSP), compressió, memòria cau i fitxers protegits |
 | `sitemap.xml`, `robots.txt` | SEO |
@@ -119,6 +121,45 @@ les que el test de la portada recomana, són a `projectes.json` (les llegeix
 `npm test` comprova que cada activitat té un municipi, una data i un perfil
 vàlids. El calendari de la pàgina Activitats té les seves dades a
 `activitats.js`. El test no envia ni desa cap resposta.
+
+## Instagram (portada)
+
+La secció Instagram de la portada té el perfil (amb el botó «Segueix-nos»),
+les destacades (cercles que porten a apartats de la web), les publicacions i
+un codi QR (només a l'ordinador). El QR és `instagram/qr-rotaractigualada.svg`;
+la versió per imprimir (paradetes, cartells…) és `instagram/qr-rotaractigualada.png`.
+
+**Publicacions fixes** (si no s'activa l'Instagram automàtic): són les
+targetes `ig-post` d'`index.html`. Al comentari de l'HTML hi ha com canviar-les
+(imatge quadrada a `instagram/`, enllaç del post i peu) i com afegir-hi el
+tipus (`data-tipus="carrusel"` o `"video"`) i la data.
+
+### Instagram automàtic (opcional)
+
+Amb un token de l'API d'Instagram, `instagram-feed.php` posa sola a la portada
+les 6 últimes publicacions i el nombre de publicacions i seguidors. Consulta
+Instagram com a màxim un cop l'hora i desa les imatges a `instagram/auto/`, de
+manera que els visitants no es connecten a Instagram. Per activar-lo:
+
+1. El compte d'Instagram ha de ser **professional** (de creador o d'empresa;
+   és gratuït). A l'app: Configuració → Tipus de compte i eines → Canvia a
+   compte professional.
+2. A [developers.facebook.com](https://developers.facebook.com/apps) → Crea
+   una app → cas d'ús «Gestionar missatges i contingut a Instagram».
+3. A l'app: «Configuració de l'API amb inici de sessió d'Instagram» →
+   «Genera tokens d'accés» → afegeix el compte @rotaractigualada i copia el
+   token. L'app pot quedar en mode de desenvolupament: només llegeix el vostre
+   propi compte.
+4. A Hostinger (Administrador d'arxius), dins `public_html/form-data/`, crea el
+   fitxer `instagram-token.txt` i enganxa-hi el token (una sola línia).
+   `form-data/` no es pot obrir des del web i els ZIP de la web no el toquen.
+5. Obre <https://rotaractigualada.org/instagram-feed.php>: hi ha de sortir la
+   llista de publicacions. La portada ja les mostra.
+
+El token dura 60 dies, però `instagram-feed.php` el renova cada setmana tot
+sol. Si la web passés 60 dies sense visites, caldria generar-ne un de nou
+(pas 3). Si no hi ha token o Instagram falla, la portada mostra les
+publicacions fixes.
 
 ## Estadístiques de visites
 

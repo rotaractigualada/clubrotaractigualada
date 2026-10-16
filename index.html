@@ -72,7 +72,7 @@
   }
   </script>
   <link rel="preload" as="image" href="sopar.jpg" fetchpriority="high">
-  <link rel="stylesheet" href="rotaractigualada.css?v=4e388f8c">
+  <link rel="stylesheet" href="rotaractigualada.css?v=8536f2ec">
   <link rel="preload" href="fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="fonts.css?v=d6f9c1e4">
   <link rel="icon" href="favicon.ico" sizes="48x48">
@@ -82,8 +82,9 @@
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#da1a5d">
   <link rel="stylesheet" href="i18n.css?v=788d4587">
+  <link rel="stylesheet" href="instagram.css?v=bc64afba">
   <link rel="stylesheet" href="test-voluntari.css?v=c18189d2">
-  <link rel="stylesheet" href="efectes.css?v=516ee587">
+  <link rel="stylesheet" href="efectes.css?v=a0de8e85">
 </head>
 
 <body id="top">
@@ -122,6 +123,7 @@
         <ul class="mobile-nav__sub">
             <li><a href="activitats.html#programades" class="mobile-nav__sublink" data-en="Upcoming activities">Activitats programades</a></li>
             <li><a href="activitats.html#realitzades" class="mobile-nav__sublink" data-en="Past activities">Activitats realitzades</a></li>
+            <li><a href="activitats.html#galeria" class="mobile-nav__sublink" data-en="Gallery">Galeria</a></li>
             <li><a href="activitats.html#calendari" class="mobile-nav__sublink" data-en="Calendar">Calendari</a></li>
         </ul>
       </li>
@@ -195,6 +197,7 @@
           <ul class="nav__dropdown">
             <li><a href="activitats.html#programades" data-en="Upcoming activities">Activitats programades</a></li>
             <li><a href="activitats.html#realitzades" data-en="Past activities">Activitats realitzades</a></li>
+            <li><a href="activitats.html#galeria" data-en="Gallery">Galeria</a></li>
             <li><a href="activitats.html#calendari" data-en="Calendar">Calendari</a></li>
           </ul>
         </div>
@@ -364,164 +367,97 @@
     </div>
   </section>
 
-  <section class="galeria-section" id="galeria">
-    <div class="galeria__header">
-      <p class="galeria__eyebrow" data-en="📸 Our activities">📸 Les nostres activitats</p>
-      <h2 class="galeria__title"><span data-en="Gallery" style="color: inherit;">Galeria</span> <span>Rotaract Igualada</span></h2>
-      <div class="galeria__divider"></div>
-      <p class="galeria__subtitle" data-en="Moments we've shared together throughout our journey.">Moments que hem viscut junts al llarg de la nostra trajectòria.</p>
-    </div>
-
-    <!-- Galeria de fotos (mosaic). Per afegir-ne una de nova:
-         1) Desa la foto a galeria/ en dues mides: NOM-800.jpg i NOM-1600.jpg
-            (costat llarg de 800 i 1600 px).
-         2) Copia un bloc <a class="galeria__item ..."> i canvia'n les rutes,
-            l'alt (descripció de la foto) i el peu (català i data-en en anglès).
-         Modificadors: galeria__item--featured (gran), --tall (vertical),
-         --wide (horitzontal). Clicar una foto l'obre en gran (galeria.js). -->
-    <div class="galeria__grid galeria__grid--mosaic" id="galeriaGrid">
-      <a class="galeria__item galeria__item--featured" href="galeria/grup-1600.jpg">
-        <img src="galeria/grup-800.jpg"
-             srcset="galeria/grup-800.jpg 800w, galeria/grup-1600.jpg 1600w"
-             sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px"
-             width="800" height="534" loading="lazy" decoding="async"
-             style="object-position: center 40%;"
-             alt="Foto de grup de tots els assistents al sopar, joves de Rotaract i socis de Rotary">
-        <span class="galeria__zoom" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
-        </span>
-        <span class="galeria__caption" data-en="The whole Rotary family, all together">La família rotària, tots junts</span>
-      </a>
-      <a class="galeria__item galeria__item--tall" href="galeria/certificat-1600.jpg">
-        <img src="galeria/certificat-800.jpg"
-             srcset="galeria/certificat-800.jpg 800w, galeria/certificat-1600.jpg 1600w"
-             sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px"
-             width="534" height="800" loading="lazy" decoding="async"
-             style="object-position: center 30%;"
-             alt="Dos socis de Rotaract Igualada sostenen el certificat de Rotary International del club, amb una dona al mig">
-        <span class="galeria__zoom" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
-        </span>
-        <span class="galeria__caption" data-en="Presentation of the Rotary International certificate">Lliurament del certificat de Rotary International</span>
-      </a>
-      <a class="galeria__item galeria__item--tall" href="galeria/campana-1600.jpg">
-        <img src="galeria/campana-800.jpg"
-             srcset="galeria/campana-800.jpg 800w, galeria/campana-1600.jpg 1600w"
-             sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px"
-             width="534" height="800" loading="lazy" decoding="async"
-             style="object-position: center 30%;"
-             alt="Un soci de Rotaract Igualada sosté la campana del club, acompanyat de dues dones">
-        <span class="galeria__zoom" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
-        </span>
-        <span class="galeria__caption" data-en="Presenting the club bell">Entrega de la campana del club</span>
-      </a>
-      <a class="galeria__item galeria__item--wide" href="galeria/equip-1600.jpg">
-        <img src="galeria/equip-800.jpg"
-             srcset="galeria/equip-800.jpg 800w, galeria/equip-1600.jpg 1600w"
-             sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px"
-             width="800" height="534" loading="lazy" decoding="async"
-             style="object-position: center 35%;"
-             alt="Els joves de Rotaract Igualada posen junts, dempeus, amb un soci de Rotary amb el collar del càrrec">
-        <span class="galeria__zoom" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
-        </span>
-        <span class="galeria__caption" data-en="The Rotaract Igualada team">L'equip de Rotaract Igualada</span>
-      </a>
-      <a class="galeria__item galeria__item--wide" href="galeria/sopar-1600.jpg">
-        <img src="galeria/sopar-800.jpg"
-             srcset="galeria/sopar-800.jpg 800w, galeria/sopar-1600.jpg 1600w"
-             sizes="(max-width: 520px) 100vw, (max-width: 768px) 50vw, 550px"
-             width="800" height="534" loading="lazy" decoding="async"
-             style="object-position: center 45%;"
-             alt="Assistents asseguts a les taules del sopar escoltant els parlaments">
-        <span class="galeria__zoom" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
-        </span>
-        <span class="galeria__caption" data-en="A dinner to remember">Un sopar per recordar</span>
-      </a>
-    </div>
-  </section>
-
   <!-- =============================================
        INSTAGRAM
   ============================================= -->
-  <section class="instagram-section" id="instagram">
+  <section class="instagram-section" id="instagram" aria-labelledby="igTitle">
+    <div class="ig-card">
 
-    <div class="instagram-section__header">
-      <p class="instagram-section__eyebrow">
-        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-        <span data-en="Follow us on Instagram">Segueix-nos a Instagram</span>
-      </p>
+      <!-- Perfil -->
+      <div class="ig-profile">
+        <div class="ig-profile__avatar" aria-hidden="true">
+          <img src="favicon-192.png" width="192" height="192" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="ig-profile__info">
+          <p class="ig-profile__eyebrow"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg><span data-en="Follow us on Instagram">Segueix-nos a Instagram</span></p>
+          <div class="ig-profile__row">
+            <h2 class="ig-profile__user" id="igTitle">@rotaractigualada</h2>
+            <a class="ig-profile__follow" href="https://www.instagram.com/rotaractigualada/" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg><span data-en="Follow">Segueix-nos</span></a>
+          </div>
+          <!-- Nombre de publicacions i seguidors: només amb l'Instagram automàtic -->
+          <ul class="ig-profile__stats" data-ig="stats" hidden>
+            <li data-ig="posts-wrap" hidden><strong data-ig="posts"></strong> <span data-en="posts">publicacions</span></li>
+            <li data-ig="followers-wrap" hidden><strong data-ig="followers"></strong> <span data-en="followers">seguidors</span></li>
+          </ul>
+          <p class="ig-profile__name" data-en="Rotaract Club Igualada">Club Rotaract d'Igualada</p>
+          <p class="ig-profile__bio" data-en="Young people who act, connect and lead. Volunteering, projects and friendship in Anoia.">Joves que actuen, connecten i lideren. Voluntariat, projectes i amistat a l'Anoia.</p>
+          <ul class="ig-profile__chips">
+            <li><span aria-hidden="true">📍</span> Igualada, Anoia</li>
+            <li><span aria-hidden="true">🎓</span> <span data-en="18 to 30 years old">De 18 a 30 anys</span></li>
+            <li><span aria-hidden="true">🌍</span> <span data-en="District 2202">Districte 2202</span></li>
+          </ul>
+        </div>
+        <!-- Codi QR (només a l'ordinador): porta al perfil. El PNG és per imprimir. -->
+        <div class="ig-qr">
+          <img class="ig-qr__img" src="instagram/qr-rotaractigualada.svg" width="430" height="430" loading="lazy" decoding="async" alt="Codi QR de l'Instagram de Rotaract Igualada (@rotaractigualada)">
+          <p class="ig-qr__text" data-en="Scan it with your phone">Escaneja'l amb el mòbil</p>
+          <a class="ig-qr__download" href="instagram/qr-rotaractigualada.png" download="QR-Instagram-Rotaract-Igualada.png"><span data-en="Download the QR">Descarrega el QR</span></a>
+        </div>
+      </div>
 
-      <h2 class="instagram-section__title">
-        Instagram <span>Rotaract Igualada</span>
-      </h2>
+      <!-- Destacades: com les d'Instagram, però porten a apartats de la web -->
+      <nav class="ig-highlights" aria-labelledby="igHighlights">
+        <h3 class="ig-sr" id="igHighlights" data-en="Highlights">Destacades</h3>
+        <ul class="ig-highlights__list">
+          <li><a class="ig-highlight" href="activitats.html#realitzades"><span class="ig-highlight__ring"><span class="ig-highlight__icon" aria-hidden="true">🤝</span></span><span class="ig-highlight__label" data-en="Projects">Projectes</span></a></li>
+          <li><a class="ig-highlight" href="activitats.html#galeria"><span class="ig-highlight__ring"><span class="ig-highlight__icon" aria-hidden="true">📸</span></span><span class="ig-highlight__label" data-en="Gallery">Galeria</span></a></li>
+          <li><a class="ig-highlight" href="activitats.html#calendari"><span class="ig-highlight__ring"><span class="ig-highlight__icon" aria-hidden="true">📅</span></span><span class="ig-highlight__label" data-en="Calendar">Calendari</span></a></li>
+          <li><a class="ig-highlight" href="directiu.html"><span class="ig-highlight__ring"><span class="ig-highlight__icon" aria-hidden="true">👥</span></span><span class="ig-highlight__label" data-en="Team">Equip</span></a></li>
+          <li><a class="ig-highlight" href="nosaltres.html#on-som"><span class="ig-highlight__ring"><span class="ig-highlight__icon" aria-hidden="true">📍</span></span><span class="ig-highlight__label" data-en="Where we are">On som</span></a></li>
+          <li><a class="ig-highlight" href="#test"><span class="ig-highlight__ring"><span class="ig-highlight__icon" aria-hidden="true">🧭</span></span><span class="ig-highlight__label" data-en="Quiz">Test</span></a></li>
+          <li><a class="ig-highlight" href="contacte.html#uneix-te"><span class="ig-highlight__ring"><span class="ig-highlight__icon" aria-hidden="true">✨</span></span><span class="ig-highlight__label" data-en="Join us">Uneix-te</span></a></li>
+        </ul>
+      </nav>
 
-      <div class="instagram-section__divider"></div>
-
-      <p class="instagram-section__subtitle" data-en="All our news and activities, updated in real time.">
-        Totes les nostres novetats i activitats actualitzades al moment.
-      </p>
-    </div>
-
-<div class="instagram-section__posts">
       <!--
-        PUBLICACIONS D'INSTAGRAM (targetes pròpies, sense el script d'Instagram,
-        perquè es vegin sempre i ràpid). Per canviar-les:
-        1) Desa la imatge del post a instagram/ (quadrada, 800 × 800 px, .jpg),
-           per exemple instagram/post-1.jpg (pots substituir la que hi ha).
+        PUBLICACIONS. Si l'Instagram automàtic està activat (instagram-feed.php,
+        vegeu el README), instagram.js hi posa les 6 últimes publicacions.
+        Si no, es veuen aquestes targetes. Per canviar-les:
+        1) Desa la imatge del post a instagram/ (quadrada, 800 × 800 px, .jpg).
         2) Canvia l'href per l'enllaç del post: https://www.instagram.com/p/CODI/
            (sense ?utm_source=... ni igsh=...).
-        3) Canvia el peu (text en català i data-en en anglès) i l'alt (descripció de la foto).
-        Ordre: de la més nova a la més antiga. Deixa'n 3 (o 6).
+        3) Canvia el peu (text en català i data-en en anglès) i l'alt.
+        Opcional: data-tipus="carrusel" o data-tipus="video" a l'<a> (icona a la
+        cantonada) i la data dins l'overlay:
+        <time class="ig-post__date" datetime="2026-10-16">16 d'octubre de 2026</time>
+        Ordre: de la més nova a la més antiga. Deixa'n 3 o 6.
       -->
-      <a class="ig-post" href="https://www.instagram.com/p/DdWZ_VBjYNg/" target="_blank" rel="noopener noreferrer">
-        <span class="ig-post__media">
-          <img src="instagram/post-1.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Els joves de Rotaract Igualada posen junts, dempeus, amb un soci de Rotary">
-        </span>
-        <span class="ig-post__body">
-          <span class="ig-post__caption" data-en="The Rotaract Igualada team">L'equip de Rotaract Igualada</span>
-          <span class="ig-post__more" data-en="View on Instagram">Veure a Instagram</span>
-        </span>
-      </a>
+      <div class="ig-grid" data-ig="grid">
+        <a class="ig-post" href="https://www.instagram.com/p/DdWZ_VBjYNg/" target="_blank" rel="noopener noreferrer">
+          <span class="ig-post__media"><img src="instagram/post-1.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Els joves de Rotaract Igualada posen junts, dempeus, amb un soci de Rotary"></span>
+          <span class="ig-post__overlay">
+            <span class="ig-post__caption" data-en="The Rotaract Igualada team">L'equip de Rotaract Igualada</span>
+            <span class="ig-post__more" data-en="View on Instagram">Veure a Instagram</span>
+          </span>
+        </a>
+        <a class="ig-post" href="https://www.instagram.com/p/DdI6qTSoX7s/" target="_blank" rel="noopener noreferrer">
+          <span class="ig-post__media"><img src="instagram/post-2.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Foto de grup de tots els assistents al sopar, joves de Rotaract i socis de Rotary"></span>
+          <span class="ig-post__overlay">
+            <span class="ig-post__caption" data-en="The whole Rotary family, all together">La família rotària, tots junts</span>
+            <span class="ig-post__more" data-en="View on Instagram">Veure a Instagram</span>
+          </span>
+        </a>
+        <a class="ig-post" href="https://www.instagram.com/p/DcQqNmWDIUN/" target="_blank" rel="noopener noreferrer">
+          <span class="ig-post__media"><img src="instagram/post-3.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Assistents asseguts a les taules del sopar escoltant els parlaments"></span>
+          <span class="ig-post__overlay">
+            <span class="ig-post__caption" data-en="A dinner to remember">Un sopar per recordar</span>
+            <span class="ig-post__more" data-en="View on Instagram">Veure a Instagram</span>
+          </span>
+        </a>
+      </div>
 
-      <a class="ig-post" href="https://www.instagram.com/p/DdI6qTSoX7s/" target="_blank" rel="noopener noreferrer">
-        <span class="ig-post__media">
-          <img src="instagram/post-2.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Foto de grup de tots els assistents al sopar, joves de Rotaract i socis de Rotary">
-        </span>
-        <span class="ig-post__body">
-          <span class="ig-post__caption" data-en="The whole Rotary family, all together">La família rotària, tots junts</span>
-          <span class="ig-post__more" data-en="View on Instagram">Veure a Instagram</span>
-        </span>
-      </a>
-
-      <a class="ig-post" href="https://www.instagram.com/p/DcQqNmWDIUN/" target="_blank" rel="noopener noreferrer">
-        <span class="ig-post__media">
-          <img src="instagram/post-3.jpg" width="800" height="800" loading="lazy" decoding="async" alt="Assistents asseguts a les taules del sopar escoltant els parlaments">
-        </span>
-        <span class="ig-post__body">
-          <span class="ig-post__caption" data-en="A dinner to remember">Un sopar per recordar</span>
-          <span class="ig-post__more" data-en="View on Instagram">Veure a Instagram</span>
-        </span>
-      </a>
+      <a class="ig-more" href="https://www.instagram.com/rotaractigualada/" target="_blank" rel="noopener noreferrer"><span data-en="See all our posts on Instagram">Veure totes les publicacions a Instagram</span>&nbsp;<span aria-hidden="true">→</span></a>
     </div>
-
-    <div class="instagram-section__follow">
-      <a
-        class="instagram-section__cta"
-        href="https://www.instagram.com/rotaractigualada/"
-        target="_blank"
-        rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.014 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.014 8.332 0 8.741 0 12c0 3.259.014 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-        <span data-en="Follow us on Instagram">Segueix-nos a Instagram</span>
-      </a>
-    </div>
-
   </section>
 
   <!-- =============================================
@@ -772,7 +708,7 @@
           <li><a href="nosaltres.html" data-en="About us">Nosaltres</a></li>
           <li><a href="directiu.html" data-en="Board">Directiu</a></li>
           <li><a href="activitats.html" data-en="Activities">Activitats</a></li>
-          <li><a href="index.html#galeria" data-en="Gallery">Galeria</a></li>
+          <li><a href="activitats.html#galeria" data-en="Gallery">Galeria</a></li>
           <li><a href="contacte.html" data-en="Contact">Contacte</a></li>
         </ul>
       </div>
@@ -806,9 +742,9 @@
   ============================================= -->
   <script src="nav.js?v=35a73008"></script>
   <script src="rotaractigualada.js?v=15d577cf"></script>
-  <script src="galeria.js?v=961b85ec"></script>
   <script src="projectes.js?v=c875be58"></script>
   <script src="test-voluntari.js?v=85fb7873"></script>
+  <script src="instagram.js?v=64d4fbcf"></script>
   <script src="legal-modals.js?v=8b4503ac"></script>
 
   <div id="avisLegalModal" class="legal-modal-overlay">
@@ -1130,7 +1066,7 @@
   </div>
 
   <script src="analytics.js?v=a0662709"></script>
-  <script src="efectes.js?v=db87b92c"></script>
-  <script src="i18n.js?v=98d6744e"></script>
+  <script src="efectes.js?v=b568823c"></script>
+  <script src="i18n.js?v=072ce3b0"></script>
 </body>
 </html>

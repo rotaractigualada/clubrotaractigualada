@@ -23,14 +23,14 @@
 
   /* ── Botons: elevació, premut i onada al clicar ── */
   .btn, .btn-submit, .contact-card__btn, .signup-process__cta-btn,
-  .instagram-section__cta, .header__cta, .mobile-nav__cta, .act-filter-btn,
+  .ig-profile__follow, .header__cta, .mobile-nav__cta, .act-filter-btn,
   .act-hero__tab-btn, .lang-menu__btn, .lang-menu__opt, .qc-card {
     transition-property: transform, box-shadow, background-color, border-color, color, opacity;
     transition-duration: .25s;
     transition-timing-function: cubic-bezier(.2, .8, .2, 1);
   }
   .btn:active, .btn-submit:active, .contact-card__btn:active, .signup-process__cta-btn:active,
-  .instagram-section__cta:active, .header__cta:active, .mobile-nav__cta:active, .act-filter-btn:active,
+  .ig-profile__follow:active, .header__cta:active, .mobile-nav__cta:active, .act-filter-btn:active,
   .act-hero__tab-btn:active, .lang-menu__btn:active, .lang-menu__opt:active, .qc-card:active {
     transform: scale(.97);
     transition-duration: .08s;
@@ -290,7 +290,7 @@ body::before {
 }
 
 /* Seccions sense blocs de color: es veu el fons continu */
-.aboutus-section, .galeria-section, .instagram-section, .contact, .join-cta,
+.aboutus-section, .instagram-section, .contact, .join-cta,
 .nosaltres-bloc, .nosaltres-bloc--alt,
 .act-section--light,
 .directiu-section, .directiu-section--alt,
@@ -324,7 +324,7 @@ body::before {
 }
 
 /* Targetes de vidre (blanc transparent) */
-.aboutus__pillar, .aboutus__stat, .ig-post, .act-card, .junta-card, .soci-card,
+.aboutus__pillar, .aboutus__stat, .act-card, .junta-card, .soci-card,
 .contact-form, .contact-card__item, .faq-item, .signup-process__cta-col {
   background: rgba(255, 255, 255, .66);
   -webkit-backdrop-filter: blur(14px) saturate(150%);

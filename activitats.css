@@ -1153,3 +1153,56 @@
     font-size: 3rem;
   }
 }
+/* ─────────────────────────────────────────────
+   GALERIA DE FOTOS (un àlbum per activitat)
+   El mosaic i el visor són a rotaractigualada.css
+───────────────────────────────────────────── */
+.galeria-albums {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 6vw, 4rem);
+}
+.galeria-album {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+.galeria-album__head {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(47, 47, 150, 0.12);
+}
+.galeria-album__title {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+  font-weight: 800;
+  color: var(--blue);
+}
+.galeria-album__meta {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+.galeria-album__count {
+  flex-shrink: 0;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(218, 26, 93, 0.1);
+  color: var(--pink);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.galeria-album__count:empty { display: none; }
+@media (max-width: 520px) {
+  .galeria-album__head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+}

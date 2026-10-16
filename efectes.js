@@ -41,9 +41,9 @@
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion) return;
 
-  var BUTTONS = '.btn, .btn-submit, .contact-card__btn, .signup-process__cta-btn, .instagram-section__cta, ' +
+  var BUTTONS = '.btn, .btn-submit, .contact-card__btn, .signup-process__cta-btn, .ig-profile__follow, ' +
     '.header__cta, .mobile-nav__cta, .act-filter-btn, .act-hero__tab-btn, .lang-menu__btn, .lang-menu__opt, .qc-card';
-  var TILT = '.ig-post, .qc-card, .act-card, .junta-card, .soci-card, .aboutus__pillar, .galeria__item, .join-cta__step';
+  var TILT = '.qc-card, .act-card, .junta-card, .soci-card, .aboutus__pillar, .galeria__item, .join-cta__step';
   var MAX_TILT = 6; // graus
 
   // L'element ha de poder contenir l'onada o la brillantor sense
