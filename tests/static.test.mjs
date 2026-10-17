@@ -223,9 +223,9 @@ test('tots els textos amb data-en tenen traducció al castellà (i18n.js)', () =
   }
 });
 
-const PERFILS = ['generacions', 'medi', 'motor', 'salut', 'social'];
+const AREES = ['aigua', 'economia', 'educacio', 'malalties', 'maternoinfantil', 'medi', 'pau'];
 
-test('projectes.json: activitats vàlides (municipi de l\'Anoia, dates, perfil del test i nom en 3 idiomes)', () => {
+test('projectes.json: activitats vàlides (municipi de l\'Anoia, dates, àrea de Rotary i nom en 3 idiomes)', () => {
   const { activitats } = JSON.parse(read('projectes.json'));
   const municipis = new Set(JSON.parse(read('anoia.json')).features
     .filter((f) => !f.properties.comarca).map((f) => f.properties.name));
@@ -237,24 +237,35 @@ test('projectes.json: activitats vàlides (municipi de l\'Anoia, dates, perfil d
     assert.ok(municipis.has(a.municipi), `${nom}: «${a.municipi}» no és cap dels 33 municipis de l'Anoia (escriu-lo com al mapa)`);
     assert.ok(isDate(a.data), `${nom}: la data ha de ser AAAA-MM-DD i existir (${a.data})`);
     if (a.fi) assert.ok(isDate(a.fi) && a.fi >= a.data, `${nom}: la data de fi (${a.fi}) no és vàlida`);
-    assert.ok(PERFILS.includes(a.perfil), `${nom}: el perfil «${a.perfil}» no és cap dels del test`);
+    if ('area' in a) assert.ok(AREES.includes(a.area), `${nom}: l'àrea «${a.area}» no és cap de les 7 àrees de Rotary (${AREES.join(', ')})`);
     if (a.estat) assert.match(a.estat, /^(feta|cancel·lada)$/, `${nom}: estat «${a.estat}» (feta o cancel·lada)`);
   }
 });
 
-test('portada: test «Quin voluntari ets?» entre Instagram i Uneix-te, amb 5 preguntes i un resultat per perfil', () => {
+test('portada: test «Quina àrea de Rotary et va més?» entre Instagram i Uneix-te: 7 preguntes amb una resposta per àrea i un resultat per àrea', () => {
   const html = stripComments(read('index.html'));
   const pos = (id) => html.indexOf(`id="${id}"`);
   assert.ok(pos('instagram') < pos('test') && pos('test') < pos('contacte'), 'el test va entre Instagram i Uneix-te');
   const sec = html.slice(pos('test'), pos('contacte'));
-  const questions = sec.split('<div class="quiz__q"').slice(1);
-  assert.equal(questions.length, 5, '5 preguntes');
+  const steps = sec.split('<div class="quiz__step');
+  const questions = steps.find((x) => x.includes('data-step="preguntes"')).split('<div class="quiz__q"').slice(1);
+  assert.equal(questions.length, 7, '7 preguntes');
   questions.forEach((q, i) => {
-    const perfils = [...q.split('<div class="quiz__step')[0].matchAll(/class="quiz__opt" data-perfil="(\w+)"/g)].map((m) => m[1]).sort();
-    assert.deepEqual(perfils, PERFILS, `pregunta ${i + 1}: una resposta de cada perfil`);
+    const arees = [...q.matchAll(/class="quiz__opt" data-area="(\w+)"/g)].map((m) => m[1]).sort();
+    assert.deepEqual(arees, AREES, `pregunta ${i + 1}: una resposta de cada àrea de Rotary`);
   });
-  for (const p of PERFILS) assert.match(sec, new RegExp(`class="quiz__perfil" data-perfil="${p}" hidden`), `resultat del perfil ${p}`);
-  assert.match(sec, /href="contacte\.html#uneix-te"/, 'el resultat porta a «Uneix-te»');
+  const result = steps.find((x) => x.includes('data-step="resultat"'));
+  const blocks = result.split('<div class="quiz__res" ').slice(1);
+  assert.deepEqual(blocks.map((b) => b.match(/^data-area="(\w+)" hidden>/)[1]).sort(), AREES, 'un resultat per àrea');
+  for (const b of blocks) {
+    const area = b.match(/^data-area="(\w+)"/)[1];
+    assert.equal((b.match(/<ul class="quiz__chips">([\s\S]*?)<\/ul>/)[1].match(/<li>/g) || []).length, 3, `${area}: 3 motius`);
+    assert.equal((b.match(/<ul class="quiz__ideas">([\s\S]*?)<\/ul>/)[1].match(/<li>/g) || []).length, 3, `${area}: 3 idees per al club`);
+    assert.match(b, /class="quiz__area-fact"/, `${area}: dada de Rotary`);
+    assert.match(b, /class="quiz__res-short" hidden>/, `${area}: nom curt per a la barreja`);
+  }
+  assert.match(result, /href="contacte\.html#uneix-te"/, 'el resultat porta a «Uneix-te»');
+  assert.match(result, /data-quiz="copy"/, 'es pot copiar el resultat');
   assert.match(html, /<script src="projectes\.js[^"]*"><\/script>\s*<script src="test-voluntari\.js/);
 });
 

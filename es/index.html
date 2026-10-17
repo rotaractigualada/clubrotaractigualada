@@ -83,7 +83,7 @@
   <meta name="theme-color" content="#da1a5d">
   <link rel="stylesheet" href="../i18n.css?v=788d4587">
   <link rel="stylesheet" href="../instagram.css?v=bc64afba">
-  <link rel="stylesheet" href="../test-voluntari.css?v=c18189d2">
+  <link rel="stylesheet" href="../test-voluntari.css?v=9e9c0574">
   <link rel="stylesheet" href="../efectes.css?v=a0de8e85">
 </head>
 
@@ -446,21 +446,24 @@
   </section>
 
   <!-- =============================================
-       TEST «QUIN VOLUNTARI ETS?»
-       5 preguntes: cada resposta suma un punt a un perfil (medi, social,
-       salut, generacions o motor). El resultat proposa les activitats del
-       club del mateix perfil (camp «perfil» de projectes.json). Tot passa
-       al navegador: no s'envia ni es desa cap resposta.
+       TEST «QUINA ÀREA DE ROTARY ET VA MÉS?»
+       7 preguntes amb 7 respostes cadascuna: cada resposta suma un punt a
+       una de les 7 àrees d'interès de Rotary (pau, malalties, aigua,
+       maternoinfantil, educacio, economia o medi). El resultat diu l'àrea
+       que més et va (per què, què hi pots fer al club, què fa Rotary i les
+       activitats del club d'aquesta àrea: camp «area» de projectes.json),
+       la segona i la barreja de les 7. Tot passa al navegador: no s'envia
+       ni es desa cap resposta.
   ============================================= -->
   <section class="quiz-section" id="test" aria-labelledby="quizTitle">
     <div class="container">
       <div class="quiz-section__header">
         <div class="section__eyebrow">
           <span class="section__eyebrow-dot"></span>
-          <span data-en="1-minute test" data-ca="Test d'1 minut">Test de 1 minuto</span>
+          <span data-en="2-minute test" data-ca="Test de 2 minuts">Test de 2 minutos</span>
         </div>
-        <h2 class="quiz-section__title" id="quizTitle" data-en="What kind of volunteer are you?" data-ca="Quin voluntari ets?">¿Qué voluntario eres?</h2>
-        <p class="quiz-section__subtitle" data-en="Five quick questions to discover your profile and which club activities suit you best." data-ca="Cinc preguntes ràpides per descobrir el teu perfil i quines activitats del club et van més.">Cinco preguntas rápidas para descubrir tu perfil y qué actividades del club te van más.</p>
+        <h2 class="quiz-section__title" id="quizTitle" data-en="Which Rotary area of focus suits you best?" data-ca="Quina àrea de Rotary et va més?">¿Qué área de Rotary va más contigo?</h2>
+        <p class="quiz-section__subtitle" data-en="Seven questions to discover which of Rotary's 7 areas of focus you connect with most, why it suits you and what you can do in the club." data-ca="Set preguntes per descobrir amb quina de les 7 àrees d'interès de Rotary connectes més, per què et va i què hi pots fer al club.">Siete preguntas para descubrir con cuál de las 7 áreas de interés de Rotary conectas más, por qué va contigo y qué puedes hacer en el club.</p>
       </div>
 
       <div class="quiz" id="quiz">
@@ -468,8 +471,8 @@
 
         <!-- Inici -->
         <div class="quiz__step quiz__step--start" data-step="inici">
-          <div class="quiz__emojis" aria-hidden="true"><span>🌱</span><span>🤝</span><span>❤️</span><span>🧩</span><span>⚡</span></div>
-          <p class="quiz__lead" data-en="5 questions · 1 minute · 5 possible profiles" data-ca="5 preguntes · 1 minut · 5 perfils possibles">5 preguntas · 1 minuto · 5 perfiles posibles</p>
+          <div class="quiz__emojis" aria-hidden="true"><span>🕊️</span><span>💉</span><span>🚰</span><span>👶</span><span>📚</span><span>💼</span><span>🌍</span></div>
+          <p class="quiz__lead" data-en="7 questions · 2 minutes · 7 Rotary areas of focus" data-ca="7 preguntes · 2 minuts · 7 àrees de Rotary">7 preguntas · 2 minutos · 7 áreas de Rotary</p>
           <button type="button" class="btn btn--primary quiz__start" data-quiz="start">
             <span data-en="Start the test" data-ca="Comença el test">Empieza el test</span>
             <svg aria-hidden="true" focusable="false" class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -477,118 +480,310 @@
           <p class="quiz__privacy" data-en="Your answers stay in your browser: nothing is sent or saved." data-ca="Les respostes es queden al teu navegador: no s'envia ni es desa res.">Las respuestas se quedan en tu navegador: no se envía ni se guarda nada.</p>
         </div>
 
-        <!-- Preguntes -->
+        <!-- Preguntes: cada resposta (data-area) suma un punt a una de les 7 àrees -->
         <div class="quiz__step quiz__step--questions" data-step="preguntes" hidden="">
           <div class="quiz__top">
             <button type="button" class="quiz__back" data-quiz="back">
               <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
               <span data-en="Back" data-ca="Enrere">Atrás</span>
             </button>
-            <span class="quiz__count" aria-hidden="true"><span data-quiz="num">1</span>/5</span>
+            <span class="quiz__count" aria-hidden="true"><span data-quiz="num">1</span>/7</span>
           </div>
           <div class="quiz__progress" aria-hidden="true"><span class="quiz__progress-bar" data-quiz="bar"></span></div>
           <div class="quiz__q" data-q="1" role="group" aria-labelledby="quizQ1">
             <h3 class="quiz__question" id="quizQ1" tabindex="-1" data-en="A perfect Saturday starts…" data-ca="Un dissabte perfecte comença…">Un sábado perfecto empieza…</h3>
             <div class="quiz__opts">
-              <button type="button" class="quiz__opt" data-perfil="medi"><span class="quiz__opt-emoji" aria-hidden="true">🥾</span><span data-en="With a hike in nature" data-ca="Amb una excursió per la natura">Con una excursión por la naturaleza</span></button>
-              <button type="button" class="quiz__opt" data-perfil="social"><span class="quiz__opt-emoji" aria-hidden="true">🤲</span><span data-en="Lending a hand to someone who needs it" data-ca="Donant un cop de mà a qui ho necessita">Echando una mano a quien lo necesita</span></button>
-              <button type="button" class="quiz__opt" data-perfil="salut"><span class="quiz__opt-emoji" aria-hidden="true">🏃</span><span data-en="Going for a run or doing sport" data-ca="Sortint a córrer o fent esport">Saliendo a correr o haciendo deporte</span></button>
-              <button type="button" class="quiz__opt" data-perfil="generacions"><span class="quiz__opt-emoji" aria-hidden="true">☕</span><span data-en="Having breakfast with my grandparents" data-ca="Esmorzant amb els avis">Desayunando con los abuelos</span></button>
-              <button type="button" class="quiz__opt" data-perfil="motor"><span class="quiz__opt-emoji" aria-hidden="true">📋</span><span data-en="Organising plans for the whole group" data-ca="Organitzant el pla de tota la colla">Organizando el plan de todo el grupo</span></button>
+              <button type="button" class="quiz__opt" data-area="medi"><span class="quiz__opt-emoji" aria-hidden="true">🥾</span><span data-en="With a hike in nature" data-ca="Amb una excursió per la natura">Con una excursión por la naturaleza</span></button>
+              <button type="button" class="quiz__opt" data-area="educacio"><span class="quiz__opt-emoji" aria-hidden="true">📚</span><span data-en="With a good book or learning something new" data-ca="Amb un bon llibre o aprenent alguna cosa nova">Con un buen libro o aprendiendo algo nuevo</span></button>
+              <button type="button" class="quiz__opt" data-area="pau"><span class="quiz__opt-emoji" aria-hidden="true">🤝</span><span data-en="Catching up with old friends… and making new ones" data-ca="Retrobant amics de tota la vida… i fent-ne de nous">Reencontrando a amigos de siempre… y haciendo nuevos</span></button>
+              <button type="button" class="quiz__opt" data-area="malalties"><span class="quiz__opt-emoji" aria-hidden="true">🏃</span><span data-en="Going for a run or doing sport" data-ca="Sortint a córrer o fent esport">Saliendo a correr o haciendo deporte</span></button>
+              <button type="button" class="quiz__opt" data-area="economia"><span class="quiz__opt-emoji" aria-hidden="true">☕</span><span data-en="Having breakfast at the local café and shopping at the market" data-ca="Esmorzant al bar del barri i comprant al mercat">Desayunando en el bar del barrio y comprando en el mercado</span></button>
+              <button type="button" class="quiz__opt" data-area="maternoinfantil"><span class="quiz__opt-emoji" aria-hidden="true">🧸</span><span data-en="Babysitting my nieces and nephews or my friends' kids" data-ca="Fent de cangur dels nebots o dels fills dels amics">Haciendo de canguro de mis sobrinos o de los hijos de mis amigos</span></button>
+              <button type="button" class="quiz__opt" data-area="aigua"><span class="quiz__opt-emoji" aria-hidden="true">🏊</span><span data-en="With a swim in the pool, the river or the sea" data-ca="Amb un bany a la piscina, al riu o al mar">Con un baño en la piscina, el río o el mar</span></button>
             </div>
           </div>
           <div class="quiz__q" data-q="2" role="group" aria-labelledby="quizQ2" hidden="">
             <h3 class="quiz__question" id="quizQ2" tabindex="-1" data-en="What would get you off the sofa?" data-ca="Què et faria saltar del sofà?">¿Qué te haría saltar del sofá?</h3>
             <div class="quiz__opts">
-              <button type="button" class="quiz__opt" data-perfil="social"><span class="quiz__opt-emoji" aria-hidden="true">🛒</span><span data-en="Knowing that some families can't make ends meet" data-ca="Saber que hi ha famílies que no arriben a final de mes">Saber que hay familias que no llegan a final de mes</span></button>
-              <button type="button" class="quiz__opt" data-perfil="motor"><span class="quiz__opt-emoji" aria-hidden="true">💡</span><span data-en="A good idea that nobody gets round to organising" data-ca="Una bona idea que ningú es posa a organitzar">Una buena idea que nadie se pone a organizar</span></button>
-              <button type="button" class="quiz__opt" data-perfil="medi"><span class="quiz__opt-emoji" aria-hidden="true">🧴</span><span data-en="Seeing plastic in the Anoia river" data-ca="Veure plàstics al riu Anoia">Ver plásticos en el río Anoia</span></button>
-              <button type="button" class="quiz__opt" data-perfil="generacions"><span class="quiz__opt-emoji" aria-hidden="true">👵</span><span data-en="An elderly person who feels lonely" data-ca="Una persona gran que se sent sola">Una persona mayor que se siente sola</span></button>
-              <button type="button" class="quiz__opt" data-perfil="salut"><span class="quiz__opt-emoji" aria-hidden="true">🚑</span><span data-en="Nobody knowing what to do if someone's heart stops" data-ca="Que ningú sàpiga què fer davant d'una aturada cardíaca">Que nadie sepa qué hacer ante una parada cardíaca</span></button>
+              <button type="button" class="quiz__opt" data-area="economia"><span class="quiz__opt-emoji" aria-hidden="true">🛒</span><span data-en="Knowing that some families can't make ends meet" data-ca="Saber que hi ha famílies que no arriben a final de mes">Saber que hay familias que no llegan a final de mes</span></button>
+              <button type="button" class="quiz__opt" data-area="aigua"><span class="quiz__opt-emoji" aria-hidden="true">🚱</span><span data-en="Knowing there are schools without clean water or toilets" data-ca="Saber que hi ha escoles sense aigua potable ni lavabos">Saber que hay escuelas sin agua potable ni baños</span></button>
+              <button type="button" class="quiz__opt" data-area="pau"><span class="quiz__opt-emoji" aria-hidden="true">📢</span><span data-en="Seeing someone being bullied or discriminated against" data-ca="Veure que algú pateix assetjament o discriminació">Ver que alguien sufre acoso o discriminación</span></button>
+              <button type="button" class="quiz__opt" data-area="malalties"><span class="quiz__opt-emoji" aria-hidden="true">🚑</span><span data-en="Nobody knowing what to do if someone's heart stops" data-ca="Que ningú sàpiga què fer davant d'una aturada cardíaca">Que nadie sepa qué hacer ante una parada cardíaca</span></button>
+              <button type="button" class="quiz__opt" data-area="medi"><span class="quiz__opt-emoji" aria-hidden="true">🗑️</span><span data-en="Seeing the woods full of rubbish" data-ca="Veure el bosc ple de deixalles">Ver el bosque lleno de basura</span></button>
+              <button type="button" class="quiz__opt" data-area="educacio"><span class="quiz__opt-emoji" aria-hidden="true">✏️</span><span data-en="A child who can't do their homework because nobody helps them" data-ca="Un infant que no pot fer els deures perquè ningú l'ajuda">Un niño que no puede hacer los deberes porque nadie le ayuda</span></button>
+              <button type="button" class="quiz__opt" data-area="maternoinfantil"><span class="quiz__opt-emoji" aria-hidden="true">🍼</span><span data-en="A single mother who can't afford what her baby needs" data-ca="Una mare sola que no pot comprar el que necessita el seu nadó">Una madre sola que no puede comprar lo que necesita su bebé</span></button>
             </div>
           </div>
           <div class="quiz__q" data-q="3" role="group" aria-labelledby="quizQ3" hidden="">
-            <h3 class="quiz__question" id="quizQ3" tabindex="-1" data-en="In your group of friends, you're the one who…" data-ca="A la colla, tu ets qui…">En tu grupo, tú eres quien…</h3>
+            <h3 class="quiz__question" id="quizQ3" tabindex="-1" data-en="If you could change one thing in the world, what would it be?" data-ca="Si poguessis canviar una cosa del món, quina seria?">Si pudieras cambiar una cosa del mundo, ¿cuál sería?</h3>
             <div class="quiz__opts">
-              <button type="button" class="quiz__opt" data-perfil="generacions"><span class="quiz__opt-emoji" aria-hidden="true">🧩</span><span data-en="Brings everyone together, young and old" data-ca="Fa de pont entre tothom, petits i grans">Hace de puente entre todos, pequeños y mayores</span></button>
-              <button type="button" class="quiz__opt" data-perfil="salut"><span class="quiz__opt-emoji" aria-hidden="true">🍎</span><span data-en="Makes sure everyone is OK" data-ca="Vetlla perquè tothom estigui bé">Se asegura de que todos estén bien</span></button>
-              <button type="button" class="quiz__opt" data-perfil="motor"><span class="quiz__opt-emoji" aria-hidden="true">📣</span><span data-en="Gets everyone excited and has a thousand ideas" data-ca="Engresca tothom i té mil idees">Anima a todo el mundo y tiene mil ideas</span></button>
-              <button type="button" class="quiz__opt" data-perfil="social"><span class="quiz__opt-emoji" aria-hidden="true">👂</span><span data-en="Listens and is always there when needed" data-ca="Escolta i sempre hi és quan cal">Escucha y siempre está cuando hace falta</span></button>
-              <button type="button" class="quiz__opt" data-perfil="medi"><span class="quiz__opt-emoji" aria-hidden="true">♻️</span><span data-en="Recycles and reminds everyone not to waste anything" data-ca="Recicla i recorda que no llencem res">Recicla y recuerda que no tiremos nada</span></button>
+              <button type="button" class="quiz__opt" data-area="pau"><span class="quiz__opt-emoji" aria-hidden="true">🕊️</span><span data-en="An end to wars, and learning to live together" data-ca="Que s'acabin les guerres i aprenguem a conviure">Que se acaben las guerras y aprendamos a convivir</span></button>
+              <button type="button" class="quiz__opt" data-area="malalties"><span class="quiz__opt-emoji" aria-hidden="true">💉</span><span data-en="Nobody dying of a disease that can be prevented" data-ca="Que ningú mori d'una malaltia que es pot prevenir">Que nadie muera de una enfermedad que se puede prevenir</span></button>
+              <button type="button" class="quiz__opt" data-area="aigua"><span class="quiz__opt-emoji" aria-hidden="true">🚰</span><span data-en="Everyone having clean water and a decent toilet" data-ca="Que tothom tingui aigua potable i un lavabo digne">Que todo el mundo tenga agua potable y un baño digno</span></button>
+              <button type="button" class="quiz__opt" data-area="maternoinfantil"><span class="quiz__opt-emoji" aria-hidden="true">👶</span><span data-en="No mother or baby going without medical care" data-ca="Que cap mare ni cap nadó es quedi sense atenció mèdica">Que ninguna madre ni ningún bebé se quede sin atención médica</span></button>
+              <button type="button" class="quiz__opt" data-area="educacio"><span class="quiz__opt-emoji" aria-hidden="true">📚</span><span data-en="Every child being able to go to school and learn to read" data-ca="Que tots els infants puguin anar a l'escola i aprendre a llegir">Que todos los niños puedan ir a la escuela y aprender a leer</span></button>
+              <button type="button" class="quiz__opt" data-area="economia"><span class="quiz__opt-emoji" aria-hidden="true">💼</span><span data-en="Everyone having a job and the chance to get ahead" data-ca="Que tothom tingui feina i oportunitats per tirar endavant">Que todo el mundo tenga trabajo y oportunidades para salir adelante</span></button>
+              <button type="button" class="quiz__opt" data-area="medi"><span class="quiz__opt-emoji" aria-hidden="true">🌍</span><span data-en="Looking after the planet and slowing down climate change" data-ca="Que cuidem el planeta i frenem el canvi climàtic">Que cuidemos el planeta y frenemos el cambio climático</span></button>
             </div>
           </div>
           <div class="quiz__q" data-q="4" role="group" aria-labelledby="quizQ4" hidden="">
-            <h3 class="quiz__question" id="quizQ4" tabindex="-1" data-en="You have €500 to improve Igualada. What do you do?" data-ca="Tens 500 € per millorar Igualada. Què hi fas?">Tienes 500 € para mejorar Igualada. ¿Qué haces?</h3>
+            <h3 class="quiz__question" id="quizQ4" tabindex="-1" data-en="In your group of friends, you're the one who…" data-ca="A la colla, tu ets qui…">En tu grupo, tú eres quien…</h3>
             <div class="quiz__opts">
-              <button type="button" class="quiz__opt" data-perfil="salut"><span class="quiz__opt-emoji" aria-hidden="true">❤️</span><span data-en="Defibrillators and first-aid courses" data-ca="Desfibril·ladors i cursos de primers auxilis">Desfibriladores y cursos de primeros auxilios</span></button>
-              <button type="button" class="quiz__opt" data-perfil="medi"><span class="quiz__opt-emoji" aria-hidden="true">🌳</span><span data-en="New trees and a river clean-up" data-ca="Arbres nous i una neteja del riu">Árboles nuevos y una limpieza del río</span></button>
-              <button type="button" class="quiz__opt" data-perfil="motor"><span class="quiz__opt-emoji" aria-hidden="true">🎉</span><span data-en="A charity party that gets the whole town moving" data-ca="Una festa solidària que mogui tota la ciutat">Una fiesta solidaria que mueva a toda la ciudad</span></button>
-              <button type="button" class="quiz__opt" data-perfil="generacions"><span class="quiz__opt-emoji" aria-hidden="true">📱</span><span data-en="Workshops where young and old learn together" data-ca="Tallers on joves i gent gran aprenguin junts">Talleres donde jóvenes y mayores aprendan juntos</span></button>
-              <button type="button" class="quiz__opt" data-perfil="social"><span class="quiz__opt-emoji" aria-hidden="true">🥫</span><span data-en="Food parcels for families in need" data-ca="Lots de menjar per a les famílies que ho necessiten">Lotes de comida para las familias que lo necesitan</span></button>
+              <button type="button" class="quiz__opt" data-area="maternoinfantil"><span class="quiz__opt-emoji" aria-hidden="true">👶</span><span data-en="Melts around babies and children" data-ca="Es desfà amb els nadons i els infants">Se derrite con los bebés y los niños</span></button>
+              <button type="button" class="quiz__opt" data-area="pau"><span class="quiz__opt-emoji" aria-hidden="true">🕊️</span><span data-en="Makes peace when there's tension" data-ca="Posa pau quan hi ha mal rotllo">Pone paz cuando hay mal rollo</span></button>
+              <button type="button" class="quiz__opt" data-area="economia"><span class="quiz__opt-emoji" aria-hidden="true">💡</span><span data-en="Always has a business idea up their sleeve" data-ca="Sempre té una idea de negoci entre mans">Siempre tiene una idea de negocio entre manos</span></button>
+              <button type="button" class="quiz__opt" data-area="malalties"><span class="quiz__opt-emoji" aria-hidden="true">🩹</span><span data-en="Always carries plasters and painkillers in their bag" data-ca="Sempre porta tiretes i ibuprofèn a la motxilla">Siempre lleva tiritas e ibuprofeno en la mochila</span></button>
+              <button type="button" class="quiz__opt" data-area="educacio"><span class="quiz__opt-emoji" aria-hidden="true">🧠</span><span data-en="Explains things so everyone understands them" data-ca="Explica les coses perquè tothom les entengui">Explica las cosas para que todo el mundo las entienda</span></button>
+              <button type="button" class="quiz__opt" data-area="aigua"><span class="quiz__opt-emoji" aria-hidden="true">💧</span><span data-en="Reminds you to drink water and takes a water bottle everywhere" data-ca="Et recorda que beguis aigua i porta la cantimplora a tot arreu">Te recuerda que bebas agua y lleva la cantimplora a todas partes</span></button>
+              <button type="button" class="quiz__opt" data-area="medi"><span class="quiz__opt-emoji" aria-hidden="true">♻️</span><span data-en="Recycles and reminds everyone not to waste anything" data-ca="Recicla i recorda que no llencem res">Recicla y recuerda que no tiremos nada</span></button>
             </div>
           </div>
           <div class="quiz__q" data-q="5" role="group" aria-labelledby="quizQ5" hidden="">
-            <h3 class="quiz__question" id="quizQ5" tabindex="-1" data-en="Which superpower would you choose?" data-ca="Quin superpoder triaries?">¿Qué superpoder elegirías?</h3>
+            <h3 class="quiz__question" id="quizQ5" tabindex="-1" data-en="You have €500 to improve Igualada. What do you do?" data-ca="Tens 500 € per millorar Igualada. Què hi fas?">Tienes 500 € para mejorar Igualada. ¿Qué haces?</h3>
             <div class="quiz__opts">
-              <button type="button" class="quiz__opt" data-perfil="motor"><span class="quiz__opt-emoji" aria-hidden="true">⚡</span><span data-en="Endless energy" data-ca="Energia infinita">Energía infinita</span></button>
-              <button type="button" class="quiz__opt" data-perfil="social"><span class="quiz__opt-emoji" aria-hidden="true">🫶</span><span data-en="Knowing what anyone needs just by looking at them" data-ca="Saber què necessita cadascú només de mirar-lo">Saber qué necesita cada uno con solo mirarle</span></button>
-              <button type="button" class="quiz__opt" data-perfil="medi"><span class="quiz__opt-emoji" aria-hidden="true">🌱</span><span data-en="Making plants grow wherever I touch" data-ca="Fer créixer plantes allà on toco">Hacer crecer plantas allá donde toco</span></button>
-              <button type="button" class="quiz__opt" data-perfil="generacions"><span class="quiz__opt-emoji" aria-hidden="true">⏳</span><span data-en="Travelling in time to hear stories from the past" data-ca="Viatjar en el temps per escoltar històries d'abans">Viajar en el tiempo para escuchar historias de antes</span></button>
-              <button type="button" class="quiz__opt" data-perfil="salut"><span class="quiz__opt-emoji" aria-hidden="true">🩺</span><span data-en="Healing any wound" data-ca="Curar qualsevol ferida">Curar cualquier herida</span></button>
+              <button type="button" class="quiz__opt" data-area="malalties"><span class="quiz__opt-emoji" aria-hidden="true">❤️</span><span data-en="Defibrillators and first-aid courses" data-ca="Desfibril·ladors i cursos de primers auxilis">Desfibriladores y cursos de primeros auxilios</span></button>
+              <button type="button" class="quiz__opt" data-area="pau"><span class="quiz__opt-emoji" aria-hidden="true">🎉</span><span data-en="An intercultural festival to meet all the neighbours" data-ca="Una festa intercultural per conèixer tots els veïns">Una fiesta intercultural para conocer a todos los vecinos</span></button>
+              <button type="button" class="quiz__opt" data-area="medi"><span class="quiz__opt-emoji" aria-hidden="true">🌳</span><span data-en="New trees and more green spaces" data-ca="Arbres nous i més zones verdes">Árboles nuevos y más zonas verdes</span></button>
+              <button type="button" class="quiz__opt" data-area="educacio"><span class="quiz__opt-emoji" aria-hidden="true">🎒</span><span data-en="School supplies and free tutoring" data-ca="Material escolar i classes de reforç gratuïtes">Material escolar y clases de refuerzo gratuitas</span></button>
+              <button type="button" class="quiz__opt" data-area="aigua"><span class="quiz__opt-emoji" aria-hidden="true">🚰</span><span data-en="Drinking fountains in parks and schools" data-ca="Fonts d'aigua potable als parcs i a les escoles">Fuentes de agua potable en los parques y las escuelas</span></button>
+              <button type="button" class="quiz__opt" data-area="maternoinfantil"><span class="quiz__opt-emoji" aria-hidden="true">🍼</span><span data-en="A space for families with babies, with clothes and nappies" data-ca="Un espai per a famílies amb nadons, amb roba i bolquers">Un espacio para familias con bebés, con ropa y pañales</span></button>
+              <button type="button" class="quiz__opt" data-area="economia"><span class="quiz__opt-emoji" aria-hidden="true">🛍️</span><span data-en="A fair to showcase young entrepreneurs and local shops" data-ca="Una fira per donar a conèixer joves emprenedors i el comerç local">Una feria para dar a conocer a jóvenes emprendedores y el comercio local</span></button>
+            </div>
+          </div>
+          <div class="quiz__q" data-q="6" role="group" aria-labelledby="quizQ6" hidden="">
+            <h3 class="quiz__question" id="quizQ6" tabindex="-1" data-en="And here in Anoia, where would you do your bit?" data-ca="I aquí, a l'Anoia, on posaries el teu granet de sorra?">Y aquí, en el Anoia, ¿dónde pondrías tu granito de arena?</h3>
+            <div class="quiz__opts">
+              <button type="button" class="quiz__opt" data-area="educacio"><span class="quiz__opt-emoji" aria-hidden="true">📖</span><span data-en="Homework help and workshops so children learn more" data-ca="Reforç escolar i tallers perquè els infants aprenguin més">Refuerzo escolar y talleres para que los niños aprendan más</span></button>
+              <button type="button" class="quiz__opt" data-area="medi"><span class="quiz__opt-emoji" aria-hidden="true">🌳</span><span data-en="Tree planting and clean-ups in nature" data-ca="Plantades d'arbres i neteges a la natura">Plantadas de árboles y limpiezas en la naturaleza</span></button>
+              <button type="button" class="quiz__opt" data-area="malalties"><span class="quiz__opt-emoji" aria-hidden="true">🩸</span><span data-en="Blood donation and prevention campaigns" data-ca="Campanyes de donació de sang i de prevenció">Campañas de donación de sangre y de prevención</span></button>
+              <button type="button" class="quiz__opt" data-area="economia"><span class="quiz__opt-emoji" aria-hidden="true">🚀</span><span data-en="Helping young people find a job or launch their own project" data-ca="Ajudar joves a trobar feina o a tirar endavant el seu projecte">Ayudar a jóvenes a encontrar trabajo o a sacar adelante su proyecto</span></button>
+              <button type="button" class="quiz__opt" data-area="aigua"><span class="quiz__opt-emoji" aria-hidden="true">💧</span><span data-en="Looking after the Anoia river and the springs of the region" data-ca="Cuidar el riu Anoia i les fonts de la comarca">Cuidar el río Anoia y las fuentes de la comarca</span></button>
+              <button type="button" class="quiz__opt" data-area="pau"><span class="quiz__opt-emoji" aria-hidden="true">🤝</span><span data-en="Workshops on living together and against bullying in schools" data-ca="Tallers de convivència i contra l'assetjament a les escoles">Talleres de convivencia y contra el acoso en las escuelas</span></button>
+              <button type="button" class="quiz__opt" data-area="maternoinfantil"><span class="quiz__opt-emoji" aria-hidden="true">🍼</span><span data-en="Collecting supplies for families with babies in need" data-ca="Recollir material per a famílies amb nadons que ho necessiten">Recoger material para familias con bebés que lo necesitan</span></button>
+            </div>
+          </div>
+          <div class="quiz__q" data-q="7" role="group" aria-labelledby="quizQ7" hidden="">
+            <h3 class="quiz__question" id="quizQ7" tabindex="-1" data-en="Which superpower would you choose?" data-ca="Quin superpoder triaries?">¿Qué superpoder elegirías?</h3>
+            <div class="quiz__opts">
+              <button type="button" class="quiz__opt" data-area="aigua"><span class="quiz__opt-emoji" aria-hidden="true">💧</span><span data-en="Making clean water spring up wherever it's needed" data-ca="Fer brollar aigua neta allà on calgui">Hacer brotar agua limpia donde haga falta</span></button>
+              <button type="button" class="quiz__opt" data-area="economia"><span class="quiz__opt-emoji" aria-hidden="true">✨</span><span data-en="Turning any idea into a job" data-ca="Convertir qualsevol idea en una feina">Convertir cualquier idea en un trabajo</span></button>
+              <button type="button" class="quiz__opt" data-area="medi"><span class="quiz__opt-emoji" aria-hidden="true">🌱</span><span data-en="Making plants grow wherever I touch" data-ca="Fer créixer plantes allà on toco">Hacer crecer plantas allá donde toco</span></button>
+              <button type="button" class="quiz__opt" data-area="maternoinfantil"><span class="quiz__opt-emoji" aria-hidden="true">🛡️</span><span data-en="Protecting every baby in the world" data-ca="Protegir tots els nadons del món">Proteger a todos los bebés del mundo</span></button>
+              <button type="button" class="quiz__opt" data-area="malalties"><span class="quiz__opt-emoji" aria-hidden="true">🩺</span><span data-en="Healing any wound" data-ca="Curar qualsevol ferida">Curar cualquier herida</span></button>
+              <button type="button" class="quiz__opt" data-area="pau"><span class="quiz__opt-emoji" aria-hidden="true">🫶</span><span data-en="Getting two people at odds to understand each other" data-ca="Fer que dues persones enfrontades s'entenguin">Hacer que dos personas enfrentadas se entiendan</span></button>
+              <button type="button" class="quiz__opt" data-area="educacio"><span class="quiz__opt-emoji" aria-hidden="true">🧠</span><span data-en="Teaching anything in a minute" data-ca="Ensenyar qualsevol cosa en un minut">Enseñar cualquier cosa en un minuto</span></button>
             </div>
           </div>
         </div>
 
-        <!-- Resultat -->
+        <!-- Resultat: l'àrea de Rotary que més et va -->
         <div class="quiz__step quiz__step--result" data-step="resultat" hidden="">
-          <p class="quiz__result-eyebrow" data-en="Your profile" data-ca="El teu perfil">Tu perfil</p>
-          <div class="quiz__perfil" data-perfil="medi" hidden="">
-            <span class="quiz__perfil-emoji" aria-hidden="true">🌱</span>
-            <h3 class="quiz__perfil-name" tabindex="-1" data-en="Green spirit" data-ca="Esperit verd">Espíritu verde</h3>
-            <p class="quiz__perfil-desc" data-en="You care about the planet and you show it. You're the ideal person for river clean-ups, tree planting and anything that makes Anoia a little greener." data-ca="Et mou el planeta i ho demostres amb fets. Ets la persona ideal per a neteges del riu, plantades d'arbres i tot el que faci l'Anoia una mica més verda.">Te mueve el planeta y lo demuestras con hechos. Eres la persona ideal para limpiezas del río, plantadas de árboles y todo lo que haga el Anoia un poco más verde.</p>
-          </div>
-          <div class="quiz__perfil" data-perfil="social" hidden="">
-            <span class="quiz__perfil-emoji" aria-hidden="true">🤝</span>
-            <h3 class="quiz__perfil-name" tabindex="-1" data-en="Big heart" data-ca="Cor solidari">Corazón solidario</h3>
-            <p class="quiz__perfil-desc" data-en="When someone is having a hard time, you're the first to lend a hand. Food drives, charity stalls and projects with social organisations are where you belong." data-ca="Quan algú ho passa malament, ets qui primer hi dona un cop de mà. Recaptes d'aliments, paradetes solidàries i projectes amb entitats socials són el teu lloc.">Cuando alguien lo pasa mal, eres quien primero echa una mano. Recogidas de alimentos, puestos solidarios y proyectos con entidades sociales son tu sitio.</p>
-          </div>
-          <div class="quiz__perfil" data-perfil="salut" hidden="">
-            <span class="quiz__perfil-emoji" aria-hidden="true">❤️</span>
-            <h3 class="quiz__perfil-name" tabindex="-1" data-en="Healthy energy" data-ca="Energia saludable">Energía saludable</h3>
-            <p class="quiz__perfil-desc" data-en="Sport, health and wellbeing are in your DNA. Charity runs, first-aid workshops and blood donation drives have your name on them." data-ca="Esport, salut i benestar: ho portes a dins. Curses solidàries, tallers de primers auxilis i campanyes de donació de sang porten el teu nom.">Deporte, salud y bienestar: lo llevas dentro. Carreras solidarias, talleres de primeros auxilios y campañas de donación de sangre llevan tu nombre.</p>
-          </div>
-          <div class="quiz__perfil" data-perfil="generacions" hidden="">
-            <span class="quiz__perfil-emoji" aria-hidden="true">🧩</span>
-            <h3 class="quiz__perfil-name" tabindex="-1" data-en="Bridge between generations" data-ca="Pont entre generacions">Puente entre generaciones</h3>
-            <p class="quiz__perfil-desc" data-en="You love bringing people of all ages together. Workshops with older people, activities with children and projects where everyone learns from everyone." data-ca="T'encanta connectar persones de totes les edats. Tallers amb gent gran, activitats amb infants i projectes on tothom aprèn de tothom.">Te encanta conectar a personas de todas las edades. Talleres con gente mayor, actividades con niños y proyectos donde todos aprenden de todos.</p>
-          </div>
-          <div class="quiz__perfil" data-perfil="motor" hidden="">
-            <span class="quiz__perfil-emoji" aria-hidden="true">⚡</span>
-            <h3 class="quiz__perfil-name" tabindex="-1" data-en="Team engine" data-ca="Motor de l'equip">Motor del equipo</h3>
-            <p class="quiz__perfil-desc" data-en="You have ideas, energy and the drive to make them happen. Organising events, getting people on board and making things happen is your superpower." data-ca="Tens idees, energia i ganes de fer-les realitat. Organitzar esdeveniments, engrescar la gent i fer que les coses passin és el teu superpoder.">Tienes ideas, energía y ganas de hacerlas realidad. Organizar eventos, animar a la gente y hacer que las cosas pasen es tu superpoder.</p>
-          </div>
-          <div class="quiz__result-grid">
-            <div class="quiz__mix">
-              <p class="quiz__subhead" data-en="Your mix" data-ca="La teva barreja">Tu mezcla</p>
-              <ul class="quiz__bars" data-quiz="bars"></ul>
+          <p class="quiz__result-eyebrow" data-en="Your Rotary area of focus" data-ca="La teva àrea de Rotary">Tu área de Rotary</p>
+          <div class="quiz__res" data-area="pau" hidden="">
+            <span class="quiz__res-emoji" aria-hidden="true">🕊️</span>
+            <h3 class="quiz__res-name" tabindex="-1" data-en="Promoting peace" data-ca="Construcció de la pau i prevenció de conflictes">Construcción de la paz y prevención de conflictos</h3>
+            <p class="quiz__res-desc" data-en="You bring people together: you care about living side by side and solving conflicts by talking." data-ca="Ets de les persones que uneixen: et mou la convivència i que els conflictes es resolguin parlant.">Eres de las personas que unen: te mueve la convivencia y que los conflictos se resuelvan hablando.</p>
+            <span class="quiz__res-short" hidden=""><span data-en="Peace" data-ca="Pau">Paz</span></span>
+            <div class="quiz__res-grid">
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="Why it suits you" data-ca="Per què et va">Por qué va contigo</p>
+                <ul class="quiz__chips"><li><span data-en="Empathy" data-ca="Empatia">Empatía</span></li><li><span data-en="Dialogue" data-ca="Diàleg">Diálogo</span></li><li><span data-en="Open-mindedness" data-ca="Mirada oberta">Mente abierta</span></li></ul>
+              </div>
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="What you can do in the club" data-ca="Què pots fer al club">Qué puedes hacer en el club</p>
+                <ul class="quiz__ideas">
+                  <li><span data-en="Organising intercultural meetings and community activities" data-ca="Organitzar trobades interculturals i activitats de convivència">Organizar encuentros interculturales y actividades de convivencia</span></li>
+                  <li><span data-en="Suggesting anti-bullying workshops in secondary schools" data-ca="Proposar tallers contra l'assetjament als instituts">Proponer talleres contra el acoso en los institutos</span></li>
+                  <li><span data-en="Meeting young people from other countries at district and international events" data-ca="Conèixer joves d'altres països a les trobades del districte i internacionals">Conocer a jóvenes de otros países en los encuentros del distrito e internacionales</span></li>
+                </ul>
+              </div>
             </div>
+            <div class="quiz__area-box">
+              <p class="quiz__subhead" data-en="What Rotary does in this area" data-ca="Què fa Rotary en aquesta àrea">Qué hace Rotary en esta área</p>
+              <p class="quiz__area-desc" data-en="Training leaders who resolve conflicts through dialogue, helping refugees and encouraging people to live together." data-ca="Formar líders que resolguin els conflictes amb diàleg, ajudar persones refugiades i fomentar la convivència.">Formar líderes que resuelvan los conflictos con diálogo, ayudar a personas refugiadas y fomentar la convivencia.</p>
+              <p class="quiz__area-fact"><strong><span data-en="Did you know…" data-ca="Sabies que…">¿Sabías que…</span></strong> <span data-en="Every year, Rotary awards up to 130 fellowships to study peace at its Peace Centers." data-ca="Cada any, Rotary ofereix fins a 130 beques per formar-se en pau als seus Centres de la Pau.">Cada año, Rotary ofrece hasta 130 becas para formarse en paz en sus Centros de la Paz.</span></p>
+            </div>
+          </div>
+          <div class="quiz__res" data-area="malalties" hidden="">
+            <span class="quiz__res-emoji" aria-hidden="true">💉</span>
+            <h3 class="quiz__res-name" tabindex="-1" data-en="Fighting disease" data-ca="Prevenció i tractament de malalties">Prevención y tratamiento de enfermedades</h3>
+            <p class="quiz__res-desc" data-en="You care about everyone's health: preventing before curing, and knowing how to act when it matters." data-ca="Et mou la salut de tothom: prevenir abans que curar i saber actuar quan cal.">Te mueve la salud de todos: prevenir antes que curar y saber actuar cuando hace falta.</p>
+            <span class="quiz__res-short" hidden=""><span data-en="Disease" data-ca="Malalties">Enfermedades</span></span>
+            <div class="quiz__res-grid">
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="Why it suits you" data-ca="Per què et va">Por qué va contigo</p>
+                <ul class="quiz__chips"><li><span data-en="Caring for others" data-ca="Cura dels altres">Cuidar de los demás</span></li><li><span data-en="Responsibility" data-ca="Responsabilitat">Responsabilidad</span></li><li><span data-en="Calm under pressure" data-ca="Sang freda">Sangre fría</span></li></ul>
+              </div>
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="What you can do in the club" data-ca="Què pots fer al club">Qué puedes hacer en el club</p>
+                <ul class="quiz__ideas">
+                  <li><span data-en="Organising blood donation drives" data-ca="Organitzar campanyes de donació de sang">Organizar campañas de donación de sangre</span></li>
+                  <li><span data-en="Promoting first-aid and CPR workshops" data-ca="Impulsar tallers de primers auxilis i RCP">Impulsar talleres de primeros auxilios y RCP</span></li>
+                  <li><span data-en="Setting up charity runs and challenges for research" data-ca="Muntar curses i reptes solidaris per a la recerca">Montar carreras y retos solidarios para la investigación</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="quiz__area-box">
+              <p class="quiz__subhead" data-en="What Rotary does in this area" data-ca="Què fa Rotary en aquesta àrea">Qué hace Rotary en esta área</p>
+              <p class="quiz__area-desc" data-en="Vaccination and prevention campaigns, health training and support for hospitals and health centres." data-ca="Campanyes de vacunació i de prevenció, formació sanitària i suport a hospitals i centres de salut.">Campañas de vacunación y de prevención, formación sanitaria y apoyo a hospitales y centros de salud.</p>
+              <p class="quiz__area-fact"><strong><span data-en="Did you know…" data-ca="Sabies que…">¿Sabías que…</span></strong> <span data-en="Rotary has been fighting polio since 1985, and cases have fallen by 99.9%." data-ca="Rotary lluita contra la poliomielitis des del 1985 i els casos s'han reduït un 99,9%.">Rotary lucha contra la poliomielitis desde 1985 y los casos se han reducido un 99,9 %.</span></p>
+            </div>
+          </div>
+          <div class="quiz__res" data-area="aigua" hidden="">
+            <span class="quiz__res-emoji" aria-hidden="true">🚰</span>
+            <h3 class="quiz__res-name" tabindex="-1" data-en="Providing clean water, sanitation and hygiene" data-ca="Aigua, sanejament i higiene">Agua, saneamiento e higiene</h3>
+            <p class="quiz__res-desc" data-en="You know water is life: you care that everyone has clean, safe water." data-ca="Saps que l'aigua és vida: et mou que tothom en tingui de neta i segura.">Sabes que el agua es vida: te mueve que todo el mundo la tenga limpia y segura.</p>
+            <span class="quiz__res-short" hidden=""><span data-en="Water" data-ca="Aigua">Agua</span></span>
+            <div class="quiz__res-grid">
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="Why it suits you" data-ca="Per què et va">Por qué va contigo</p>
+                <ul class="quiz__chips"><li><span data-en="Practical sense" data-ca="Sentit pràctic">Sentido práctico</span></li><li><span data-en="Consistency" data-ca="Constància">Constancia</span></li><li><span data-en="Global outlook" data-ca="Mirada global">Mirada global</span></li></ul>
+              </div>
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="What you can do in the club" data-ca="Què pots fer al club">Qué puedes hacer en el club</p>
+                <ul class="quiz__ideas">
+                  <li><span data-en="Suggesting clean-ups of the Anoia river and the region's springs" data-ca="Proposar neteges del riu Anoia i de les fonts de la comarca">Proponer limpiezas del río Anoia y de las fuentes de la comarca</span></li>
+                  <li><span data-en="Running water-saving campaigns" data-ca="Fer campanyes per estalviar aigua">Hacer campañas para ahorrar agua</span></li>
+                  <li><span data-en="Collaborating on Rotary water projects in other countries" data-ca="Col·laborar en projectes d'aigua de Rotary a altres països">Colaborar en proyectos de agua de Rotary en otros países</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="quiz__area-box">
+              <p class="quiz__subhead" data-en="What Rotary does in this area" data-ca="Què fa Rotary en aquesta àrea">Qué hace Rotary en esta área</p>
+              <p class="quiz__area-desc" data-en="Bringing clean water and toilets to schools and communities, and teaching hygiene habits that save lives." data-ca="Portar aigua potable i lavabos a escoles i comunitats, i ensenyar hàbits d'higiene que salven vides.">Llevar agua potable y baños a escuelas y comunidades, y enseñar hábitos de higiene que salvan vidas.</p>
+              <p class="quiz__area-fact"><strong><span data-en="Did you know…" data-ca="Sabies que…">¿Sabías que…</span></strong> <span data-en="Rotary clubs build wells and water purification systems in communities all over the world." data-ca="Els clubs Rotary construeixen pous i sistemes de potabilització en comunitats de tot el món.">Los clubes Rotary construyen pozos y sistemas de potabilización en comunidades de todo el mundo.</span></p>
+            </div>
+          </div>
+          <div class="quiz__res" data-area="maternoinfantil" hidden="">
+            <span class="quiz__res-emoji" aria-hidden="true">👶</span>
+            <h3 class="quiz__res-name" tabindex="-1" data-en="Saving mothers and children" data-ca="Salut materna i infantil">Salud materno-infantil</h3>
+            <p class="quiz__res-desc" data-en="You care about the little ones: that every baby and every mother has what they need." data-ca="Et mouen els més petits: que cada nadó i cada mare tinguin el que necessiten.">Te mueven los más pequeños: que cada bebé y cada madre tengan lo que necesitan.</p>
+            <span class="quiz__res-short" hidden=""><span data-en="Mothers &amp; children" data-ca="Mares i infants">Madres e infancia</span></span>
+            <div class="quiz__res-grid">
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="Why it suits you" data-ca="Per què et va">Por qué va contigo</p>
+                <ul class="quiz__chips"><li><span data-en="Tenderness" data-ca="Tendresa">Ternura</span></li><li><span data-en="Protective instinct" data-ca="Instint protector">Instinto protector</span></li><li><span data-en="Patience" data-ca="Paciència">Paciencia</span></li></ul>
+              </div>
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="What you can do in the club" data-ca="Què pots fer al club">Qué puedes hacer en el club</p>
+                <ul class="quiz__ideas">
+                  <li><span data-en="Collecting clothes, nappies and supplies for families with babies" data-ca="Recollir roba, bolquers i material per a famílies amb nadons">Recoger ropa, pañales y material para familias con bebés</span></li>
+                  <li><span data-en="Working with organisations that support young mothers" data-ca="Col·laborar amb entitats que acompanyen mares joves">Colaborar con entidades que acompañan a madres jóvenes</span></li>
+                  <li><span data-en="Organising activities with children and families" data-ca="Organitzar activitats per a infants i famílies">Organizar actividades con niños y familias</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="quiz__area-box">
+              <p class="quiz__subhead" data-en="What Rotary does in this area" data-ca="Què fa Rotary en aquesta àrea">Qué hace Rotary en esta área</p>
+              <p class="quiz__area-desc" data-en="Making sure mothers and babies get quality health care: safe births, vaccines and good nutrition." data-ca="Que mares i nadons tinguin una atenció sanitària de qualitat: parts segurs, vacunes i bona nutrició.">Que madres y bebés tengan una atención sanitaria de calidad: partos seguros, vacunas y buena nutrición.</p>
+              <p class="quiz__area-fact"><strong><span data-en="Did you know…" data-ca="Sabies que…">¿Sabías que…</span></strong> <span data-en="Rotary trains health workers and donates equipment to make childbirth safer." data-ca="Rotary forma personal sanitari i dona equipament perquè els parts siguin més segurs.">Rotary forma a personal sanitario y dona equipamiento para que los partos sean más seguros.</span></p>
+            </div>
+          </div>
+          <div class="quiz__res" data-area="educacio" hidden="">
+            <span class="quiz__res-emoji" aria-hidden="true">📚</span>
+            <h3 class="quiz__res-name" tabindex="-1" data-en="Supporting education" data-ca="Educació bàsica i alfabetització">Educación básica y alfabetización</h3>
+            <p class="quiz__res-desc" data-en="You believe in the power of learning: you care that everyone gets the chance to learn." data-ca="Creus en el poder d'aprendre: et mou que tothom tingui l'oportunitat de formar-se.">Crees en el poder de aprender: te mueve que todo el mundo tenga la oportunidad de formarse.</p>
+            <span class="quiz__res-short" hidden=""><span data-en="Education" data-ca="Educació">Educación</span></span>
+            <div class="quiz__res-grid">
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="Why it suits you" data-ca="Per què et va">Por qué va contigo</p>
+                <ul class="quiz__chips"><li><span data-en="Curiosity" data-ca="Curiositat">Curiosidad</span></li><li><span data-en="Patience" data-ca="Paciència">Paciencia</span></li><li><span data-en="Love of teaching" data-ca="Ganes d'ensenyar">Ganas de enseñar</span></li></ul>
+              </div>
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="What you can do in the club" data-ca="Què pots fer al club">Qué puedes hacer en el club</p>
+                <ul class="quiz__ideas">
+                  <li><span data-en="Tutoring or running workshops in schools and youth clubs" data-ca="Fer reforç escolar o tallers a escoles i esplais">Hacer refuerzo escolar o talleres en escuelas y centros de ocio</span></li>
+                  <li><span data-en="Organising book and school supply drives" data-ca="Organitzar recollides de llibres i material escolar">Organizar recogidas de libros y material escolar</span></li>
+                  <li><span data-en="Sharing what you know in workshops for young people" data-ca="Compartir el que saps en tallers per a joves">Compartir lo que sabes en talleres para jóvenes</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="quiz__area-box">
+              <p class="quiz__subhead" data-en="What Rotary does in this area" data-ca="Què fa Rotary en aquesta àrea">Qué hace Rotary en esta área</p>
+              <p class="quiz__area-desc" data-en="Helping children and adults learn to read and write, and supporting schools and teachers." data-ca="Que infants i adults puguin aprendre a llegir i a escriure, i donar suport a escoles i mestres.">Que niños y adultos puedan aprender a leer y a escribir, y apoyar a escuelas y maestros.</p>
+              <p class="quiz__area-fact"><strong><span data-en="Did you know…" data-ca="Sabies que…">¿Sabías que…</span></strong> <span data-en="Rotary supports schools, teachers and literacy programmes in communities around the world." data-ca="Rotary dona suport a escoles, mestres i programes d'alfabetització en comunitats de tot el món.">Rotary apoya a escuelas, maestros y programas de alfabetización en comunidades de todo el mundo.</span></p>
+            </div>
+          </div>
+          <div class="quiz__res" data-area="economia" hidden="">
+            <span class="quiz__res-emoji" aria-hidden="true">💼</span>
+            <h3 class="quiz__res-name" tabindex="-1" data-en="Growing local economies" data-ca="Desenvolupament econòmic de la comunitat">Desarrollo económico de la comunidad</h3>
+            <p class="quiz__res-desc" data-en="You're all about ideas and opportunities: you care that everyone can get ahead through their work." data-ca="Ets d'idees i d'oportunitats: et mou que tothom pugui tirar endavant amb la seva feina.">Eres de ideas y oportunidades: te mueve que todo el mundo pueda salir adelante con su trabajo.</p>
+            <span class="quiz__res-short" hidden=""><span data-en="Local economies" data-ca="Economia local">Economía local</span></span>
+            <div class="quiz__res-grid">
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="Why it suits you" data-ca="Per què et va">Por qué va contigo</p>
+                <ul class="quiz__chips"><li><span data-en="Initiative" data-ca="Iniciativa">Iniciativa</span></li><li><span data-en="Creativity" data-ca="Creativitat">Creatividad</span></li><li><span data-en="Entrepreneurial spirit" data-ca="Esperit emprenedor">Espíritu emprendedor</span></li></ul>
+              </div>
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="What you can do in the club" data-ca="Què pots fer al club">Qué puedes hacer en el club</p>
+                <ul class="quiz__ideas">
+                  <li><span data-en="Organising job talks and workshops for young people" data-ca="Organitzar xerrades i tallers d'ocupació per a joves">Organizar charlas y talleres de empleo para jóvenes</span></li>
+                  <li><span data-en="Supporting local shops with campaigns" data-ca="Donar suport al comerç local amb campanyes">Apoyar al comercio local con campañas</span></li>
+                  <li><span data-en="Helping entrepreneurs get their projects off the ground" data-ca="Ajudar persones emprenedores a tirar endavant el seu projecte">Ayudar a personas emprendedoras a sacar adelante su proyecto</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="quiz__area-box">
+              <p class="quiz__subhead" data-en="What Rotary does in this area" data-ca="Què fa Rotary en aquesta àrea">Qué hace Rotary en esta área</p>
+              <p class="quiz__area-desc" data-en="Job training, support for entrepreneurs and microloans so that communities can thrive." data-ca="Formació professional, suport a persones emprenedores i microcrèdits perquè les comunitats tirin endavant.">Formación profesional, apoyo a personas emprendedoras y microcréditos para que las comunidades salgan adelante.</p>
+              <p class="quiz__area-fact"><strong><span data-en="Did you know…" data-ca="Sabies que…">¿Sabías que…</span></strong> <span data-en="With small loans and training, Rotary helps entrepreneurs start their own businesses." data-ca="Amb petits préstecs i formació, Rotary ajuda persones emprenedores a crear el seu propi negoci.">Con pequeños préstamos y formación, Rotary ayuda a personas emprendedoras a crear su propio negocio.</span></p>
+            </div>
+          </div>
+          <div class="quiz__res" data-area="medi" hidden="">
+            <span class="quiz__res-emoji" aria-hidden="true">🌍</span>
+            <h3 class="quiz__res-name" tabindex="-1" data-en="Protecting the environment" data-ca="Protecció del medi ambient">Protección del medio ambiente</h3>
+            <p class="quiz__res-desc" data-en="You care about the planet: you want to leave Anoia, and the world, better than you found them." data-ca="Et mou el planeta: vols deixar l'Anoia, i el món, millor de com els has trobat.">Te mueve el planeta: quieres dejar el Anoia, y el mundo, mejor de como los encontraste.</p>
+            <span class="quiz__res-short" hidden=""><span data-en="Environment" data-ca="Medi ambient">Medio ambiente</span></span>
+            <div class="quiz__res-grid">
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="Why it suits you" data-ca="Per què et va">Por qué va contigo</p>
+                <ul class="quiz__chips"><li><span data-en="Environmental awareness" data-ca="Consciència ecològica">Conciencia ecológica</span></li><li><span data-en="Consistency" data-ca="Constància">Constancia</span></li><li><span data-en="Drive to take action" data-ca="Ganes de passar a l'acció">Ganas de pasar a la acción</span></li></ul>
+              </div>
+              <div class="quiz__panel">
+                <p class="quiz__subhead" data-en="What you can do in the club" data-ca="Què pots fer al club">Qué puedes hacer en el club</p>
+                <ul class="quiz__ideas">
+                  <li><span data-en="Suggesting and leading clean-ups and tree planting in the region" data-ca="Proposar i liderar neteges i plantades a la comarca">Proponer y liderar limpiezas y plantadas en la comarca</span></li>
+                  <li><span data-en="Making the club's activities produce less waste" data-ca="Fer que les activitats del club generin menys residus">Hacer que las actividades del club generen menos residuos</span></li>
+                  <li><span data-en="Building partnerships with environmental groups in Anoia" data-ca="Buscar aliances amb entitats ambientals de l'Anoia">Buscar alianzas con entidades ambientales del Anoia</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="quiz__area-box">
+              <p class="quiz__subhead" data-en="What Rotary does in this area" data-ca="Què fa Rotary en aquesta àrea">Qué hace Rotary en esta área</p>
+              <p class="quiz__area-desc" data-en="Planting trees, protecting rivers and seas, reducing waste and promoting clean energy." data-ca="Plantar arbres, protegir rius i mars, reduir residus i impulsar les energies netes.">Plantar árboles, proteger ríos y mares, reducir residuos e impulsar las energías limpias.</p>
+              <p class="quiz__area-fact"><strong><span data-en="Did you know…" data-ca="Sabies que…">¿Sabías que…</span></strong> <span data-en="It is Rotary's seventh area of focus: it was added in 2020." data-ca="És la setena àrea d'interès de Rotary: es va afegir el 2020.">Es la séptima área de interés de Rotary: se añadió en 2020.</span></p>
+            </div>
+          </div>
+          <p class="quiz__second" data-quiz="second" hidden=""><span data-en="Your second closest area:" data-ca="La segona que més et va:">La segunda que más va contigo:</span> <strong data-quiz="second-name"></strong></p>
+
+          <div class="quiz__result-grid">
             <div class="quiz__acts">
-              <p class="quiz__subhead" data-en="Club activities for you" data-ca="Activitats del club per a tu">Actividades del club para ti</p>
+              <p class="quiz__subhead" data-en="In the club we work on it with" data-ca="Al club ho treballem amb">En el club lo trabajamos con</p>
               <ul class="quiz__acts-list" data-quiz="acts" hidden=""></ul>
-              <p class="quiz__acts-empty" data-quiz="empty" hidden="" data-en="We don't have an activity like this on the calendar yet… maybe you'll be the one to suggest it!" data-ca="Encara no tenim cap activitat d'aquest tipus al calendari… potser la proposes tu!">Todavía no tenemos ninguna actividad de este tipo en el calendario… ¡quizá la propongas tú!</p>
+              <p class="quiz__acts-empty" data-quiz="empty" hidden="" data-en="We don't have an activity in this area on the calendar yet… maybe you'll be the one to suggest it!" data-ca="Encara no tenim cap activitat d'aquesta àrea al calendari… potser la proposes tu!">Todavía no tenemos ninguna actividad de esta área en el calendario… ¡quizá la propongas tú!</p>
               <a class="quiz__acts-more" href="activitats.html"><span data-en="See all activities" data-ca="Veure totes les activitats">Ver todas las actividades</span> <span aria-hidden="true">→</span></a>
             </div>
+            <div class="quiz__mix">
+              <p class="quiz__subhead" data-en="Your mix of the 7 areas" data-ca="La teva barreja de les 7 àrees">Tu mezcla de las 7 áreas</p>
+              <ul class="quiz__bars" data-quiz="bars"></ul>
+            </div>
           </div>
+          <p class="quiz__area-note"><span data-en="These are Rotary's 7 areas of focus: the causes where clubs all over the world, ours included, focus their projects." data-ca="Són les 7 àrees d'interès de Rotary: les causes on els clubs de tot el món, també el nostre, concentren els seus projectes.">Son las 7 áreas de interés de Rotary: las causas en las que los clubes de todo el mundo, también el nuestro, concentran sus proyectos.</span> <a href="nosaltres.html#rotary-internacional"><span data-en="About Rotary" data-ca="Coneix Rotary">Conoce Rotary</span></a></p>
           <div class="quiz__actions">
             <a class="btn btn--primary" href="contacte.html#uneix-te">
               <span data-en="Join the club" data-ca="Uneix-te al club">Inscríbete al club</span>
               <svg aria-hidden="true" focusable="false" class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </a>
+            <button type="button" class="btn quiz__again quiz__copy" data-quiz="copy">
+              <svg aria-hidden="true" focusable="false" class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span data-en="Copy your result" data-ca="Copia el resultat">Copia el resultado</span>
+            </button>
             <button type="button" class="btn quiz__again" data-quiz="again">
               <svg aria-hidden="true" focusable="false" class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
               <span data-en="Take the test again" data-ca="Torna a fer el test">Repite el test</span>
             </button>
           </div>
+          <p class="quiz__copied" data-quiz="copied" role="status" aria-live="polite"></p>
         </div>
       </div>
     </div>
@@ -726,8 +921,8 @@
   ============================================= -->
   <script src="../nav.js?v=35a73008"></script>
   <script src="../rotaractigualada.js?v=15d577cf"></script>
-  <script src="../projectes.js?v=c875be58"></script>
-  <script src="../test-voluntari.js?v=85fb7873"></script>
+  <script src="../projectes.js?v=d5d67e34"></script>
+  <script src="../test-voluntari.js?v=7f8ceb50"></script>
   <script src="../instagram.js?v=64d4fbcf"></script>
   <script src="../legal-modals.js?v=7b358c88"></script>
 
@@ -941,6 +1136,6 @@
 
   <script src="../analytics.js?v=fa780a89"></script>
   <script src="../efectes.js?v=b568823c"></script>
-  <script src="../i18n.js?v=e4f4a3e7"></script>
+  <script src="../i18n.js?v=db9156e6"></script>
 
 </body></html>
