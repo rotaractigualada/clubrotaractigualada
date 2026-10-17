@@ -1,5 +1,5 @@
 /* projectes.js — Llegeix projectes.json (activitats del club) per al mapa
-   de «On som» i el test «Quin voluntari ets?».
+   de «On som» i el test «Quina àrea de Rotary et va més?».
    - Una activitat és «feta» quan ja ha passat la data (o la data de fi), o
      si té "estat": "feta". Les que tenen "estat": "cancel·lada" no surten.
    - Retorna els textos en l'idioma de la pàgina.
@@ -43,7 +43,7 @@
               inici: start,
               fi: end,
               fet: a.estat ? /^fet/i.test(a.estat) : end < today,
-              perfil: a.perfil || '',
+              area: a.area || '',
               xifra: text(a.xifra)
             };
           })

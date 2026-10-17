@@ -1,72 +1,67 @@
 {
-  "_com_editar": "Activitats del club per al mapa de «On som» (nosaltres.html) i per al test «Quin voluntari ets?» (portada). Per afegir-ne una, copia un bloc i canvia'n les dades. municipi: un dels 33 de l'Anoia, escrit com al mapa (p. ex. «Igualada», «El Bruc»). data (i fi, si dura més d'un dia): AAAA-MM-DD. Quan passa la data, l'activitat surt sola com a «Feta». Si una activitat no es fa, posa-hi \"estat\": \"cancel·lada\" i deixarà de sortir. perfil: medi, social, salut, generacions o motor (el perfil del test que hi encaixa). xifra (opcional): el resultat, per exemple «120 kg d'aliments».",
+  "_com_editar": "Activitats del club per al mapa de «On som» (nosaltres.html) i per al test «Quina àrea de Rotary et va més?» (portada). Per afegir-ne una, copia un bloc i canvia'n les dades. municipi: un dels 33 de l'Anoia, escrit com al mapa (p. ex. «Igualada», «El Bruc»). data (i fi, si dura més d'un dia): AAAA-MM-DD. Quan passa la data, l'activitat surt sola com a «Feta». Si una activitat no es fa, posa-hi \"estat\": \"cancel·lada\" i deixarà de sortir. area (opcional): l'àrea d'interès de Rotary on encaixa, una de pau, malalties, aigua, maternoinfantil, educacio, economia o medi; el test de la portada la mostra a «Al club ho treballem amb». xifra (opcional): el resultat, per exemple «120 kg d'aliments».",
   "activitats": [
     {
       "nom": { "ca": "Presentació del club", "es": "Presentación del club", "en": "Club presentation" },
       "municipi": "Igualada",
-      "data": "2026-09-24",
-      "perfil": "motor"
+      "data": "2026-09-24"
     },
     {
       "nom": { "ca": "Castanyada: paradeta solidària", "es": "Castañada: puesto solidario", "en": "Castanyada: charity stall" },
       "municipi": "Igualada",
-      "data": "2026-10-31",
-      "perfil": "motor"
+      "data": "2026-10-31"
     },
     {
       "nom": { "ca": "Gran Recapte d'Aliments", "es": "Gran Recogida de Alimentos", "en": "Big Food Drive" },
       "municipi": "Igualada",
       "data": "2026-11-26",
-      "perfil": "social"
+      "area": "economia"
     },
     {
       "nom": { "ca": "La Marató de 3Cat: paradeta", "es": "La Marató de 3Cat: puesto solidario", "en": "La Marató de 3Cat: charity stall" },
       "municipi": "Igualada",
       "data": "2026-12-13",
-      "perfil": "social"
+      "area": "malalties"
     },
     {
       "nom": { "ca": "Sant Valentí: paradeta", "es": "San Valentín: puesto solidario", "en": "Valentine's Day: charity stall" },
       "municipi": "Igualada",
-      "data": "2027-02-14",
-      "perfil": "motor"
+      "data": "2027-02-14"
     },
     {
       "nom": { "ca": "Projecte comunitari de districte", "es": "Proyecto comunitario de distrito", "en": "District community project" },
       "municipi": "Igualada",
       "data": "2027-03-06",
-      "fi": "2027-03-07",
-      "perfil": "social"
+      "fi": "2027-03-07"
     },
     {
       "nom": { "ca": "Taller de RCP i desfibril·lador", "es": "Taller de RCP y desfibrilador", "en": "CPR and defibrillator workshop" },
       "municipi": "Igualada",
       "data": "2027-04-10",
-      "perfil": "salut"
+      "area": "malalties"
     },
     {
       "nom": { "ca": "Sant Jordi: paradeta de roses i llibres", "es": "Sant Jordi: puesto de rosas y libros", "en": "Sant Jordi: roses and books stall" },
       "municipi": "Igualada",
-      "data": "2027-04-23",
-      "perfil": "motor"
+      "data": "2027-04-23"
     },
     {
       "nom": { "ca": "Cursa Solidària per l'Esclerosi Múltiple", "es": "Carrera Solidaria por la Esclerosis Múltiple", "en": "Charity Run for Multiple Sclerosis" },
       "municipi": "Igualada",
       "data": "2027-05-30",
-      "perfil": "salut"
+      "area": "malalties"
     },
     {
       "nom": { "ca": "Neteja del riu Anoia", "es": "Limpieza del río Anoia", "en": "Anoia river clean-up" },
       "municipi": "Igualada",
       "data": "2027-06-05",
-      "perfil": "medi"
+      "area": "medi"
     },
     {
       "nom": { "ca": "Dia del Donant de Sang", "es": "Día del Donante de Sangre", "en": "Blood Donor Day" },
       "municipi": "Igualada",
       "data": "2027-06-13",
-      "perfil": "salut"
+      "area": "malalties"
     }
   ]
 }

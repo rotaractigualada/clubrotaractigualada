@@ -555,51 +555,71 @@ test('nosaltres: activitats del club al costat del mapa i, amb el mapa obert, n�
   assert.deepEqual(errors, []);
 });
 
-test('portada: el test «Quin voluntari ets?» dona un perfil, la barreja i activitats del club, i porta a Uneix-te', async (t) => {
+test('portada: el test diu l\'àrea de Rotary que més et va (per què, què fer al club, activitats), la segona i la barreja, i es pot copiar', async (t) => {
   if (skip) return t.skip(skip);
   const acts = activitats();
-  const { page, context, errors } = await open('index.html');
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce', locale: 'ca-ES',
+    permissions: ['clipboard-read', 'clipboard-write']
+  });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
   const ext = [];
   page.on('request', (r) => { if (!r.url().startsWith(server.url)) ext.push(r.url()); });
-  const answer = async (q, perfil) => {
-    await page.click(`.quiz__q[data-q="${q}"] .quiz__opt[data-perfil="${perfil}"]`);
-  };
+  await page.goto(server.url + '/index.html', { waitUntil: 'load' });
+  const answer = (q, area) => page.click(`.quiz__q[data-q="${q}"] .quiz__opt[data-area="${area}"]`);
   await page.click('[data-quiz="start"]');
   assert.equal(await page.isVisible('.quiz__q[data-q="1"]'), true);
   assert.equal(await page.evaluate(() => document.activeElement.id), 'quizQ1', 'el focus va a la pregunta');
+  assert.equal(await page.locator('.quiz__q[data-q="1"] .quiz__opt').count(), 7);
   // Enrere: es veu la resposta triada i es pot canviar
-  await answer(1, 'medi');
+  await answer(1, 'pau');
   await page.waitForSelector('.quiz__q[data-q="2"]:not([hidden])');
   assert.equal(await page.textContent('[data-quiz="num"]'), '2');
   await page.click('[data-quiz="back"]');
   await page.waitForSelector('.quiz__q[data-q="1"]:not([hidden])');
-  assert.equal(await page.getAttribute('.quiz__q[data-q="1"] [data-perfil="medi"]', 'aria-pressed'), 'true');
-  await answer(1, 'salut');
-  await answer(2, 'salut');
-  await answer(3, 'medi');
-  await answer(4, 'salut');
-  await answer(5, 'salut');
+  assert.equal(await page.getAttribute('.quiz__q[data-q="1"] [data-area="pau"]', 'aria-pressed'), 'true');
+  for (const [q, a] of [[1, 'malalties'], [2, 'malalties'], [3, 'medi'], [4, 'malalties'], [5, 'pau'], [6, 'medi'], [7, 'malalties']]) await answer(q, a);
   await page.waitForSelector('[data-step="resultat"]:not([hidden])');
-  assert.equal(await page.locator('.quiz__perfil:not([hidden])').count(), 1);
-  assert.equal(await page.isVisible('.quiz__perfil[data-perfil="salut"]'), true);
-  assert.match(await page.evaluate(() => document.activeElement.textContent), /Energia saludable/);
-  assert.deepEqual(await page.locator('.quiz__bar-pct').allTextContents(), ['80%', '20%', '0%', '0%', '0%']);
-  assert.match(await page.textContent('.quiz__bar.is-top'), /Energia saludable/);
-  // Activitats del club del mateix perfil (primer les que vindran)
-  const salut = acts.filter((a) => a.perfil === 'salut');
-  const expected = (salut.some((a) => !a.fet) ? salut.filter((a) => !a.fet) : salut.slice().reverse()).slice(0, 3).map((a) => a.nom.ca);
+  // L'àrea que més et va, amb per què, què pots fer al club i què fa Rotary
+  const res = page.locator('.quiz__res:not([hidden])');
+  assert.equal(await res.count(), 1);
+  assert.equal(await res.getAttribute('data-area'), 'malalties');
+  assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Prevenció i tractament de malalties');
+  assert.equal(await res.locator('.quiz__chips li').count(), 3);
+  assert.equal(await res.locator('.quiz__ideas li').count(), 3);
+  assert.match(await res.locator('.quiz__area-fact').textContent(), /^Sabies que… /);
+  assert.match(await page.textContent('[data-quiz="second"]'), /La segona que més et va:\s+🌍 Medi ambient/);
+  assert.deepEqual(await page.locator('.quiz__bar-pct').allTextContents(), ['57%', '29%', '14%', '0%', '0%', '0%', '0%']);
+  assert.match(await page.textContent('.quiz__bar.is-top'), /Malalties/);
+  // Activitats del club d'aquesta àrea (primer les que vindran)
+  const inArea = acts.filter((a) => a.area === 'malalties');
+  const expected = (inArea.some((a) => !a.fet) ? inArea.filter((a) => !a.fet) : inArea.slice().reverse()).slice(0, 3).map((a) => a.nom.ca);
   await page.waitForFunction(() => !document.querySelector('[data-quiz="acts"]').hidden || !document.querySelector('[data-quiz="empty"]').hidden);
   assert.deepEqual(await page.locator('.quiz__act-name').allTextContents(), expected);
   assert.equal(await page.getAttribute('.quiz__actions a.btn--primary', 'href'), 'contacte.html#uneix-te');
-  // Torna a començar; un perfil sense activitats mostra el missatge
+  // Copiar el resultat (sense obrir cap aplicació)
+  await page.click('[data-quiz="copy"]');
+  await page.waitForFunction(() => /Copiat!/.test(document.querySelector('[data-quiz="copied"]').textContent));
+  assert.equal(await page.evaluate(() => navigator.clipboard.readText()),
+    'He fet el test de Rotaract Igualada i la meva àrea de Rotary és «Prevenció i tractament de malalties» 💉. Descobreix la teva: https://rotaractigualada.org/#test');
+  // Torna a començar: tot «pau» → 100%, sense segona àrea; si no hi ha activitats, el missatge
   await page.click('[data-quiz="again"]');
-  for (let q = 1; q <= 5; q++) await answer(q, 'generacions');
-  await page.waitForSelector('.quiz__perfil[data-perfil="generacions"]:not([hidden])');
-  assert.deepEqual(await page.locator('.quiz__bar-pct').allTextContents(), ['100%', '0%', '0%', '0%', '0%']);
-  if (!acts.some((a) => a.perfil === 'generacions')) {
+  for (let q = 1; q <= 7; q++) await answer(q, 'pau');
+  await page.waitForSelector('.quiz__res[data-area="pau"]:not([hidden])');
+  assert.deepEqual(await page.locator('.quiz__bar-pct').allTextContents(), ['100%', '0%', '0%', '0%', '0%', '0%', '0%']);
+  assert.equal(await page.isVisible('[data-quiz="second"]'), false);
+  assert.equal(await page.textContent('[data-quiz="copied"]'), '');
+  if (!acts.some((a) => a.area === 'pau')) {
     await page.waitForSelector('[data-quiz="empty"]:not([hidden])');
     assert.equal(await page.locator('.quiz__act').count(), 0);
   }
+  // Empat (aigua 2 – educació 2): guanya la resposta més recent
+  await page.click('[data-quiz="again"]');
+  for (const [q, a] of [[1, 'aigua'], [2, 'educacio'], [3, 'aigua'], [4, 'economia'], [5, 'medi'], [6, 'pau'], [7, 'educacio']]) await answer(q, a);
+  await page.waitForSelector('.quiz__res[data-area="educacio"]:not([hidden])');
   // No s'envia ni es desa res
   assert.deepEqual(ext, []);
   assert.deepEqual(await page.evaluate(() => [Object.keys(localStorage), Object.keys(sessionStorage)]), [[], []]);
@@ -608,15 +628,15 @@ test('portada: el test «Quin voluntari ets?» dona un perfil, la barreja i acti
   assert.deepEqual(errors, []);
 });
 
-test('portada en castellà: el test surt traduït, també la barreja de perfils', async (t) => {
+test('portada en castellà: el test surt traduït, també la barreja de les 7 àrees', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context, errors } = await open('es/index.html');
-  assert.equal(await page.textContent('#quizTitle'), '¿Qué voluntario eres?');
+  assert.equal(await page.textContent('#quizTitle'), '¿Qué área de Rotary va más contigo?');
   await page.click('[data-quiz="start"]');
-  for (let q = 1; q <= 5; q++) await page.click(`.quiz__q[data-q="${q}"] .quiz__opt[data-perfil="motor"]`);
-  await page.waitForSelector('.quiz__perfil[data-perfil="motor"]:not([hidden])');
-  assert.equal((await page.textContent('.quiz__perfil[data-perfil="motor"] .quiz__perfil-name')).trim(), 'Motor del equipo');
-  assert.match(await page.textContent('.quiz__bar.is-top'), /Motor del equipo/);
+  for (let q = 1; q <= 7; q++) await page.click(`.quiz__q[data-q="${q}"] .quiz__opt[data-area="medi"]`);
+  await page.waitForSelector('.quiz__res[data-area="medi"]:not([hidden])');
+  assert.equal((await page.textContent('.quiz__res[data-area="medi"] .quiz__res-name')).trim(), 'Protección del medio ambiente');
+  assert.match(await page.textContent('.quiz__bar.is-top'), /Medio ambiente/);
   assert.equal(await page.getAttribute('.quiz__actions a.btn--primary', 'href'), 'contacte.html#uneix-te');
   await context.close();
   assert.deepEqual(errors, []);

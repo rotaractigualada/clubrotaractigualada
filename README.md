@@ -29,7 +29,7 @@ Cap enllaç de la web obre el programa de correu: tot es fa des de la pàgina.
 | `projectes.json`, `projectes.js` | Activitats del club per al mapa i el test de la portada |
 | `instagram.css`, `instagram.js`, `instagram/` | Secció Instagram de la portada: perfil, destacades, publicacions i codi QR |
 | `instagram-feed.php` | Instagram automàtic: últimes publicacions des de l'API d'Instagram (opcional, vegeu més avall) |
-| `test-voluntari.js`, `test-voluntari.css` | Test «Quin voluntari ets?» de la portada |
+| `test-voluntari.js`, `test-voluntari.css` | Test «Quina àrea de Rotary et va més?» de la portada |
 | `.htaccess` | HTTPS, capçaleres de seguretat (CSP), compressió, memòria cau i fitxers protegits |
 | `sitemap.xml`, `robots.txt` | SEO |
 
@@ -103,7 +103,7 @@ d'OpenStreetMap i els límits dels 33 municipis de l'Anoia (`anoia.json` i la
 previsualització `anoia.svg`), extrets de les dades de l'IGN (CC BY 4.0) amb
 el paquet `es-atlas`.
 
-## Activitats del club (mapa i test «Quin voluntari ets?»)
+## Activitats del club (mapa i test «Quina àrea de Rotary et va més?»)
 
 Les activitats que surten al resum i als números rosa del mapa d'«On som», i
 les que el test de la portada recomana, són a `projectes.json` (les llegeix
@@ -113,14 +113,20 @@ les que el test de la portada recomana, són a `projectes.json` (les llegeix
 - `municipi`: un dels 33 de l'Anoia, escrit com al mapa (p. ex. «El Bruc»).
 - `data` (i `fi`, si dura més d'un dia): `AAAA-MM-DD`. Quan passa la data,
   l'activitat surt sola com a «Feta»; abans, només se'n mostra el mes.
-- `perfil`: `medi`, `social`, `salut`, `generacions` o `motor` (el perfil
-  del test al qual es recomana).
+- `area` (opcional): l'àrea d'interès de Rotary on encaixa: `pau`,
+  `malalties`, `aigua`, `maternoinfantil`, `educacio`, `economia` o `medi`.
+  El test de la portada la mostra a «Al club ho treballem amb».
 - `xifra` (opcional): el resultat, p. ex. «120 kg d'aliments».
 - `estat` (opcional): `"cancel·lada"` perquè deixi de sortir, o `"feta"`.
 
-`npm test` comprova que cada activitat té un municipi, una data i un perfil
-vàlids. El calendari de la pàgina Activitats té les seves dades a
-`activitats.js`. El test no envia ni desa cap resposta.
+`npm test` comprova que cada activitat té un municipi i una data vàlids, i
+que l'àrea (si n'hi ha) és una de les 7 de Rotary. El calendari de la pàgina Activitats té les seves dades a
+`activitats.js`.
+
+El test de la portada té 7 preguntes amb 7 respostes cadascuna, una per a
+cada àrea d'interès de Rotary, i diu l'àrea que més et va. Les preguntes i
+els textos del resultat són a `index.html` (secció `#test`). No envia ni
+desa cap resposta.
 
 ## Instagram (portada)
 
