@@ -198,7 +198,12 @@
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
 }
-.quiz__opt:hover { background: rgba(255, 255, 255, 0.18); border-color: rgba(255, 255, 255, 0.45); transform: translateY(-2px); }
+/* Ressaltat en passar el ratolí: només amb ratolí (als mòbils es quedaria
+   «enganxat» a la resposta de la pregunta següent) i no just després de
+   canviar de pregunta, fins que el ratolí es mou (.is-fresh, test-voluntari.js) */
+@media (hover: hover) and (pointer: fine) {
+  .quiz:not(.is-fresh) .quiz__opt:hover { background: rgba(255, 255, 255, 0.18); border-color: rgba(255, 255, 255, 0.45); transform: translateY(-2px); }
+}
 .quiz__opt[aria-pressed="true"] { border-color: #fff; background: rgba(255, 255, 255, 0.22); }
 .quiz__opt.is-picked { background: #fff; color: var(--blue); border-color: #fff; transform: scale(1.02); }
 .quiz__opt-emoji {
@@ -212,7 +217,7 @@
   background: rgba(255, 255, 255, 0.14);
 }
 .quiz__opt.is-picked .quiz__opt-emoji { background: rgba(218, 26, 93, 0.12); }
-.quiz__q.is-in { animation: quiz-in 0.38s cubic-bezier(.2, .8, .2, 1) both; }
+.quiz__q.is-in { animation: quiz-in 0.26s cubic-bezier(.2, .8, .2, 1) both; }
 
 /* ── Resultat ── */
 .quiz__step--result { position: relative; text-align: center; }
@@ -367,7 +372,7 @@
   50% { transform: translateY(-7px); }
 }
 @keyframes quiz-in {
-  from { opacity: 0; transform: translateX(22px); }
+  from { opacity: 0.4; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
 @keyframes quiz-pop {
@@ -382,8 +387,13 @@
 @media (prefers-reduced-motion: reduce) {
   .quiz__emojis span, .quiz__q.is-in, .quiz__res-emoji { animation: none; }
   .quiz__opt, .quiz__progress-bar, .quiz__bar-fill, .quiz__back { transition: none; }
-  .quiz__opt:hover { transform: none; }
+  .quiz .quiz__opt:hover { transform: none; }
 }
+
+/* Font de la dada de Rotary */
+.quiz__area-source { margin: 0.45rem 0 0; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); }
+.quiz__area-source a { color: #fff; font-weight: 600; text-underline-offset: 3px; }
+.quiz__area-source a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; border-radius: 4px; }
 
 /* ── Resultat ampliat ── */
 .quiz__res-grid {

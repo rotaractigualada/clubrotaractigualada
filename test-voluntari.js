@@ -1,7 +1,8 @@
-/* test-voluntari.js — Test «Quina àrea de Rotary et va més?» de la portada.
+/* test-voluntari.js — Test «Amb quina àrea de Rotary connectes més?» de la portada.
    7 preguntes amb 7 respostes cadascuna: cada resposta (data-area) suma un
    punt a una de les 7 àrees d'interès de Rotary. El resultat mostra l'àrea
-   que més et va (per què, què hi pots fer al club i què fa Rotary), la
+   amb què connectes més (punts forts, com hi pots contribuir i què fa
+   Rotary, amb la font), la
    segona, la barreja de les 7 i les activitats del club d'aquesta àrea
    (camp «area» de projectes.json, a través de projectes.js). Es pot copiar
    el resultat per compartir-lo (no s'obre cap aplicació).
@@ -25,6 +26,7 @@
   var answers = [];  // àrea triada a cada pregunta
   var current = 0;
   var busy = false;
+  var clickAt = null; // on s'ha clicat l'última resposta (per al ressaltat del ratolí)
   var top = null;    // àrea de l'últim resultat (per copiar-lo)
 
   var lang = function () {
@@ -51,6 +53,8 @@
 
   function ask(i) {
     current = i;
+    // La resposta que queda sota el ratolí no es ressalta fins que es mou
+    quiz.classList.add('is-fresh');
     questions.forEach(function (q, j) {
       q.hidden = j !== i;
       // Si torna enrere, es veu la resposta que havia triat
@@ -220,18 +224,25 @@
     ask(0);
   }
 
+  quiz.addEventListener('pointermove', function (e) {
+    if (!quiz.classList.contains('is-fresh') || e.pointerType !== 'mouse') return;
+    if (clickAt && Math.abs(e.clientX - clickAt.x) + Math.abs(e.clientY - clickAt.y) < 6) return;
+    quiz.classList.remove('is-fresh');
+  });
+
   quiz.addEventListener('click', function (e) {
     var opt = e.target.closest('.quiz__opt');
     if (opt) {
       if (busy) return;
       busy = true;
       answers[current] = opt.getAttribute('data-area');
+      clickAt = { x: e.clientX, y: e.clientY };
       opt.classList.add('is-picked');
       setTimeout(function () {
         busy = false;
         if (current < questions.length - 1) ask(current + 1);
         else showResult();
-      }, reduce() ? 0 : 280);
+      }, reduce() ? 0 : 220);
       return;
     }
     var btn = e.target.closest('[data-quiz]');
