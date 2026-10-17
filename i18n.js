@@ -143,7 +143,7 @@
     'Club presentation at the Rotary Igualada dinner talk': 'Presentación del club en la cena coloquio de Rotary Igualada',
     'Presentation': 'Presentación',
     'See the photos': 'Ver las fotos',
-    'Home | Rotaract Club of Igualada': 'Inicio | Club Rotaract de Igualada',
+    'Rotaract Igualada | Rotary youth club in Anoia': 'Rotaract Igualada | Club de jóvenes de Rotary en el Anoia',
     'About us | Rotaract Club of Igualada': 'Nosotros | Club Rotaract de Igualada',
     'Activities | Rotaract Club of Igualada': 'Actividades | Club Rotaract de Igualada',
     'Board | Rotaract Club of Igualada': 'Junta directiva | Club Rotaract de Igualada',

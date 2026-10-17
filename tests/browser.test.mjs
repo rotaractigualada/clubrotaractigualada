@@ -281,10 +281,10 @@ test('còpia de GitHub Pages: redirigeix a rotaractigualada.org mantenint la pà
 test('idioma: la primera visita porta a la versió de l\'idioma del navegador', async (t) => {
   if (skip) return t.skip(skip);
   const cases = [
-    ['ca-ES', '/', "Inici | Club Rotaract d'Igualada"],
-    ['es-ES', '/es/', 'Inicio | Club Rotaract de Igualada'],
-    ['en-GB', '/en/', 'Home | Rotaract Club of Igualada'],
-    ['fr-FR', '/en/', 'Home | Rotaract Club of Igualada']
+    ['ca-ES', '/', "Rotaract Igualada | Club de joves de Rotary a l'Anoia"],
+    ['es-ES', '/es/', 'Rotaract Igualada | Club de jóvenes de Rotary en el Anoia'],
+    ['en-GB', '/en/', 'Rotaract Igualada | Rotary youth club in Anoia'],
+    ['fr-FR', '/en/', 'Rotaract Igualada | Rotary youth club in Anoia']
   ];
   for (const [locale, path, title] of cases) {
     const context = await browser.newContext({ locale });
@@ -318,9 +318,9 @@ test('idioma: els cercadors (Googlebot) no es redirigeixen i veuen cada versió 
   await page.waitForTimeout(300);
   assert.equal(new URL(page.url()).pathname, '/index.html');
   assert.equal(await page.getAttribute('html', 'lang'), 'ca');
-  assert.equal(await page.title(), "Inici | Club Rotaract d'Igualada");
+  assert.equal(await page.title(), "Rotaract Igualada | Club de joves de Rotary a l'Anoia");
   await page.goto(server.url + '/es/');
-  assert.equal(await page.title(), 'Inicio | Club Rotaract de Igualada');
+  assert.equal(await page.title(), 'Rotaract Igualada | Club de jóvenes de Rotary en el Anoia');
   await context.close();
 });
 

@@ -335,3 +335,11 @@ test('portada: Instagram amb perfil, destacades, publicacions, QR i Instagram au
   assert.doesNotMatch(svg, /(?:href|src)="https?:/, 'el QR no carrega res de fora');
   assert.ok(readFileSync(join(ROOT, 'instagram', 'qr-rotaractigualada.png')).subarray(1, 4).toString() === 'PNG');
 });
+
+test('portada: el títol comença per «Rotaract Igualada» (el que busca la gent), en els 3 idiomes', () => {
+  for (const { dir } of VERSIONS) {
+    const title = read(dir + 'index.html').match(/<title[^>]*>([^<]+)<\/title>/)[1];
+    assert.match(title, /^Rotaract Igualada \| /, `${dir}index.html: «${title}»`);
+    assert.ok(title.length <= 60, `${dir}index.html: títol massa llarg per a Google (${title.length})`);
+  }
+});
