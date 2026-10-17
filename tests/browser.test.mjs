@@ -591,7 +591,8 @@ test('portada: el test diu l\'àrea de Rotary que més et va (per què, què fer
   assert.equal(await res.locator('.quiz__chips li').count(), 3);
   assert.equal(await res.locator('.quiz__ideas li').count(), 3);
   assert.match(await res.locator('.quiz__area-fact').textContent(), /^Sabies que… /);
-  assert.match(await page.textContent('[data-quiz="second"]'), /La segona que més et va:\s+🌍 Medi ambient/);
+  assert.match(await page.textContent('[data-quiz="second"]'), /La teva segona àrea:\s+🌍 Medi ambient/);
+  assert.match(await res.locator('.quiz__area-source a').getAttribute('href'), /^https:\/\/www\.endpolio\.org\//);
   assert.deepEqual(await page.locator('.quiz__bar-pct').allTextContents(), ['57%', '29%', '14%', '0%', '0%', '0%', '0%']);
   assert.match(await page.textContent('.quiz__bar.is-top'), /Malalties/);
   // Activitats del club d'aquesta àrea (primer les que vindran)
@@ -628,10 +629,49 @@ test('portada: el test diu l\'àrea de Rotary que més et va (per què, què fer
   assert.deepEqual(errors, []);
 });
 
+test('test: la resposta que queda sota el ratolí o el dit no surt ressaltada a la pregunta següent', async (t) => {
+  if (skip) return t.skip(skip);
+  const base = 'rgba(255, 255, 255, 0.09)';
+  const bgAt = (page, x, y) => page.evaluate(([x, y]) => {
+    const opt = document.elementFromPoint(x, y)?.closest('.quiz__opt');
+    return opt ? getComputedStyle(opt).backgroundColor : null;
+  }, [x, y]);
+  // Amb ratolí: no es ressalta fins que el ratolí es mou
+  const desk = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce', locale: 'ca-ES' });
+  await desk.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+  let page = await desk.newPage();
+  await page.goto(server.url + '/index.html', { waitUntil: 'load' });
+  await page.click('[data-quiz="start"]');
+  const box = await page.locator('.quiz__q[data-q="1"] .quiz__opt').nth(1).boundingBox();
+  const x = box.x + box.width / 2, y = box.y + box.height / 2;
+  await page.mouse.click(x, y);
+  await page.waitForSelector('.quiz__q[data-q="2"]:not([hidden])');
+  assert.equal(await bgAt(page, x, y), base, 'just després de clicar, la resposta de sota no es ressalta');
+  await page.mouse.move(x + 20, y + 4);
+  await page.waitForFunction(([x, y, base]) => {
+    const opt = document.elementFromPoint(x, y)?.closest('.quiz__opt');
+    return opt && getComputedStyle(opt).backgroundColor !== base;
+  }, [x + 20, y + 4, base]);
+  await desk.close();
+  // Mòbil (tàctil): mai es ressalta
+  const mob = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, reducedMotion: 'reduce', locale: 'ca-ES' });
+  await mob.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+  page = await mob.newPage();
+  await page.goto(server.url + '/index.html', { waitUntil: 'load' });
+  await page.tap('[data-quiz="start"]');
+  const mbox = await page.locator('.quiz__q[data-q="1"] .quiz__opt').nth(1).boundingBox();
+  const mx = mbox.x + mbox.width / 2, my = mbox.y + mbox.height / 2;
+  await page.touchscreen.tap(mx, my);
+  await page.waitForSelector('.quiz__q[data-q="2"]:not([hidden])');
+  const opt2 = page.locator('.quiz__q[data-q="2"] .quiz__opt').nth(1);
+  assert.equal(await opt2.evaluate((o) => getComputedStyle(o).backgroundColor), base);
+  await mob.close();
+});
+
 test('portada en castellà: el test surt traduït, també la barreja de les 7 àrees', async (t) => {
   if (skip) return t.skip(skip);
   const { page, context, errors } = await open('es/index.html');
-  assert.equal(await page.textContent('#quizTitle'), '¿Qué área de Rotary va más contigo?');
+  assert.equal(await page.textContent('#quizTitle'), '¿Con qué área de Rotary conectas más?');
   await page.click('[data-quiz="start"]');
   for (let q = 1; q <= 7; q++) await page.click(`.quiz__q[data-q="${q}"] .quiz__opt[data-area="medi"]`);
   await page.waitForSelector('.quiz__res[data-area="medi"]:not([hidden])');

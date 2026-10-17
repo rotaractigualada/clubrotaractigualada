@@ -242,7 +242,7 @@ test('projectes.json: activitats vàlides (municipi de l\'Anoia, dates, àrea de
   }
 });
 
-test('portada: test «Quina àrea de Rotary et va més?» entre Instagram i Uneix-te: 7 preguntes amb una resposta per àrea i un resultat per àrea', () => {
+test('portada: test «Amb quina àrea de Rotary connectes més?» entre Instagram i Uneix-te: 7 preguntes amb una resposta per àrea i un resultat per àrea', () => {
   const html = stripComments(read('index.html'));
   const pos = (id) => html.indexOf(`id="${id}"`);
   assert.ok(pos('instagram') < pos('test') && pos('test') < pos('contacte'), 'el test va entre Instagram i Uneix-te');
@@ -250,6 +250,8 @@ test('portada: test «Quina àrea de Rotary et va més?» entre Instagram i Unei
   const steps = sec.split('<div class="quiz__step');
   const questions = steps.find((x) => x.includes('data-step="preguntes"')).split('<div class="quiz__q"').slice(1);
   assert.equal(questions.length, 7, '7 preguntes');
+  // Preguntes per a tothom, no només per a qui viu a Igualada
+  for (const q of questions) assert.doesNotMatch(q, /Igualada|Anoia|comarca|€/, 'preguntes sense referències locals ni diners');
   questions.forEach((q, i) => {
     const arees = [...q.matchAll(/class="quiz__opt" data-area="(\w+)"/g)].map((m) => m[1]).sort();
     assert.deepEqual(arees, AREES, `pregunta ${i + 1}: una resposta de cada àrea de Rotary`);
@@ -262,6 +264,7 @@ test('portada: test «Quina àrea de Rotary et va més?» entre Instagram i Unei
     assert.equal((b.match(/<ul class="quiz__chips">([\s\S]*?)<\/ul>/)[1].match(/<li>/g) || []).length, 3, `${area}: 3 motius`);
     assert.equal((b.match(/<ul class="quiz__ideas">([\s\S]*?)<\/ul>/)[1].match(/<li>/g) || []).length, 3, `${area}: 3 idees per al club`);
     assert.match(b, /class="quiz__area-fact"/, `${area}: dada de Rotary`);
+    assert.match(b, /<p class="quiz__area-source">[\s\S]*?<a href="https:\/\/www\.(rotary|endpolio)\.org\/[^"]+" target="_blank" rel="noopener noreferrer">/, `${area}: la dada enllaça la font oficial`);
     assert.match(b, /class="quiz__res-short" hidden>/, `${area}: nom curt per a la barreja`);
   }
   assert.match(result, /href="contacte\.html#uneix-te"/, 'el resultat porta a «Uneix-te»');
