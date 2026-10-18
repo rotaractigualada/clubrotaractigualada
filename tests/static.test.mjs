@@ -335,3 +335,18 @@ test('portada: Instagram amb perfil, destacades, publicacions, QR i Instagram au
   assert.doesNotMatch(svg, /(?:href|src)="https?:/, 'el QR no carrega res de fora');
   assert.ok(readFileSync(join(ROOT, 'instagram', 'qr-rotaractigualada.png')).subarray(1, 4).toString() === 'PNG');
 });
+
+test('avís legal i privacitat: dades de l\'entitat omplertes (sense «[…]»), en els 3 idiomes', () => {
+  for (const { lang, dir } of VERSIONS) {
+    for (const page of PAGES) {
+      const html = stripComments(read(dir + page));
+      const legal = html.slice(html.indexOf('id="avisLegalModal"'));
+      assert.doesNotMatch(legal, /\[[^\]<>]{3,}\]/, `${dir + page}: encara hi ha dades per omplir`);
+      const privacy = legal.indexOf('id="politicaPrivacitatModal"');
+      for (const [name, part] of [['avís legal', legal.slice(0, privacy)], ['privacitat', legal.slice(privacy)]]) {
+        assert.match(part, />[^<]*Camí Ral, 4-10, 08700 Igualada \(Barcelona\)/, `${dir + page}: domicili social a ${name}`);
+      }
+      assert.match(legal, lang === 'en' ? /Register of Associations of the Generalitat de Catalunya/ : lang === 'es' ? /Registro de Asociaciones de la Generalitat de Catalunya/ : /Registre d'Associacions de la Generalitat de Catalunya/);
+    }
+  }
+});
