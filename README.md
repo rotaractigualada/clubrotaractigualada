@@ -143,7 +143,10 @@ projectes que hi ha a `grups.json` (els llegeix `grups.js`):
   castellà i anglès, `area`, `objectiu` (euros que es volen recaptar) i
   `recaptat` (euros que ja s'han recaptat). La barra de donacions surt quan hi
   ha `objectiu`, i es mou sola quan s'actualitza `recaptat`. Sense objectiu, el
-  projecte surt com a «Projecte en preparació».
+  projecte surt com a «Projecte en preparació». Amb `"exemple": true` la
+  targeta porta l'etiqueta «Exemple» (ara la Motxilla Solidària, amb xifres
+  d'exemple): quan el projecte sigui real, esborreu la línia i poseu-hi les
+  xifres de veritat.
 
 Mentre no hi ha cap projecte, la pestanya diu «Els grups s'estan formant».
 El botó «Vull col·laborar» porta al formulari de Contacte. `npm test`

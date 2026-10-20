@@ -360,6 +360,7 @@ test('grups de treball: pestanya a Activitats amb les 7 àrees, els menús hi po
   assert.match(sec, /<a href="index\.html#test" class="grups-area__link">/, 'porta al test de la portada');
   assert.match(sec, /id="grupsProjectes" hidden><\/div>[\s\S]*id="grupsBuit"/, 'projectes i missatge mentre no n\'hi ha');
   assert.match(sec, /href="contacte\.html#uneix-te"/);
+  assert.match(sec, /<a href="contacte\.html#escriu-nos" class="grups-cta__empresa">/, 'botó per a entitats i empreses');
   assert.match(act, /<script src="grups\.js[^"]*"><\/script>/);
   assert.match(read('activitats.js'), /validTabs\s*=\s*\[[^\]]*'grups'/);
   for (const page of PAGES) {
@@ -384,5 +385,6 @@ test('grups de treball: pestanya a Activitats amb les 7 àrees, els menús hi po
     if (p.descripcio) assert.ok(p.descripcio.ca && p.descripcio.es && p.descripcio.en, `${nom}: descripció en català, castellà i anglès`);
     if (p.objectiu != null) assert.ok(typeof p.objectiu === 'number' && p.objectiu > 0, `${nom}: l'objectiu ha de ser un número d'euros més gran que 0`);
     if (p.recaptat != null) assert.ok(typeof p.recaptat === 'number' && p.recaptat >= 0, `${nom}: el recaptat ha de ser un número d'euros`);
+    if (p.exemple != null) assert.equal(typeof p.exemple, 'boolean', `${nom}: «exemple» ha de ser true o false`);
   }
 });

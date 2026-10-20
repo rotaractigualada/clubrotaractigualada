@@ -1235,7 +1235,7 @@
   margin: -0.5rem auto 0;
 }
 
-/* Les 7 àrees */
+/* Les 7 àrees: cada una té el seu color (--c-rgb) */
 .grups-arees {
   list-style: none;
   margin: 0;
@@ -1246,6 +1246,10 @@
 }
 
 .grups-area {
+  --c-rgb: 47, 47, 150;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -1254,12 +1258,54 @@
   border: 1px solid rgba(47, 47, 150, 0.08);
   border-radius: 18px;
   box-shadow: var(--shadow-sm);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.grups-area[data-area="pau"] { --c-rgb: 37, 99, 235; }
+.grups-area[data-area="malalties"] { --c-rgb: 218, 26, 93; }
+.grups-area[data-area="aigua"] { --c-rgb: 8, 145, 178; }
+.grups-area[data-area="maternoinfantil"] { --c-rgb: 234, 88, 12; }
+.grups-area[data-area="educacio"] { --c-rgb: 124, 58, 237; }
+.grups-area[data-area="economia"] { --c-rgb: 202, 138, 4; }
+.grups-area[data-area="medi"] { --c-rgb: 22, 163, 74; }
+
+/* Franja de color a dalt (surt en passar-hi el ratolí) i llum suau de l'àrea */
+.grups-area::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, rgb(var(--c-rgb)), rgba(var(--c-rgb), 0.35));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.grups-area::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -80px;
+  right: -80px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(var(--c-rgb), 0.12) 0%, rgba(var(--c-rgb), 0) 70%);
+  transition: transform 0.6s ease;
 }
 
 .grups-area__emoji {
-  font-size: 1.8rem;
+  display: inline-grid;
+  place-items: center;
+  align-self: flex-start;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 0.45rem;
+  font-size: 1.6rem;
   line-height: 1;
-  margin-bottom: 0.35rem;
+  border-radius: 14px;
+  background: rgba(var(--c-rgb), 0.1);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.35s ease;
 }
 
 .grups-area__nom {
@@ -1267,6 +1313,7 @@
   font-size: 1rem;
   font-weight: 800;
   color: var(--text);
+  transition: color 0.3s ease;
 }
 
 .grups-area__desc {
@@ -1276,8 +1323,37 @@
   color: var(--text-light);
 }
 
+@media (hover: hover) {
+  .grups-area:not(.grups-area--test):hover {
+    transform: translateY(-6px);
+    border-color: rgba(var(--c-rgb), 0.3);
+    box-shadow: 0 20px 38px -16px rgba(var(--c-rgb), 0.45);
+  }
+
+  .grups-area:hover::before {
+    transform: scaleX(1);
+  }
+
+  .grups-area:hover::after {
+    transform: scale(1.6);
+  }
+
+  .grups-area:not(.grups-area--test):hover .grups-area__emoji {
+    transform: scale(1.12) rotate(-8deg);
+    background: rgba(var(--c-rgb), 0.18);
+  }
+
+  .grups-area:not(.grups-area--test):hover .grups-area__nom {
+    color: rgb(var(--c-rgb));
+  }
+}
+
 .grups-area--actiu {
-  border-color: rgba(218, 26, 93, 0.25);
+  border-color: rgba(var(--c-rgb), 0.3);
+}
+
+.grups-area--actiu::before {
+  transform: scaleX(1);
 }
 
 .grups-area__grup {
@@ -1294,6 +1370,9 @@
 }
 
 .grups-area__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: 'Montserrat', sans-serif;
   font-size: 0.68rem;
   font-weight: 700;
@@ -1305,6 +1384,21 @@
   border-radius: 999px;
 }
 
+/* Punt que batega: el grup està en marxa */
+.grups-area__badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: grupsPols 2s ease-out infinite;
+}
+
+@keyframes grupsPols {
+  0% { box-shadow: 0 0 0 0 rgba(218, 26, 93, 0.5); }
+  70%, 100% { box-shadow: 0 0 0 7px rgba(218, 26, 93, 0); }
+}
+
 .grups-area__referent {
   font-family: 'Poppins', sans-serif;
   font-size: 0.82rem;
@@ -1312,6 +1406,7 @@
   color: var(--text);
 }
 
+/* «No saps quina?»: porta al test de la portada */
 .grups-area--test {
   padding: 0;
   border: none;
@@ -1319,7 +1414,33 @@
   box-shadow: 0 8px 24px rgba(47, 47, 150, 0.18);
 }
 
+.grups-area--test::before {
+  display: none;
+}
+
+/* Reflex de llum que hi passa de tant en tant */
+.grups-area--test::after {
+  top: 0;
+  right: auto;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  z-index: 0;
+  border-radius: 0;
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.16) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: translateX(-120%) skewX(-12deg);
+  animation: grupsReflex 5s ease-in-out 1.5s infinite;
+  pointer-events: none;
+}
+
+@keyframes grupsReflex {
+  0% { transform: translateX(-120%) skewX(-12deg); }
+  35%, 100% { transform: translateX(260%) skewX(-12deg); }
+}
+
 .grups-area__link {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -1327,11 +1448,20 @@
   padding: 1.25rem 1.2rem;
   border-radius: 18px;
   text-decoration: none;
-  transition: transform 0.2s ease;
 }
 
-.grups-area__link:hover {
-  transform: translateY(-3px);
+.grups-area--test .grups-area__emoji {
+  background: rgba(255, 255, 255, 0.12);
+  animation: grupsBruixola 3.2s ease-in-out infinite;
+}
+
+/* La brúixola busca cap on anar */
+@keyframes grupsBruixola {
+  0%, 100% { rotate: 0deg; }
+  20% { rotate: -14deg; }
+  45% { rotate: 10deg; }
+  65% { rotate: -5deg; }
+  80% { rotate: 0deg; }
 }
 
 .grups-area--test .grups-area__nom {
@@ -1340,6 +1470,63 @@
 
 .grups-area--test .grups-area__desc {
   color: rgba(255, 255, 255, 0.8);
+}
+
+@media (hover: hover) {
+  .grups-area--test:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 38px -14px rgba(47, 47, 150, 0.6);
+  }
+
+  .grups-area--test:hover .grups-area__emoji {
+    transform: rotate(360deg) scale(1.1);
+    transition-duration: 0.8s;
+  }
+}
+
+.grups-area__link:focus-visible {
+  outline: 3px solid var(--pink);
+  outline-offset: 3px;
+}
+
+/* Entrada: les targetes apareixen una darrere l'altra (grups.js posa
+   --i, grups-arees--anim i is-in) i la icona fa un salt */
+.grups-arees--anim .grups-area {
+  opacity: 0;
+  translate: 0 26px;
+  scale: 0.96;
+}
+
+.grups-arees--anim.is-in .grups-area {
+  animation: grupsEntra 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--i, 0) * 80ms) both;
+}
+
+.grups-arees--anim.is-in .grups-area__emoji {
+  animation: grupsSalt 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--i, 0) * 80ms + 250ms) both;
+}
+
+.grups-arees--anim.is-in .grups-area--test .grups-area__emoji {
+  animation: grupsSalt 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--i, 0) * 80ms + 250ms) both,
+    grupsBruixola 3.2s ease-in-out calc(var(--i, 0) * 80ms + 1.2s) infinite;
+}
+
+@keyframes grupsEntra {
+  from { opacity: 0; translate: 0 26px; scale: 0.96; }
+  to { opacity: 1; translate: 0 0; scale: 1; }
+}
+
+@keyframes grupsSalt {
+  0% { scale: 0; rotate: -25deg; }
+  70% { scale: 1.15; }
+  100% { scale: 1; rotate: 0deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grups-arees--anim .grups-area {
+    opacity: 1;
+    translate: none;
+    scale: none;
+  }
 }
 
 /* Com funcionen */
@@ -1397,7 +1584,8 @@
 /* Projectes i barra de donacions */
 .grups-projectes {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 380px));
+  justify-content: center;
   gap: 1.25rem;
 }
 
@@ -1414,6 +1602,27 @@
   border: 1px solid rgba(47, 47, 150, 0.08);
   border-radius: 18px;
   box-shadow: 0 10px 28px rgba(47, 47, 150, 0.08);
+}
+
+.grups-projecte__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Projecte d'exemple («exemple»: true a grups.json) */
+.grups-projecte__exemple {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a1450a;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px dashed rgba(161, 69, 10, 0.4);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
 }
 
 .grups-projecte__area {
@@ -1630,15 +1839,144 @@
   }
 }
 
-.grups-cta__link {
-  margin-top: 0.4rem;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.grups-cta__empresa {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 660px;
+  margin-top: 1.1rem;
+  padding: 1rem 1rem 1rem 1.1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  text-align: left;
+  text-decoration: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
 }
 
-.grups-cta__link:hover {
+/* Reflex que creua el botó en passar-hi el ratolí */
+.grups-cta__empresa::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.16) 50%, rgba(255, 255, 255, 0) 70%);
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
+
+.grups-cta__empresa:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -14px rgba(0, 0, 0, 0.5);
+}
+
+.grups-cta__empresa:hover::after {
+  transform: translateX(100%);
+}
+
+.grups-cta__empresa:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.grups-cta__empresa-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--pink) 0%, #ff5c8a 100%);
+  box-shadow: 0 8px 18px -6px rgba(218, 26, 93, 0.6);
+}
+
+.grups-cta__empresa-icon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.grups-cta__empresa:hover .grups-cta__empresa-icon {
+  animation: grupsEncaixada 0.6s ease-in-out;
+}
+
+@keyframes grupsEncaixada {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg) scale(1.06); }
+  50% { transform: rotate(8deg) scale(1.06); }
+  75% { transform: rotate(-4deg); }
+}
+
+.grups-cta__empresa-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.grups-cta__empresa-text strong {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.grups-cta__empresa-text span {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.grups-cta__empresa-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.7rem 1.15rem;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--primary);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.grups-cta__empresa-btn svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.grups-cta__empresa:hover .grups-cta__empresa-btn {
+  background: var(--pink);
   color: #fff;
+}
+
+.grups-cta__empresa:hover .grups-cta__empresa-btn svg {
+  transform: translateX(4px);
+}
+
+@media (max-width: 560px) {
+  .grups-cta__empresa {
+    flex-wrap: wrap;
+  }
+
+  .grups-cta__empresa-text {
+    flex-basis: calc(100% - 4rem);
+  }
+
+  .grups-cta__empresa-btn {
+    width: 100%;
+  }
 }

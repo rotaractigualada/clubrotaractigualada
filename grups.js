@@ -2,7 +2,8 @@
    Llegeix grups.json: posa «Grup actiu» i el referent a la targeta de cada
    àrea que ja té grup, i mostra els projectes dels grups amb la barra de
    donacions (recaptat respecte a l'objectiu). Mentre no hi ha cap projecte,
-   es veu el missatge «Els grups s'estan formant». */
+   es veu el missatge «Els grups s'estan formant». Les targetes de les àrees
+   entren una darrere l'altra quan es veuen (no amb «reduir moviment»). */
 (function () {
   'use strict';
 
@@ -41,14 +42,39 @@
     return n;
   }
 
-  // La barra s'omple quan es veu (la pestanya pot estar amagada en carregar)
-  function grow(fill, pct) {
-    var go = function () { fill.style.width = pct + '%'; };
+  // Crida go() quan l'element es veu (la pestanya pot estar amagada en carregar)
+  function whenSeen(node, go, threshold) {
     if (reduce() || !('IntersectionObserver' in window)) return go();
     var io = new IntersectionObserver(function (entries) {
       if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); requestAnimationFrame(go); }
-    }, { threshold: 0.3 });
-    io.observe(fill.parentNode);
+    }, { threshold: threshold });
+    io.observe(node);
+  }
+
+  // Les àrees entren una darrere l'altra
+  var arees = document.getElementById('grupsArees');
+  if (arees && !reduce() && 'IntersectionObserver' in window) {
+    Array.prototype.forEach.call(arees.children, function (li, i) { li.style.setProperty('--i', i); });
+    arees.classList.add('grups-arees--anim');
+    whenSeen(arees, function () { arees.classList.add('is-in'); }, 0.15);
+  }
+
+  // La barra s'omple i el percentatge compta fins al valor (1,2 s, com la transició del CSS)
+  function grow(fill, pct, shown, label) {
+    var count = !reduce() && 'IntersectionObserver' in window;
+    if (count) label.textContent = '0%';
+    whenSeen(fill.parentNode, function () {
+      fill.style.width = shown + '%';
+      if (!count) return;
+      var start = null;
+      var step = function (now) {
+        if (start === null) start = now;
+        var k = Math.min((now - start) / 1200, 1);
+        label.textContent = Math.round(pct * (1 - Math.pow(1 - k, 3))) + '%';
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }, 0.3);
   }
 
   function showGroups(grups) {
@@ -67,12 +93,15 @@
   function projectCard(p) {
     var card = el('article', 'grups-projecte');
     var area = areaEl(p.area);
+    var tags = el('div', 'grups-projecte__tags');
     var tag = el('span', 'grups-projecte__area');
     var emoji = el('span', null, area.querySelector('.grups-area__emoji').textContent);
     emoji.setAttribute('aria-hidden', 'true');
     tag.appendChild(emoji);
     tag.appendChild(document.createTextNode(' ' + area.querySelector('.grups-area__nom').textContent.trim()));
-    card.appendChild(tag);
+    tags.appendChild(tag);
+    if (p.exemple === true) tags.appendChild(el('span', 'grups-projecte__exemple', t('Exemple', 'Example', 'Ejemplo')));
+    card.appendChild(tags);
     card.appendChild(el('h4', 'grups-projecte__nom', text(p.nom)));
     if (text(p.descripcio)) card.appendChild(el('p', 'grups-projecte__desc', text(p.descripcio)));
 
@@ -83,7 +112,8 @@
       var shown = Math.min(pct, 100);
       var fons = el('div', 'grups-fons');
       var xifres = el('div', 'grups-fons__xifres');
-      xifres.appendChild(el('span', 'grups-fons__pct', pct + '%'));
+      var pctEl = el('span', 'grups-fons__pct', pct + '%');
+      xifres.appendChild(pctEl);
       xifres.appendChild(el('span', 'grups-fons__import', t(
         euros(recaptat) + ' de ' + euros(objectiu),
         euros(recaptat) + ' of ' + euros(objectiu),
@@ -103,7 +133,7 @@
       fons.appendChild(bar);
       if (pct >= 100) fons.appendChild(el('p', 'grups-fons__fet', t('Objectiu aconseguit! Gràcies a tothom 💙', 'Goal reached! Thank you all 💙', '¡Objetivo conseguido! Gracias a todos 💙')));
       card.appendChild(fons);
-      grow(fill, shown);
+      grow(fill, pct, shown, pctEl);
     } else {
       card.appendChild(el('p', 'grups-projecte__prep', t('Projecte en preparació', 'Project in preparation', 'Proyecto en preparación')));
     }

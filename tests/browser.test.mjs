@@ -806,19 +806,51 @@ test('portada en mòbil: Instagram com a l\'app (sense QR), destacades que es po
 
 test('activitats: pestanya Grups de treball amb les 7 àrees, el referent de cada grup i la barra de donacions', async (t) => {
   if (skip) return t.skip(skip);
-  // Amb el grups.json de la web, mentre no hi ha projectes, surt el missatge
+  // Amb el grups.json de la web: un projecte per cada un dels seus projectes
   const real = JSON.parse(readFileSync(join(ROOT, 'grups.json'), 'utf8'));
   let { page, context, errors } = await open('activitats.html#grups');
   await page.waitForFunction(() => document.getElementById('grups').classList.contains('act-tab-section--active'));
   assert.equal(await page.getAttribute('[data-tab="grups"]', 'aria-pressed'), 'true');
   assert.equal(await page.locator('#grups .grups-area[data-area]').count(), 7);
-  if (!real.projectes.length) {
+  if (real.projectes.length) {
+    await page.waitForSelector('#grups .grups-projecte');
+    assert.equal(await page.locator('#grups .grups-projecte').count(), real.projectes.length);
+    assert.equal(await page.locator('#grups .grups-projecte__exemple').count(), real.projectes.filter((p) => p.exemple === true).length, 'etiqueta «Exemple»');
+    assert.equal(await page.isHidden('#grupsBuit'), true);
+  } else {
     await page.waitForTimeout(200);
     assert.equal(await page.isVisible('#grupsBuit'), true);
-    assert.equal(await page.isHidden('#grupsProjectes'), true);
   }
   await context.close();
   assert.deepEqual(errors, []);
+
+  // Sense cap projecte surt el missatge «Els grups s'estan formant»
+  context = await browser.newContext({ reducedMotion: 'reduce', locale: 'ca-ES' });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+  await context.route('**/grups.json', (route) => route.fulfill({ status: 200, contentType: 'application/json', body: '{"grups":[],"projectes":[]}' }));
+  page = await context.newPage();
+  await page.goto(server.url + '/activitats.html#grups', { waitUntil: 'load' });
+  await page.waitForTimeout(200);
+  assert.equal(await page.isVisible('#grupsBuit'), true);
+  assert.equal(await page.isHidden('#grupsProjectes'), true);
+  await context.close();
+
+  // Amb animacions: les 7 àrees entren i acaben visibles, i el percentatge compta fins al valor
+  context = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'ca-ES' });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+  page = await context.newPage();
+  await page.goto(server.url + '/activitats.html#grups', { waitUntil: 'load' });
+  await page.locator('#grupsArees').scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => document.getElementById('grupsArees').classList.contains('is-in'));
+  await page.waitForFunction(() => [...document.querySelectorAll('#grupsArees > li')].every((li) => getComputedStyle(li).opacity === '1'), null, { timeout: 5000 });
+  if (real.projectes.some((p) => p.objectiu)) {
+    const p0 = real.projectes.find((p) => p.objectiu);
+    const final = Math.round(p0.recaptat / p0.objectiu * 100) + '%';
+    const pct = page.locator('#grups .grups-fons__pct').first();
+    await pct.scrollIntoViewIfNeeded();
+    await page.waitForFunction((v) => document.querySelector('#grups .grups-fons__pct').textContent === v, final, { timeout: 5000 });
+  }
+  await context.close();
 
   // Amb grups i projectes de prova (un d'invàlid, que no surt)
   const dades = {

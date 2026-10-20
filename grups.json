@@ -1,5 +1,22 @@
 {
-  "_com_editar": "Grups de treball (Activitats → Grups de treball). grups: un per àrea, amb el nom del referent (surt a la targeta de l'àrea). projectes: un bloc per projecte, amb el nom i la descripció en català, castellà i anglès; area: una de pau, malalties, aigua, maternoinfantil, educacio, economia o medi; objectiu: els euros que es volen recaptar (sense objectiu no surt la barra); recaptat: els euros que ja s'han recaptat (la barra es mou sola amb aquest número). Exemple de projecte: {\"nom\": {\"ca\": \"Nom\", \"es\": \"Nombre\", \"en\": \"Name\"}, \"area\": \"educacio\", \"descripcio\": {\"ca\": \"…\", \"es\": \"…\", \"en\": \"…\"}, \"objectiu\": 800, \"recaptat\": 0}",
+  "_com_editar": "Grups de treball (Activitats → Grups de treball). grups: un per àrea, amb el nom del referent (surt a la targeta de l'àrea). projectes: un bloc per projecte, amb el nom i la descripció en català, castellà i anglès; area: una de pau, malalties, aigua, maternoinfantil, educacio, economia o medi; objectiu: els euros que es volen recaptar (sense objectiu no surt la barra); recaptat: els euros que ja s'han recaptat (la barra es mou sola amb aquest número); exemple: true posa l'etiqueta «Exemple» a la targeta (esborreu la línia quan el projecte sigui real). Exemple de projecte: {\"nom\": {\"ca\": \"Nom\", \"es\": \"Nombre\", \"en\": \"Name\"}, \"area\": \"educacio\", \"descripcio\": {\"ca\": \"…\", \"es\": \"…\", \"en\": \"…\"}, \"objectiu\": 800, \"recaptat\": 0}",
   "grups": [],
-  "projectes": []
+  "projectes": [
+    {
+      "nom": {
+        "ca": "Motxilla Solidària",
+        "es": "Mochila Solidaria",
+        "en": "Solidarity Backpack"
+      },
+      "area": "educacio",
+      "exemple": true,
+      "descripcio": {
+        "ca": "Reforç escolar i una motxilla amb material escolar i un llibre de lectura per a infants d'Igualada que necessiten un cop de mà amb els estudis. Ho farem de la mà d'una escola de la ciutat.",
+        "es": "Refuerzo escolar y una mochila con material escolar y un libro de lectura para niños y niñas de Igualada que necesitan una ayuda con los estudios. Lo haremos de la mano de una escuela de la ciudad.",
+        "en": "Homework support and a backpack with school supplies and a reading book for children in Igualada who need a helping hand with their studies, together with a local school."
+      },
+      "objectiu": 600,
+      "recaptat": 120
+    }
+  ]
 }
