@@ -43,8 +43,8 @@ const META = {
     en: 'Learn about the history and values of Rotaract Club Igualada, part of the Rotary International network, and how we work with Rotary Club Igualada.'
   },
   'activitats.html': {
-    es: 'Actividades y proyectos solidarios, culturales, deportivos y de formación de Rotaract Igualada. Consulta el calendario e inscríbete.',
-    en: 'Solidarity, cultural, sports and training activities and projects by Rotaract Igualada. Check the calendar and sign up.'
+    es: 'Actividades, proyectos solidarios y grupos de trabajo de Rotaract Igualada para el Anoia. Consulta el calendario, las fotos y cómo puedes colaborar.',
+    en: 'Activities, solidarity projects and work groups of Rotaract Igualada for the Anoia region. Check the calendar, the photos and how you can help.'
   },
   'directiu.html': {
     es: 'Conoce la junta directiva y los socios del Club Rotaract de Igualada, el club de jóvenes de Rotary en el Anoia.',
