@@ -306,6 +306,43 @@ test('idioma: la primera visita porta a la versió de l\'idioma del navegador', 
   await context.close();
 });
 
+test('idioma: la web també funciona oberta des d\'una carpeta de l\'ordinador (Live Server o doble clic)', async (t) => {
+  if (skip) return t.skip(skip);
+  // Live Server amb la carpeta de sobre oberta: la web és a /rotaract/
+  const context = await browser.newContext({ locale: 'es-ES' });
+  await context.route('http://local.test/**', async (route) => {
+    const path = new URL(route.request().url()).pathname.replace(/^\/rotaract\//, '/');
+    const res = await fetch(server.url + path);
+    await route.fulfill({ status: res.status, headers: { 'content-type': res.headers.get('content-type') || 'text/html' }, body: Buffer.from(await res.arrayBuffer()) });
+  });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1|local\.test)/, (route) => route.abort());
+  const page = await context.newPage();
+  await page.goto('http://local.test/rotaract/activitats.html#grups');
+  await page.waitForURL('http://local.test/rotaract/es/activitats.html#grups');
+  await page.waitForLoadState('load');
+  assert.equal(await page.getAttribute('html', 'lang'), 'es');
+  await page.click('.header__lang .lang-menu__btn');
+  await page.click('.header__lang [data-lang-opt="ca"]');
+  await page.waitForURL('http://local.test/rotaract/activitats.html#grups');
+  await page.click('.header__lang .lang-menu__btn');
+  await page.click('.header__lang [data-lang-opt="en"]');
+  await page.waitForURL('http://local.test/rotaract/en/activitats.html#grups');
+  await context.close();
+
+  // Doble clic a l'arxiu (file://): porta a la versió de l'idioma dins la mateixa carpeta
+  const local = await browser.newContext({ locale: 'es-ES' });
+  await local.route(/^https?:\/\//, (route) => route.abort());
+  const p2 = await local.newPage();
+  const base = 'file://' + ROOT.split('\\').join('/').replace(/^(?=[A-Za-z]:)/, '/');
+  await p2.goto(base + '/activitats.html');
+  await p2.waitForURL(base + '/es/activitats.html');
+  await p2.goto(base + '/es/index.html');
+  await p2.click('.header__lang .lang-menu__btn');
+  await p2.click('.header__lang [data-lang-opt="ca"]');
+  await p2.waitForURL(base + '/index.html');
+  await local.close();
+});
+
 test('idioma: els cercadors (Googlebot) no es redirigeixen i veuen cada versió tal com és', async (t) => {
   if (skip) return t.skip(skip);
   const context = await browser.newContext({

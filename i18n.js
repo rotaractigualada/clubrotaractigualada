@@ -529,12 +529,19 @@
     return LANGS.indexOf(lang) !== -1 ? lang : 'ca';
   }
 
-  /* Adreça de la mateixa pàgina en un altre idioma */
+  /* Adreça de la mateixa pàgina en un altre idioma. Es fa a partir de la
+     carpeta de la pàgina (com a redireccions.js), perquè també funcioni
+     si la web s'obre des d'una carpeta de l'ordinador. */
   function urlFor(lang) {
-    var file = window.location.pathname.split('/').pop() || '';
-    if (file === 'index.html') file = '';
-    var prefix = lang === 'ca' ? '/' : '/' + lang + '/';
-    return prefix + file + window.location.search + window.location.hash;
+    var loc = window.location;
+    var dir = loc.pathname.replace(/[^/]*$/, '');
+    var file = loc.pathname.slice(dir.length);
+    if (file === 'index.html' && loc.protocol !== 'file:') file = '';
+    var cur = pageLang();
+    var root = cur !== 'ca' && dir.slice(-(cur.length + 2)) === '/' + cur + '/'
+      ? dir.slice(0, -(cur.length + 1))
+      : dir;
+    return root + (lang === 'ca' ? '' : lang + '/') + file + loc.search + loc.hash;
   }
 
   function saveLang(lang) {
