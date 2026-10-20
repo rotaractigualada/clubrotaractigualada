@@ -849,6 +849,11 @@ test('activitats: pestanya Grups de treball amb les 7 àrees, el referent de cad
     const pct = page.locator('#grups .grups-fons__pct').first();
     await pct.scrollIntoViewIfNeeded();
     await page.waitForFunction((v) => document.querySelector('#grups .grups-fons__pct').textContent === v, final, { timeout: 5000 });
+    assert.equal(await page.textContent('#grups .grups-escena__pct'), final, 'l\'anell de l\'escena 3D diu el mateix');
+    // Bloc horitzontal: el text a un costat i l'escena 3D a l'altre
+    const txt = await page.locator('#grups .grups-projecte__text').first().boundingBox();
+    const vis = await page.locator('#grups .grups-projecte__visual').first().boundingBox();
+    assert.ok(vis.x >= txt.x + txt.width - 1, 'l\'escena va al costat del text');
   }
   await context.close();
 
@@ -887,6 +892,7 @@ test('activitats: pestanya Grups de treball amb les 7 àrees, el referent de cad
     const ratio = await first.locator('.grups-barra').evaluate((bar) => bar.firstChild.getBoundingClientRect().width / bar.getBoundingClientRect().width);
     assert.ok(Math.abs(ratio - 0.4) < 0.02, `${path}: la barra va al 40% (${ratio})`);
     assert.equal(await cards.nth(1).locator('.grups-barra').count(), 0, 'sense objectiu no hi ha barra');
+    assert.match(await cards.nth(1).getAttribute('class'), /grups-projecte--reverse/, 'els blocs alternen el costat de l\'escena');
     assert.equal(await cards.nth(1).locator('.grups-projecte__prep').textContent(), txt.prep);
     assert.equal(await first.locator('.grups-projecte__btn').textContent(), txt.btn);
     assert.equal(await first.locator('.grups-projecte__btn').getAttribute('href'), 'contacte.html#escriu-nos');

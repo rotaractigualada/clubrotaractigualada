@@ -386,5 +386,6 @@ test('grups de treball: pestanya a Activitats amb les 7 àrees, els menús hi po
     if (p.objectiu != null) assert.ok(typeof p.objectiu === 'number' && p.objectiu > 0, `${nom}: l'objectiu ha de ser un número d'euros més gran que 0`);
     if (p.recaptat != null) assert.ok(typeof p.recaptat === 'number' && p.recaptat >= 0, `${nom}: el recaptat ha de ser un número d'euros`);
     if (p.exemple != null) assert.equal(typeof p.exemple, 'boolean', `${nom}: «exemple» ha de ser true o false`);
+    if (p.icona != null) assert.ok(typeof p.icona === 'string' && p.icona.trim().length <= 8, `${nom}: «icona» ha de ser un emoji`);
   }
 });
