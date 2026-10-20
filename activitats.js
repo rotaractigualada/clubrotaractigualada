@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   /* ── Sistema de Tabs ── */
-  const validTabs   = ['programades', 'realitzades', 'galeria', 'calendari'];
+  const validTabs   = ['programades', 'realitzades', 'galeria', 'calendari', 'grups'];
   const tabBtns     = document.querySelectorAll('.act-hero__tab-btn');
   const tabSections = document.querySelectorAll('.act-tab-section');
 
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   initTabFromHash();
 
-  // Suport per a qualsevol enllaç que apunti a una tab (#programades, #realitzades, #galeria, #calendari),
+  // Suport per a qualsevol enllaç que apunti a una tab (#programades, #realitzades, #galeria, #calendari, #grups),
   // tant des del menú d'escriptori (dropdown del header) com del menú mòbil, encara que
   // l'enllaç inclogui "activitats.html" al davant (com passa amb els del header).
 

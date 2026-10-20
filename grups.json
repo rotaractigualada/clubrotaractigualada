@@ -1,0 +1,5 @@
+{
+  "_com_editar": "Grups de treball (Activitats → Grups de treball). grups: un per àrea, amb el nom del referent (surt a la targeta de l'àrea). projectes: un bloc per projecte, amb el nom i la descripció en català, castellà i anglès; area: una de pau, malalties, aigua, maternoinfantil, educacio, economia o medi; objectiu: els euros que es volen recaptar (sense objectiu no surt la barra); recaptat: els euros que ja s'han recaptat (la barra es mou sola amb aquest número). Exemple de projecte: {\"nom\": {\"ca\": \"Nom\", \"es\": \"Nombre\", \"en\": \"Name\"}, \"area\": \"educacio\", \"descripcio\": {\"ca\": \"…\", \"es\": \"…\", \"en\": \"…\"}, \"objectiu\": 800, \"recaptat\": 0}",
+  "grups": [],
+  "projectes": []
+}

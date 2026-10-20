@@ -766,3 +766,64 @@ test('portada en mòbil: Instagram com a l\'app (sense QR), destacades que es po
   await context.close();
   assert.deepEqual(errors, []);
 });
+
+test('activitats: pestanya Grups de treball amb les 7 àrees, el referent de cada grup i la barra de donacions', async (t) => {
+  if (skip) return t.skip(skip);
+  // Amb el grups.json de la web, mentre no hi ha projectes, surt el missatge
+  const real = JSON.parse(readFileSync(join(ROOT, 'grups.json'), 'utf8'));
+  let { page, context, errors } = await open('activitats.html#grups');
+  await page.waitForFunction(() => document.getElementById('grups').classList.contains('act-tab-section--active'));
+  assert.equal(await page.getAttribute('[data-tab="grups"]', 'aria-pressed'), 'true');
+  assert.equal(await page.locator('#grups .grups-area[data-area]').count(), 7);
+  if (!real.projectes.length) {
+    await page.waitForTimeout(200);
+    assert.equal(await page.isVisible('#grupsBuit'), true);
+    assert.equal(await page.isHidden('#grupsProjectes'), true);
+  }
+  await context.close();
+  assert.deepEqual(errors, []);
+
+  // Amb grups i projectes de prova (un d'invàlid, que no surt)
+  const dades = {
+    grups: [{ area: 'educacio', referent: 'Anna Puig' }, { area: 'cap', referent: 'No' }],
+    projectes: [
+      { nom: { ca: 'Motxilla Solidària', es: 'Mochila Solidaria', en: 'Solidarity Backpack' }, area: 'educacio',
+        descripcio: { ca: 'Material escolar per a infants.', es: 'Material escolar para niños.', en: 'School supplies for children.' }, objectiu: 800, recaptat: 320 },
+      { nom: { ca: 'Neteja del riu', es: 'Limpieza del río', en: 'River clean-up' }, area: 'medi' },
+      { nom: { ca: 'Fora' }, area: 'cap', objectiu: 100 }
+    ]
+  };
+  for (const [path, txt] of [
+    ['activitats.html#grups', { nom: 'Motxilla Solidària', import: /^320\s€ de 800\s€$/, prep: 'Projecte en preparació', ref: 'Referent: Anna Puig', btn: 'Vull col·laborar' }],
+    ['es/activitats.html#grups', { nom: 'Mochila Solidaria', import: /^320\s€ de 800\s€$/, prep: 'Proyecto en preparación', ref: 'Referente: Anna Puig', btn: 'Quiero colaborar' }]
+  ]) {
+    context = await browser.newContext({ viewport: { width: 375, height: 800 }, reducedMotion: 'reduce', locale: 'ca-ES' });
+    await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+    await context.route('**/grups.json', (route) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(dades) }));
+    page = await context.newPage();
+    errors = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    await page.goto(server.url + '/' + path, { waitUntil: 'load' });
+    await page.waitForSelector('#grups .grups-projecte');
+    const cards = page.locator('#grups .grups-projecte');
+    assert.equal(await cards.count(), 2, `${path}: només els projectes vàlids`);
+    assert.equal(await page.isHidden('#grupsBuit'), true);
+    assert.equal(await page.locator('.grups-area--actiu').count(), 1);
+    assert.equal(await page.textContent('.grups-area[data-area="educacio"] .grups-area__referent'), txt.ref);
+    const first = cards.nth(0);
+    assert.equal(await first.locator('.grups-projecte__nom').textContent(), txt.nom);
+    assert.equal(await first.locator('.grups-fons__pct').textContent(), '40%');
+    assert.match(await first.locator('.grups-fons__import').textContent(), txt.import);
+    assert.equal(await first.locator('[role="progressbar"]').getAttribute('aria-valuenow'), '40');
+    const ratio = await first.locator('.grups-barra').evaluate((bar) => bar.firstChild.getBoundingClientRect().width / bar.getBoundingClientRect().width);
+    assert.ok(Math.abs(ratio - 0.4) < 0.02, `${path}: la barra va al 40% (${ratio})`);
+    assert.equal(await cards.nth(1).locator('.grups-barra').count(), 0, 'sense objectiu no hi ha barra');
+    assert.equal(await cards.nth(1).locator('.grups-projecte__prep').textContent(), txt.prep);
+    assert.equal(await first.locator('.grups-projecte__btn').textContent(), txt.btn);
+    assert.equal(await first.locator('.grups-projecte__btn').getAttribute('href'), 'contacte.html#escriu-nos');
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    assert.ok(overflow <= 0, `${path}: la pàgina desborda ${overflow}px en horitzontal`);
+    await context.close();
+    assert.deepEqual(errors, []);
+  }
+});

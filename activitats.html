@@ -29,7 +29,7 @@
   <!-- /hreflang -->
   <link rel="stylesheet" href="rotaractigualada.css?v=e446797d">
   <link rel="stylesheet" href="legal-modals.css?v=4bfb5401">
-  <link rel="stylesheet" href="activitats.css?v=46081a07">
+  <link rel="stylesheet" href="activitats.css?v=66fd54bd">
   <link rel="preload" href="fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="fonts.css?v=d6f9c1e4">
   <link rel="icon" href="favicon.ico" sizes="48x48">
@@ -75,6 +75,7 @@
             <li><a href="activitats.html#realitzades" class="mobile-nav__sublink" data-en="Past activities">Activitats realitzades</a></li>
             <li><a href="activitats.html#galeria" class="mobile-nav__sublink" data-en="Gallery">Galeria</a></li>
             <li><a href="activitats.html#calendari" class="mobile-nav__sublink" data-en="Calendar">Calendari</a></li>
+            <li><a href="activitats.html#grups" class="mobile-nav__sublink" data-en="Work groups">Grups de treball</a></li>
         </ul>
       </li>
       <li class="mobile-nav__group">
@@ -132,6 +133,7 @@
             <li><a href="activitats.html#realitzades" data-en="Past activities">Activitats realitzades</a></li>
             <li><a href="activitats.html#galeria" data-en="Gallery">Galeria</a></li>
             <li><a href="activitats.html#calendari" data-en="Calendar">Calendari</a></li>
+            <li><a href="activitats.html#grups" data-en="Work groups">Grups de treball</a></li>
           </ul>
         </div>
         <div class="nav__item nav__item--dropdown">
@@ -197,6 +199,10 @@
         <button type="button" class="act-hero__tab-btn" data-tab="calendari">
           <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <span data-en="Calendar">Calendari</span>
+        </button>
+        <button type="button" class="act-hero__tab-btn" data-tab="grups">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span data-en="Work groups">Grups de treball</span>
         </button>
       </div>
     </div>
@@ -611,6 +617,140 @@
     </div>
   </section>
 
+  <!-- ============================================
+       SECCIÓ 5: GRUPS DE TREBALL
+       Les 7 àrees d'interès de Rotary, com funcionen els grups i els
+       projectes de cada grup amb la barra de donacions. Els grups (àrea i
+       referent) i els projectes són a grups.json, i els posa grups.js.
+  ============================================ -->
+  <section class="act-section act-section--light act-tab-section" id="grups">
+    <div class="act-section__inner">
+      <div class="act-section__header act-reveal">
+        <span class="act-tag act-tag--blue">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span data-en="How we organise ourselves">Com ens organitzem</span>
+        </span>
+        <h2 class="act-section__title"><span data-en="Work groups" style="color: inherit;">Grups de treball</span> <span data-en="by area">per àrees</span></h2>
+        <div class="act-section__divider"></div>
+        <p class="act-section__desc" data-en="In the club we work in groups, each dedicated to one of the 7 areas in which Rotary focuses its service around the world. Each group runs projects for Igualada and the Anoia region.">Al club treballem en grups, cadascun dedicat a una de les 7 àrees en què Rotary concentra el seu servei arreu del món. Cada grup impulsa projectes per a Igualada i l'Anoia.</p>
+      </div>
+
+      <div class="grups-bloc act-reveal">
+        <h3 class="grups-bloc__title" data-en="The 7 Rotary areas of focus">Les 7 àrees d'interès de Rotary</h3>
+        <p class="grups-bloc__desc" data-en="They are the main causes Rotary works on around the world.">Són les grans causes en què treballa Rotary arreu del món.</p>
+        <ul class="grups-arees" id="grupsArees">
+          <li class="grups-area" data-area="pau">
+            <span class="grups-area__emoji" aria-hidden="true">🕊️</span>
+            <span class="grups-area__nom" data-en="Peace">Pau</span>
+            <span class="grups-area__desc" data-en="Promoting peace">Construcció de la pau i prevenció de conflictes</span>
+            <span class="grups-area__grup" data-grup hidden></span>
+          </li>
+          <li class="grups-area" data-area="malalties">
+            <span class="grups-area__emoji" aria-hidden="true">💉</span>
+            <span class="grups-area__nom" data-en="Disease">Malalties</span>
+            <span class="grups-area__desc" data-en="Fighting disease">Prevenció i tractament de malalties</span>
+            <span class="grups-area__grup" data-grup hidden></span>
+          </li>
+          <li class="grups-area" data-area="aigua">
+            <span class="grups-area__emoji" aria-hidden="true">🚰</span>
+            <span class="grups-area__nom" data-en="Water">Aigua</span>
+            <span class="grups-area__desc" data-en="Providing clean water, sanitation and hygiene">Aigua, sanejament i higiene</span>
+            <span class="grups-area__grup" data-grup hidden></span>
+          </li>
+          <li class="grups-area" data-area="maternoinfantil">
+            <span class="grups-area__emoji" aria-hidden="true">👶</span>
+            <span class="grups-area__nom" data-en="Mothers &amp; children">Mares i infants</span>
+            <span class="grups-area__desc" data-en="Saving mothers and children">Salut materna i infantil</span>
+            <span class="grups-area__grup" data-grup hidden></span>
+          </li>
+          <li class="grups-area" data-area="educacio">
+            <span class="grups-area__emoji" aria-hidden="true">📚</span>
+            <span class="grups-area__nom" data-en="Education">Educació</span>
+            <span class="grups-area__desc" data-en="Supporting education">Educació bàsica i alfabetització</span>
+            <span class="grups-area__grup" data-grup hidden></span>
+          </li>
+          <li class="grups-area" data-area="economia">
+            <span class="grups-area__emoji" aria-hidden="true">💼</span>
+            <span class="grups-area__nom" data-en="Local economies">Economia local</span>
+            <span class="grups-area__desc" data-en="Growing local economies">Desenvolupament econòmic de la comunitat</span>
+            <span class="grups-area__grup" data-grup hidden></span>
+          </li>
+          <li class="grups-area" data-area="medi">
+            <span class="grups-area__emoji" aria-hidden="true">🌍</span>
+            <span class="grups-area__nom" data-en="Environment">Medi ambient</span>
+            <span class="grups-area__desc" data-en="Protecting the environment">Protecció del medi ambient</span>
+            <span class="grups-area__grup" data-grup hidden></span>
+          </li>
+          <li class="grups-area grups-area--test">
+            <a href="index.html#test" class="grups-area__link">
+              <span class="grups-area__emoji" aria-hidden="true">🧭</span>
+              <span class="grups-area__nom" data-en="Not sure which one?">No saps quina?</span>
+              <span class="grups-area__desc" data-en="Take the test on the home page and find out which area you fit best →">Fes el test de la portada i descobreix amb quina àrea encaixes més →</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="grups-bloc act-reveal">
+        <h3 class="grups-bloc__title" data-en="How we work">Com treballem</h3>
+        <ul class="grups-com">
+          <li class="grups-com__item">
+            <span class="grups-com__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <div>
+              <h4 class="grups-com__title" data-en="Projects for our region">Projectes per a la nostra comarca</h4>
+              <p class="grups-com__text" data-en="Each group proposes and carries out projects in its area for Igualada and the Anoia region.">Cada grup proposa i tira endavant projectes de la seva àrea per a Igualada i l'Anoia.</p>
+            </div>
+          </li>
+          <li class="grups-com__item">
+            <span class="grups-com__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg></span>
+            <div>
+              <h4 class="grups-com__title" data-en="With Rotary's support">Amb el suport de Rotary</h4>
+              <p class="grups-com__text" data-en="For each topic, we can count on the help of Rotary members who know it well.">Per a cada tema, comptem amb l'ajuda de socis de Rotary que en saben.</p>
+            </div>
+          </li>
+          <li class="grups-com__item">
+            <span class="grups-com__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
+            <div>
+              <h4 class="grups-com__title" data-en="Clear accounts">Comptes clars</h4>
+              <p class="grups-com__text" data-en="For each project you can see what we want to achieve and how much has been raised.">A cada projecte hi veuràs què volem aconseguir i quant s'ha recaptat.</p>
+            </div>
+          </li>
+          <li class="grups-com__item">
+            <span class="grups-com__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+            <div>
+              <h4 class="grups-com__title" data-en="Open to collaboration">Oberts a col·laborar</h4>
+              <p class="grups-com__text" data-en="People, organisations and businesses can lend a hand or donate to the projects.">Persones, entitats i empreses poden donar un cop de mà o fer una donació als projectes.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="grups-bloc act-reveal">
+        <h3 class="grups-bloc__title" data-en="The groups' projects">Projectes dels grups</h3>
+        <p class="grups-bloc__desc" data-en="Each project shows how much it has raised. If you would like to help, write to us.">Cada projecte mostra quant ha recaptat. Si hi vols col·laborar, escriu-nos.</p>
+        <div class="grups-projectes" id="grupsProjectes" hidden></div>
+        <div class="act-empty-state grups-buit" id="grupsBuit">
+          <div class="act-empty-state__icon" aria-hidden="true">🌱</div>
+          <h4 class="act-empty-state__title" data-en="The groups are being formed">Els grups s'estan formant</h4>
+          <p class="act-empty-state__desc" data-en="Their projects will appear here very soon, along with how you can help.">Molt aviat hi trobaràs els seus projectes i com hi pots col·laborar.</p>
+        </div>
+      </div>
+
+      <div class="grups-cta act-reveal">
+        <h3 class="grups-cta__title" data-en="Would you like to be part of it?">Vols formar-ne part?</h3>
+        <p class="grups-cta__text" data-en="Join the club and choose the area that motivates you most.">Uneix-te al club i tria l'àrea que més et motiva.</p>
+        <div class="grups-cta__btns">
+          <a href="contacte.html#uneix-te" class="act-btn act-btn--primary">
+            <span data-en="Join the club">Uneix-te al club</span>
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="index.html#test" class="act-btn act-btn--ghost"><span data-en="Take the test">Fes el test</span></a>
+        </div>
+        <a href="contacte.html#escriu-nos" class="grups-cta__link" data-en="Are you an organisation or a business and would like to support a project? Write to us →">Ets una entitat o una empresa i vols col·laborar en algun projecte? Escriu-nos →</a>
+      </div>
+    </div>
+  </section>
+
 </main>
 
   <!-- ============================================
@@ -644,6 +784,7 @@
           <li><a href="directiu.html" data-en="Board">Directiu</a></li>
           <li><a href="activitats.html" data-en="Activities">Activitats</a></li>
           <li><a href="activitats.html#galeria" data-en="Gallery">Galeria</a></li>
+          <li><a href="activitats.html#grups" data-en="Work groups">Grups de treball</a></li>
           <li><a href="contacte.html" data-en="Contact">Contacte</a></li>
         </ul>
       </div>
@@ -672,8 +813,9 @@
   </footer>
 
   <script src="nav.js?v=35a73008"></script>
-  <script src="activitats.js?v=8e9971e1"></script>
+  <script src="activitats.js?v=65b98b15"></script>
   <script src="galeria.js?v=b38b67b5"></script>
+  <script src="grups.js?v=8cbb8e6a"></script>
 
 
   <script src="legal-modals.js?v=7b358c88"></script>
@@ -891,6 +1033,6 @@
 
   <script src="analytics.js?v=fa780a89"></script>
   <script src="efectes.js?v=b568823c"></script>
-  <script src="i18n.js?v=e521d71e"></script>
+  <script src="i18n.js?v=ec39ac90"></script>
 </body>
 </html>

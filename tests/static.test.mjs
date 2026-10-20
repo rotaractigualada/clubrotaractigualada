@@ -279,10 +279,10 @@ test('.htaccess: la web pot llegir els .json que fa servir (mapa i activitats), 
   const allowed = (f) => granted.some((ok) => ok(f));
   // .json que demana el JavaScript de la web
   const used = new Set();
-  for (const js of ['mapa.js', 'projectes.js', 'test-voluntari.js']) {
+  for (const js of ['mapa.js', 'projectes.js', 'test-voluntari.js', 'grups.js']) {
     for (const m of read(js).matchAll(/['"]([\w-]+\.json)['"]/g)) used.add(m[1]);
   }
-  assert.ok(used.has('anoia.json') && used.has('projectes.json'));
+  assert.ok(used.has('anoia.json') && used.has('projectes.json') && used.has('grups.json'));
   for (const f of used) {
     assert.ok(existsSync(join(ROOT, f)), `falta ${f}`);
     assert.ok(allowed(f), `${f}: el bloqueig de .json de l'.htaccess el deixaria en 403`);
@@ -348,5 +348,41 @@ test('avís legal i privacitat: dades de l\'entitat omplertes (sense «[…]»),
       }
       assert.match(legal, lang === 'en' ? /Register of Associations of the Generalitat de Catalunya/ : lang === 'es' ? /Registro de Asociaciones de la Generalitat de Catalunya/ : /Registre d'Associacions de la Generalitat de Catalunya/);
     }
+  }
+});
+
+test('grups de treball: pestanya a Activitats amb les 7 àrees, els menús hi porten i grups.json és vàlid', () => {
+  const act = stripComments(read('activitats.html'));
+  assert.match(act, /<button type="button" class="act-hero__tab-btn" data-tab="grups">/);
+  const sec = act.slice(act.indexOf('<section class="act-section act-section--light act-tab-section" id="grups">'));
+  assert.ok(sec.length < act.length, 'falta la secció #grups');
+  assert.deepEqual([...sec.matchAll(/<li class="grups-area" data-area="(\w+)">/g)].map((m) => m[1]).sort(), AREES, 'una targeta per àrea');
+  assert.match(sec, /<a href="index\.html#test" class="grups-area__link">/, 'porta al test de la portada');
+  assert.match(sec, /id="grupsProjectes" hidden><\/div>[\s\S]*id="grupsBuit"/, 'projectes i missatge mentre no n\'hi ha');
+  assert.match(sec, /href="contacte\.html#uneix-te"/);
+  assert.match(act, /<script src="grups\.js[^"]*"><\/script>/);
+  assert.match(read('activitats.js'), /validTabs\s*=\s*\[[^\]]*'grups'/);
+  for (const page of PAGES) {
+    const html = stripComments(read(page));
+    assert.match(html, /<li><a href="activitats\.html#grups" class="mobile-nav__sublink" data-en="Work groups">Grups de treball<\/a><\/li>/, `${page}: menú mòbil`);
+    assert.match(html, /<li><a href="activitats\.html#grups" data-en="Work groups">Grups de treball<\/a><\/li>[\s\S]*<li><a href="activitats\.html#grups" data-en="Work groups">Grups de treball<\/a><\/li>/, `${page}: menú d'escriptori i peu`);
+  }
+
+  const { grups, projectes } = JSON.parse(read('grups.json'));
+  assert.ok(Array.isArray(grups) && Array.isArray(projectes), 'grups.json: «grups» i «projectes» han de ser llistes');
+  const fets = new Set();
+  for (const g of grups) {
+    assert.ok(AREES.includes(g.area), `grup: l'àrea «${g.area}» no és cap de les 7 àrees de Rotary (${AREES.join(', ')})`);
+    assert.ok(!fets.has(g.area), `hi ha dos grups de l'àrea «${g.area}»`);
+    fets.add(g.area);
+    assert.ok(typeof g.referent === 'string' && g.referent.trim(), `grup de ${g.area}: falta el nom del referent`);
+  }
+  for (const p of projectes) {
+    const nom = p.nom && p.nom.ca;
+    assert.ok(p.nom && p.nom.ca && p.nom.es && p.nom.en, `projecte: nom en català, castellà i anglès: ${JSON.stringify(p.nom)}`);
+    assert.ok(AREES.includes(p.area), `${nom}: l'àrea «${p.area}» no és cap de les 7 àrees de Rotary`);
+    if (p.descripcio) assert.ok(p.descripcio.ca && p.descripcio.es && p.descripcio.en, `${nom}: descripció en català, castellà i anglès`);
+    if (p.objectiu != null) assert.ok(typeof p.objectiu === 'number' && p.objectiu > 0, `${nom}: l'objectiu ha de ser un número d'euros més gran que 0`);
+    if (p.recaptat != null) assert.ok(typeof p.recaptat === 'number' && p.recaptat >= 0, `${nom}: el recaptat ha de ser un número d'euros`);
   }
 });

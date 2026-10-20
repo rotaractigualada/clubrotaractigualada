@@ -27,6 +27,7 @@ Cap enllaç de la web obre el programa de correu: tot es fa des de la pàgina.
 | `galeria.js`, `galeria/` | Galeria de fotos (Activitats → pestanya Galeria): un mosaic per àlbum i visor a pantalla completa (fotos en mides 800 i 1600 px) |
 | `mapa.js`, `mapa.css`, `anoia.json`, `anoia.svg` | Mapa d'Igualada i l'Anoia (Nosaltres → On som) |
 | `projectes.json`, `projectes.js` | Activitats del club per al mapa i el test de la portada |
+| `grups.json`, `grups.js` | Activitats → Grups de treball: grups per àrea (amb el referent) i projectes amb la barra de donacions |
 | `instagram.css`, `instagram.js`, `instagram/` | Secció Instagram de la portada: perfil, destacades, publicacions i codi QR |
 | `instagram-feed.php` | Instagram automàtic: últimes publicacions des de l'API d'Instagram (opcional, vegeu més avall) |
 | `test-voluntari.js`, `test-voluntari.css` | Test «Amb quina àrea de Rotary connectes més?» de la portada |
@@ -128,6 +129,25 @@ cada àrea d'interès de Rotary, i diu l'àrea amb què connectes més. Cada dad
 de Rotary del resultat («Sabies que…») enllaça la seva font oficial. Les preguntes i
 els textos del resultat són a `index.html` (secció `#test`). No envia ni
 desa cap resposta.
+
+## Grups de treball (Activitats → Grups de treball)
+
+La pestanya «Grups de treball» d'`activitats.html` explica les 7 àrees
+d'interès de Rotary i com funcionen els grups, i mostra els grups i els
+projectes que hi ha a `grups.json` (els llegeix `grups.js`):
+
+- `grups`: un bloc per grup, amb `area` (una de les 7: `pau`, `malalties`,
+  `aigua`, `maternoinfantil`, `educacio`, `economia` o `medi`) i `referent`
+  (nom de la persona). La targeta de l'àrea mostra «Grup actiu» i el referent.
+- `projectes`: un bloc per projecte, amb `nom` i `descripcio` en català,
+  castellà i anglès, `area`, `objectiu` (euros que es volen recaptar) i
+  `recaptat` (euros que ja s'han recaptat). La barra de donacions surt quan hi
+  ha `objectiu`, i es mou sola quan s'actualitza `recaptat`. Sense objectiu, el
+  projecte surt com a «Projecte en preparació».
+
+Mentre no hi ha cap projecte, la pestanya diu «Els grups s'estan formant».
+El botó «Vull col·laborar» porta al formulari de Contacte. `npm test`
+comprova que les àrees, els noms i els imports de `grups.json` són vàlids.
 
 ## Instagram (portada)
 
