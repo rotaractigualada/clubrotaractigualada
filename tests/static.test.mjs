@@ -318,6 +318,19 @@ test('la galeria és a Activitats (pestanya Galeria) i no a la portada; els men�
   }
 });
 
+test('dades estructurades de la portada: el club, la web, l\'Instagram i el perfil de Google', () => {
+  for (const page of ['index.html', 'es/index.html', 'en/index.html']) {
+    const blocks = [...read(page).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+    const ngo = blocks.find((b) => b['@type'] === 'NGO');
+    assert.ok(ngo, `${page}: falta el bloc NGO`);
+    assert.equal(ngo.name, "Club Rotaract d'Igualada");
+    assert.equal(ngo.url, 'https://rotaractigualada.org/');
+    assert.ok(ngo.sameAs.includes('https://www.instagram.com/rotaractigualada/'), `${page}: Instagram a sameAs`);
+    assert.ok(ngo.sameAs.some((u) => /^https:\/\/maps\.app\.goo\.gl\/\w+$/.test(u)), `${page}: perfil de Google (Maps) a sameAs`);
+    assert.ok(blocks.some((b) => b['@type'] === 'WebSite' && b.url === 'https://rotaractigualada.org/'), `${page}: falta el bloc WebSite`);
+  }
+});
+
 test('portada: Instagram amb perfil, destacades, publicacions, QR i Instagram automàtic', () => {
   const html = stripComments(read('index.html'));
   const start = html.indexOf('id="instagram"');
