@@ -14,7 +14,7 @@
      des de la subcarpeta (../).
    - Posa l'adreça canònica, Open Graph i la descripció de l'idioma.
    - Afegeix les etiquetes hreflang (també a les pàgines catalanes).
-   - Posa la versió (?v=hash) als CSS i JS propis de totes les pàgines,
+   - Posa la versió (?v=hash) als CSS, JS i icones propis de totes les pàgines,
      perquè els navegadors no facin servir còpies antigues.
 
    Ús: node scripts/build-idiomes.mjs [carpeta_de_sortida]
@@ -84,13 +84,13 @@ function updateSourceHreflang(page) {
   writeFileSync(file, html);
 }
 
-/* Versió als CSS i JS propis (?v=<hash del contingut>): quan un fitxer
-   canvia, l'adreça canvia i els navegadors no fan servir la còpia antiga
-   de la memòria cau. */
+/* Versió als CSS i JS propis i a les icones (?v=<hash del contingut>):
+   quan un fitxer canvia, l'adreça canvia i els navegadors (i Google, per a
+   la icona dels resultats) no fan servir la còpia antiga de la memòria cau. */
 function updateSourceVersions(page) {
   const file = join(ROOT, page);
   const html = readFileSync(file, 'utf8').replace(
-    /(\s(?:href|src)=")([\w./-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?"/g,
+    /(\s(?:href|src)=")([\w./-]+\.(?:css|js)|(?:favicon[\w-]*|apple-touch-icon)\.(?:png|ico))(?:\?v=[0-9a-f]+)?"/g,
     (all, attr, asset) => {
       const path = join(ROOT, asset);
       if (!existsSync(path)) return all;

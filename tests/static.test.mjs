@@ -141,6 +141,15 @@ test('sense cookies: ni avís ni política de cookies, ni Google Analytics; esta
   assert.match(h, /script-src 'self';/);
 });
 
+test('icones amb versió (?v=hash): quan canvien, navegadors i Google agafen les noves', () => {
+  for (const page of PAGES) {
+    const html = read(page);
+    for (const icon of ['favicon\\.ico', 'favicon-96\\.png', 'favicon-192\\.png', 'apple-touch-icon\\.png']) {
+      assert.match(html, new RegExp(`href="${icon}\\?v=[0-9a-f]{8}"`), `${page}: ${icon} sense versió (npm run build:idiomes)`);
+    }
+  }
+});
+
 test('tipografies servides des de la mateixa web (sense Google Fonts: no s\'envia la IP dels visitants a Google)', () => {
   for (const page of PAGES) {
     const html = read(page);
