@@ -35,8 +35,8 @@ const LOCALES = { ca: 'ca_ES', es: 'es_ES', en: 'en_GB' };
 /* Descripcions per a cercadors i xarxes (les catalanes són a l'HTML) */
 const META = {
   'index.html': {
-    es: 'Rotaract Igualada: jóvenes comprometidos con proyectos sociales y de liderazgo en el Anoia. Descubre nuestras actividades, nuestra historia y cómo unirte.',
-    en: 'Rotaract Igualada: young people committed to social and leadership projects in the Anoia region. Discover our activities, our story and how to join.'
+    es: 'Web oficial del Club Rotaract de Igualada: jóvenes comprometidos con proyectos sociales y de liderazgo en el Anoia. Descubre cómo unirte.',
+    en: 'Official website of the Rotaract Club of Igualada: young people committed to social and leadership projects in the Anoia region. Find out how to join.'
   },
   'nosaltres.html': {
     es: 'Conoce la historia y los valores del Club Rotaract de Igualada, parte de la red de Rotary International, y descubre cómo colaboramos con Rotary Igualada.',

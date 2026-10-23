@@ -327,7 +327,10 @@ test('dades estructurades de la portada: el club, la web, l\'Instagram i el perf
     assert.equal(ngo.url, 'https://rotaractigualada.org/');
     assert.ok(ngo.sameAs.includes('https://www.instagram.com/rotaractigualada/'), `${page}: Instagram a sameAs`);
     assert.ok(ngo.sameAs.some((u) => /^https:\/\/maps\.app\.goo\.gl\/\w+$/.test(u)), `${page}: perfil de Google (Maps) a sameAs`);
-    assert.ok(blocks.some((b) => b['@type'] === 'WebSite' && b.url === 'https://rotaractigualada.org/'), `${page}: falta el bloc WebSite`);
+    const site = blocks.find((b) => b['@type'] === 'WebSite');
+    assert.ok(site && site.url === 'https://rotaractigualada.org/', `${page}: falta el bloc WebSite`);
+    assert.equal(site.publisher['@id'], ngo['@id'], `${page}: la web la publica el club`);
+    assert.match(read(page), /<meta name="description" content="(Web oficial|Official website)/, `${page}: la descripció diu que és la web oficial`);
   }
 });
 
