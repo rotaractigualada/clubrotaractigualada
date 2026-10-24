@@ -60,35 +60,6 @@
       }
     },
     {
-      "id": "motxilla-solidaria",
-      "data": "2026-10-20",
-      "categoria": "districte",
-      "icona": "🎒",
-      "titol": {
-        "ca": "Proposem la Motxilla Solidària al Districte",
-        "es": "Proponemos la Mochila Solidaria al Distrito",
-        "en": "We propose the Solidarity Backpack to the District"
-      },
-      "resum": {
-        "ca": "Reforç escolar i una motxilla amb material per a infants que ho necessiten: una idea perquè cada club la porti a terme a la seva localitat.",
-        "es": "Refuerzo escolar y una mochila con material para niños y niñas que lo necesitan: una idea para que cada club la lleve a cabo en su localidad.",
-        "en": "Homework support and a backpack with school supplies for children who need it: an idea every club can carry out in its own town."
-      },
-      "text": {
-        "ca": "Hem presentat al Districte 2202 la proposta Motxilla Solidària: sessions de reforç escolar i tècniques d'estudi, i una motxilla amb material escolar i un llibre de lectura per a infants que necessiten un cop de mà.\n\nÉs una idea pensada perquè cada club la pugui fer a la seva localitat, de la mà d'una escola. A Igualada la plantejarem amb una escola amb qui el club ja té contacte.",
-        "es": "Hemos presentado al Distrito 2202 la propuesta Mochila Solidaria: sesiones de refuerzo escolar y técnicas de estudio, y una mochila con material escolar y un libro de lectura para niños y niñas que necesitan una ayuda.\n\nEs una idea pensada para que cada club la pueda llevar a cabo en su localidad, de la mano de una escuela. En Igualada la plantearemos con una escuela con la que el club ya tiene contacto.",
-        "en": "We have presented the Solidarity Backpack proposal to District 2202: homework support and study-skills sessions, plus a backpack with school supplies and a reading book for children who need a helping hand.\n\nIt is designed so that every club can carry it out in its own town, together with a local school. In Igualada we will propose it to a school the club is already in touch with."
-      },
-      "enllac": {
-        "url": "activitats.html#grups",
-        "text": {
-          "ca": "Mira els projectes",
-          "es": "Mira los proyectos",
-          "en": "See the projects"
-        }
-      }
-    },
-    {
       "id": "presentacio-del-club",
       "data": "2026-09-24",
       "categoria": "club",
