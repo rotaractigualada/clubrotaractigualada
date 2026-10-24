@@ -100,9 +100,9 @@ RedirectMatch 404 ^/(tests|node_modules)(/|$)
   <Files "security.txt">
     Require all granted
   </Files>
-  # Excepció: dades públiques de la web (límits dels municipis del mapa
-  # i activitats del club), que la mateixa web llegeix
-  <FilesMatch "^(anoia|projectes)\.json$">
+  # Excepció: dades públiques de la web (límits dels municipis del mapa,
+  # activitats del club, grups de treball i notícies), que la mateixa web llegeix
+  <FilesMatch "^(anoia|projectes|grups|noticies)\.json$">
     Require all granted
   </FilesMatch>
 </IfModule>

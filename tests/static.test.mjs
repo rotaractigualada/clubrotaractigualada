@@ -141,6 +141,15 @@ test('sense cookies: ni avís ni política de cookies, ni Google Analytics; esta
   assert.match(h, /script-src 'self';/);
 });
 
+test('icones amb versió (?v=hash): quan canvien, navegadors i Google agafen les noves', () => {
+  for (const page of PAGES) {
+    const html = read(page);
+    for (const icon of ['favicon\\.ico', 'favicon-96\\.png', 'favicon-192\\.png', 'apple-touch-icon\\.png']) {
+      assert.match(html, new RegExp(`href="${icon}\\?v=[0-9a-f]{8}"`), `${page}: ${icon} sense versió (npm run build:idiomes)`);
+    }
+  }
+});
+
 test('tipografies servides des de la mateixa web (sense Google Fonts: no s\'envia la IP dels visitants a Google)', () => {
   for (const page of PAGES) {
     const html = read(page);
@@ -279,10 +288,10 @@ test('.htaccess: la web pot llegir els .json que fa servir (mapa i activitats), 
   const allowed = (f) => granted.some((ok) => ok(f));
   // .json que demana el JavaScript de la web
   const used = new Set();
-  for (const js of ['mapa.js', 'projectes.js', 'test-voluntari.js']) {
+  for (const js of ['mapa.js', 'projectes.js', 'test-voluntari.js', 'grups.js', 'noticies.js']) {
     for (const m of read(js).matchAll(/['"]([\w-]+\.json)['"]/g)) used.add(m[1]);
   }
-  assert.ok(used.has('anoia.json') && used.has('projectes.json'));
+  assert.ok(used.has('anoia.json') && used.has('projectes.json') && used.has('grups.json') && used.has('noticies.json'));
   for (const f of used) {
     assert.ok(existsSync(join(ROOT, f)), `falta ${f}`);
     assert.ok(allowed(f), `${f}: el bloqueig de .json de l'.htaccess el deixaria en 403`);
@@ -306,6 +315,22 @@ test('la galeria és a Activitats (pestanya Galeria) i no a la portada; els men�
     assert.doesNotMatch(html, /index\.html#galeria/, `${page}: encara enllaça la galeria de la portada`);
     assert.match(html, /<li><a href="activitats\.html#galeria" class="mobile-nav__sublink" data-en="Gallery">Galeria<\/a><\/li>/, `${page}: menú mòbil`);
     assert.match(html, /<li><a href="activitats\.html#galeria" data-en="Gallery">Galeria<\/a><\/li>[\s\S]*<li><a href="activitats\.html#galeria" data-en="Gallery">Galeria<\/a><\/li>/, `${page}: menú d'escriptori i peu`);
+  }
+});
+
+test('dades estructurades de la portada: el club, la web, l\'Instagram i el perfil de Google', () => {
+  for (const page of ['index.html', 'es/index.html', 'en/index.html']) {
+    const blocks = [...read(page).matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+    const ngo = blocks.find((b) => b['@type'] === 'NGO');
+    assert.ok(ngo, `${page}: falta el bloc NGO`);
+    assert.equal(ngo.name, "Club Rotaract d'Igualada");
+    assert.equal(ngo.url, 'https://rotaractigualada.org/');
+    assert.ok(ngo.sameAs.includes('https://www.instagram.com/rotaractigualada/'), `${page}: Instagram a sameAs`);
+    assert.ok(ngo.sameAs.some((u) => /^https:\/\/maps\.app\.goo\.gl\/\w+$/.test(u)), `${page}: perfil de Google (Maps) a sameAs`);
+    const site = blocks.find((b) => b['@type'] === 'WebSite');
+    assert.ok(site && site.url === 'https://rotaractigualada.org/', `${page}: falta el bloc WebSite`);
+    assert.equal(site.publisher['@id'], ngo['@id'], `${page}: la web la publica el club`);
+    assert.match(read(page), /<meta name="description" content="(Web oficial|Official website)/, `${page}: la descripció diu que és la web oficial`);
   }
 });
 
@@ -347,6 +372,87 @@ test('avís legal i privacitat: dades de l\'entitat omplertes (sense «[…]»),
         assert.match(part, />[^<]*Camí Ral, 4-10, 08700 Igualada \(Barcelona\)/, `${dir + page}: domicili social a ${name}`);
       }
       assert.match(legal, lang === 'en' ? /Register of Associations of the Generalitat de Catalunya/ : lang === 'es' ? /Registro de Asociaciones de la Generalitat de Catalunya/ : /Registre d'Associacions de la Generalitat de Catalunya/);
+    }
+  }
+});
+
+test('grups de treball: pestanya a Activitats amb les 7 àrees, els menús hi porten i grups.json és vàlid', () => {
+  const act = stripComments(read('activitats.html'));
+  assert.match(act, /<button type="button" class="act-hero__tab-btn" data-tab="grups">/);
+  const sec = act.slice(act.indexOf('<section class="act-section act-section--light act-tab-section" id="grups">'));
+  assert.ok(sec.length < act.length, 'falta la secció #grups');
+  assert.deepEqual([...sec.matchAll(/<li class="grups-area" data-area="(\w+)">/g)].map((m) => m[1]).sort(), AREES, 'una targeta per àrea');
+  assert.match(sec, /<a href="index\.html#test" class="grups-area__link">/, 'porta al test de la portada');
+  assert.match(sec, /id="grupsProjectes" hidden><\/div>[\s\S]*id="grupsBuit"/, 'projectes i missatge mentre no n\'hi ha');
+  assert.match(sec, /href="contacte\.html#uneix-te"/);
+  assert.match(sec, /<a href="contacte\.html#escriu-nos" class="grups-cta__empresa">/, 'botó per a entitats i empreses');
+  assert.match(act, /<script src="grups\.js[^"]*"><\/script>/);
+  assert.match(read('activitats.js'), /validTabs\s*=\s*\[[^\]]*'grups'/);
+  for (const page of PAGES) {
+    const html = stripComments(read(page));
+    assert.match(html, /<li><a href="activitats\.html#grups" class="mobile-nav__sublink" data-en="Work groups">Grups de treball<\/a><\/li>/, `${page}: menú mòbil`);
+    assert.match(html, /<li><a href="activitats\.html#grups" data-en="Work groups">Grups de treball<\/a><\/li>[\s\S]*<li><a href="activitats\.html#grups" data-en="Work groups">Grups de treball<\/a><\/li>/, `${page}: menú d'escriptori i peu`);
+  }
+
+  const { grups, projectes } = JSON.parse(read('grups.json'));
+  assert.ok(Array.isArray(grups) && Array.isArray(projectes), 'grups.json: «grups» i «projectes» han de ser llistes');
+  const fets = new Set();
+  for (const g of grups) {
+    assert.ok(AREES.includes(g.area), `grup: l'àrea «${g.area}» no és cap de les 7 àrees de Rotary (${AREES.join(', ')})`);
+    assert.ok(!fets.has(g.area), `hi ha dos grups de l'àrea «${g.area}»`);
+    fets.add(g.area);
+    assert.ok(typeof g.referent === 'string' && g.referent.trim(), `grup de ${g.area}: falta el nom del referent`);
+  }
+  for (const p of projectes) {
+    const nom = p.nom && p.nom.ca;
+    assert.ok(p.nom && p.nom.ca && p.nom.es && p.nom.en, `projecte: nom en català, castellà i anglès: ${JSON.stringify(p.nom)}`);
+    assert.ok(AREES.includes(p.area), `${nom}: l'àrea «${p.area}» no és cap de les 7 àrees de Rotary`);
+    if (p.descripcio) assert.ok(p.descripcio.ca && p.descripcio.es && p.descripcio.en, `${nom}: descripció en català, castellà i anglès`);
+    if (p.objectiu != null) assert.ok(typeof p.objectiu === 'number' && p.objectiu > 0, `${nom}: l'objectiu ha de ser un número d'euros més gran que 0`);
+    if (p.recaptat != null) assert.ok(typeof p.recaptat === 'number' && p.recaptat >= 0, `${nom}: el recaptat ha de ser un número d'euros`);
+    if (p.exemple != null) assert.equal(typeof p.exemple, 'boolean', `${nom}: «exemple» ha de ser true o false`);
+    if (p.icona != null) assert.ok(typeof p.icona === 'string' && p.icona.trim().length <= 8, `${nom}: «icona» ha de ser un emoji`);
+  }
+});
+
+test('notícies a la portada: secció després de la imatge principal i noticies.json vàlid', () => {
+  const home = stripComments(read('index.html'));
+  assert.match(home, /<section class="news-section" id="noticies" aria-labelledby="newsTitle" hidden>/, 'secció de notícies (amagada fins que noticies.js la mostra)');
+  assert.match(home, /<script src="noticies\.js[^"]*"><\/script>/);
+  assert.match(home, /<link rel="stylesheet" href="noticies\.css[^"]*">/);
+  assert.match(home, /<dialog class="news-modal" id="newsModal" aria-labelledby="newsModalTitle">/);
+  assert.ok(home.indexOf('class="hero-section"') < home.indexOf('id="noticies"') && home.indexOf('id="noticies"') < home.indexOf('id="nosaltres"'),
+    'les notícies van just després de la imatge principal');
+
+  const { noticies } = JSON.parse(read('noticies.json'));
+  assert.ok(Array.isArray(noticies) && noticies.length, 'noticies.json: «noticies» ha de ser una llista amb alguna notícia');
+  const CATS = ['club', 'activitat', 'projecte', 'districte', 'rotary'];
+  const fets = new Set();
+  for (const n of noticies) {
+    const nom = n.id;
+    assert.match(n.id || '', /^[a-z0-9]+(-[a-z0-9]+)*$/, `«${n.id}»: l'id són paraules en minúscula separades per guions, sense accents`);
+    assert.ok(!fets.has(n.id), `hi ha dues notícies amb l'id «${n.id}»`);
+    fets.add(n.id);
+    assert.match(n.data || '', /^\d{4}-\d{2}-\d{2}$/, `${nom}: la data ha de ser AAAA-MM-DD`);
+    assert.ok(!Number.isNaN(Date.parse(n.data)), `${nom}: la data ${n.data} no existeix`);
+    if (n.fins != null) {
+      assert.match(n.fins, /^\d{4}-\d{2}-\d{2}$/, `${nom}: «fins» ha de ser AAAA-MM-DD`);
+      assert.ok(n.fins >= n.data, `${nom}: «fins» és abans de la data`);
+    }
+    assert.ok(CATS.includes(n.categoria), `${nom}: la categoria «${n.categoria}» ha de ser ${CATS.join(', ')}`);
+    for (const k of ['titol', 'resum', 'text']) assert.ok(n[k] && n[k].ca && n[k].es && n[k].en, `${nom}: «${k}» en català, castellà i anglès`);
+    if (n.imatge != null) {
+      assert.match(n.imatge, /^[\w./-]+\.(jpe?g|png|webp)$/i, `${nom}: la imatge ha de ser una foto de la web`);
+      assert.ok(existsSync(join(ROOT, n.imatge)), `${nom}: la imatge ${n.imatge} no existeix`);
+    }
+    if (n.enllac != null) {
+      const { url, text } = n.enllac;
+      assert.ok(text && text.ca && text.es && text.en, `${nom}: el text de l'enllaç en català, castellà i anglès`);
+      if (/^https:\/\//.test(url)) continue;
+      assert.doesNotMatch(url, /^[a-z]+:/i, `${nom}: només enllaços https o pàgines de la web (res que obri una altra aplicació)`);
+      const [file, anchor] = url.split('#');
+      assert.ok(existsSync(join(ROOT, file)), `${nom}: la pàgina ${file} no existeix`);
+      if (anchor) assert.ok(ids(read(file)).has(anchor), `${nom}: ${file} no té l'àncora #${anchor}`);
     }
   }
 });

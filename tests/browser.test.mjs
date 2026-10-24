@@ -306,6 +306,43 @@ test('idioma: la primera visita porta a la versió de l\'idioma del navegador', 
   await context.close();
 });
 
+test('idioma: la web també funciona oberta des d\'una carpeta de l\'ordinador (Live Server o doble clic)', async (t) => {
+  if (skip) return t.skip(skip);
+  // Live Server amb la carpeta de sobre oberta: la web és a /rotaract/
+  const context = await browser.newContext({ locale: 'es-ES' });
+  await context.route('http://local.test/**', async (route) => {
+    const path = new URL(route.request().url()).pathname.replace(/^\/rotaract\//, '/');
+    const res = await fetch(server.url + path);
+    await route.fulfill({ status: res.status, headers: { 'content-type': res.headers.get('content-type') || 'text/html' }, body: Buffer.from(await res.arrayBuffer()) });
+  });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1|local\.test)/, (route) => route.abort());
+  const page = await context.newPage();
+  await page.goto('http://local.test/rotaract/activitats.html#grups');
+  await page.waitForURL('http://local.test/rotaract/es/activitats.html#grups');
+  await page.waitForLoadState('load');
+  assert.equal(await page.getAttribute('html', 'lang'), 'es');
+  await page.click('.header__lang .lang-menu__btn');
+  await page.click('.header__lang [data-lang-opt="ca"]');
+  await page.waitForURL('http://local.test/rotaract/activitats.html#grups');
+  await page.click('.header__lang .lang-menu__btn');
+  await page.click('.header__lang [data-lang-opt="en"]');
+  await page.waitForURL('http://local.test/rotaract/en/activitats.html#grups');
+  await context.close();
+
+  // Doble clic a l'arxiu (file://): porta a la versió de l'idioma dins la mateixa carpeta
+  const local = await browser.newContext({ locale: 'es-ES' });
+  await local.route(/^https?:\/\//, (route) => route.abort());
+  const p2 = await local.newPage();
+  const base = 'file://' + ROOT.split('\\').join('/').replace(/^(?=[A-Za-z]:)/, '/');
+  await p2.goto(base + '/activitats.html');
+  await p2.waitForURL(base + '/es/activitats.html');
+  await p2.goto(base + '/es/index.html');
+  await p2.click('.header__lang .lang-menu__btn');
+  await p2.click('.header__lang [data-lang-opt="ca"]');
+  await p2.waitForURL(base + '/index.html');
+  await local.close();
+});
+
 test('idioma: els cercadors (Googlebot) no es redirigeixen i veuen cada versió tal com és', async (t) => {
   if (skip) return t.skip(skip);
   const context = await browser.newContext({
@@ -765,4 +802,183 @@ test('portada en mòbil: Instagram com a l\'app (sense QR), destacades que es po
   assert.ok(follow.width > card.width * 0.75, 'el botó «Segueix-nos» ocupa tota l\'amplada');
   await context.close();
   assert.deepEqual(errors, []);
+});
+
+test('activitats: pestanya Grups de treball amb les 7 àrees, el referent de cada grup i la barra de donacions', async (t) => {
+  if (skip) return t.skip(skip);
+  // Amb el grups.json de la web: un projecte per cada un dels seus projectes
+  const real = JSON.parse(readFileSync(join(ROOT, 'grups.json'), 'utf8'));
+  let { page, context, errors } = await open('activitats.html#grups');
+  await page.waitForFunction(() => document.getElementById('grups').classList.contains('act-tab-section--active'));
+  assert.equal(await page.getAttribute('[data-tab="grups"]', 'aria-pressed'), 'true');
+  assert.equal(await page.locator('#grups .grups-area[data-area]').count(), 7);
+  if (real.projectes.length) {
+    await page.waitForSelector('#grups .grups-projecte');
+    assert.equal(await page.locator('#grups .grups-projecte').count(), real.projectes.length);
+    assert.equal(await page.locator('#grups .grups-projecte__exemple').count(), real.projectes.filter((p) => p.exemple === true).length, 'etiqueta «Exemple»');
+    assert.equal(await page.isHidden('#grupsBuit'), true);
+  } else {
+    await page.waitForTimeout(200);
+    assert.equal(await page.isVisible('#grupsBuit'), true);
+  }
+  await context.close();
+  assert.deepEqual(errors, []);
+
+  // Sense cap projecte surt el missatge «Els grups s'estan formant»
+  context = await browser.newContext({ reducedMotion: 'reduce', locale: 'ca-ES' });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+  await context.route('**/grups.json', (route) => route.fulfill({ status: 200, contentType: 'application/json', body: '{"grups":[],"projectes":[]}' }));
+  page = await context.newPage();
+  await page.goto(server.url + '/activitats.html#grups', { waitUntil: 'load' });
+  await page.waitForTimeout(200);
+  assert.equal(await page.isVisible('#grupsBuit'), true);
+  assert.equal(await page.isHidden('#grupsProjectes'), true);
+  await context.close();
+
+  // Amb animacions: les 7 àrees entren i acaben visibles, i el percentatge compta fins al valor
+  context = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'ca-ES' });
+  await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+  page = await context.newPage();
+  await page.goto(server.url + '/activitats.html#grups', { waitUntil: 'load' });
+  await page.locator('#grupsArees').scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => document.getElementById('grupsArees').classList.contains('is-in'));
+  await page.waitForFunction(() => [...document.querySelectorAll('#grupsArees > li')].every((li) => getComputedStyle(li).opacity === '1'), null, { timeout: 5000 });
+  if (real.projectes.some((p) => p.objectiu)) {
+    const p0 = real.projectes.find((p) => p.objectiu);
+    const final = Math.round(p0.recaptat / p0.objectiu * 100) + '%';
+    const pct = page.locator('#grups .grups-fons__pct').first();
+    await pct.scrollIntoViewIfNeeded();
+    await page.waitForFunction((v) => document.querySelector('#grups .grups-fons__pct').textContent === v, final, { timeout: 5000 });
+    assert.equal(await page.textContent('#grups .grups-escena__pct'), final, 'l\'anell de l\'escena 3D diu el mateix');
+    // Bloc horitzontal: el text a un costat i l'escena 3D a l'altre
+    const txt = await page.locator('#grups .grups-projecte__text').first().boundingBox();
+    const vis = await page.locator('#grups .grups-projecte__visual').first().boundingBox();
+    assert.ok(vis.x >= txt.x + txt.width - 1, 'l\'escena va al costat del text');
+  }
+  await context.close();
+
+  // Amb grups i projectes de prova (un d'invàlid, que no surt)
+  const dades = {
+    grups: [{ area: 'educacio', referent: 'Anna Puig' }, { area: 'cap', referent: 'No' }],
+    projectes: [
+      { nom: { ca: 'Motxilla Solidària', es: 'Mochila Solidaria', en: 'Solidarity Backpack' }, area: 'educacio',
+        descripcio: { ca: 'Material escolar per a infants.', es: 'Material escolar para niños.', en: 'School supplies for children.' }, objectiu: 800, recaptat: 320 },
+      { nom: { ca: 'Neteja del riu', es: 'Limpieza del río', en: 'River clean-up' }, area: 'medi' },
+      { nom: { ca: 'Fora' }, area: 'cap', objectiu: 100 }
+    ]
+  };
+  for (const [path, txt] of [
+    ['activitats.html#grups', { nom: 'Motxilla Solidària', import: /^320\s€ de 800\s€$/, prep: 'Projecte en preparació', ref: 'Referent: Anna Puig', btn: 'Vull col·laborar' }],
+    ['es/activitats.html#grups', { nom: 'Mochila Solidaria', import: /^320\s€ de 800\s€$/, prep: 'Proyecto en preparación', ref: 'Referente: Anna Puig', btn: 'Quiero colaborar' }]
+  ]) {
+    context = await browser.newContext({ viewport: { width: 375, height: 800 }, reducedMotion: 'reduce', locale: 'ca-ES' });
+    await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+    await context.route('**/grups.json', (route) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(dades) }));
+    page = await context.newPage();
+    errors = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    await page.goto(server.url + '/' + path, { waitUntil: 'load' });
+    await page.waitForSelector('#grups .grups-projecte');
+    const cards = page.locator('#grups .grups-projecte');
+    assert.equal(await cards.count(), 2, `${path}: només els projectes vàlids`);
+    assert.equal(await page.isHidden('#grupsBuit'), true);
+    assert.equal(await page.locator('.grups-area--actiu').count(), 1);
+    assert.equal(await page.textContent('.grups-area[data-area="educacio"] .grups-area__referent'), txt.ref);
+    const first = cards.nth(0);
+    assert.equal(await first.locator('.grups-projecte__nom').textContent(), txt.nom);
+    assert.equal(await first.locator('.grups-fons__pct').textContent(), '40%');
+    assert.match(await first.locator('.grups-fons__import').textContent(), txt.import);
+    assert.equal(await first.locator('[role="progressbar"]').getAttribute('aria-valuenow'), '40');
+    const ratio = await first.locator('.grups-barra').evaluate((bar) => bar.firstChild.getBoundingClientRect().width / bar.getBoundingClientRect().width);
+    assert.ok(Math.abs(ratio - 0.4) < 0.02, `${path}: la barra va al 40% (${ratio})`);
+    assert.equal(await cards.nth(1).locator('.grups-barra').count(), 0, 'sense objectiu no hi ha barra');
+    assert.match(await cards.nth(1).getAttribute('class'), /grups-projecte--reverse/, 'els blocs alternen el costat de l\'escena');
+    assert.equal(await cards.nth(1).locator('.grups-projecte__prep').textContent(), txt.prep);
+    assert.equal(await first.locator('.grups-projecte__btn').textContent(), txt.btn);
+    assert.equal(await first.locator('.grups-projecte__btn').getAttribute('href'), 'contacte.html#escriu-nos');
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    assert.ok(overflow <= 0, `${path}: la pàgina desborda ${overflow}px en horitzontal`);
+    await context.close();
+    assert.deepEqual(errors, []);
+  }
+});
+
+test('portada: notícies (ordre, programades i caducades, finestra amb adreça pròpia, fletxes i pausa)', async (t) => {
+  if (skip) return t.skip(skip);
+  const pad = (n) => String(n).padStart(2, '0');
+  const day = (delta) => { const d = new Date(); d.setDate(d.getDate() + delta); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+  const txt = (s) => ({ ca: s, es: s + ' (es)', en: s + ' (en)' });
+  const n = (id, delta, extra = {}) => ({ id, data: day(delta), categoria: 'club', titol: txt('Títol ' + id), resum: txt('Resum ' + id), text: txt('Text ' + id + '\n\nSegon paràgraf'), ...extra });
+  const dades = { noticies: [
+    n('antiga', -30), n('nova', -1, { enllac: { url: 'activitats.html#grups', text: txt('Mira-ho') } }), n('futura', 5), n('caducada', -10, { fins: day(-2) }),
+    n('mitjana', -5, { categoria: 'rotary', imatge: 'galeria/grup-800.jpg' }), n('quarta', -8), n('cinquena', -9, { icona: '🎒' })
+  ] };
+  const ordre = ['nova', 'mitjana', 'quarta', 'cinquena', 'antiga'];
+  const obre = async (path, opts = {}) => {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'ca-ES', reducedMotion: 'reduce', ...opts });
+    await context.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+    await context.route('**/noticies.json', (route) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(dades) }));
+    const page = await context.newPage();
+    const errors = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    await page.goto(server.url + path, { waitUntil: 'load' });
+    return { context, page, errors };
+  };
+
+  let { context, page, errors } = await obre('/index.html');
+  await page.waitForSelector('#noticies:not([hidden]) .news-card');
+  // Les més noves primer; les programades i les caducades no surten
+  const titols = await page.locator('.news-card__title').allTextContents();
+  assert.deepEqual(titols, ordre.map((id) => 'Títol ' + id));
+  assert.equal(await page.locator('.news-card[data-cat="rotary"] .news-chip').textContent(), 'Rotary');
+  assert.equal(await page.locator('.news-card .news-card__media.is-icon').count(), 4, 'sense foto, surt la icona');
+  // Amb «reduir moviment» no hi ha botó de pausa, però sí fletxes i punts
+  assert.equal(await page.isHidden('[data-news="pause"]'), true);
+  assert.equal(await page.locator('.news__dot').count(), 3, '5 notícies, 3 per pantalla: 3 posicions');
+  await page.click('[data-news="next"]');
+  await page.waitForFunction(() => document.getElementById('newsTrack').scrollLeft > 100);
+  assert.equal(await page.getAttribute('.news__dot >> nth=1', 'aria-current'), 'true');
+  // La notícia s'obre en una finestra i té la seva adreça
+  await page.click('.news-card >> nth=0 >> .news-card__more');
+  await page.waitForSelector('#newsModal[open]');
+  assert.equal(new URL(page.url()).hash, '#noticia-nova');
+  assert.equal(await page.textContent('#newsModalTitle'), 'Títol nova');
+  assert.equal(await page.locator('#newsModalText p').count(), 2);
+  assert.equal(await page.getAttribute('#newsModalLink', 'href'), 'activitats.html#grups');
+  const box = await page.locator('#newsModal').boundingBox();
+  assert.ok(Math.abs(box.x + box.width / 2 - 640) < 4, 'la finestra surt centrada');
+  await page.keyboard.press('Escape');
+  // L'esdeveniment «close» arriba just després de tancar-se
+  await page.waitForFunction(() => !document.getElementById('newsModal').open && location.hash === '');
+  assert.equal(new URL(page.url()).hash, '', 'en tancar, l\'adreça torna a ser la de la portada');
+  assert.equal(await page.evaluate(() => document.activeElement.getAttribute('href')), '#noticia-nova', 'el focus torna a la targeta');
+  await context.close();
+  assert.deepEqual(errors, []);
+
+  // Un enllaç compartit obre la notícia directament, també en castellà
+  ({ context, page, errors } = await obre('/es/index.html#noticia-mitjana'));
+  await page.waitForSelector('#newsModal[open]');
+  assert.equal(await page.textContent('#newsModalTitle'), 'Títol mitjana (es)');
+  assert.equal(await page.locator('#newsModalMedia img').count(), 1);
+  await context.close();
+  assert.deepEqual(errors, []);
+
+  // Sense «reduir moviment» hi ha el botó de pausa; al mòbil, la pàgina no desborda
+  ({ context, page, errors } = await obre('/index.html', { reducedMotion: 'no-preference', viewport: { width: 375, height: 800 } }));
+  await page.waitForSelector('#noticies:not([hidden]) .news-card');
+  assert.equal(await page.isVisible('[data-news="pause"]'), true);
+  assert.equal(await page.getAttribute('[data-news="pause"]', 'aria-pressed'), 'false');
+  await page.click('[data-news="pause"]');
+  assert.equal(await page.getAttribute('[data-news="pause"]', 'aria-pressed'), 'true');
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  assert.ok(overflow <= 0, `la portada desborda ${overflow}px en horitzontal`);
+  await context.close();
+  assert.deepEqual(errors, []);
+
+  // Sense cap notícia vigent, la secció no surt
+  dades.noticies = [n('futura', 3)];
+  ({ context, page } = await obre('/index.html'));
+  await page.waitForTimeout(400);
+  assert.equal(await page.isHidden('#noticies'), true);
+  await context.close();
 });

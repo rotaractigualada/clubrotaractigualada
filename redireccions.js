@@ -7,25 +7,33 @@
       - Si el visitant ja ha triat un idioma al menú, es respecta sempre.
       - Si no, a la primera visita d'una pàgina en català es fa servir
         l'idioma del navegador (gallec i basc → castellà; altres → anglès).
-      - Els cercadors no es redirigeixen mai: indexen cada versió tal com és. */
+      - Els cercadors no es redirigeixen mai: indexen cada versió tal com és.
+   Les adreces es fan a partir de la carpeta de la pàgina, no de l'arrel del
+   servidor: així també funciona si la web s'obre des d'una carpeta de
+   l'ordinador (VS Code amb Live Server o fent doble clic a l'arxiu). */
 (function () {
   var LANGS = ['ca', 'es', 'en'];
   var loc = window.location;
-  var parts = loc.pathname.split('/').filter(Boolean);
   var onGithub = /\.github\.io$/i.test(loc.hostname);
-  if (onGithub) parts.shift(); // treu el nom del repositori del camí
 
-  var folder = (parts[0] === 'es' || parts[0] === 'en') ? parts[0] : 'ca';
-  var file = parts.length && /\.html$/i.test(parts[parts.length - 1]) ? parts[parts.length - 1] : '';
-  if (file === 'index.html') file = '';
+  // Carpeta i fitxer de la pàgina (/es/contacte.html → /es/ i contacte.html)
+  var dir = loc.pathname.replace(/[^/]*$/, '');
+  var file = loc.pathname.slice(dir.length);
+  if (!/\.html$/i.test(file)) file = '';
+  // Des d'un arxiu de l'ordinador (file://) una carpeta no obre el seu index.html
+  if (file === 'index.html' && loc.protocol !== 'file:') file = '';
+  var last = dir.split('/').filter(Boolean).pop();
+  var folder = (last === 'es' || last === 'en') ? last : 'ca';
+  // Arrel de la web: la carpeta de la pàgina sense /es/ o /en/ («/» al servidor)
+  var base = folder === 'ca' ? dir : dir.slice(0, -(folder.length + 1));
 
-  function target(lang, origin) {
-    return origin + (lang === 'ca' ? '/' : '/' + lang + '/') + file + loc.search + loc.hash;
+  function target(lang, origin, root) {
+    return origin + root + (lang === 'ca' ? '' : lang + '/') + file + loc.search + loc.hash;
   }
 
   if (onGithub) {
     window.__rotaractRedirect = true; // analytics.js no compta aquesta pàgina
-    loc.replace(target(folder, 'https://rotaractigualada.org'));
+    loc.replace(target(folder, 'https://rotaractigualada.org', '/'));
     return;
   }
 
@@ -51,6 +59,6 @@
 
   if (wanted && wanted !== folder) {
     window.__rotaractRedirect = true; // analytics.js no compta aquesta pàgina
-    loc.replace(target(wanted, ''));
+    loc.replace(target(wanted, '', base));
   }
 })();
