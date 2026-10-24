@@ -460,6 +460,10 @@
     '💬 Something else': '💬 Otras cuestiones',
     '❓ A question': '❓ Una duda',
     '💡 A proposal': '💡 Una propuesta',
+    // Inici → Notícies
+    "What's new": 'Actualidad',
+    'Club news': 'Noticias del club',
+    'What we do, what we are preparing and what is happening at Rotary.': 'Lo que hacemos, lo que preparamos y lo que pasa en Rotary.',
     // Activitats → Grups de treball
     'Work groups': 'Grupos de trabajo',
     'In the club we work in groups, each dedicated to one of the 7 areas in which Rotary focuses its service around the world. Each group runs projects for Igualada and the Anoia region.': 'En el club trabajamos en grupos, cada uno dedicado a una de las 7 áreas en las que Rotary concentra su servicio en todo el mundo. Cada grupo impulsa proyectos para Igualada y el Anoia.',

@@ -101,8 +101,8 @@ RedirectMatch 404 ^/(tests|node_modules)(/|$)
     Require all granted
   </Files>
   # Excepció: dades públiques de la web (límits dels municipis del mapa,
-  # activitats del club i grups de treball), que la mateixa web llegeix
-  <FilesMatch "^(anoia|projectes|grups)\.json$">
+  # activitats del club, grups de treball i notícies), que la mateixa web llegeix
+  <FilesMatch "^(anoia|projectes|grups|noticies)\.json$">
     Require all granted
   </FilesMatch>
 </IfModule>

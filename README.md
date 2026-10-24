@@ -28,6 +28,7 @@ Cap enllaç de la web obre el programa de correu: tot es fa des de la pàgina.
 | `mapa.js`, `mapa.css`, `anoia.json`, `anoia.svg` | Mapa d'Igualada i l'Anoia (Nosaltres → On som) |
 | `projectes.json`, `projectes.js` | Activitats del club per al mapa i el test de la portada |
 | `grups.json`, `grups.js` | Activitats → Grups de treball: grups per àrea (amb el referent) i projectes amb la barra de donacions |
+| `noticies.json`, `noticies.js`, `noticies.css`, `noticies/` | Inici → Notícies: targetes que avancen soles, i cada notícia en una finestra amb adreça pròpia |
 | `instagram.css`, `instagram.js`, `instagram/` | Secció Instagram de la portada: perfil, destacades, publicacions i codi QR |
 | `instagram-feed.php` | Instagram automàtic: últimes publicacions des de l'API d'Instagram (opcional, vegeu més avall) |
 | `test-voluntari.js`, `test-voluntari.css` | Test «Amb quina àrea de Rotary connectes més?» de la portada |
@@ -129,6 +130,36 @@ cada àrea d'interès de Rotary, i diu l'àrea amb què connectes més. Cada dad
 de Rotary del resultat («Sabies que…») enllaça la seva font oficial. Les preguntes i
 els textos del resultat són a `index.html` (secció `#test`). No envia ni
 desa cap resposta.
+
+## Notícies (Inici)
+
+Just després de la imatge principal de la portada surten les últimes
+notícies del club (fins a 8, les més noves primer), en targetes que avancen
+soles. S'aturen amb el ratolí, el focus, el dit o el botó de pausa, i no es
+mouen soles amb «reduir moviment». Cada notícia s'obre en una finestra i té
+la seva adreça per compartir-la: `rotaractigualada.org/#noticia-ID`.
+
+Les notícies són a `noticies.json` (les llegeix `noticies.js`; per afegir-ne
+una no cal tornar a pujar la web, només aquest fitxer):
+
+- `id`: paraules en minúscula separades per guions, sense accents
+  (`dia-mundial-polio-2026`).
+- `data` (`AAAA-MM-DD`): abans d'aquest dia la notícia no surt, així que es
+  poden deixar programades. `fins` (opcional): a partir de l'endemà ja no surt.
+- `categoria`: `club`, `activitat`, `projecte`, `districte` o `rotary`
+  (cada una té el seu color).
+- `titol`, `resum` (una o dues frases per a la targeta) i `text` (la notícia
+  sencera; paràgraf nou amb una línia en blanc, `\n\n`), en català,
+  castellà i anglès.
+- `imatge` (opcional): una foto de la web, per exemple `galeria/grup-800.jpg`
+  o una de la carpeta `noticies/`. Sense foto surt la `icona` (un emoji) o la
+  de la categoria.
+- `enllac` (opcional): `url` (una pàgina de la web, com
+  `activitats.html#grups`, o una adreça `https://`) i el text del botó en
+  els tres idiomes.
+
+Si no hi ha cap notícia vigent, la secció no surt. `npm test` comprova que
+`noticies.json` és vàlid (dates, categories, idiomes, fotos i enllaços).
 
 ## Grups de treball (Activitats → Grups de treball)
 

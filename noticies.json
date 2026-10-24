@@ -1,0 +1,121 @@
+{
+  "_com_editar": "Notícies de la portada (Inici → Notícies). Un bloc per notícia; surten les més noves primer i se'n mostren fins a 8. id: paraules en minúscula separades per guions, sense accents (fa l'adreça rotaractigualada.org/#noticia-ID); data: AAAA-MM-DD (abans d'aquest dia no surt: es poden programar); fins: AAAA-MM-DD opcional (a partir de l'endemà ja no surt); categoria: club, activitat, projecte, districte o rotary; titol, resum (1-2 frases per a la targeta) i text (la notícia sencera; un paràgraf nou amb una línia en blanc, \\n\\n) en català, castellà i anglès; imatge: opcional, ruta d'una foto de la web (si no n'hi ha, surt la icona); icona: emoji opcional per a les notícies sense foto; enllac: opcional, url (una pàgina de la web o una adreça https) i text del botó en els tres idiomes.",
+  "noticies": [
+    {
+      "id": "grups-de-treball",
+      "data": "2026-11-05",
+      "categoria": "club",
+      "imatge": "galeria/equip-800.jpg",
+      "titol": {
+        "ca": "Presentem els grups de treball",
+        "es": "Presentamos los grupos de trabajo",
+        "en": "Introducing our work groups"
+      },
+      "resum": {
+        "ca": "Ens organitzem en grups dedicats a les 7 àrees en què Rotary concentra el seu servei.",
+        "es": "Nos organizamos en grupos dedicados a las 7 áreas en las que Rotary concentra su servicio.",
+        "en": "We are organising ourselves into groups dedicated to the 7 areas in which Rotary focuses its service."
+      },
+      "text": {
+        "ca": "A partir d'ara, al club treballem en grups, cadascun dedicat a una de les 7 àrees d'interès de Rotary: pau, malalties, aigua, salut maternoinfantil, educació, economia local i medi ambient.\n\nCada grup impulsa projectes per a Igualada i l'Anoia. A la pàgina d'Activitats hi trobaràs les àrees, els projectes que preparem i com hi pots col·laborar.",
+        "es": "A partir de ahora, en el club trabajamos en grupos, cada uno dedicado a una de las 7 áreas de interés de Rotary: paz, enfermedades, agua, salud maternoinfantil, educación, economía local y medio ambiente.\n\nCada grupo impulsa proyectos para Igualada y el Anoia. En la página de Actividades encontrarás las áreas, los proyectos que preparamos y cómo puedes colaborar.",
+        "en": "From now on, the club works in groups, each dedicated to one of Rotary's 7 areas of focus: peace, disease, water, maternal and child health, education, local economies and the environment.\n\nEach group runs projects for Igualada and the Anoia region. On the Activities page you'll find the areas, the projects we're preparing and how you can help."
+      },
+      "enllac": {
+        "url": "activitats.html#grups",
+        "text": {
+          "ca": "Descobreix els grups",
+          "es": "Descubre los grupos",
+          "en": "Discover the groups"
+        }
+      }
+    },
+    {
+      "id": "dia-mundial-polio-2026",
+      "data": "2026-10-24",
+      "categoria": "rotary",
+      "imatge": "noticies/dia-polio-2026.jpg",
+      "titol": {
+        "ca": "Ens sumem al Dia Mundial contra la Pòlio",
+        "es": "Nos sumamos al Día Mundial contra la Polio",
+        "en": "We join World Polio Day"
+      },
+      "resum": {
+        "ca": "Els casos de pòlio han baixat un 99,9 % des de 1988 i ja només és endèmica en 2 països. Acabem la feina!",
+        "es": "Los casos de polio han bajado un 99,9 % desde 1988 y ya solo es endémica en 2 países. ¡Acabemos el trabajo!",
+        "en": "Polio cases have fallen by 99.9% since 1988 and it is now endemic in only 2 countries. Let's finish the job!"
+      },
+      "text": {
+        "ca": "Cada 24 d'octubre se celebra el Dia Mundial contra la Pòlio. Des de 1988, gràcies a la vacunació, els casos de pòlio han baixat un 99,9 %, i el virus salvatge ja només és endèmic a l'Afganistan i al Pakistan.\n\nRotary lluita per eradicar la pòlio des de 1985 amb la campanya End Polio Now, i des del Club Rotaract d'Igualada ens hi sumem.",
+        "es": "Cada 24 de octubre se celebra el Día Mundial contra la Polio. Desde 1988, gracias a la vacunación, los casos de polio han bajado un 99,9 %, y el virus salvaje ya solo es endémico en Afganistán y Pakistán.\n\nRotary lucha para erradicar la polio desde 1985 con la campaña End Polio Now, y desde el Club Rotaract de Igualada nos sumamos.",
+        "en": "World Polio Day is held every 24 October. Since 1988, thanks to vaccination, polio cases have fallen by 99.9%, and the wild virus is now endemic only in Afghanistan and Pakistan.\n\nRotary has been working to eradicate polio since 1985 through its End Polio Now campaign, and we at the Rotaract Club of Igualada are proud to join in."
+      },
+      "enllac": {
+        "url": "https://www.endpolio.org/",
+        "text": {
+          "ca": "Més informació a endpolio.org",
+          "es": "Más información en endpolio.org",
+          "en": "More at endpolio.org"
+        }
+      }
+    },
+    {
+      "id": "motxilla-solidaria",
+      "data": "2026-10-20",
+      "categoria": "districte",
+      "icona": "🎒",
+      "titol": {
+        "ca": "Proposem la Motxilla Solidària al Districte",
+        "es": "Proponemos la Mochila Solidaria al Distrito",
+        "en": "We propose the Solidarity Backpack to the District"
+      },
+      "resum": {
+        "ca": "Reforç escolar i una motxilla amb material per a infants que ho necessiten: una idea perquè cada club la porti a terme a la seva localitat.",
+        "es": "Refuerzo escolar y una mochila con material para niños y niñas que lo necesitan: una idea para que cada club la lleve a cabo en su localidad.",
+        "en": "Homework support and a backpack with school supplies for children who need it: an idea every club can carry out in its own town."
+      },
+      "text": {
+        "ca": "Hem presentat al Districte 2202 la proposta Motxilla Solidària: sessions de reforç escolar i tècniques d'estudi, i una motxilla amb material escolar i un llibre de lectura per a infants que necessiten un cop de mà.\n\nÉs una idea pensada perquè cada club la pugui fer a la seva localitat, de la mà d'una escola. A Igualada la plantejarem amb una escola amb qui el club ja té contacte.",
+        "es": "Hemos presentado al Distrito 2202 la propuesta Mochila Solidaria: sesiones de refuerzo escolar y técnicas de estudio, y una mochila con material escolar y un libro de lectura para niños y niñas que necesitan una ayuda.\n\nEs una idea pensada para que cada club la pueda llevar a cabo en su localidad, de la mano de una escuela. En Igualada la plantearemos con una escuela con la que el club ya tiene contacto.",
+        "en": "We have presented the Solidarity Backpack proposal to District 2202: homework support and study-skills sessions, plus a backpack with school supplies and a reading book for children who need a helping hand.\n\nIt is designed so that every club can carry it out in its own town, together with a local school. In Igualada we will propose it to a school the club is already in touch with."
+      },
+      "enllac": {
+        "url": "activitats.html#grups",
+        "text": {
+          "ca": "Mira els projectes",
+          "es": "Mira los proyectos",
+          "en": "See the projects"
+        }
+      }
+    },
+    {
+      "id": "presentacio-del-club",
+      "data": "2026-09-24",
+      "categoria": "club",
+      "imatge": "galeria/grup-800.jpg",
+      "titol": {
+        "ca": "Presentació oficial del club",
+        "es": "Presentación oficial del club",
+        "en": "Official club presentation"
+      },
+      "resum": {
+        "ca": "Vam presentar el Club Rotaract d'Igualada al sopar col·loqui de Rotary Igualada, on vam rebre el certificat de Rotary International.",
+        "es": "Presentamos el Club Rotaract de Igualada en la cena coloquio de Rotary Igualada, donde recibimos el certificado de Rotary International.",
+        "en": "We presented the Rotaract Club of Igualada at the Rotary Igualada dinner talk, where we received our Rotary International certificate."
+      },
+      "text": {
+        "ca": "El dijous 24 de setembre vam presentar oficialment el Club Rotaract d'Igualada a Ses Oliveres, davant de Rotary Igualada: vam rebre el certificat de Rotary International i la campana del club.\n\nTot seguit vam compartir el sopar col·loqui i, per acabar la nit, vam fer un bingo amb tots els assistents.",
+        "es": "El jueves 24 de septiembre presentamos oficialmente el Club Rotaract de Igualada en Ses Oliveres, ante Rotary Igualada: recibimos el certificado de Rotary International y la campana del club.\n\nA continuación compartimos la cena coloquio y, para terminar la noche, hicimos un bingo con todos los asistentes.",
+        "en": "On Thursday 24 September we officially presented Rotaract Club Igualada at Ses Oliveres, in front of Rotary Igualada: we received our Rotary International certificate and the club bell.\n\nThen we shared the dinner talk and, to round off the evening, we held a bingo with everyone there."
+      },
+      "enllac": {
+        "url": "activitats.html#galeria",
+        "text": {
+          "ca": "Veure les fotos",
+          "es": "Ver las fotos",
+          "en": "See the photos"
+        }
+      }
+    }
+  ]
+}
