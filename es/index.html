@@ -2,15 +2,15 @@
 <!-- Generat automàticament per scripts/build-idiomes.mjs a partir de index.html. No l'editis: canvia la versió catalana i torna a executar npm run build:idiomes. -->
 <html lang="es"><head>
   <meta charset="UTF-8">
-  <script src="../redireccions.js?v=43c8ff82"></script>
+  <script src="../redireccions.js?v=835c55dc"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-en="Home | Rotaract Club of Igualada" data-ca="Inici | Club Rotaract d'Igualada">Inicio | Club Rotaract de Igualada</title>
-  <meta name="description" content="Rotaract Igualada: jóvenes comprometidos con proyectos sociales y de liderazgo en el Anoia. Descubre nuestras actividades, nuestra historia y cómo unirte.">
+  <meta name="description" content="Web oficial del Club Rotaract de Igualada: jóvenes comprometidos con proyectos sociales y de liderazgo en el Anoia. Descubre cómo unirte.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Club Rotaract d'Igualada">
   <meta property="og:locale" content="es_ES">
   <meta property="og:title" content="Inicio | Club Rotaract de Igualada">
-  <meta property="og:description" content="Rotaract Igualada: jóvenes comprometidos con proyectos sociales y de liderazgo en el Anoia. Descubre nuestras actividades, nuestra historia y cómo unirte.">
+  <meta property="og:description" content="Web oficial del Club Rotaract de Igualada: jóvenes comprometidos con proyectos sociales y de liderazgo en el Anoia. Descubre cómo unirte.">
   <meta property="og:url" content="https://rotaractigualada.org/es/">
   <meta property="og:image" content="https://rotaractigualada.org/og-rotaract-igualada.jpg">
   <meta property="og:image:type" content="image/jpeg">
@@ -30,6 +30,7 @@
   {
     "@context": "https://schema.org",
     "@type": "NGO",
+    "@id": "https://rotaractigualada.org/#club",
     "name": "Club Rotaract d'Igualada",
     "alternateName": "Rotaract Igualada",
     "url": "https://rotaractigualada.org/",
@@ -52,7 +53,8 @@
       "url": "https://rotaryigualada.org/"
     },
     "sameAs": [
-      "https://www.instagram.com/rotaractigualada/"
+      "https://www.instagram.com/rotaractigualada/",
+      "https://maps.app.goo.gl/xRnL1LAAth7wFCgT8"
     ]
   }
   </script>
@@ -66,6 +68,8 @@
       "Rotaract Club of Igualada"
     ],
     "url": "https://rotaractigualada.org/",
+    "description": "Web oficial del Club Rotaract d'Igualada",
+    "publisher": { "@id": "https://rotaractigualada.org/#club" },
     "inLanguage": [
       "ca",
       "es",
@@ -77,13 +81,14 @@
   <link rel="stylesheet" href="../rotaractigualada.css?v=e446797d">
   <link rel="preload" href="../fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin="">
   <link rel="stylesheet" href="../fonts.css?v=d6f9c1e4">
-  <link rel="icon" href="../favicon.ico" sizes="48x48">
-  <link rel="icon" type="image/png" sizes="96x96" href="../favicon-96.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192.png">
-  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="icon" href="../favicon.ico?v=ee62b02d" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="96x96" href="../favicon-96.png?v=0cbbbbc1">
+  <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192.png?v=646f2080">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png?v=6df6655a">
   <link rel="manifest" href="../site.webmanifest">
   <meta name="theme-color" content="#da1a5d">
   <link rel="stylesheet" href="../i18n.css?v=788d4587">
+  <link rel="stylesheet" href="../noticies.css?v=37ff42ae">
   <link rel="stylesheet" href="../instagram.css?v=bc64afba">
   <link rel="stylesheet" href="../test-voluntari.css?v=dfd34992">
   <link rel="stylesheet" href="../efectes.css?v=a0de8e85">
@@ -126,6 +131,7 @@
             <li><a href="activitats.html#realitzades" class="mobile-nav__sublink" data-en="Past activities" data-ca="Activitats realitzades">Actividades pasadas</a></li>
             <li><a href="activitats.html#galeria" class="mobile-nav__sublink" data-en="Gallery" data-ca="Galeria">Galería</a></li>
             <li><a href="activitats.html#calendari" class="mobile-nav__sublink" data-en="Calendar" data-ca="Calendari">Calendario</a></li>
+            <li><a href="activitats.html#grups" class="mobile-nav__sublink" data-en="Work groups" data-ca="Grups de treball">Grupos de trabajo</a></li>
         </ul>
       </li>
       <li class="mobile-nav__group">
@@ -193,6 +199,7 @@
             <li><a href="activitats.html#realitzades" data-en="Past activities" data-ca="Activitats realitzades">Actividades pasadas</a></li>
             <li><a href="activitats.html#galeria" data-en="Gallery" data-ca="Galeria">Galería</a></li>
             <li><a href="activitats.html#calendari" data-en="Calendar" data-ca="Calendari">Calendario</a></li>
+            <li><a href="activitats.html#grups" data-en="Work groups" data-ca="Grups de treball">Grupos de trabajo</a></li>
           </ul>
         </div>
 
@@ -245,6 +252,40 @@
       <p class="hero__text" data-en-is-html="true" data-en="Young people who act, connect and lead. &lt;br&gt;At Rotaract Igualada we bring together the talent and energy of young people aged 18 to 30 to create solidarity projects with a real impact on our community." data-ca-html="Joves que actuen, connecten i lideren. &lt;br&gt;A Rotaract Igualada unim el talent i l'energia de joves d'entre 18 i 30 anys per crear projectes solidaris amb un impacte real al nostre entorn.">Jóvenes que actúan, conectan y lideran. <br>En Rotaract Igualada unimos el talento y la energía de jóvenes de entre 18 y 30 años para crear proyectos solidarios con un impacto real en nuestro entorno.</p>
       <a href="contacte.html" class="hero__cta" data-en="JOIN ROTARACT" data-ca="UNEIX-TE A ROTARACT">ÚNETE A ROTARACT</a>
     </div>
+  </section>
+
+  <!-- =============================================
+       NOTÍCIES — es llegeixen de noticies.json (vegeu README).
+       Sense notícies (o si no es pot llegir el fitxer) la secció no surt.
+  ============================================= -->
+  <section class="news-section" id="noticies" aria-labelledby="newsTitle" hidden="">
+    <div class="news__container">
+      <div class="news__head">
+        <div class="news__intro">
+          <p class="news__eyebrow"><span class="news__spark" aria-hidden="true">✦</span><span data-en="What's new" data-ca="Actualitat">Actualidad</span></p>
+          <h2 class="news__title" id="newsTitle" data-en="Club news" data-ca="Notícies del club">Noticias del club</h2>
+          <p class="news__desc" data-en="What we do, what we are preparing and what is happening at Rotary." data-ca="El que fem, el que preparem i el que passa a Rotary.">Lo que hacemos, lo que preparamos y lo que pasa en Rotary.</p>
+        </div>
+        <div class="news__controls" id="newsControls">
+          <button type="button" class="news__ctrl" data-news="prev"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+          <button type="button" class="news__ctrl news__ctrl--pause" data-news="pause" aria-pressed="false"><svg class="news__icon-pause" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1.2"></rect><rect x="14" y="5" width="4" height="14" rx="1.2"></rect></svg><svg class="news__icon-play" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"></path></svg></button>
+          <button type="button" class="news__ctrl" data-news="next"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        </div>
+      </div>
+      <ul class="news__track" id="newsTrack" aria-labelledby="newsTitle"></ul>
+      <div class="news__dots" id="newsDots"></div>
+    </div>
+
+    <dialog class="news-modal" id="newsModal" aria-labelledby="newsModalTitle">
+      <button type="button" class="news-modal__close" data-news="close"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      <div class="news-modal__media" id="newsModalMedia"></div>
+      <div class="news-modal__body">
+        <p class="news-modal__meta"><span class="news-chip" id="newsModalCat"></span><time id="newsModalDate"></time></p>
+        <h3 class="news-modal__title" id="newsModalTitle"></h3>
+        <div class="news-modal__text" id="newsModalText"></div>
+        <a class="news-modal__link" id="newsModalLink" hidden=""></a>
+      </div>
+    </dialog>
   </section>
 
   <!-- =============================================
@@ -363,7 +404,7 @@
       <!-- Perfil -->
       <div class="ig-profile">
         <div class="ig-profile__avatar" aria-hidden="true">
-          <img src="../favicon-192.png" width="192" height="192" alt="" loading="lazy" decoding="async">
+          <img src="../favicon-192.png?v=646f2080" width="192" height="192" alt="" loading="lazy" decoding="async">
         </div>
         <div class="ig-profile__info">
           <p class="ig-profile__eyebrow"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5.5"></rect><circle cx="12" cy="12" r="4.2"></circle><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"></circle></svg><span data-en="Follow us on Instagram" data-ca="Segueix-nos a Instagram">Síguenos en Instagram</span></p>
@@ -899,6 +940,7 @@
           <li><a href="directiu.html" data-en="Board" data-ca="Directiu">Junta directiva</a></li>
           <li><a href="activitats.html" data-en="Activities" data-ca="Activitats">Actividades</a></li>
           <li><a href="activitats.html#galeria" data-en="Gallery" data-ca="Galeria">Galería</a></li>
+          <li><a href="activitats.html#grups" data-en="Work groups" data-ca="Grups de treball">Grupos de trabajo</a></li>
           <li><a href="contacte.html" data-en="Contact" data-ca="Contacte">Contacto</a></li>
         </ul>
       </div>
@@ -931,6 +973,7 @@
   ============================================= -->
   <script src="../nav.js?v=35a73008"></script>
   <script src="../rotaractigualada.js?v=15d577cf"></script>
+  <script src="../noticies.js?v=eb3086fc"></script>
   <script src="../projectes.js?v=30419f19"></script>
   <script src="../test-voluntari.js?v=415fc302"></script>
   <script src="../instagram.js?v=64d4fbcf"></script>
@@ -1146,6 +1189,6 @@
 
   <script src="../analytics.js?v=fa780a89"></script>
   <script src="../efectes.js?v=b568823c"></script>
-  <script src="../i18n.js?v=e521d71e"></script>
+  <script src="../i18n.js?v=76a18b0f"></script>
 
 </body></html>

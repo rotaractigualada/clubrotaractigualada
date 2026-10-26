@@ -14,7 +14,7 @@
      des de la subcarpeta (../).
    - Posa l'adreça canònica, Open Graph i la descripció de l'idioma.
    - Afegeix les etiquetes hreflang (també a les pàgines catalanes).
-   - Posa la versió (?v=hash) als CSS i JS propis de totes les pàgines,
+   - Posa la versió (?v=hash) als CSS, JS i icones propis de totes les pàgines,
      perquè els navegadors no facin servir còpies antigues.
 
    Ús: node scripts/build-idiomes.mjs [carpeta_de_sortida]
@@ -35,16 +35,16 @@ const LOCALES = { ca: 'ca_ES', es: 'es_ES', en: 'en_GB' };
 /* Descripcions per a cercadors i xarxes (les catalanes són a l'HTML) */
 const META = {
   'index.html': {
-    es: 'Rotaract Igualada: jóvenes comprometidos con proyectos sociales y de liderazgo en el Anoia. Descubre nuestras actividades, nuestra historia y cómo unirte.',
-    en: 'Rotaract Igualada: young people committed to social and leadership projects in the Anoia region. Discover our activities, our story and how to join.'
+    es: 'Web oficial del Club Rotaract de Igualada: jóvenes comprometidos con proyectos sociales y de liderazgo en el Anoia. Descubre cómo unirte.',
+    en: 'Official website of the Rotaract Club of Igualada: young people committed to social and leadership projects in the Anoia region. Find out how to join.'
   },
   'nosaltres.html': {
     es: 'Conoce la historia y los valores del Club Rotaract de Igualada, parte de la red de Rotary International, y descubre cómo colaboramos con Rotary Igualada.',
     en: 'Learn about the history and values of Rotaract Club Igualada, part of the Rotary International network, and how we work with Rotary Club Igualada.'
   },
   'activitats.html': {
-    es: 'Actividades y proyectos solidarios, culturales, deportivos y de formación de Rotaract Igualada. Consulta el calendario e inscríbete.',
-    en: 'Solidarity, cultural, sports and training activities and projects by Rotaract Igualada. Check the calendar and sign up.'
+    es: 'Actividades, proyectos solidarios y grupos de trabajo de Rotaract Igualada para el Anoia. Consulta el calendario, las fotos y cómo puedes colaborar.',
+    en: 'Activities, solidarity projects and work groups of Rotaract Igualada for the Anoia region. Check the calendar, the photos and how you can help.'
   },
   'directiu.html': {
     es: 'Conoce la junta directiva y los socios del Club Rotaract de Igualada, el club de jóvenes de Rotary en el Anoia.',
@@ -84,13 +84,13 @@ function updateSourceHreflang(page) {
   writeFileSync(file, html);
 }
 
-/* Versió als CSS i JS propis (?v=<hash del contingut>): quan un fitxer
-   canvia, l'adreça canvia i els navegadors no fan servir la còpia antiga
-   de la memòria cau. */
+/* Versió als CSS i JS propis i a les icones (?v=<hash del contingut>):
+   quan un fitxer canvia, l'adreça canvia i els navegadors (i Google, per a
+   la icona dels resultats) no fan servir la còpia antiga de la memòria cau. */
 function updateSourceVersions(page) {
   const file = join(ROOT, page);
   const html = readFileSync(file, 'utf8').replace(
-    /(\s(?:href|src)=")([\w./-]+\.(?:css|js))(?:\?v=[0-9a-f]+)?"/g,
+    /(\s(?:href|src)=")([\w./-]+\.(?:css|js)|(?:favicon[\w-]*|apple-touch-icon)\.(?:png|ico))(?:\?v=[0-9a-f]+)?"/g,
     (all, attr, asset) => {
       const path = join(ROOT, asset);
       if (!existsSync(path)) return all;

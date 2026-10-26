@@ -460,6 +460,37 @@
     '💬 Something else': '💬 Otras cuestiones',
     '❓ A question': '❓ Una duda',
     '💡 A proposal': '💡 Una propuesta',
+    // Inici → Notícies
+    "What's new": 'Actualidad',
+    'Club news': 'Noticias del club',
+    'What we do, what we are preparing and what is happening at Rotary.': 'Lo que hacemos, lo que preparamos y lo que pasa en Rotary.',
+    // Activitats → Grups de treball
+    'Work groups': 'Grupos de trabajo',
+    'In the club we work in groups, each dedicated to one of the 7 areas in which Rotary focuses its service around the world. Each group runs projects for Igualada and the Anoia region.': 'En el club trabajamos en grupos, cada uno dedicado a una de las 7 áreas en las que Rotary concentra su servicio en todo el mundo. Cada grupo impulsa proyectos para Igualada y el Anoia.',
+    'They are the main causes Rotary works on around the world.': 'Son las grandes causas en las que trabaja Rotary en todo el mundo.',
+    'How we work': 'Cómo trabajamos',
+    'Projects for our region': 'Proyectos para nuestra comarca',
+    'Each group proposes and carries out projects in its area for Igualada and the Anoia region.': 'Cada grupo propone y saca adelante proyectos de su área para Igualada y el Anoia.',
+    'With Rotary\'s support': 'Con el apoyo de Rotary',
+    'For each topic, we can count on the help of Rotary members who know it well.': 'Para cada tema, contamos con la ayuda de socios de Rotary que saben de ello.',
+    'Clear accounts': 'Cuentas claras',
+    'For each project you can see what we want to achieve and how much has been raised.': 'En cada proyecto verás qué queremos conseguir y cuánto se ha recaudado.',
+    'Open to collaboration': 'Abiertos a colaborar',
+    'People, organisations and businesses can lend a hand or donate to the projects.': 'Personas, entidades y empresas pueden echar una mano o hacer una donación a los proyectos.',
+    'Are you an organisation or a business?': '¿Eres una entidad o una empresa?',
+    'Support one of our projects: sponsor it, donate or lend a hand.': 'Colabora con alguno de nuestros proyectos: patrocínalo, haz una donación o échanos una mano.',
+    'How we organise ourselves': 'Cómo nos organizamos',
+    'by area': 'por áreas',
+    'The 7 Rotary areas of focus': 'Las 7 áreas de interés de Rotary',
+    'Not sure which one?': '¿No sabes cuál?',
+    'Take the test on the home page and find out which area you fit best →': 'Haz el test de la portada y descubre con qué área encajas más →',
+    'The groups\' projects': 'Proyectos de los grupos',
+    'Each project shows how much it has raised. If you would like to help, write to us.': 'Cada proyecto muestra cuánto ha recaudado. Si quieres colaborar, escríbenos.',
+    'The groups are being formed': 'Los grupos se están formando',
+    'Their projects will appear here very soon, along with how you can help.': 'Muy pronto encontrarás aquí sus proyectos y cómo puedes colaborar.',
+    'Would you like to be part of it?': '¿Quieres formar parte?',
+    'Join the club and choose the area that motivates you most.': 'Únete al club y elige el área que más te motive.',
+    'Take the test': 'Haz el test',
   };
 
   /* Diccionari castellà per a elements amb contingut HTML (data-en-is-html) */
@@ -503,12 +534,19 @@
     return LANGS.indexOf(lang) !== -1 ? lang : 'ca';
   }
 
-  /* Adreça de la mateixa pàgina en un altre idioma */
+  /* Adreça de la mateixa pàgina en un altre idioma. Es fa a partir de la
+     carpeta de la pàgina (com a redireccions.js), perquè també funcioni
+     si la web s'obre des d'una carpeta de l'ordinador. */
   function urlFor(lang) {
-    var file = window.location.pathname.split('/').pop() || '';
-    if (file === 'index.html') file = '';
-    var prefix = lang === 'ca' ? '/' : '/' + lang + '/';
-    return prefix + file + window.location.search + window.location.hash;
+    var loc = window.location;
+    var dir = loc.pathname.replace(/[^/]*$/, '');
+    var file = loc.pathname.slice(dir.length);
+    if (file === 'index.html' && loc.protocol !== 'file:') file = '';
+    var cur = pageLang();
+    var root = cur !== 'ca' && dir.slice(-(cur.length + 2)) === '/' + cur + '/'
+      ? dir.slice(0, -(cur.length + 1))
+      : dir;
+    return root + (lang === 'ca' ? '' : lang + '/') + file + loc.search + loc.hash;
   }
 
   function saveLang(lang) {
