@@ -317,16 +317,16 @@ test('idioma: la web també funciona oberta des d\'una carpeta de l\'ordinador (
   });
   await context.route(/^https?:\/\/(?!127\.0\.0\.1|local\.test)/, (route) => route.abort());
   const page = await context.newPage();
-  await page.goto('http://local.test/rotaract/activitats.html#grups');
-  await page.waitForURL('http://local.test/rotaract/es/activitats.html#grups');
+  await page.goto('http://local.test/rotaract/activitats.html#calendari');
+  await page.waitForURL('http://local.test/rotaract/es/activitats.html#calendari');
   await page.waitForLoadState('load');
   assert.equal(await page.getAttribute('html', 'lang'), 'es');
   await page.click('.header__lang .lang-menu__btn');
   await page.click('.header__lang [data-lang-opt="ca"]');
-  await page.waitForURL('http://local.test/rotaract/activitats.html#grups');
+  await page.waitForURL('http://local.test/rotaract/activitats.html#calendari');
   await page.click('.header__lang .lang-menu__btn');
   await page.click('.header__lang [data-lang-opt="en"]');
-  await page.waitForURL('http://local.test/rotaract/en/activitats.html#grups');
+  await page.waitForURL('http://local.test/rotaract/en/activitats.html#calendari');
   await context.close();
 
   // Doble clic a l'arxiu (file://): porta a la versió de l'idioma dins la mateixa carpeta
